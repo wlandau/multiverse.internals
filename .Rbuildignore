@@ -1,0 +1,12 @@
+^LICENSE\.md$
+^.*\.Rproj$
+^\.Rproj\.user$
+^main$
+^pull_request$
+^packages\.json$
+^\.lintr$
+^\.git$
+^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

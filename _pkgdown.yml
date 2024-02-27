@@ -1,0 +1,11 @@
+url: https://r-releases.github.io/r.releases/
+template:
+  bootstrap: 5
+reference:
+- title: Package help
+  contents:
+  - r.releases-package
+- title: Pull request reviews
+  contents:
+  - review_pull_request
+  - review_pull_requests
