@@ -1,6 +1,5 @@
 # r.releases.utils
 
-[![status](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 [![check](https://github.com/r-releases/r.releases.utils/actions/workflows/check.yaml/badge.svg)](https://github.com/r-releases/r.releases.utils/actions?query=workflow%3Acheck)
 [![lint](https://github.com/r-releases/r.releases.utils/actions/workflows/lint.yaml/badge.svg)](https://github.com/r-releases/r.releases.utils/actions?query=workflow%3Alint)
 
