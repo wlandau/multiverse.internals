@@ -2,12 +2,12 @@
 % Please edit documentation in R/assert_package.R
 \name{assert_package}
 \alias{assert_package}
-\title{Validate a package entry.}
+\title{Validate a Package Entry}
 \usage{
 assert_package(path)
 }
 \value{
-An character string if there is a problem with the package entry,
+A character string if there is a problem with the package entry,
 otherwise \code{NULL} if there are no issues.
 }
 \description{

@@ -1,8 +1,8 @@
-#' @title Validate a package entry.
+#' @title Validate a Package Entry
 #' @export
 #' @keywords internal
 #' @description Validate a package entry.
-#' @return An character string if there is a problem with the package entry,
+#' @return A character string if there is a problem with the package entry,
 #'   otherwise `NULL` if there are no issues.
 assert_package <- function(path) {
   if (!is_character_scalar(path)) {
@@ -40,10 +40,20 @@ assert_package_contents <- function(name, url) {
       paste("Found malformed URL", shQuote(url), "of package", shQuote(name))
     )
   }
+}
+
+#' @title Validate a Package URL
+#' @export
+#' @keywords internal
+#' @description Validate that the package URL is in the description file if on
+#'   CRAN.
+#' @return A character string if there is a problem with the URL for the given
+#'   package name, otherwise `NULL` if there are no issues.
+assert_package_url <- function(name, url) {
+  
   res <- ps(name, size = 1L)
   pkg <- res[["package"]]
   if (length(pkg) && name == pkg) {
-    
     purl <- parse_url(sub("/$", "", url, perl = TRUE))
     urls <- strsplit(res[["url"]], ",\n|, |\n", perl = TRUE)[[1L]]
     for (u in urls) {
@@ -51,14 +61,13 @@ assert_package_contents <- function(name, url) {
       purl[["host"]] == pu[["host"]] && purl[["path"]] == pu[["path"]] &&
         return(invisible())
     }
-    
     burl <- parse_url(res[["bugreports"]])
     purl[["host"]] == burl[["host"]] &&
       purl[["path"]] == sub("/issues/*$", "", burl[["path"]], perl = TRUE) &&
       return(invisible())
-    
     return(
-      paste("URL of CRAN package", shQuote(name), "is not", shQuote(url))
+      paste("CRAN package", shQuote(name), "does not have URL", shQuote(url))
     )
   }
+  
 }

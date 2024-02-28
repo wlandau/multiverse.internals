@@ -93,6 +93,22 @@ review_pull_request <- function(
       )
       return(invisible())
     }
+    result <- assert_package_url(name = name, url = url)
+    if (!is.null(result)) {
+      pull_request_defer(
+        owner = owner,
+        repo = repo,
+        number = number,
+        message = paste0(
+          "Pull request ",
+          number,
+          " automated diagnostics failed: ",
+          result,
+          ". Manual review required."
+        )
+      )
+      return(invisible())
+    }
   }
   pull_request_merge(
     owner = owner,

@@ -55,3 +55,59 @@ dir.create(dirname(path))
 writeLines("https://github.com/owner/package", path)
 stopifnot(is.null(r.releases.utils::assert_package(path = path)))
 unlink(dirname(path), recursive = TRUE)
+
+stopifnot(
+  grepl(
+    "does not have URL",
+    r.releases.utils::assert_package_url(
+      name = "gh",
+      url = "https://github.com/r-lib/gha"
+    ),
+    fixed = TRUE
+  )
+)
+
+stopifnot(
+  is.null(
+    r.releases.utils::assert_package_url(
+      name = "gh",
+      url = "https://github.com/r-lib/gh"
+    )
+  )
+)
+
+stopifnot(
+  is.null(
+    r.releases.utils::assert_package_url(
+      name = "curl",
+      url = "https://github.com/jeroen/curl/"
+    )
+  )
+)
+
+stopifnot(
+  is.null(
+    r.releases.utils::assert_package_url(
+      name = "curl",
+      url = "https://github.com/jeroen/curl/"
+    )
+  )
+)
+
+stopifnot(
+  is.null(
+    r.releases.utils::assert_package_url(
+      name = "jsonlite",
+      url = "https://github.com/jeroen/jsonlite"
+    )
+  )
+)
+
+stopifnot(
+  is.null(
+    r.releases.utils::assert_package_url(
+      name = "packageNOTonCRAN",
+      url = "https://github.com/jeroen/jsonlite"
+    )
+  )
+)
