@@ -187,9 +187,9 @@ pull_request_merge <- function(owner, repo, number) {
       body = paste(
         "This pull request was automatically merged",
         "to incorporate new packages in the r-releases universe.",
-        "The packages will join",
+        "An automated GitHub actions job will migrate the packages to",
         "https://github.com/r-releases/r-releases.r-universe.dev",
-        "within the hour. If you have not already done so,",
+        "If you have not done so already,",
         "please create a new GitHub tag and release of each",
         "package to ensure it gets published in the universe.",
         "You can check status and progress at",
