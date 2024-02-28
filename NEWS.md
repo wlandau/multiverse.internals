@@ -1,6 +1,6 @@
 # r.releases.utils 0.0.2.9000 (development)
 
-
+* Checks URL matches the package description for CRAN packages.
 
 # r.releases.utils 0.0.2
 

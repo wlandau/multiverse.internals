@@ -40,4 +40,25 @@ assert_package_contents <- function(name, url) {
       paste("Found malformed URL", shQuote(url), "of package", shQuote(name))
     )
   }
+  res <- ps(name, size = 1L)
+  pkg <- res[["package"]]
+  if (length(pkg) && name == pkg) {
+    
+    purl <- parse_url(sub("/$", "", url, perl = TRUE))
+    urls <- strsplit(res[["url"]], ",\n|, |\n", perl = TRUE)[[1L]]
+    for (u in urls) {
+      pu <- parse_url(sub("/$", "", u, perl = TRUE))
+      purl[["host"]] == pu[["host"]] && purl[["path"]] == pu[["path"]] &&
+        return(invisible())
+    }
+    
+    burl <- parse_url(res[["bugreports"]])
+    purl[["host"]] == burl[["host"]] &&
+      purl[["path"]] == sub("/issues/*$", "", burl[["path"]], perl = TRUE) &&
+      return(invisible())
+    
+    return(
+      paste("URL of CRAN package", shQuote(name), "is not", shQuote(url))
+    )
+  }
 }
