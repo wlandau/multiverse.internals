@@ -132,7 +132,7 @@ pull_request_defer <- function(owner, repo, number, message) {
     owner = owner,
     repo = repo,
     number = number,
-    body = paste(message, "@r-releases, please review.")
+    body = message
   )
 }
 
@@ -187,9 +187,9 @@ pull_request_merge <- function(owner, repo, number) {
       body = paste(
         "This pull request was automatically merged",
         "to incorporate new packages in the r-releases universe.",
-        "The packages will move to",
+        "The packages will join",
         "https://github.com/r-releases/r-releases.r-universe.dev",
-        "within the hour. After that,",
+        "within the hour. If you have not already done so,",
         "please create a new GitHub tag and release of each",
         "package to ensure it gets published in the universe.",
         "You can check status and progress at",
