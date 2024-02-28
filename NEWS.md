@@ -1,3 +1,3 @@
-# r.releases.utils 0.0.0.9000 (development)
+# r.releases.utils 0.0.1
 
 * First version.
