@@ -4,7 +4,7 @@ template:
 reference:
 - title: Package help
   contents:
-  - r.releases-package
+  - r.releases.utils-package
 - title: Pull request reviews
   contents:
   - review_pull_request
