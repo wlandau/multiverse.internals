@@ -22,8 +22,8 @@ build_universe <- function(input = getwd(), output = "packages.json") {
     warn = FALSE
   )
   out <- data.frame(
-    package = basename(packages),
-    url = urls,
+    package = trimws(basename(packages)),
+    url = trimws(urls),
     branch = "*release"
   )
   if (!file.exists(dirname(output))) {

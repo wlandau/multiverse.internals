@@ -11,7 +11,7 @@ assert_package <- function(path) {
   if (!file.exists(path)) {
     stop(paste("file", shQuote(path), "does not exist"))
   }
-  name <- basename(path)
+  name <- trimws(basename(path))
   url <- try(readLines(path, warn = FALSE), silent = TRUE)
   if (inherits(url, "try-error")) {
     stop(paste("Problem reading file", shQuote(path)))
@@ -30,6 +30,7 @@ assert_package_contents <- function(name, url) {
   if (!is_character_scalar(url)) {
     stop("Invalid package URL")
   }
+  url <- trimws(url)
   good_url <- grepl(
     pattern = "^https?://[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,3}(/\\S*)?$",
     x = url
