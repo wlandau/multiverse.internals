@@ -6,15 +6,15 @@
 #'   otherwise `NULL` if there are no issues.
 assert_package <- function(path) {
   if (!is_character_scalar(path)) {
-    stop("Invalid package file path")
+    return("Invalid package file path")
   }
   if (!file.exists(path)) {
-    stop(paste("file", shQuote(path), "does not exist"))
+    return(paste("file", shQuote(path), "does not exist"))
   }
   name <- trimws(basename(path))
   url <- try(readLines(path, warn = FALSE), silent = TRUE)
   if (inherits(url, "try-error")) {
-    stop(paste("Problem reading file", shQuote(path)))
+    return(paste("Problem reading file", shQuote(path)))
   }
   assert_package_contents(name = name, url = url)
 }
@@ -25,10 +25,10 @@ assert_package_contents <- function(name, url) {
     x = name
   )
   if (!isTRUE(good_package_name)) {
-    stop(paste("Found invalid package name: ", shQuote(name)))
+    return(paste("Found invalid package name: ", shQuote(name)))
   }
   if (!is_character_scalar(url)) {
-    stop("Invalid package URL")
+    return("Invalid package URL")
   }
   url <- trimws(url)
   good_url <- grepl(
@@ -36,7 +36,7 @@ assert_package_contents <- function(name, url) {
     x = url
   )
   if (!isTRUE(good_url)) {
-    stop(
+    return(
       paste("Found malformed URL", shQuote(url), "of package", shQuote(name))
     )
   }
