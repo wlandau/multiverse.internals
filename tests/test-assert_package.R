@@ -1,48 +1,26 @@
-stopifnot(
-  grepl(
-    "Invalid package file path",
-    r.releases.utils::assert_package(path = c(1L, 2L))
-  )
-)
+expect_error <- function(x, e = "") {
+  invisible(grepl(e, tryCatch(x, error = identity)[["message"]], fixed = TRUE) || stop("Error '", e, "' not generated"))
+}
 
-stopifnot(
-  grepl(
-    "does not exist",
-    r.releases.utils::assert_package(path = tempfile())
-  )
-)
+expect_error(r.releases.utils::assert_package(path = c(1L, 2L)), "Invalid package file path")
+expect_error(r.releases.utils::assert_package(path = tempfile()), "does not exist")
 
 path <- file.path(tempfile(), "hy-phens")
 dir.create(dirname(path))
 file.create(path)
-stopifnot(
-  grepl(
-    "invalid package name",
-    r.releases.utils::assert_package(path = path)
-  )
-)
+expect_error(r.releases.utils::assert_package(path = path), "invalid package name")
 unlink(dirname(path), recursive = TRUE)
 
 path <- file.path(tempfile(), "package")
 dir.create(dirname(path))
 writeLines(letters, path)
-stopifnot(
-  grepl(
-    "Invalid package URL",
-    r.releases.utils::assert_package(path = path)
-  )
-)
+expect_error(r.releases.utils::assert_package(path = path), "Invalid package URL")
 unlink(dirname(path), recursive = TRUE)
 
 path <- file.path(tempfile(), "package")
 dir.create(dirname(path))
 writeLines("b a d", path)
-stopifnot(
-  grepl(
-    "Found malformed URL",
-    r.releases.utils::assert_package(path = path)
-  )
-)
+expect_error(r.releases.utils::assert_package(path = path), "Found malformed URL")
 unlink(dirname(path), recursive = TRUE)
 
 path <- file.path(tempfile(), "package")

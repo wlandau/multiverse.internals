@@ -1,6 +1,6 @@
 assert_file <- function(x) {
   if (!file.exists(x)) {
-    stop("File ", shQuote(x), " does not exist.", call. = FALSE)
+    stop("File ", shQuote(x), " does not exist", call. = FALSE)
   }
 }
 
