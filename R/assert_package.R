@@ -15,7 +15,11 @@ assert_package <- function(name, url) {
   json <- try(jsonlite::parse_json(json = url), silent = TRUE)
   if (!inherits(json, "try-error")) {
     return(
-      paste("Entry of package", shQuote(name), "looks like custom JSON")
+      paste(
+        "Entry of package",
+        shQuote(name),
+        "looks like custom JSON"
+      )
     )
   }
   if (!is_character_scalar(url)) {

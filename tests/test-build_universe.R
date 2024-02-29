@@ -39,3 +39,23 @@ out <- try(
 stopifnot(inherits(out, "try-error"))
 unlink(packages, recursive = TRUE)
 unlink(universe)
+
+packages <- tempfile()
+dir.create(packages)
+writeLines("https://github.com/r-lib/gh", file.path(packages, "gh"))
+writeLines(
+  c(
+    "{",
+    "  \"package\": \"paws.analytics\",",
+    "  \"url\": \"https://github.com/paws-r/paws\",",
+    "  \"subdir\": \"cran/paws.analytics\",",
+    "  \"branch\": \"*release\"",
+    "}"
+  ),
+  file.path(packages, "paws.analytics")
+)
+universe <- file.path(tempfile(), "out")
+r.releases.utils::build_universe(input = packages, output = universe)
+stopifnot(inherits(out, "try-error"))
+unlink(packages, recursive = TRUE)
+unlink(universe)
