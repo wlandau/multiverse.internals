@@ -8,6 +8,7 @@
 #'   2. Add a bad URL (manual review).
 #'   3. Change a URL (manual review).
 #'   4. Add a file in a forbidden place (close).
+#'   5. Add a custom JSON file which can be parsed (manual review).
 #' @return `NULL` (invisibly).
 #' @param owner Character of length 1, name of the universe repository owner.
 #' @param repo Character of length 1, name of the universe repository.
