@@ -8,7 +8,9 @@
 #' @param url Usually a character of length 1 with the package URL.
 #'   Can also be a custom JSON string with the package URL and other metadata,
 #'   but this is for rare cases and flags the package for manual review.
-assert_package <- function(name, url) {
+#' @param assert_cran_url Logical of length 1, whether to check
+#'   the alignment between the specified URL and the CRAN URL.
+assert_package <- function(name, url, assert_cran_url = TRUE) {
   if (!is_package_name(name)) {
     return("Invalid package name.")
   }
@@ -71,7 +73,10 @@ assert_package <- function(name, url) {
   if (identical(owner, "cran")) {
     return(paste("URL", shQuote(url), "appears to use a CRAN mirror."))
   }
-  assert_cran_url(name = name, url = url)
+  if (assert_cran_url) {
+    return(assert_cran_url(name = name, url = url))
+  }
+  NULL
 }
 
 is_package_name <- function(name) {

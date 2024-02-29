@@ -38,7 +38,11 @@ read_package_entry <- function(package) {
 }
 
 package_entry_url <- function(name, url) {
-  message <- assert_package(name = name, url = url)
+  message <- assert_package(
+    name = name,
+    url = url,
+    assert_cran_url = FALSE # Prevents massive slowdown from 20000+ packages.
+  )
   if (!is.null(message)) {
     stop(message, call. = FALSE)
   }
@@ -50,11 +54,17 @@ package_entry_url <- function(name, url) {
 }
 
 package_entry_json <- function(name, json) {
-  if (!all(c("package", "url", "branch") %in% names(json))) {
+  fields <- names(json)
+  good_fields <- identical(
+    sort(fields),
+    sort(c("package", "url", "branch", "subdir"))
+  )
+  if (!good_fields) {
     stop(
       "Custom JSON entry for package ",
       shQuote(name),
-      " must include fields 'package', 'url', and 'branch'.",
+      " must have fields 'packages', 'url', 'branch', and 'subdir' ",
+      "and no other fields.",
       call. = FALSE
     )
   }
