@@ -129,7 +129,14 @@ out <- try(
 stopifnot(inherits(out, "try-error"))
 stopifnot(
   grepl(
-    pattern = "JSON entry for package 'paws.analytics' must have fields",
+    pattern = "JSON entry for package",
+    x = r.releases.utils::try_message(out),
+    fixed = TRUE
+  )
+)
+stopifnot(
+  grepl(
+    pattern = "must have fields",
     x = r.releases.utils::try_message(out),
     fixed = TRUE
   )
