@@ -1,3 +1,7 @@
+# r.releases.utils 0.0.5
+
+* Write pretty JSON to `packages.json` (@llrs, https://github.com/r-releases/help/issues/4).
+
 # r.releases.utils 0.0.4
 
 * Relax some assertions so `build_universe()` can run on reasonable cases.

@@ -21,7 +21,7 @@ build_universe <- function(input = getwd(), output = "packages.json") {
     dir.create(dirname(output))
   }
   message("Writing packages.json.")
-  jsonlite::write_json(x = aggregated, path = output)
+  jsonlite::write_json(x = aggregated, path = output, pretty = TRUE)
   invisible()
 }
 
