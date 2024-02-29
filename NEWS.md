@@ -4,6 +4,7 @@
 * `check_package()` checks the URL and name directly, not a file.
 * Add more strict URL assertions.
 * Accept custom JSON entries but flag them for manual review.
+* Print progress messages from `build_universe()`.
 
 # r.releases.utils 0.0.2
 

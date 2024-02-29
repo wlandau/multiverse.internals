@@ -13,16 +13,20 @@ build_universe <- function(input = getwd(), output = "packages.json") {
   assert_character_scalar(output, "invalid output")
   assert_file(input)
   packages <- list.files(input, all.files = FALSE, full.names = TRUE)
+  message("Processing ", length(packages), " package entries.")
   entries <- lapply(X = packages, FUN = read_package_entry)
+  message("Aggregating ", length(entries), " package entries.")
   aggregated <- do.call(what = vctrs::vec_rbind, args = entries)
   if (!file.exists(dirname(output))) {
     dir.create(dirname(output))
   }
+  message("Writing packages.json.")
   jsonlite::write_json(x = aggregated, path = output)
   invisible()
 }
 
 read_package_entry <- function(package) {
+  message("Processing package entry ", package)
   name <- trimws(basename(package))
   lines <- readLines(con = package, warn = FALSE)
   out <- try(jsonlite::parse_json(lines), silent = TRUE)
@@ -50,7 +54,7 @@ package_entry_json <- function(name, json) {
     stop(
       "Custom JSON entry for package ",
       shQuote(name),
-      " must have fields 'package', 'url', and 'branch'.",
+      " must include fields 'package', 'url', and 'branch'.",
       call. = FALSE
     )
   }

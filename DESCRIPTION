@@ -32,7 +32,8 @@ Imports:
   gh,
   jsonlite,
   nanonext,
-  pkgsearch
+  pkgsearch,
+  vctrs
 Encoding: UTF-8
 Language: en-US
 Config/testthat/edition: 3
