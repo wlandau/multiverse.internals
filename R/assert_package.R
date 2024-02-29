@@ -6,20 +6,10 @@
 #'   otherwise `NULL` if there are no issues.
 #' @param name Character of length 1, package name.
 #' @param url Usually a character of length 1 with the package URL.
-#'   Can also be a custom JSON string with the package URL and other metadata,
-#'   but this is for rare cases and flags the package for manual review.
-#' @param strict Logical of length 1, whether to run strict and expensive
-#'   checks such as checking the alignment between the specified
-#'   URL and the CRAN URL.
 assert_package <- function(name, url) {
-  json <- try(jsonlite::parse_json(json = url), silent = TRUE)
-  if (!inherits(json, "try-error")) {
+  if (any(grepl(pattern = "\\}|\\{", x = url))) {
     return(
-      paste(
-        "Entry of package",
-        shQuote(name),
-        "looks like custom JSON"
-      )
+      paste("Entry of package", shQuote(name), "looks like custom JSON")
     )
   }
   out <- assert_package_lite(name = name, url = url)

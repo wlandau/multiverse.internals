@@ -91,5 +91,9 @@ package_entry_json <- function(name, json) {
     )
     json[[field]] <- trimws(json[[field]])
   }
+  message <- assert_package_lite(name = json$package, url = json$url)
+  if (!is.null(message)) {
+    stop(message, call. = FALSE)
+  }
   as.data.frame(json)
 }

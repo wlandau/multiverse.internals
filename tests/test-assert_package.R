@@ -20,10 +20,15 @@ stopifnot(
 stopifnot(
   grepl(
     "looks like custom JSON",
-    r.releases.utils::assert_package(
-      name = "xy",
-      url = "{\"branch\": \"release\"}"
-    ),
+    r.releases.utils::assert_package(name = "xy", url = "{"),
+    fixed = TRUE
+  )
+)
+
+stopifnot(
+  grepl(
+    "looks like custom JSON",
+    r.releases.utils::assert_package(name = "xy", url = "}"),
     fixed = TRUE
   )
 )
