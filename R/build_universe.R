@@ -31,7 +31,6 @@ read_package_entry <- function(package) {
   } else {
     package_entry_json(name = name, json = out)
   }
-  
 }
 
 package_entry_url <- function(name, url) {

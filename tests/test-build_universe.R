@@ -1,3 +1,4 @@
+# Success test case for ordinary URLs.
 packages <- tempfile()
 dir.create(packages)
 writeLines("https://github.com/r-lib/gh", file.path(packages, "gh"))
@@ -24,6 +25,7 @@ stopifnot(identical(json, exp))
 unlink(packages, recursive = TRUE)
 unlink(universe)
 
+# One of the URLs is malformed.
 packages <- tempfile()
 dir.create(packages)
 writeLines("https://github.com/r-lib/gh", file.path(packages, "gh"))
@@ -40,6 +42,7 @@ stopifnot(inherits(out, "try-error"))
 unlink(packages, recursive = TRUE)
 unlink(universe)
 
+# Acceptable custom JSON.
 packages <- tempfile()
 dir.create(packages)
 writeLines("https://github.com/r-lib/gh", file.path(packages, "gh"))
