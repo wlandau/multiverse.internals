@@ -1,3 +1,7 @@
+# r.releases.utils 0.0.4
+
+* Relax some assertions so `build_universe()` can run on reasonable cases.
+
 # r.releases.utils 0.0.3
 
 * Checks URL matches the package description for CRAN packages.

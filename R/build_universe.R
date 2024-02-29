@@ -38,11 +38,7 @@ read_package_entry <- function(package) {
 }
 
 package_entry_url <- function(name, url) {
-  message <- assert_package(
-    name = name,
-    url = url,
-    assert_cran_url = FALSE # Prevents massive slowdown from 20000+ packages.
-  )
+  message <- assert_package_lite(name = name, url = url)
   if (!is.null(message)) {
     stop(message, call. = FALSE)
   }
