@@ -4,7 +4,7 @@
 \alias{assert_package}
 \title{Validate a Package Entry}
 \usage{
-assert_package(path)
+assert_package(name, url)
 }
 \value{
 A character string if there is a problem with the package entry,

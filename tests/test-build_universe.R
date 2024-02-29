@@ -5,7 +5,7 @@ writeLines(
   "https://github.com/jeroen/jsonlite",
   file.path(packages, "jsonlite")
 )
-universe <- tempfile()
+universe <- file.path(tempfile(), "out")
 r.releases.utils::build_universe(input = packages, output = universe)
 json <- jsonlite::read_json(universe)
 exp <- list(

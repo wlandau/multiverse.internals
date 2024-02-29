@@ -13,10 +13,6 @@ build_universe <- function(input = getwd(), output = "packages.json") {
   assert_character_scalar(output, "invalid output")
   assert_file(input)
   packages <- list.files(input, all.files = FALSE, full.names = TRUE)
-  for (package in packages) {
-    result <- assert_package(package)
-    is.null(result) || stop(result, call. = FALSE)
-  }
   urls <- vapply(
     X = packages,
     FUN = readLines,
