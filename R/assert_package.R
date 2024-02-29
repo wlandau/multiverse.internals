@@ -39,8 +39,7 @@ assert_package <- function(name, url) {
   if (!identical(parsed_url[["scheme"]], "https")) {
     return(paste("Scheme of URL", shQuote(url), "is not https."))
   }
-  host <- tolower(parsed_url[["hostname"]])
-  if (!(host %in% c("github.com", "gitlab.com"))) {
+  if (!(parsed_url[["hostname"]] %in% c("github.com", "gitlab.com"))) {
     return(paste("URL", shQuote(url), "is not a GitHub or GitLab URL."))
   }
   splits <- strsplit(parsed_url[["path"]], split = "/", fixed = TRUE)[[1L]]
