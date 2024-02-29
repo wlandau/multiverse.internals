@@ -77,6 +77,36 @@ stopifnot(identical(out, exp))
 unlink(packages, recursive = TRUE)
 unlink(universe)
 
+
+# Malformed URL in JSON.
+packages <- tempfile()
+dir.create(packages)
+writeLines("https://github.com/r-lib/gh", file.path(packages, "gh"))
+writeLines(
+  c(
+    "{",
+    "  \"package\": \"paws.analytics\",",
+    "  \"url\": \"b a d u r l\",",
+    "  \"subdir\": \"cran/paws.analytics\",",
+    "  \"branch\": \"*release\"",
+    "}"
+  ),
+  file.path(packages, "paws.analytics")
+)
+universe <- file.path(tempfile(), "out")
+out <- try(
+  r.releases.utils::build_universe(input = packages, output = universe),
+  silent = TRUE
+)
+stopifnot(
+  grepl(
+    pattern = "Found malformed URL",
+    x = r.releases.utils::try_message(out)
+  )
+)
+unlink(packages, recursive = TRUE)
+unlink(universe)
+
 # Missing branch field
 packages <- tempfile()
 dir.create(packages)
