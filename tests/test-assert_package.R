@@ -82,6 +82,17 @@ stopifnot(
 
 stopifnot(
   grepl(
+    "appears to use a CRAN mirror",
+    r.releases.utils::assert_package(
+      name = "gh",
+      url = "https://github.com/cran/gh"
+    ),
+    fixed = TRUE
+  )
+)
+
+stopifnot(
+  grepl(
     "does not appear in its DESCRIPTION file published on CRAN",
     r.releases.utils::assert_cran_url(
       name = "gh",

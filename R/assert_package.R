@@ -44,5 +44,14 @@ assert_package <- function(name, url) {
   if (!(host %in% c("github.com", "gitlab.com"))) {
     return(paste("URL", shQuote(url), "is not a GitHub or GitLab URL."))
   }
+  splits <- strsplit(parsed_url[["path"]], split = "/", fixed = TRUE)[[1L]]
+  splits <- splits[nzchar(splits)]
+  if (length(splits) < 1L) {
+    return(invisible())
+  }
+  owner <- tolower(splits[nzchar(splits)][1L])
+  if (identical(owner, "cran")) {
+    return(paste("URL", shQuote(url), "appears to use a CRAN mirror."))
+  }
   assert_cran_url(name = name, url = url)
 }
