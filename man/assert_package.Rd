@@ -6,6 +6,13 @@
 \usage{
 assert_package(name, url)
 }
+\arguments{
+\item{name}{Character of length 1, package name.}
+
+\item{url}{Usually a character of length 1 with the package URL.
+Can also be a custom JSON string with the package URL and other metadata,
+but this is for rare cases and flags the package for manual review.}
+}
 \value{
 A character string if there is a problem with the package entry,
 otherwise \code{NULL} if there are no issues.

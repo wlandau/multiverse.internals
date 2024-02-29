@@ -4,9 +4,19 @@
 #' @description Validate a package entry.
 #' @return A character string if there is a problem with the package entry,
 #'   otherwise `NULL` if there are no issues.
+#' @param name Character of length 1, package name.
+#' @param url Usually a character of length 1 with the package URL.
+#'   Can also be a custom JSON string with the package URL and other metadata,
+#'   but this is for rare cases and flags the package for manual review.
 assert_package <- function(name, url) {
-  if (!is_character_scalar(name)) {
+  if (!is_package_name(name)) {
     return("Invalid package name.")
+  }
+  json <- try(jsonlite::parse_json(json = url), silent = TRUE)
+  if (!inherits(json, "try-error")) {
+    return(
+      paste("Entry of package", shQuote(name), "looks like custom JSON")
+    )
   }
   if (!is_character_scalar(url)) {
     return("Invalid package URL.")
@@ -58,4 +68,11 @@ assert_package <- function(name, url) {
     return(paste("URL", shQuote(url), "appears to use a CRAN mirror."))
   }
   assert_cran_url(name = name, url = url)
+}
+
+is_package_name <- function(name) {
+  is_character_scalar(name) && grepl(
+    pattern = "^[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9]$",
+    x = trimws(name)
+  )
 }

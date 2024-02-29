@@ -1,7 +1,29 @@
 stopifnot(
   grepl(
     "Invalid package name",
-    r.releases.utils::assert_package(name = letters, url = "x"),
+    r.releases.utils::assert_package(name = letters, url = "xy"),
+    fixed = TRUE
+  )
+)
+
+stopifnot(
+  grepl(
+    "Invalid package name",
+    r.releases.utils::assert_package(
+      name = ".gh",
+      url = "https://github.com/r-lib/gh"
+    ),
+    fixed = TRUE
+  )
+)
+
+stopifnot(
+  grepl(
+    "looks like custom JSON",
+    r.releases.utils::assert_package(
+      name = "xy",
+      url = "{\"branch\": \"release\"}"
+    ),
     fixed = TRUE
   )
 )
@@ -9,18 +31,18 @@ stopifnot(
 stopifnot(
   grepl(
     "Invalid package URL",
-    r.releases.utils::assert_package(name = "x", url = letters),
+    r.releases.utils::assert_package(
+      name = "xy",
+      url = letters
+    ),
     fixed = TRUE
   )
 )
 
 stopifnot(
   grepl(
-    "Found invalid package name",
-    r.releases.utils::assert_package(
-      name = ".gh",
-      url = "https://github.com/r-lib/gh"
-    ),
+    "Invalid package URL",
+    r.releases.utils::assert_package(name = "xy", url = letters),
     fixed = TRUE
   )
 )
