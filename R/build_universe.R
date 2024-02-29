@@ -13,20 +13,10 @@ build_universe <- function(input = getwd(), output = "packages.json") {
   assert_character_scalar(output, "invalid output")
   assert_file(input)
   packages <- list.files(input, all.files = FALSE, full.names = TRUE)
-  for (package in packages) {
-    result <- assert_package(package)
-    is.null(result) || stop(result, call. = FALSE)
-  }
-  urls <- vapply(
-    X = packages,
-    FUN = readLines,
-    FUN.VALUE = character(1L),
-    USE.NAMES = FALSE,
-    warn = FALSE
-  )
+  contents <- lapply(X = packages, FUN = read_package_entry)
   out <- data.frame(
     package = trimws(basename(packages)),
-    url = trimws(urls),
+    url = trimws(unlist(contents, use.names = FALSE)),
     branch = "*release"
   )
   if (!file.exists(dirname(output))) {
@@ -34,4 +24,13 @@ build_universe <- function(input = getwd(), output = "packages.json") {
   }
   jsonlite::write_json(x = out, path = output)
   invisible()
+}
+
+read_package_entry <- function(package) {
+  out <- readLines(con = package, warn = FALSE)
+  message <- assert_package(name = basename(package), url = out)
+  if (!is.null(message)) {
+    stop(message, call. = FALSE)
+  }
+  out
 }
