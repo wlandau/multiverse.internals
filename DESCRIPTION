@@ -1,7 +1,7 @@
 Package: r.releases.utils
 Title: Utilities for An R Universe of Package Releases
 Description: Utilities for an R universe of package releases.
-Version: 0.0.2.9000
+Version: 0.0.3
 License: MIT + file LICENSE
 URL:
   https://r-releases.github.io/r.releases.utils/,
@@ -32,7 +32,8 @@ Imports:
   gh,
   jsonlite,
   nanonext,
-  pkgsearch
+  pkgsearch,
+  vctrs
 Encoding: UTF-8
 Language: en-US
 Config/testthat/edition: 3

@@ -25,6 +25,7 @@ Testing of this function unfortunately needs to be manual. Test cases:
 \item Add a bad URL (manual review).
 \item Change a URL (manual review).
 \item Add a file in a forbidden place (close).
+\item Add a custom JSON file which can be parsed (manual review).
 }
 }
 

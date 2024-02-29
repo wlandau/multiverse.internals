@@ -30,6 +30,13 @@ is_positive_scalar <- function(x) {
     all(x > 0)
 }
 
+#' @title Get try error message
+#' @export
+#' @keywords internal
+#' @description Get the error message of an error object from `try()`.
+#' @param try_error `try()` error object.
+#' @param collapse Character of length 1, delimiter for the
+#'   lines of the message.
 try_message <- function(try_error, collapse = " ") {
   paste(conditionMessage(attr(try_error, "condition")), collapse = collapse)
 }

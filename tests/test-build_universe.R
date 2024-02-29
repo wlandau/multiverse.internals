@@ -1,3 +1,4 @@
+# Success test case for ordinary URLs.
 packages <- tempfile()
 dir.create(packages)
 writeLines("https://github.com/r-lib/gh", file.path(packages, "gh"))
@@ -24,6 +25,7 @@ stopifnot(identical(json, exp))
 unlink(packages, recursive = TRUE)
 unlink(universe)
 
+# One of the URLs is malformed.
 packages <- tempfile()
 dir.create(packages)
 writeLines("https://github.com/r-lib/gh", file.path(packages, "gh"))
@@ -37,5 +39,132 @@ out <- try(
   silent = TRUE
 )
 stopifnot(inherits(out, "try-error"))
+unlink(packages, recursive = TRUE)
+unlink(universe)
+
+# Acceptable custom JSON.
+packages <- tempfile()
+dir.create(packages)
+writeLines("https://github.com/r-lib/gh", file.path(packages, "gh"))
+writeLines(
+  c(
+    "{",
+    "  \"package\": \"paws.analytics\",",
+    "  \"url\": \"https://github.com/paws-r/paws\",",
+    "  \"subdir\": \"cran/paws.analytics\",",
+    "  \"branch\": \"*release\"",
+    "}"
+  ),
+  file.path(packages, "paws.analytics")
+)
+universe <- file.path(tempfile(), "out")
+r.releases.utils::build_universe(input = packages, output = universe)
+out <- jsonlite::read_json(path = universe)
+exp <- list(
+  list(
+    package = "gh",
+    url = "https://github.com/r-lib/gh",
+    branch = "*release"
+  ),
+  list(
+    package = "paws.analytics",
+    url = "https://github.com/paws-r/paws",
+    branch = "*release",
+    subdir = "cran/paws.analytics"
+  )
+)
+stopifnot(identical(out, exp))
+unlink(packages, recursive = TRUE)
+unlink(universe)
+
+# Missing branch field
+packages <- tempfile()
+dir.create(packages)
+writeLines("https://github.com/r-lib/gh", file.path(packages, "gh"))
+writeLines(
+  c(
+    "{",
+    "  \"package\": \"paws.analytics\",",
+    "  \"url\": \"https://github.com/paws-r/paws\",",
+    "  \"subdir\": \"cran/paws.analytics\"",
+    "}"
+  ),
+  file.path(packages, "paws.analytics")
+)
+universe <- file.path(tempfile(), "out")
+out <- try(
+  r.releases.utils::build_universe(input = packages, output = universe),
+  silent = TRUE
+)
+stopifnot(inherits(out, "try-error"))
+stopifnot(
+  grepl(
+    pattern = "JSON entry for package 'paws.analytics' must have fields",
+    x = r.releases.utils::try_message(out),
+    fixed = TRUE
+  )
+)
+unlink(packages, recursive = TRUE)
+unlink(universe)
+
+# Disagreeing package field
+packages <- tempfile()
+dir.create(packages)
+writeLines("https://github.com/r-lib/gh", file.path(packages, "gh"))
+writeLines(
+  c(
+    "{",
+    "  \"package\": \"paws.analytics2\",",
+    "  \"url\": \"https://github.com/paws-r/paws\",",
+    "  \"subdir\": \"cran/paws.analytics\",",
+    "  \"branch\": \"*release\"",
+    "}"
+  ),
+  file.path(packages, "paws.analytics")
+)
+universe <- file.path(tempfile(), "out")
+out <- try(
+  r.releases.utils::build_universe(input = packages, output = universe),
+  silent = TRUE
+)
+stopifnot(inherits(out, "try-error"))
+stopifnot(
+  grepl(
+    pattern = "The 'packages' field disagrees with the package name",
+    x = r.releases.utils::try_message(out),
+    fixed = TRUE
+  )
+)
+unlink(packages, recursive = TRUE)
+unlink(universe)
+
+# Bad branch field
+packages <- tempfile()
+dir.create(packages)
+writeLines("https://github.com/r-lib/gh", file.path(packages, "gh"))
+writeLines(
+  c(
+    "{",
+    "  \"package\": \"paws.analytics\",",
+    "  \"url\": \"https://github.com/paws-r/paws\",",
+    "  \"subdir\": \"cran/paws.analytics\",",
+    "  \"branch\": \"development\"",
+    "}"
+  ),
+  file.path(packages, "paws.analytics")
+)
+universe <- file.path(tempfile(), "out")
+out <- try(
+  r.releases.utils::build_universe(input = packages, output = universe),
+  silent = TRUE
+)
+stopifnot(inherits(out, "try-error"))
+stopifnot(
+  grepl(
+    pattern = "The 'branch' field of package",
+    x = r.releases.utils::try_message(out),
+    fixed = TRUE
+  )
+)
 unlink(packages, recursive = TRUE)
 unlink(universe)
