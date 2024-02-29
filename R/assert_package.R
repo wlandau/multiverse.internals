@@ -44,8 +44,14 @@ assert_package <- function(name, url) {
   }
   splits <- strsplit(parsed_url[["path"]], split = "/", fixed = TRUE)[[1L]]
   splits <- splits[nzchar(splits)]
-  if (length(splits) < 1L) {
-    return(invisible())
+  if (length(splits) < 2L) {
+    return(
+      paste(
+        "URL",
+        shQuote(url),
+        "appears to be an owner, not a repository."
+      )
+    )
   }
   owner <- tolower(splits[nzchar(splits)][1L])
   if (identical(owner, "cran")) {

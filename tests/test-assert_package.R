@@ -82,6 +82,17 @@ stopifnot(
 
 stopifnot(
   grepl(
+    "appears to be an owner",
+    r.releases.utils::assert_package(
+      name = "gh",
+      url = "https://github.com/gh"
+    ),
+    fixed = TRUE
+  )
+)
+
+stopifnot(
+  grepl(
     "appears to use a CRAN mirror",
     r.releases.utils::assert_package(
       name = "gh",
