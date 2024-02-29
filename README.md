@@ -5,10 +5,4 @@
 
 `r.releases.utils` is an R package to support automation for the `r-releases` project.
 
-# Documentation
-
-Please visit <https://github.com/r-releases/help> for the README, documentation, and code of conduct for the entire `r-releases` project.
-
-# Help
-
-Please report bugs to <https://github.com/r-releases/help/issues> and send other feedback and questions to <https://github.com/r-releases/help/discussions>.
+For all matters please refer to https://github.com/r-releases/help.
