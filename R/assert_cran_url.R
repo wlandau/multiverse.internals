@@ -44,6 +44,6 @@ assert_cran_url <- function(name, url) {
 url_agrees_with_cran <- function(cran, reference) {
   parsed_cran <- url_parse(cran)
   parsed_reference <- url_parse(reference)
-  identical(parsed_cran[["host"]], parsed_reference[["host"]]) &&
-    identical(parsed_cran[["path"]], parsed_reference[["path"]])
+  (parsed_cran[["host"]] == parsed_reference[["host"]]) &&
+    (parsed_cran[["path"]] == parsed_reference[["path"]])
 }
