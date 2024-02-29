@@ -76,7 +76,6 @@ assert_package <- function(name, url, assert_cran_url = TRUE) {
   if (assert_cran_url) {
     return(assert_cran_url(name = name, url = url))
   }
-  NULL
 }
 
 is_package_name <- function(name) {
