@@ -36,8 +36,7 @@ assert_package <- function(name, url) {
       )
     )
   }
-  scheme <- tolower(parsed_url[["scheme"]])
-  if (!identical(scheme, "https")) {
+  if (!identical(parsed_url[["scheme"]], "https")) {
     return(paste("Scheme of URL", shQuote(url), "is not https."))
   }
   host <- tolower(parsed_url[["hostname"]])
