@@ -16,9 +16,6 @@ assert_cran_url <- function(name, url) {
     return(invisible())
   }
   package <- result[["Package"]]
-  if (!identical(package, name)) {
-    return(invisible())
-  }
   main_urls <- strsplit(result[["URL"]], ",\n|, |\n", perl = TRUE)[[1L]]
   bugs_url <- sub(
     pattern = "/issues/*$",
