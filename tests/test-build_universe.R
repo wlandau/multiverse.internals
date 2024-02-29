@@ -23,3 +23,19 @@ exp <- list(
 stopifnot(identical(json, exp))
 unlink(packages, recursive = TRUE)
 unlink(universe)
+
+packages <- tempfile()
+dir.create(packages)
+writeLines("https://github.com/r-lib/gh", file.path(packages, "gh"))
+writeLines(
+  c("https://github.com/jeroen/jsonlite", "bad"),
+  file.path(packages, "jsonlite")
+)
+universe <- file.path(tempfile(), "out")
+out <- try(
+  r.releases.utils::build_universe(input = packages, output = universe),
+  silent = TRUE
+)
+stopifnot(inherits(out, "try-error"))
+unlink(packages, recursive = TRUE)
+unlink(universe)
