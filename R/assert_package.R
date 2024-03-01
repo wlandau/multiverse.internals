@@ -48,6 +48,17 @@ assert_package <- function(name, url) {
     return(paste("URL", shQuote(url), "appears to use a CRAN mirror."))
   }
   assert_cran_url(name = name, url = url)
+  status <- nanonext::ncurl(url)[["status"]]
+  if (status != 200L) {
+    return(
+      paste(
+        "URL",
+        shQuote(url),
+        "returned HTTP error",
+        nanonext::status_code(status)
+      )
+    )
+  }
 }
 
 assert_package_lite <- function(name, url) {

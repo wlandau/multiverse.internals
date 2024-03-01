@@ -1,3 +1,7 @@
+# r.releases.utils 0.0.5.9000 (development)
+
+* Check URL exists as part of package verification.
+
 # r.releases.utils 0.0.5
 
 * Write pretty JSON to `packages.json` (@llrs, https://github.com/r-releases/help/issues/4).

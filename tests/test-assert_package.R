@@ -141,6 +141,17 @@ stopifnot(
 )
 
 stopifnot(
+  grepl(
+    "returned HTTP error",
+    r.releases.utils::assert_package(
+      name = "afantasticallylongandimpossiblepackage",
+      url = "https://github.com/r-lib/afantasticallylongandimpossiblepackage"
+    ),
+    fixed = TRUE
+  )
+)
+
+stopifnot(
   is.null(
     r.releases.utils::assert_package(
       name = "gh",

@@ -4,7 +4,7 @@
 #' @family help
 #' @importFrom gh gh
 #' @importFrom jsonlite parse_json read_json
-#' @importFrom nanonext parse_url
+#' @importFrom nanonext ncurl parse_url status_code
 #' @importFrom pkgsearch cran_package
 #' @importFrom vctrs vec_rbind
 NULL
