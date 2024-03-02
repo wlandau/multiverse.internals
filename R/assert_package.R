@@ -47,6 +47,17 @@ assert_package <- function(name, url) {
   if (identical(owner, "cran")) {
     return(paste("URL", shQuote(url), "appears to use a CRAN mirror."))
   }
+  status <- nanonext::ncurl(url)[["status"]]
+  if (status != 200L) {
+    return(
+      paste(
+        "URL",
+        shQuote(url),
+        "returned HTTP error",
+        nanonext::status_code(status)
+      )
+    )
+  }
   assert_cran_url(name = name, url = url)
 }
 
