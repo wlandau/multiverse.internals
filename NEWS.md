@@ -1,4 +1,4 @@
-# r.releases.utils 0.0.5.9000 (development)
+# r.releases.utils 0.0.6
 
 * Check URL exists as part of package verification.
 
