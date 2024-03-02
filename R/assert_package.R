@@ -47,7 +47,6 @@ assert_package <- function(name, url) {
   if (identical(owner, "cran")) {
     return(paste("URL", shQuote(url), "appears to use a CRAN mirror."))
   }
-  assert_cran_url(name = name, url = url)
   status <- nanonext::ncurl(url)[["status"]]
   if (status != 200L) {
     return(
@@ -59,6 +58,7 @@ assert_package <- function(name, url) {
       )
     )
   }
+  assert_cran_url(name = name, url = url)
 }
 
 assert_package_lite <- function(name, url) {
