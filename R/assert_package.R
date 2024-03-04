@@ -89,7 +89,7 @@ assert_package_lints <- function(name, url) {
 }
 
 assert_url_exists <- function(url) {
-  status <- nanonext::ncurl(url)[["status"]]
+  status <- nanonext::ncurl(url, convert = FALSE)[["status"]]
   if (status != 200L) {
     return(
       paste(
@@ -112,7 +112,7 @@ assert_release_exists <- function(url) {
       )
     )
   }
-  response <- nanonext::ncurl(file.path(url, "releases", "latest"))
+  response <- nanonext::ncurl(file.path(url, "releases", "latest"), convert = FALSE)
   found <- identical(
     dirname(as.character(response$headers$Location)),
     file.path(url, "releases", "tag")
