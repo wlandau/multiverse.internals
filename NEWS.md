@@ -1,4 +1,4 @@
-# r.releases.utils 0.0.7.9000
+# r.releases.utils 0.0.7.9000 (development)
 
 * Use R-releases and not `r-releases` to refer to the project.
 * Edit bot messages.
