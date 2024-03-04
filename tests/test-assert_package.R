@@ -152,6 +152,17 @@ stopifnot(
 )
 
 stopifnot(
+  grepl(
+    "No release found at URL",
+    r.releases.utils::assert_package(
+      name = "dllreprex",
+      url = "https://github.com/wlandau/dllreprex"
+    ),
+    fixed = TRUE
+  )
+)
+
+stopifnot(
   is.null(
     r.releases.utils::assert_package(
       name = "gh",
