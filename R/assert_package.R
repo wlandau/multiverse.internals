@@ -112,7 +112,10 @@ assert_release_exists <- function(url) {
       )
     )
   }
-  response <- nanonext::ncurl(file.path(url, "releases", "latest"), convert = FALSE)
+  response <- nanonext::ncurl(
+    file.path(url, "releases", "latest"),
+    convert = FALSE
+  )
   found <- identical(
     dirname(as.character(response$headers$Location)),
     file.path(url, "releases", "tag")
