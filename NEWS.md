@@ -1,3 +1,8 @@
+# r.releases.utils 0.0.7.9000 (development)
+
+* Use R-releases and not `r-releases` to refer to the project.
+* Edit bot messages.
+
 # r.releases.utils 0.0.7
 
 * Check if a release exists during automated checks.
