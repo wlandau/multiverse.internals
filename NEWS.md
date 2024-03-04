@@ -1,3 +1,7 @@
+# r.releases.utils 0.0.7
+
+* Check if a release exists during automated checks.
+
 # r.releases.utils 0.0.6
 
 * Check URL exists as part of package verification.

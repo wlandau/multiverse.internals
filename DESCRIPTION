@@ -1,7 +1,7 @@
 Package: r.releases.utils
 Title: Utilities for An R Universe of Package Releases
 Description: Utilities for an R universe of package releases.
-Version: 0.0.6
+Version: 0.0.7
 License: MIT + file LICENSE
 URL:
   https://r-releases.github.io/r.releases.utils/,
