@@ -123,6 +123,17 @@ assert_release_exists <- function(url) {
     file.path(url, "releases", "latest"),
     convert = FALSE
   )
+  status <- response[["status"]]
+  if (status != 302L) {
+    return(
+      paste(
+        "Checking releases at",
+        shQuote(url),
+        "returned HTTP error",
+        nanonext::status_code(status)
+      )
+    )
+  }
   found <- identical(
     dirname(as.character(response$headers$Location)),
     file.path(url, "releases", "tag")
