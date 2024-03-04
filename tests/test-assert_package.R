@@ -163,6 +163,16 @@ stopifnot(
 )
 
 stopifnot(
+  grepl(
+    "GitLab releases are hard to detect automatically",
+    r.releases.utils::assert_release_exists(
+      url = "https://gitlab.com/owner/repo"
+    ),
+    fixed = TRUE
+  )
+)
+
+stopifnot(
   is.null(
     r.releases.utils::assert_package(
       name = "gh",

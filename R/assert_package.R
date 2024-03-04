@@ -102,6 +102,13 @@ assert_url_exists <- function(url) {
   }
 }
 
+#' @title Check for a release.
+#' @export
+#' @keywords internal
+#' @description Check for a release.
+#' @return A character string if there is a problem with the package entry,
+#'   otherwise `NULL` if there are no issues.
+#' @inheritParams assert_package
 assert_release_exists <- function(url) {
   if (nanonext::parse_url(url)[["host"]] == "gitlab.com") {
     return(
