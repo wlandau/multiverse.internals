@@ -87,7 +87,7 @@ review_pull_request <- function(
         message = paste0(
           "Pull request ",
           number,
-          " automated diagnostics failed: ",
+          " automated diagnostics returned findings: ",
           result,
           ". Manual review required."
         )
@@ -189,10 +189,7 @@ pull_request_merge <- function(owner, repo, number) {
         "This pull request was automatically merged",
         "to incorporate new packages in the r-releases universe.",
         "An automated GitHub actions job will migrate the packages to",
-        "https://github.com/r-releases/r-releases.r-universe.dev",
-        "If you have not done so already,",
-        "please create a new GitHub tag and release of each",
-        "package to ensure it gets published in the universe.",
+        "https://github.com/r-releases/r-releases.r-universe.dev.",
         "You can check status and progress at",
         "https://r-releases.r-universe.dev."
       )
