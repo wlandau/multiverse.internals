@@ -72,7 +72,7 @@ read_versions_previous <- function(manifest) {
 
 update_version_manifest <- function(current, previous) {
   new <- merge(x = current, y = previous, all = TRUE)
-  incremented <- manifest_compare_versions(manifest = new) > 0.5
+  incremented <- manifest_compare_versions(manifest = new) == 1L
   new$version_highest[incremented] <- new$version_current[incremented]
   new$hash_highest[incremented] <- new$hash_current[incremented]
   new
