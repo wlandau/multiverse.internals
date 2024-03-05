@@ -1,6 +1,8 @@
-^LICENSE\.md$
+^.*~$
+^.*\.json$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^LICENSE\.md$
 ^main$
 ^pull_request$
 ^packages\.json$

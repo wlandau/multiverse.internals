@@ -3,29 +3,42 @@
 #' @keywords internal
 #' @description Record the manifest of versions of packages
 #'   and their MD5 hashes.
-#' @details As well as their versions and MD5 hashes, this function
-#'   records the highest version ever recorded and the MD5 of that
-#'   version. This information helps check if a package complies with
-#'   best practices for version numbers: the version number should increment
-#'   on each new release.
-#' @return `NULL` (invisibly). Writes a package manifest as a JSON file.
+#' @details This function tracks a manifest containing the current version,
+#'   the current MD5 hash, the highest version ever released, and
+#'   the MD5 hash of the highest version ever released. Each time it runs,
+#'   it reads scrapes the package repository for the current releases,
+#'   reads the old manifest, and updates recorded highest version and MD5
+#'   for all packages which incremented their version numbers.
+#'   After recording these incremented versions, the current version should
+#'   be the highest version, and the current and highest-version
+#'   MD5 hashes should agree. Packages
+#'   that fall out of alignment are recorded in a small JSON with only
+#'   the packages with version issues.
+#' @return `NULL` (invisibly). Writes a package version manifest
+#'   and a manifest of version issues as JSON files.
 #' @param manifest Character of length 1, file path to the JSON manifest.
+#' @param issues Character of length 1, file path to a JSON file
+#'   which records packages with version issues.
 #' @param repos Character string of package repositories to track.
 record_versions <- function(
   manifest = "versions.json",
+  issues = "version_issues.json",
   repos = "https://r-releases.r-universe.dev"
 ) {
-  current <- get_versions(repos = repos)
+  current <- get_current_versions(repos = repos)
   if (!file.exists(manifest)) {
     jsonlite::write_json(x = current, path = manifest, pretty = TRUE)
     return(invisible())
   }
-  previous <- read_previous(manifest = manifest)
-  new <- update_manifest(current = current, previous = previous)
+  previous <- read_versions_previous(manifest = manifest)
+  new <- update_version_manifest(current = current, previous = previous)
   jsonlite::write_json(x = new, path = manifest, pretty = TRUE)
+  new_issues <- new[!versions_aligned(new = new),, drop = FALSE] # nolint
+  jsonlite::write_json(x = new_issues, path = issues, pretty = TRUE)
+  invisible()
 }
 
-get_versions <- function(repos) {
+get_current_versions <- function(repos) {
   out <- available.packages(repos = "https://r-releases.r-universe.dev")
   out <- as.data.frame(out)
   out <- out[, c("Package", "Version", "MD5sum")]
@@ -34,7 +47,7 @@ get_versions <- function(repos) {
   out
 }
 
-read_previous <- function(manifest) {
+read_versions_previous <- function(manifest) {
   out <- jsonlite::read_json(path = manifest)
   out <- do.call(what = vctrs::vec_rbind, args = out)
   for (field in colnames(out)) {
@@ -51,21 +64,29 @@ read_previous <- function(manifest) {
   out
 }
 
-update_manifest <- function(current, previous) {
+update_version_manifest <- function(current, previous) {
   new <- merge(x = current, y = previous, all = TRUE)
-  incremented <- apply(
-    X = new,
-    MARGIN = 1L,
-    FUN = function(row) {
-      print(.subset2(row, "version_current"))
-      print(.subset2(row, "version_highest"))
-      utils::compareVersion(
-        a = .subset2(row, "version_current"),
-        b = .subset2(row, "version_highest")
-      ) > 0.5
-    }
-  )
+  incremented <- manifest_compare_versions(manifest = new) > 0.5
   new$version_highest[incremented] <- new$version_current[incremented]
   new$md5_highest[incremented] <- new$md5_current[incremented]
   new
+}
+
+manifest_compare_versions <- function(manifest) {
+  apply(
+    X = manifest,
+    MARGIN = 1L,
+    FUN = function(row) {
+      utils::compareVersion(
+        a = .subset2(row, "version_current"),
+        b = .subset2(row, "version_highest")
+      )
+    }
+  )
+}
+
+versions_aligned <- function(manifest) {
+  versions_agree <- manifest$version_current == manifest$version_highest
+  hashes_agree <- manifest$md5_current == manifest$md5_highest
+  versions_agree & hashes_agree
 }

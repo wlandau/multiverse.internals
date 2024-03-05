@@ -6,26 +6,37 @@
 \usage{
 record_versions(
   manifest = "versions.json",
+  issues = "version_issues.json",
   repos = "https://r-releases.r-universe.dev"
 )
 }
 \arguments{
 \item{manifest}{Character of length 1, file path to the JSON manifest.}
 
+\item{issues}{Character of length 1, file path to a JSON file
+which records packages with version issues.}
+
 \item{repos}{Character string of package repositories to track.}
 }
 \value{
-\code{NULL} (invisibly). Writes a package manifest as a JSON file.
+\code{NULL} (invisibly). Writes a package version manifest
+and a manifest of version issues as JSON files.
 }
 \description{
 Record the manifest of versions of packages
 and their MD5 hashes.
 }
 \details{
-As well as their versions and MD5 hashes, this function
-records the highest version ever recorded and the MD5 of that
-version. This information helps check if a package complies with
-best practices for version numbers: the version number should increment
-on each new release.
+This function tracks a manifest containing the current version,
+the current MD5 hash, the highest version ever released, and
+the MD5 hash of the highest version ever released. Each time it runs,
+it reads scrapes the package repository for the current releases,
+reads the old manifest, and updates recorded highest version and MD5
+for all packages which incremented their version numbers.
+After recording these incremented versions, the current version should
+be the highest version, and the current and highest-version
+MD5 hashes should agree. Packages
+that fall out of alignment are recorded in a small JSON with only
+the packages with version issues.
 }
 \keyword{internal}
