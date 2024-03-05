@@ -1,3 +1,7 @@
+# r.releases.utils 0.0.8.9000 (development)
+
+* Makes `review_pull_requests()` robust to a package description with no URL listed.
+
 # r.releases.utils 0.0.8
 
 * Use R-releases and not `r-releases` to refer to the project.
