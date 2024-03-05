@@ -95,10 +95,71 @@ contents$hash_current[index] <- "hash_2.0.0"
 index <- contents$package == "version_unmodified"
 contents$version_current[index] <- "1.0.0"
 contents$hash_current[index] <- "hash_1.0.0-modified"
+for (index in seq_len(2L)) {
+  r.releases.utils::record_versions(
+    manifest = manifest,
+    issues = issues,
+    current = contents
+  )
+  written <- jsonlite::read_json(manifest)
+  expected <- list(
+    list(
+      package = "package_unmodified",
+      version_current = "1.0.0",
+      hash_current = "hash_1.0.0",
+      version_highest = "1.0.0",
+      hash_highest = "hash_1.0.0"
+    ),
+    list(
+      package = "version_decremented",
+      version_current = "0.0.1",
+      hash_current = "hash_0.0.1",
+      version_highest = "1.0.0",
+      hash_highest = "hash_1.0.0"
+    ),
+    list(
+      package = "version_incremented",
+      version_current = "2.0.0",
+      hash_current = "hash_2.0.0",
+      version_highest = "2.0.0",
+      hash_highest = "hash_2.0.0"
+    ),
+    list(
+      package = "version_unmodified",
+      version_current = "1.0.0",
+      hash_current = "hash_1.0.0-modified",
+      version_highest = "1.0.0",
+      hash_highest = "hash_1.0.0"
+    )
+  )
+  stopifnot(identical(written, expected))
+  stopifnot(file.exists(issues))
+  written_issues <- jsonlite::read_json(issues)
+  expected_issues <- list(
+    list(
+      package = "version_decremented",
+      version_current = "0.0.1",
+      hash_current = "hash_0.0.1",
+      version_highest = "1.0.0",
+      hash_highest = "hash_1.0.0"
+    ),
+    list(
+      package = "version_unmodified",
+      version_current = "1.0.0",
+      hash_current = "hash_1.0.0-modified",
+      version_highest = "1.0.0",
+      hash_highest = "hash_1.0.0"
+    )
+  )
+  stopifnot(identical(written_issues, expected_issues))
+}
+
+# Same, but do not check the hash.
 r.releases.utils::record_versions(
   manifest = manifest,
   issues = issues,
-  current = contents
+  current = contents,
+  check_hash = FALSE
 )
 written <- jsonlite::read_json(manifest)
 expected <- list(
@@ -139,13 +200,6 @@ expected_issues <- list(
     package = "version_decremented",
     version_current = "0.0.1",
     hash_current = "hash_0.0.1",
-    version_highest = "1.0.0",
-    hash_highest = "hash_1.0.0"
-  ),
-  list(
-    package = "version_unmodified",
-    version_current = "1.0.0",
-    hash_current = "hash_1.0.0-modified",
     version_highest = "1.0.0",
     hash_highest = "hash_1.0.0"
   )

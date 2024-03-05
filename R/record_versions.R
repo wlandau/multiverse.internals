@@ -4,15 +4,9 @@
 #'   and their hashes.
 #' @details This function tracks a manifest containing the current version,
 #'   the current hash, the highest version ever released, and
-#'   the hash of the highest version ever released. Each time it runs,
-#'   it reads scrapes the package repository for the current releases,
-#'   reads the old manifest, and updates recorded highest version and hash
-#'   for all packages which incremented their version numbers.
-#'   After recording these incremented versions, the current version should
-#'   be the highest version, and the current and highest-version
-#'   hashes should agree. Packages
-#'   that fall out of alignment are recorded in a small JSON with only
-#'   the packages with version issues.
+#'   the hash of the highest version ever released. It uses this information
+#'   to determine whether the package complies with best
+#'   practices for version numbers.
 #' @return `NULL` (invisibly). Writes a package version manifest
 #'   and a manifest of version issues as JSON files.
 #' @param manifest Character of length 1, file path to the JSON manifest.
@@ -21,11 +15,15 @@
 #' @param repos Character string of package repositories to track.
 #' @param current A data frame of current versions and hashes of packages
 #'   in `repos`. This argument is exposed for testing only.
+#' @param check_hash Logical of length 1, check hashes when judging package
+#'   version compliance. This allows [record_versions()] to flag packages
+#'   that create new releases but keep the same version number.
 record_versions <- function(
   manifest = "versions.json",
   issues = "version_issues.json",
   repos = "https://r-releases.r-universe.dev",
-  current = r.releases.utils::get_current_versions(repos = repos)
+  current = r.releases.utils::get_current_versions(repos = repos),
+  check_hash = TRUE
 ) {
   if (!file.exists(manifest)) {
     jsonlite::write_json(x = current, path = manifest, pretty = TRUE)
@@ -34,7 +32,8 @@ record_versions <- function(
   previous <- read_versions_previous(manifest = manifest)
   new <- update_version_manifest(current = current, previous = previous)
   jsonlite::write_json(x = new, path = manifest, pretty = TRUE)
-  new_issues <- new[!versions_aligned(manifest = new),, drop = FALSE] # nolint
+  aligned <- versions_aligned(manifest = new, check_hash = check_hash)
+  new_issues <- new[!aligned,, drop = FALSE] # nolint
   jsonlite::write_json(x = new_issues, path = issues, pretty = TRUE)
   invisible()
 }
@@ -94,8 +93,10 @@ manifest_compare_versions <- function(manifest) {
   )
 }
 
-versions_aligned <- function(manifest) {
-  versions_agree <- manifest$version_current == manifest$version_highest
-  hashes_agree <- manifest$hash_current == manifest$hash_highest
-  versions_agree & hashes_agree
+versions_aligned <- function(manifest, check_hash) {
+  aligned <- manifest$version_current == manifest$version_highest
+  if (check_hash) {
+    aligned <- aligned & (manifest$hash_current == manifest$hash_highest)
+  }
+  aligned
 }

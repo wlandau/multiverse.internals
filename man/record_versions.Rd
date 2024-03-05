@@ -8,7 +8,8 @@ record_versions(
   manifest = "versions.json",
   issues = "version_issues.json",
   repos = "https://r-releases.r-universe.dev",
-  current = r.releases.utils::get_current_versions(repos = repos)
+  current = r.releases.utils::get_current_versions(repos = repos),
+  check_hash = TRUE
 )
 }
 \arguments{
@@ -21,6 +22,10 @@ which records packages with version issues.}
 
 \item{current}{A data frame of current versions and hashes of packages
 in \code{repos}. This argument is exposed for testing only.}
+
+\item{check_hash}{Logical of length 1, check hashes when judging package
+version compliance. This allows \code{\link[=record_versions]{record_versions()}} to flag packages
+that create new releases but keep the same version number.}
 }
 \value{
 \code{NULL} (invisibly). Writes a package version manifest
@@ -33,13 +38,7 @@ and their hashes.
 \details{
 This function tracks a manifest containing the current version,
 the current hash, the highest version ever released, and
-the hash of the highest version ever released. Each time it runs,
-it reads scrapes the package repository for the current releases,
-reads the old manifest, and updates recorded highest version and hash
-for all packages which incremented their version numbers.
-After recording these incremented versions, the current version should
-be the highest version, and the current and highest-version
-hashes should agree. Packages
-that fall out of alignment are recorded in a small JSON with only
-the packages with version issues.
+the hash of the highest version ever released. It uses this information
+to determine whether the package complies with best
+practices for version numbers.
 }
