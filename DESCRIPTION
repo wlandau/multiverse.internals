@@ -33,6 +33,7 @@ Imports:
   jsonlite,
   nanonext,
   pkgsearch,
+  utils,
   vctrs
 Encoding: UTF-8
 Language: en-US

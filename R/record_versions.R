@@ -1,6 +1,5 @@
 #' @title Record the manifest of package versions.
 #' @export
-#' @keywords internal
 #' @description Record the manifest of versions of packages
 #'   and their MD5 hashes.
 #' @details This function tracks a manifest containing the current version,
@@ -20,12 +19,14 @@
 #' @param issues Character of length 1, file path to a JSON file
 #'   which records packages with version issues.
 #' @param repos Character string of package repositories to track.
+#' @param current A data frame of current versions and hashes of packages
+#'   in `repos`. This argument is exposed for testing only.
 record_versions <- function(
   manifest = "versions.json",
   issues = "version_issues.json",
-  repos = "https://r-releases.r-universe.dev"
+  repos = "https://r-releases.r-universe.dev",
+  current = r.releases.utils::get_current_versions(repos = repos)
 ) {
-  current <- get_current_versions(repos = repos)
   if (!file.exists(manifest)) {
     jsonlite::write_json(x = current, path = manifest, pretty = TRUE)
     return(invisible())
@@ -33,13 +34,22 @@ record_versions <- function(
   previous <- read_versions_previous(manifest = manifest)
   new <- update_version_manifest(current = current, previous = previous)
   jsonlite::write_json(x = new, path = manifest, pretty = TRUE)
-  new_issues <- new[!versions_aligned(new = new),, drop = FALSE] # nolint
+  new_issues <- new[!versions_aligned(manifest = new),, drop = FALSE] # nolint
   jsonlite::write_json(x = new_issues, path = issues, pretty = TRUE)
   invisible()
 }
 
-get_current_versions <- function(repos) {
-  out <- available.packages(repos = "https://r-releases.r-universe.dev")
+#' @title Get the current versions of packages
+#' @export
+#' @keywords internal
+#' @description Get the current versions of packages in the repos.
+#' @return A data frame of packages with their current versions and MD5
+#'   hashes.
+#' @inheritParams record_versions
+get_current_versions <- function(
+  repos = "https://r-releases.r-universe.dev"
+) {
+  out <- utils::available.packages(repos = repos)
   out <- as.data.frame(out)
   out <- out[, c("Package", "Version", "MD5sum")]
   colnames(out) <- c("package", "version_current", "md5_current")

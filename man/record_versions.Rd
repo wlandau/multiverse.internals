@@ -7,7 +7,8 @@
 record_versions(
   manifest = "versions.json",
   issues = "version_issues.json",
-  repos = "https://r-releases.r-universe.dev"
+  repos = "https://r-releases.r-universe.dev",
+  current = r.releases.utils::get_current_versions(repos = repos)
 )
 }
 \arguments{
@@ -17,6 +18,9 @@ record_versions(
 which records packages with version issues.}
 
 \item{repos}{Character string of package repositories to track.}
+
+\item{current}{A data frame of current versions and hashes of packages
+in \code{repos}. This argument is exposed for testing only.}
 }
 \value{
 \code{NULL} (invisibly). Writes a package version manifest
@@ -39,4 +43,3 @@ MD5 hashes should agree. Packages
 that fall out of alignment are recorded in a small JSON with only
 the packages with version issues.
 }
-\keyword{internal}
