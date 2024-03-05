@@ -48,8 +48,8 @@ get_current_versions <- function(
   repos = "https://r-releases.r-universe.dev"
 ) {
   out <- utils::available.packages(repos = repos)
-  out <- as.data.frame(out)
   out <- out[, c("Package", "Version", "MD5sum")]
+  out <- as.data.frame(out)
   colnames(out) <- c("package", "version_current", "hash_current")
   rownames(out) <- NULL
   out
