@@ -11,7 +11,7 @@ contents <- data.frame(
     "version_unmodified"
   ),
   version_current = rep("1.0.0", 4L),
-  md5_current = rep("md5_1.0.0", 4L)
+  hash_current = rep("hash_1.0.0", 4L)
 )
 r.releases.utils::record_versions(
   manifest = manifest,
@@ -23,22 +23,22 @@ expected <- list(
   list(
     package = "package_unmodified",
     version_current = "1.0.0",
-    md5_current = "md5_1.0.0"
+    hash_current = "hash_1.0.0"
   ),
   list(
     package = "version_decremented",
     version_current = "1.0.0",
-    md5_current = "md5_1.0.0"
+    hash_current = "hash_1.0.0"
   ),
   list(
     package = "version_incremented",
     version_current = "1.0.0",
-    md5_current = "md5_1.0.0"
+    hash_current = "hash_1.0.0"
   ),
   list(
     package = "version_unmodified",
     version_current = "1.0.0",
-    md5_current = "md5_1.0.0"
+    hash_current = "hash_1.0.0"
   )
 )
 stopifnot(identical(written, expected))
@@ -55,30 +55,30 @@ expected <- list(
   list(
     package = "package_unmodified",
     version_current = "1.0.0",
-    md5_current = "md5_1.0.0",
+    hash_current = "hash_1.0.0",
     version_highest = "1.0.0",
-    md5_highest = "md5_1.0.0"
+    hash_highest = "hash_1.0.0"
   ),
   list(
     package = "version_decremented",
     version_current = "1.0.0",
-    md5_current = "md5_1.0.0",
+    hash_current = "hash_1.0.0",
     version_highest = "1.0.0",
-    md5_highest = "md5_1.0.0"
+    hash_highest = "hash_1.0.0"
   ),
   list(
     package = "version_incremented",
     version_current = "1.0.0",
-    md5_current = "md5_1.0.0",
+    hash_current = "hash_1.0.0",
     version_highest = "1.0.0",
-    md5_highest = "md5_1.0.0"
+    hash_highest = "hash_1.0.0"
   ),
   list(
     package = "version_unmodified",
     version_current = "1.0.0",
-    md5_current = "md5_1.0.0",
+    hash_current = "hash_1.0.0",
     version_highest = "1.0.0",
-    md5_highest = "md5_1.0.0"
+    hash_highest = "hash_1.0.0"
   )
 )
 stopifnot(identical(written, expected))
@@ -88,13 +88,13 @@ stopifnot(identical(jsonlite::read_json(issues), list()))
 # Update the packages in all the ways indicated above.
 index <- contents$package == "version_decremented"
 contents$version_current[index] <- "0.0.1"
-contents$md5_current[index] <- "md5_0.0.1"
+contents$hash_current[index] <- "hash_0.0.1"
 index <- contents$package == "version_incremented"
 contents$version_current[index] <- "2.0.0"
-contents$md5_current[index] <- "md5_2.0.0"
+contents$hash_current[index] <- "hash_2.0.0"
 index <- contents$package == "version_unmodified"
 contents$version_current[index] <- "1.0.0"
-contents$md5_current[index] <- "md5_1.0.0-modified"
+contents$hash_current[index] <- "hash_1.0.0-modified"
 r.releases.utils::record_versions(
   manifest = manifest,
   issues = issues,
@@ -105,30 +105,30 @@ expected <- list(
   list(
     package = "package_unmodified",
     version_current = "1.0.0",
-    md5_current = "md5_1.0.0",
+    hash_current = "hash_1.0.0",
     version_highest = "1.0.0",
-    md5_highest = "md5_1.0.0"
+    hash_highest = "hash_1.0.0"
   ),
   list(
     package = "version_decremented",
     version_current = "0.0.1",
-    md5_current = "md5_0.0.1",
+    hash_current = "hash_0.0.1",
     version_highest = "1.0.0",
-    md5_highest = "md5_1.0.0"
+    hash_highest = "hash_1.0.0"
   ),
   list(
     package = "version_incremented",
     version_current = "2.0.0",
-    md5_current = "md5_2.0.0",
+    hash_current = "hash_2.0.0",
     version_highest = "2.0.0",
-    md5_highest = "md5_2.0.0"
+    hash_highest = "hash_2.0.0"
   ),
   list(
     package = "version_unmodified",
     version_current = "1.0.0",
-    md5_current = "md5_1.0.0-modified",
+    hash_current = "hash_1.0.0-modified",
     version_highest = "1.0.0",
-    md5_highest = "md5_1.0.0"
+    hash_highest = "hash_1.0.0"
   )
 )
 stopifnot(identical(written, expected))
@@ -138,16 +138,16 @@ expected_issues <- list(
   list(
     package = "version_decremented",
     version_current = "0.0.1",
-    md5_current = "md5_0.0.1",
+    hash_current = "hash_0.0.1",
     version_highest = "1.0.0",
-    md5_highest = "md5_1.0.0"
+    hash_highest = "hash_1.0.0"
   ),
   list(
     package = "version_unmodified",
     version_current = "1.0.0",
-    md5_current = "md5_1.0.0-modified",
+    hash_current = "hash_1.0.0-modified",
     version_highest = "1.0.0",
-    md5_highest = "md5_1.0.0"
+    hash_highest = "hash_1.0.0"
   )
 )
 stopifnot(identical(written_issues, expected_issues))

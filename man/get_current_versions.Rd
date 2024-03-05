@@ -10,8 +10,7 @@ get_current_versions(repos = "https://r-releases.r-universe.dev")
 \item{repos}{Character string of package repositories to track.}
 }
 \value{
-A data frame of packages with their current versions and MD5
-hashes.
+A data frame of packages with their current versions and hashes.
 }
 \description{
 Get the current versions of packages in the repos.

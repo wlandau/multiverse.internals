@@ -28,18 +28,18 @@ and a manifest of version issues as JSON files.
 }
 \description{
 Record the manifest of versions of packages
-and their MD5 hashes.
+and their hashes.
 }
 \details{
 This function tracks a manifest containing the current version,
-the current MD5 hash, the highest version ever released, and
-the MD5 hash of the highest version ever released. Each time it runs,
+the current hash, the highest version ever released, and
+the hash of the highest version ever released. Each time it runs,
 it reads scrapes the package repository for the current releases,
-reads the old manifest, and updates recorded highest version and MD5
+reads the old manifest, and updates recorded highest version and hash
 for all packages which incremented their version numbers.
 After recording these incremented versions, the current version should
 be the highest version, and the current and highest-version
-MD5 hashes should agree. Packages
+hashes should agree. Packages
 that fall out of alignment are recorded in a small JSON with only
 the packages with version issues.
 }
