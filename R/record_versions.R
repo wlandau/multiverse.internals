@@ -58,9 +58,7 @@ get_current_versions <- function(
 read_versions_previous <- function(manifest) {
   out <- jsonlite::read_json(path = manifest)
   out <- do.call(what = vctrs::vec_rbind, args = out)
-  for (field in colnames(out)) {
-    out[[field]] <- as.character(out[[field]])
-  }
+  out <- lapply(out, as.character)
   if (is.null(out$version_highest)) {
     out$version_highest <- out$version_current
   }
