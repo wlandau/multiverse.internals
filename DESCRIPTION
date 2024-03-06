@@ -1,12 +1,10 @@
-Package: r.releases.utils
-Title: Utilities for An R Universe of Package Releases
-Description: Utilities for an R universe of package releases.
-Version: 0.0.8
+Package: r.releases.internals
+Title: Internal Infrastructure for An R Universe of Package Releases
+Description: Internal infrastructure for an R universe of package releases.
+Version: 0.0.9
 License: MIT + file LICENSE
-URL:
-  https://r-releases.github.io/r.releases.utils/,
-  https://github.com/r-releases/r.releases.utils
-BugReports: https://github.com/r-releases/r.releases.utils/issues
+URL: https://github.com/r-releases/r.releases.internals
+BugReports: https://github.com/r-releases/r.releases.internals/issues
 Authors@R: c(
   person(
     given = c("William", "Michael"),

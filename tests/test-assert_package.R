@@ -1,7 +1,7 @@
 stopifnot(
   grepl(
     "Invalid package name",
-    r.releases.utils::assert_package(name = letters, url = "xy"),
+    r.releases.internals::assert_package(name = letters, url = "xy"),
     fixed = TRUE
   )
 )
@@ -9,7 +9,7 @@ stopifnot(
 stopifnot(
   grepl(
     "Invalid package name",
-    r.releases.utils::assert_package(
+    r.releases.internals::assert_package(
       name = ".gh",
       url = "https://github.com/r-lib/gh"
     ),
@@ -20,7 +20,7 @@ stopifnot(
 stopifnot(
   grepl(
     "looks like custom JSON",
-    r.releases.utils::assert_package(name = "xy", url = "{"),
+    r.releases.internals::assert_package(name = "xy", url = "{"),
     fixed = TRUE
   )
 )
@@ -28,7 +28,7 @@ stopifnot(
 stopifnot(
   grepl(
     "looks like custom JSON",
-    r.releases.utils::assert_package(name = "xy", url = "}"),
+    r.releases.internals::assert_package(name = "xy", url = "}"),
     fixed = TRUE
   )
 )
@@ -36,7 +36,7 @@ stopifnot(
 stopifnot(
   grepl(
     "Invalid package URL",
-    r.releases.utils::assert_package(
+    r.releases.internals::assert_package(
       name = "xy",
       url = letters
     ),
@@ -47,7 +47,7 @@ stopifnot(
 stopifnot(
   grepl(
     "Invalid package URL",
-    r.releases.utils::assert_package(name = "xy", url = letters),
+    r.releases.internals::assert_package(name = "xy", url = letters),
     fixed = TRUE
   )
 )
@@ -55,7 +55,7 @@ stopifnot(
 stopifnot(
   grepl(
     "Found malformed URL",
-    r.releases.utils::assert_package(
+    r.releases.internals::assert_package(
       name = "gh",
       url = "github.com/r-lib/gh"
     ),
@@ -66,7 +66,7 @@ stopifnot(
 stopifnot(
   grepl(
     "Found malformed URL",
-    r.releases.utils::assert_package(
+    r.releases.internals::assert_package(
       name = "gh",
       url = "github.com/r-lib/gh"
     ),
@@ -77,7 +77,7 @@ stopifnot(
 stopifnot(
   grepl(
     "appears to disagree with the repository name in the URL",
-    r.releases.utils::assert_package(
+    r.releases.internals::assert_package(
       name = "gh2",
       url = "https://github.com/r-lib/gh"
     ),
@@ -88,7 +88,7 @@ stopifnot(
 stopifnot(
   grepl(
     "is not https",
-    r.releases.utils::assert_package(
+    r.releases.internals::assert_package(
       name = "gh",
       url = "http://github.com/r-lib/gh"
     ),
@@ -99,7 +99,7 @@ stopifnot(
 stopifnot(
   grepl(
     "is not a GitHub or GitLab URL",
-    r.releases.utils::assert_package(
+    r.releases.internals::assert_package(
       name = "gh",
       url = "https://github.gov/r-lib/gh"
     ),
@@ -110,7 +110,7 @@ stopifnot(
 stopifnot(
   grepl(
     "appears to be an owner",
-    r.releases.utils::assert_package(
+    r.releases.internals::assert_package(
       name = "gh",
       url = "https://github.com/gh"
     ),
@@ -121,7 +121,7 @@ stopifnot(
 stopifnot(
   grepl(
     "appears to use a CRAN mirror",
-    r.releases.utils::assert_package(
+    r.releases.internals::assert_package(
       name = "gh",
       url = "https://github.com/cran/gh"
     ),
@@ -132,7 +132,7 @@ stopifnot(
 stopifnot(
   grepl(
     "does not appear in its DESCRIPTION file published on CRAN",
-    r.releases.utils::assert_cran_url(
+    r.releases.internals::assert_cran_url(
       name = "gh",
       url = "https://github.com/r-lib/gha"
     ),
@@ -143,7 +143,7 @@ stopifnot(
 stopifnot(
   grepl(
     "returned HTTP error",
-    r.releases.utils::assert_package(
+    r.releases.internals::assert_package(
       name = "afantasticallylongandimpossiblepackage",
       url = "https://github.com/r-lib/afantasticallylongandimpossiblepackage"
     ),
@@ -154,7 +154,7 @@ stopifnot(
 stopifnot(
   grepl(
     "No release found at URL",
-    r.releases.utils::assert_package(
+    r.releases.internals::assert_package(
       name = "dllreprex",
       url = "https://github.com/wlandau/dllreprex"
     ),
@@ -165,7 +165,7 @@ stopifnot(
 stopifnot(
   grepl(
     "GitLab releases are hard to detect automatically",
-    r.releases.utils::assert_release_exists(
+    r.releases.internals::assert_release_exists(
       url = "https://gitlab.com/owner/repo"
     ),
     fixed = TRUE
@@ -174,7 +174,7 @@ stopifnot(
 
 stopifnot(
   is.null(
-    r.releases.utils::assert_package(
+    r.releases.internals::assert_package(
       name = "gh",
       url = "https://github.com/r-lib/gh"
     )
@@ -183,7 +183,7 @@ stopifnot(
 
 stopifnot(
   is.null(
-    r.releases.utils::assert_cran_url(
+    r.releases.internals::assert_cran_url(
       name = "gh",
       url = "https://github.com/r-lib/gh"
     )
@@ -192,7 +192,7 @@ stopifnot(
 
 stopifnot(
   is.null(
-    r.releases.utils::assert_cran_url(
+    r.releases.internals::assert_cran_url(
       name = "curl",
       url = "https://github.com/jeroen/curl/"
     )
@@ -201,7 +201,7 @@ stopifnot(
 
 stopifnot(
   is.null(
-    r.releases.utils::assert_cran_url(
+    r.releases.internals::assert_cran_url(
       name = "curl",
       url = "https://github.com/jeroen/curl/"
     )
@@ -210,7 +210,7 @@ stopifnot(
 
 stopifnot(
   is.null(
-    r.releases.utils::assert_cran_url(
+    r.releases.internals::assert_cran_url(
       name = "jsonlite",
       url = "https://github.com/jeroen/jsonlite"
     )
@@ -219,7 +219,7 @@ stopifnot(
 
 stopifnot(
   is.null(
-    r.releases.utils::assert_cran_url(
+    r.releases.internals::assert_cran_url(
       name = "packageNOTonCRAN",
       url = "https://github.com/jeroen/jsonlite"
     )

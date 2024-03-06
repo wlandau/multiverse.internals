@@ -1,3 +1,8 @@
+# r.releases.internals 0.0.9
+
+* Change the package name to `r.releases.internals`.
+* Get RemoteSha hashes for checking versions (@jeroen, https://github.com/r-universe-org/help/issues/377).
+
 # r.releases.utils 0.0.8
 
 * Use R-releases and not `r-releases` to refer to the project.

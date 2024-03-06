@@ -4,15 +4,15 @@
 \alias{get_current_versions}
 \title{Get the current versions of packages}
 \usage{
-get_current_versions(repos = "https://r-releases.r-universe.dev")
+get_current_versions(repo = "https://r-releases.r-universe.dev")
 }
 \arguments{
-\item{repos}{Character string of package repositories to track.}
+\item{repo}{Character string of package repositories to track.}
 }
 \value{
 A data frame of packages with their current versions and hashes.
 }
 \description{
-Get the current versions of packages in the repos.
+Get the current versions of packages in the repo.
 }
 \keyword{internal}
