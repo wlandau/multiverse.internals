@@ -149,7 +149,7 @@ assert_release_exists <- function(url) {
         "and then try submitting another pull request. ",
         "Please see ",
         shQuote(
-          "https://github.com/r-releases/r.releases.utils/releases/tag/0.0.6"
+          "https://github.com/r-lib/gh/releases/tag/v1.4.0"
         ),
         " for an example of a release."
       )
