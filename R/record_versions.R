@@ -48,7 +48,7 @@ get_current_versions <- function(
     "PACKAGES.json?fields=RemoteSha"
   )
   out <- jsonlite::stream_in(
-    con = url(listing),
+    con = gzcon(url(listing)),
     verbose = TRUE,
     simplifyVector = TRUE,
     simplifyDataFrame = TRUE,
