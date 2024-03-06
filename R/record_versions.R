@@ -28,7 +28,8 @@ record_versions <- function(
   previous <- read_versions_previous(manifest = manifest)
   new <- update_version_manifest(current = current, previous = previous)
   jsonlite::write_json(x = new, path = manifest, pretty = TRUE)
-  aligned <- versions_aligned(manifest = new)
+  aligned <- (new$version_current == new$version_highest) &
+    (new$hash_current == new$hash_highest)
   new_issues <- new[!aligned,, drop = FALSE] # nolint
   jsonlite::write_json(x = new_issues, path = issues, pretty = TRUE)
   invisible()
@@ -94,9 +95,4 @@ manifest_compare_versions <- function(manifest) {
       )
     }
   )
-}
-
-versions_aligned <- function(manifest) {
-  (manifest$version_current == manifest$version_highest) &
-    (manifest$hash_current == manifest$hash_highest)
 }
