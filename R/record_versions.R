@@ -43,10 +43,9 @@ record_versions <- function(
 get_current_versions <- function(
   repo = "https://r-releases.r-universe.dev"
 ) {
-  listing <- paste(
+  listing <- file.path(
     contrib.url(repos = repo, type = "source"),
-    "PACKAGES.json?fields=RemoteSha",
-    sep = "/"
+    "PACKAGES.json?fields=RemoteSha"
   )
   out <- jsonlite::stream_in(
     con = url(listing),
