@@ -2,6 +2,7 @@
 
 * Change the package name to `r.releases.internals`.
 * Get RemoteSha hashes for checking versions (@jeroen, https://github.com/r-universe-org/help/issues/377).
+* Makes `review_pull_requests()` robust to a package description with no URL listed.
 
 # r.releases.utils 0.0.8
 
