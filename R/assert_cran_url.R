@@ -16,7 +16,13 @@ assert_cran_url <- function(name, url) {
     return(invisible())
   }
   package <- result[["Package"]]
-  main_urls <- strsplit(result[["URL"]], ",\n|, |\n", perl = TRUE)[[1L]]
+  main_urls <- unlist(
+    strsplit(
+      as.character(result[["URL"]]),
+      ",\n|, |\n",
+      perl = TRUE
+    )
+  )
   bugs_url <- sub(
     pattern = "/issues/*$",
     replacement = "",
