@@ -143,7 +143,7 @@ stopifnot(
 stopifnot(
   grepl(
     "does not appear in its DESCRIPTION file published on CRAN",
-    r.releases.utils::assert_cran_url(
+    r.releases.internals::assert_cran_url(
       name = "assertthat",
       url = "https://github.com/hadley/assertthat"
     ),
