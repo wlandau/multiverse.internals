@@ -7,7 +7,7 @@ writeLines(
   file.path(packages, "jsonlite")
 )
 universe <- file.path(tempfile(), "out")
-r.releases.utils::build_universe(input = packages, output = universe)
+r.releases.internals::build_universe(input = packages, output = universe)
 json <- jsonlite::read_json(universe)
 exp <- list(
   list(
@@ -35,7 +35,7 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.utils::build_universe(input = packages, output = universe),
+  r.releases.internals::build_universe(input = packages, output = universe),
   silent = TRUE
 )
 stopifnot(inherits(out, "try-error"))
@@ -58,7 +58,7 @@ writeLines(
   file.path(packages, "paws.analytics")
 )
 universe <- file.path(tempfile(), "out")
-r.releases.utils::build_universe(input = packages, output = universe)
+r.releases.internals::build_universe(input = packages, output = universe)
 out <- jsonlite::read_json(path = universe)
 exp <- list(
   list(
@@ -95,13 +95,13 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.utils::build_universe(input = packages, output = universe),
+  r.releases.internals::build_universe(input = packages, output = universe),
   silent = TRUE
 )
 stopifnot(
   grepl(
     pattern = "Found malformed URL",
-    x = r.releases.utils::try_message(out)
+    x = r.releases.internals::try_message(out)
   )
 )
 unlink(packages, recursive = TRUE)
@@ -123,21 +123,21 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.utils::build_universe(input = packages, output = universe),
+  r.releases.internals::build_universe(input = packages, output = universe),
   silent = TRUE
 )
 stopifnot(inherits(out, "try-error"))
 stopifnot(
   grepl(
     pattern = "JSON entry for package",
-    x = r.releases.utils::try_message(out),
+    x = r.releases.internals::try_message(out),
     fixed = TRUE
   )
 )
 stopifnot(
   grepl(
     pattern = "must have fields",
-    x = r.releases.utils::try_message(out),
+    x = r.releases.internals::try_message(out),
     fixed = TRUE
   )
 )
@@ -161,14 +161,14 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.utils::build_universe(input = packages, output = universe),
+  r.releases.internals::build_universe(input = packages, output = universe),
   silent = TRUE
 )
 stopifnot(inherits(out, "try-error"))
 stopifnot(
   grepl(
     pattern = "The 'packages' field disagrees with the package name",
-    x = r.releases.utils::try_message(out),
+    x = r.releases.internals::try_message(out),
     fixed = TRUE
   )
 )
@@ -192,14 +192,14 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.utils::build_universe(input = packages, output = universe),
+  r.releases.internals::build_universe(input = packages, output = universe),
   silent = TRUE
 )
 stopifnot(inherits(out, "try-error"))
 stopifnot(
   grepl(
     pattern = "The 'branch' field of package",
-    x = r.releases.utils::try_message(out),
+    x = r.releases.internals::try_message(out),
     fixed = TRUE
   )
 )

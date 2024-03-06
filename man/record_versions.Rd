@@ -7,9 +7,8 @@
 record_versions(
   manifest = "versions.json",
   issues = "version_issues.json",
-  repos = "https://r-releases.r-universe.dev",
-  current = r.releases.utils::get_current_versions(repos = repos),
-  check_hash = TRUE
+  repo = "https://r-releases.r-universe.dev",
+  current = r.releases.internals::get_current_versions(repo = repo)
 )
 }
 \arguments{
@@ -18,14 +17,10 @@ record_versions(
 \item{issues}{Character of length 1, file path to a JSON file
 which records packages with version issues.}
 
-\item{repos}{Character string of package repositories to track.}
+\item{repo}{Character string of package repositories to track.}
 
 \item{current}{A data frame of current versions and hashes of packages
-in \code{repos}. This argument is exposed for testing only.}
-
-\item{check_hash}{Logical of length 1, check hashes when judging package
-version compliance. This allows \code{\link[=record_versions]{record_versions()}} to flag packages
-that create new releases but keep the same version number.}
+in \code{repo}. This argument is exposed for testing only.}
 }
 \value{
 \code{NULL} (invisibly). Writes a package version manifest
