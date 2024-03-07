@@ -4,7 +4,11 @@
 \alias{build_universe}
 \title{Build the universe.}
 \usage{
-build_universe(input = getwd(), output = "packages.json")
+build_universe(
+  input = getwd(),
+  output = "packages.json",
+  release_exceptions = character(0L)
+)
 }
 \arguments{
 \item{input}{Character of length 1, directory path with the
@@ -12,6 +16,10 @@ text file listings of R releases.}
 
 \item{output}{Character of length 1, file path where the
 \code{r-universe} \code{packages.json} file will be written.}
+
+\item{release_exceptions}{Character vector of URLs of GitHub owners
+where \code{"branch": "*release"} should be omitted. Example:
+\code{"https://github.com/cran"}.}
 }
 \value{
 NULL (invisibly)
