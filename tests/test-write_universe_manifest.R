@@ -7,7 +7,10 @@ writeLines(
   file.path(packages, "jsonlite")
 )
 universe <- file.path(tempfile(), "out")
-r.releases.internals::build_universe(input = packages, output = universe)
+r.releases.internals::write_universe_manifest(
+  input = packages,
+  output = universe
+)
 json <- jsonlite::read_json(universe)
 exp <- list(
   list(
@@ -42,7 +45,7 @@ writeLines(
   file.path(packages, "quarto")
 )
 universe <- file.path(tempfile(), "out")
-r.releases.internals::build_universe(
+r.releases.internals::write_universe_manifest(
   input = packages,
   output = universe,
   release_exceptions = c(
@@ -85,7 +88,10 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.internals::build_universe(input = packages, output = universe),
+  r.releases.internals::write_universe_manifest(
+    input = packages,
+    output = universe
+  ),
   silent = TRUE
 )
 stopifnot(inherits(out, "try-error"))
@@ -108,7 +114,10 @@ writeLines(
   file.path(packages, "paws.analytics")
 )
 universe <- file.path(tempfile(), "out")
-r.releases.internals::build_universe(input = packages, output = universe)
+r.releases.internals::write_universe_manifest(
+  input = packages,
+  output = universe
+)
 out <- jsonlite::read_json(path = universe)
 exp <- list(
   list(
@@ -145,7 +154,10 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.internals::build_universe(input = packages, output = universe),
+  r.releases.internals::write_universe_manifest(
+    input = packages,
+    output = universe
+  ),
   silent = TRUE
 )
 stopifnot(
@@ -173,7 +185,10 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.internals::build_universe(input = packages, output = universe),
+  r.releases.internals::write_universe_manifest(
+    input = packages,
+    output = universe
+  ),
   silent = TRUE
 )
 stopifnot(inherits(out, "try-error"))
@@ -211,7 +226,10 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.internals::build_universe(input = packages, output = universe),
+  r.releases.internals::write_universe_manifest(
+    input = packages,
+    output = universe
+  ),
   silent = TRUE
 )
 stopifnot(inherits(out, "try-error"))
@@ -242,7 +260,10 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.internals::build_universe(input = packages, output = universe),
+  r.releases.internals::write_universe_manifest(
+    input = packages,
+    output = universe
+  ),
   silent = TRUE
 )
 stopifnot(inherits(out, "try-error"))

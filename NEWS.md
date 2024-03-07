@@ -1,7 +1,8 @@
 # r.releases.internals 0.0.10
 
 * Automatically merge GitLab URLs with non-"upcoming" releases.
-* `build_universe()` omits `"branch": "release"` from listings originating from custom owners. The new `release_exceptions` can accept `"https://github.com/cran"`, for example.
+* Rename `build_universe()` to `write_universe_manifest()`. 
+* `write_universe_manifest()` omits `"branch": "release"` from listings originating from a short list of prespecified GitHub/GitLab owners. The new `release_exceptions` can accept `"https://github.com/cran"`, for example.
 
 # r.releases.internals 0.0.9
 

@@ -1,17 +1,17 @@
-#' @title Build the universe.
+#' @title Build the `packages.json` manifest for the universe.
 #' @export
 #' @keywords internal
-#' @description Create the `r-universe` `packages.json` file
+#' @description Create the R-universe `packages.json` file
 #'   from constituent text files with URLs.
 #' @return NULL (invisibly)
 #' @param input Character of length 1, directory path with the
 #'   text file listings of R releases.
 #' @param output Character of length 1, file path where the
-#'   `r-universe` `packages.json` file will be written.
+#'   R-universe `packages.json` file will be written.
 #' @param release_exceptions Character vector of URLs of GitHub owners
 #'   where `"branch": "*release"` should be omitted. Example:
 #'   `"https://github.com/cran"`.
-build_universe <- function(
+write_universe_manifest <- function(
   input = getwd(),
   output = "packages.json",
   release_exceptions = character(0L)
