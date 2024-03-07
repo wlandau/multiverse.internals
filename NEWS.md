@@ -1,3 +1,7 @@
+# r.releases.internals 0.0.10
+
+* Automatically merge GitLab URLs with non-"upcoming" releases.
+
 # r.releases.internals 0.0.9
 
 * Change the package name to `r.releases.internals`.

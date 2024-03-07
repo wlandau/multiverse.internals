@@ -31,10 +31,10 @@ assert_package <- function(name, url) {
 
 assert_package_lite <- function(name, url) {
   if (!is_package_name(name)) {
-    return("Invalid package name.")
+    return("Invalid package name")
   }
   if (!is_character_scalar(url)) {
-    return("Invalid package URL.")
+    return("Invalid package URL")
   }
   name <- trimws(name)
   url <- trimws(trim_trailing_slash(url))
@@ -45,7 +45,7 @@ assert_package_lite <- function(name, url) {
     )
   }
   if (!identical(parsed_url[["scheme"]], "https")) {
-    return(paste("Scheme of URL", shQuote(url), "is not https."))
+    return(paste("Scheme of URL", shQuote(url), "is not https"))
   }
 }
 
@@ -78,13 +78,13 @@ assert_package_lints <- function(name, url) {
       paste(
         "URL",
         shQuote(url),
-        "appears to be an owner, not a repository."
+        "appears to be an owner, not a repository"
       )
     )
   }
   owner <- tolower(splits[nzchar(splits)][1L])
   if (identical(owner, "cran")) {
-    return(paste("URL", shQuote(url), "appears to use a CRAN mirror."))
+    return(paste("URL", shQuote(url), "appears to use a CRAN mirror"))
   }
 }
 
@@ -97,61 +97,6 @@ assert_url_exists <- function(url) {
         shQuote(url),
         "returned HTTP error",
         nanonext::status_code(status)
-      )
-    )
-  }
-}
-
-#' @title Check for a release.
-#' @export
-#' @keywords internal
-#' @description Check for a release.
-#' @return A character string if there is a problem with the package entry,
-#'   otherwise `NULL` if there are no issues.
-#' @inheritParams assert_package
-assert_release_exists <- function(url) {
-  if (nanonext::parse_url(url)[["host"]] == "gitlab.com") {
-    return(
-      paste0(
-        "Trying to find a release at ",
-        shQuote(url),
-        ". Unfortunately, GitLab releases are hard to detect automatically."
-      )
-    )
-  }
-  response <- nanonext::ncurl(
-    file.path(url, "releases", "latest"),
-    convert = FALSE
-  )
-  status <- response[["status"]]
-  if (status != 302L) {
-    return(
-      paste(
-        "Checking releases at",
-        shQuote(url),
-        "returned HTTP error",
-        nanonext::status_code(status)
-      )
-    )
-  }
-  found <- identical(
-    dirname(as.character(response$headers$Location)),
-    file.path(url, "releases", "tag")
-  )
-  if (!found) {
-    return(
-      paste0(
-        "No release found at URL ",
-        shQuote(url),
-        ". To bypass manual review and have a smoother package ",
-        "registration experience, you could close this pull request, ",
-        "create a release for your package, ",
-        "and then try submitting another pull request. ",
-        "Please see ",
-        shQuote(
-          "https://github.com/r-lib/gh/releases/tag/v1.4.0"
-        ),
-        " for an example of a release."
       )
     )
   }
