@@ -7,7 +7,10 @@ writeLines(
   file.path(packages, "jsonlite")
 )
 universe <- file.path(tempfile(), "out")
-r.releases.internals::build_universe(input = packages, output = universe)
+r.releases.internals::write_universe_manifest(
+  input = packages,
+  output = universe
+)
 json <- jsonlite::read_json(universe)
 exp <- list(
   list(
@@ -25,6 +28,56 @@ stopifnot(identical(json, exp))
 unlink(packages, recursive = TRUE)
 unlink(universe)
 
+# Exempt `"branch": "release"` in certain cases.
+packages <- tempfile()
+dir.create(packages)
+writeLines("https://github.com/r-lib/gh", file.path(packages, "gh"))
+writeLines(
+  "https://github.com/jeroen/jsonlite",
+  file.path(packages, "jsonlite")
+)
+writeLines(
+  "https://github.com/wlandau/crew",
+  file.path(packages, "crew")
+)
+writeLines(
+  "https://github.com/cran/quarto",
+  file.path(packages, "quarto")
+)
+universe <- file.path(tempfile(), "out")
+r.releases.internals::write_universe_manifest(
+  input = packages,
+  output = universe,
+  release_exceptions = c(
+    "https://github.com/cran",
+    "https://github.com/wlandau"
+  )
+)
+json <- jsonlite::read_json(universe)
+exp <- list(
+  list(
+    package = "crew",
+    url = "https://github.com/wlandau/crew"
+  ),
+  list(
+    package = "gh",
+    url = "https://github.com/r-lib/gh",
+    branch = "*release"
+  ),
+  list(
+    package = "jsonlite",
+    url = "https://github.com/jeroen/jsonlite",
+    branch = "*release"
+  ),
+  list(
+    package = "quarto",
+    url = "https://github.com/cran/quarto"
+  )
+)
+stopifnot(identical(json, exp))
+unlink(packages, recursive = TRUE)
+unlink(universe)
+
 # One of the URLs is malformed.
 packages <- tempfile()
 dir.create(packages)
@@ -35,7 +88,10 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.internals::build_universe(input = packages, output = universe),
+  r.releases.internals::write_universe_manifest(
+    input = packages,
+    output = universe
+  ),
   silent = TRUE
 )
 stopifnot(inherits(out, "try-error"))
@@ -58,7 +114,10 @@ writeLines(
   file.path(packages, "paws.analytics")
 )
 universe <- file.path(tempfile(), "out")
-r.releases.internals::build_universe(input = packages, output = universe)
+r.releases.internals::write_universe_manifest(
+  input = packages,
+  output = universe
+)
 out <- jsonlite::read_json(path = universe)
 exp <- list(
   list(
@@ -95,7 +154,10 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.internals::build_universe(input = packages, output = universe),
+  r.releases.internals::write_universe_manifest(
+    input = packages,
+    output = universe
+  ),
   silent = TRUE
 )
 stopifnot(
@@ -123,7 +185,10 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.internals::build_universe(input = packages, output = universe),
+  r.releases.internals::write_universe_manifest(
+    input = packages,
+    output = universe
+  ),
   silent = TRUE
 )
 stopifnot(inherits(out, "try-error"))
@@ -161,7 +226,10 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.internals::build_universe(input = packages, output = universe),
+  r.releases.internals::write_universe_manifest(
+    input = packages,
+    output = universe
+  ),
   silent = TRUE
 )
 stopifnot(inherits(out, "try-error"))
@@ -192,7 +260,10 @@ writeLines(
 )
 universe <- file.path(tempfile(), "out")
 out <- try(
-  r.releases.internals::build_universe(input = packages, output = universe),
+  r.releases.internals::write_universe_manifest(
+    input = packages,
+    output = universe
+  ),
   silent = TRUE
 )
 stopifnot(inherits(out, "try-error"))

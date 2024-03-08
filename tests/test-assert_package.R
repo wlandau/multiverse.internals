@@ -164,10 +164,10 @@ stopifnot(
 
 stopifnot(
   grepl(
-    "No release found at URL",
+    "No full release found at URL",
     r.releases.internals::assert_package(
-      name = "dllreprex",
-      url = "https://github.com/wlandau/dllreprex"
+      name = "test.no.release",
+      url = "https://github.com/wlandau/test.no.release"
     ),
     fixed = TRUE
   )
@@ -175,9 +175,10 @@ stopifnot(
 
 stopifnot(
   grepl(
-    "GitLab releases are hard to detect automatically",
-    r.releases.internals::assert_release_exists(
-      url = "https://gitlab.com/owner/repo"
+    "No full release found at URL",
+    r.releases.internals::assert_package(
+      name = "test.no.release",
+      url = "https://gitlab.com/wlandau/test.no.release"
     ),
     fixed = TRUE
   )
@@ -188,6 +189,15 @@ stopifnot(
     r.releases.internals::assert_package(
       name = "gh",
       url = "https://github.com/r-lib/gh"
+    )
+  )
+)
+
+stopifnot(
+  is.null(
+    r.releases.internals::assert_package(
+      name = "test",
+      url = "https://gitlab.com/wlandau/test"
     )
   )
 )

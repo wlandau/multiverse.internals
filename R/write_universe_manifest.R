@@ -1,40 +1,55 @@
-#' @title Build the universe.
+#' @title Build the `packages.json` manifest for the universe.
 #' @export
 #' @keywords internal
-#' @description Create the `r-universe` `packages.json` file
+#' @description Create the R-universe `packages.json` file
 #'   from constituent text files with URLs.
 #' @return NULL (invisibly)
 #' @param input Character of length 1, directory path with the
 #'   text file listings of R releases.
 #' @param output Character of length 1, file path where the
-#'   `r-universe` `packages.json` file will be written.
-build_universe <- function(input = getwd(), output = "packages.json") {
+#'   R-universe `packages.json` file will be written.
+#' @param release_exceptions Character vector of URLs of GitHub owners
+#'   where `"branch": "*release"` should be omitted. Example:
+#'   `"https://github.com/cran"`.
+write_universe_manifest <- function(
+  input = getwd(),
+  output = "packages.json",
+  release_exceptions = character(0L)
+) {
   assert_character_scalar(input, "invalid input")
   assert_character_scalar(output, "invalid output")
   assert_file(input)
   packages <- list.files(input, all.files = FALSE, full.names = TRUE)
   message("Processing ", length(packages), " package entries.")
-  entries <- lapply(X = packages, FUN = read_package_entry)
+  entries <- lapply(
+    X = packages,
+    FUN = read_package_entry,
+    release_exceptions = release_exceptions
+  )
   message("Aggregating ", length(entries), " package entries.")
   aggregated <- do.call(what = vctrs::vec_rbind, args = entries)
   if (!file.exists(dirname(output))) {
     dir.create(dirname(output))
   }
-  message("Writing packages.json.")
+  message("Writing ", output)
   jsonlite::write_json(x = aggregated, path = output, pretty = TRUE)
   invisible()
 }
 
-read_package_entry <- function(package) {
+read_package_entry <- function(package, release_exceptions) {
   message("Processing package entry ", package)
   name <- trimws(basename(package))
   lines <- readLines(con = package, warn = FALSE)
-  out <- try(jsonlite::parse_json(lines), silent = TRUE)
-  if (inherits(out, "try-error")) {
-    package_entry_url(name = name, url = lines)
+  json <- try(jsonlite::parse_json(lines), silent = TRUE)
+  if (inherits(json, "try-error")) {
+    json <- package_entry_url(name = name, url = lines)
   } else {
-    package_entry_json(name = name, json = out)
+    json <- package_entry_json(name = name, json = json)
   }
+  decide_release_exceptions(
+    json = json,
+    release_exceptions = release_exceptions
+  )
 }
 
 package_entry_url <- function(name, url) {
@@ -96,4 +111,11 @@ package_entry_json <- function(name, json) {
     stop(message, call. = FALSE)
   }
   as.data.frame(json)
+}
+
+decide_release_exceptions <- function(json, release_exceptions) {
+  if (dirname(trim_url(json$url)) %in% trim_url(release_exceptions)) {
+    json$branch <- NULL
+  }
+  json
 }
