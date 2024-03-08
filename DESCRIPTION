@@ -1,7 +1,7 @@
 Package: r.releases.internals
 Title: Internal Infrastructure for An R Universe of Package Releases
 Description: Internal infrastructure for an R universe of package releases.
-Version: 0.0.10
+Version: 0.0.11
 License: MIT + file LICENSE
 URL: https://github.com/r-releases/r.releases.internals
 BugReports: https://github.com/r-releases/r.releases.internals/issues

@@ -1,3 +1,7 @@
+# r.releases.internals 0.0.11
+
+* Quick bug fix: avoid `NA` entries in `version_issues.json`.
+
 # r.releases.internals 0.0.10
 
 * Automatically merge GitLab URLs with non-"upcoming" releases.

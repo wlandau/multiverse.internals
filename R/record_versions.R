@@ -30,6 +30,7 @@ record_versions <- function(
   jsonlite::write_json(x = new, path = manifest, pretty = TRUE)
   aligned <- (new$version_current == new$version_highest) &
     (new$hash_current == new$hash_highest)
+  aligned[is.na(aligned)] <- TRUE
   new_issues <- new[!aligned,, drop = FALSE] # nolint
   jsonlite::write_json(x = new_issues, path = issues, pretty = TRUE)
   invisible()
