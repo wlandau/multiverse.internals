@@ -5,4 +5,4 @@
 
 `r.releases.internals` is an R package to support the internal infrastructure for the R-releases project.
 
-For all matters please refer to https://github.com/r-releases/help.
+For all matters please refer to <https://r-releases.github.io/>.
