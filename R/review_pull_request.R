@@ -16,7 +16,7 @@
 #'   in the repo.
 review_pull_request <- function(
   owner = "r-releases",
-  repo = "r-releases",
+  repo = "contributions",
   number
 ) {
   assert_character_scalar(owner)
@@ -56,7 +56,7 @@ review_pull_request <- function(
           "Pull request ",
           number,
           " attempts an action other than adding files in the 'packages/' ",
-          "folder. Manual review required."
+          "folder."
         )
       )
       return(invisible())
@@ -71,8 +71,7 @@ review_pull_request <- function(
           "Pull request ",
           number,
           " wrote something different than 1 URL for the file of package ",
-          shQuote(name),
-          ". Manual review required."
+          shQuote(name)
         )
       )
       return(invisible())
@@ -87,9 +86,8 @@ review_pull_request <- function(
         message = paste0(
           "Pull request ",
           number,
-          " automated diagnostics returned findings: ",
-          result,
-          ". Manual review required."
+          " automated checks returned findings: ",
+          result
         )
       )
       return(invisible())
@@ -133,7 +131,13 @@ pull_request_defer <- function(owner, repo, number, message) {
     owner = owner,
     repo = repo,
     number = number,
-    body = message
+    body = paste0(
+      message,
+      ". Your pull request has been marked for manual review. ",
+      "You can either wait for an R-releases moderator to review ",
+      "your contribution, or you can close this pull request ",
+      "and open a different one which passes automated checks."
+    )
   )
 }
 
@@ -167,8 +171,7 @@ pull_request_merge <- function(owner, repo, number) {
         number = number,
         body = paste0(
           "There was a problem merging pull request ",
-          number,
-          ". Manual review required. "
+          number
         )
       )
       gh::gh(
@@ -187,11 +190,10 @@ pull_request_merge <- function(owner, repo, number) {
       number = number,
       body = paste(
         "This pull request was automatically merged",
-        "to incorporate new packages in the r-releases universe.",
-        "An automated GitHub actions job will migrate the packages to",
-        "https://github.com/r-releases/r-releases.r-universe.dev.",
-        "You can check status and progress at",
-        "https://r-releases.r-universe.dev."
+        "to incorporate new packages into R-releases.",
+        "An automated GitHub actions job will deploy the packages",
+        "as described at https://r-releases.github.io/.",
+        "Thank you for your contribution."
       )
     )
   }

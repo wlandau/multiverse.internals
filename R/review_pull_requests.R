@@ -7,7 +7,7 @@
 #' @inheritParams review_pull_request
 review_pull_requests <- function(
   owner = "r-releases",
-  repo = "r-releases"
+  repo = "contributions"
 ) {
   assert_character_scalar(owner)
   assert_character_scalar(repo)

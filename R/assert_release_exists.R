@@ -34,7 +34,7 @@ assert_release_github <- function(url) {
     x = releases
   )
   if (!length(releases)) {
-    return(paste("No full release found at URL", shQuote(url)))
+    return(no_release_message(url))
   }
 }
 
@@ -62,6 +62,28 @@ assert_release_gitlab <- function(url) {
     return(try_message(releases))
   }
   if (!nrow(releases) || !any(!releases$upcoming_release)) {
-    return(paste("No full release found at URL", shQuote(url)))
+    return(no_release_message(url))
   }
+}
+
+no_release_message <- function(url) {
+  github <- file.path(
+    "https://docs.github.com/en/repositories",
+    "releasing-projects-on-github/managing-releases-in-a-repository"
+  )
+  paste0(
+    "No full release found at URL ",
+    shQuote(url),
+    ". The R-releases project relies on GitHub/GitLab releases ",
+    "to distribute deployed versions of R packages, so we must ",
+    "ask that each contributed package host a release for its ",
+    "latest non-development version. ",
+    "For GitHub, maintainers can refer to ",
+    github,
+    " for instructions. For GitLab, the directions are at ",
+    "https://docs.gitlab.com/ee/user/project/releases/. ",
+    "Pre-releases (GitHub) and upcoming releases (GitLab) ",
+    "are ignored to ensure each release has the ",
+    "full endorsement of its maintainer."
+  )
 }

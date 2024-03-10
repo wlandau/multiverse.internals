@@ -1,3 +1,8 @@
+# r.releases.internals 0.0.12
+
+* Improve bot comment messages.
+* Change default contribution repo from `r-releases` to `contributions`.
+
 # r.releases.internals 0.0.11
 
 * Quick bug fix: avoid `NA` entries in `version_issues.json`.
