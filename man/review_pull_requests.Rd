@@ -4,7 +4,7 @@
 \alias{review_pull_requests}
 \title{Review pull requests.}
 \usage{
-review_pull_requests(owner = "r-releases", repo = "r-releases")
+review_pull_requests(owner = "r-releases", repo = "contributions")
 }
 \arguments{
 \item{owner}{Character of length 1, name of the universe repository owner.}
