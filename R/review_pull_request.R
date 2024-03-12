@@ -40,9 +40,10 @@ review_pull_request <- function(
         message = paste0(
           "Pull request ",
           number,
-          " attempts to modify files outside the 'packages/' folder. ",
-          "Please open a different PR that simply adds one or ",
-          "more files in the 'packages/' folder with their URLs."
+          " attempts to modify files outside the 'packages/' folder ",
+          "or in a subdirectory of 'packages/'. ",
+          "Please open a different pull request that simply adds one or ",
+          "more text files directly inside 'packages/' with package URLs."
         )
       )
       return(invisible())
@@ -71,7 +72,8 @@ review_pull_request <- function(
           "Pull request ",
           number,
           " wrote something different than 1 URL for the file of package ",
-          shQuote(name)
+          shQuote(name),
+          "."
         )
       )
       return(invisible())
@@ -133,10 +135,10 @@ pull_request_defer <- function(owner, repo, number, message) {
     number = number,
     body = paste0(
       message,
-      ". Your pull request has been marked for manual review. ",
-      "You can either wait for an R-releases moderator to review ",
-      "your contribution, or you can close this pull request ",
-      "and open a different one which passes automated checks."
+      "\n\nThis pull request has been marked for manual review. ",
+      "Please either wait for an R-releases moderator to review, ",
+      "or close this pull request and open a different one ",
+      "which passes automated checks."
     )
   )
 }
