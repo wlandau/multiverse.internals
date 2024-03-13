@@ -1,3 +1,7 @@
+# r.releases.internals 0.0.15
+
+* Add explicit check that each contribution has only 1 line.
+
 # r.releases.internals 0.0.14
 
 * Allow terminating newline to be absent in URL contributions.

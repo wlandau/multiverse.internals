@@ -63,6 +63,24 @@ review_pull_request <- function(
       return(invisible())
     }
     name <- basename(file$filename)
+    if (file$additions != 1L) {
+      pull_request_defer(
+        owner = owner,
+        repo = repo,
+        number = number,
+        message = paste(
+          "Text file",
+          shQuote(name),
+          "in pull request",
+          number,
+          "has",
+          file$additions,
+          "lines. The file must have exactly 1 line",
+          "unless it contains custom JSON (which is uncommon)."
+        )
+      )
+      return(invisible())
+    }
     if (!is_character_scalar(file$patch)) {
       pull_request_defer(
         owner = owner,
