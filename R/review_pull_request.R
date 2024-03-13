@@ -79,6 +79,7 @@ review_pull_request <- function(
       return(invisible())
     }
     url <- gsub(pattern = "^.*\\+", replacement = "", x = file$patch)
+    url <- gsub(pattern = "\\s.*$", replacement = "", x = url)
     result <- assert_package(name = name, url = url)
     if (!is.null(result)) {
       pull_request_defer(

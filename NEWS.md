@@ -1,3 +1,7 @@
+# r.releases.internals 0.0.14
+
+* Allow terminating newline to be absent in URL contributions.
+
 # r.releases.internals 0.0.13
 
 * Reformat bot messages.
