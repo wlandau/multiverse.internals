@@ -75,7 +75,7 @@ review_pull_request <- function(
           number,
           "has",
           file$additions,
-          "lines. The file should have exactly 1 line",
+          "lines. The file must have exactly 1 line",
           "unless it contains custom JSON (which is uncommon)."
         )
       )
