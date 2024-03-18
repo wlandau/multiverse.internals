@@ -175,19 +175,38 @@ pull_request_merge <- function(owner, repo, number) {
     silent = TRUE
   )
   if (inherits(out, "try-error")) {
-    gh::gh(
-      "POST /repos/:owner/:repo/issues/:number/comments",
+    pull_request <- gh::gh(
+      "/repos/:owner/:repo/pulls/:number",
       owner = owner,
       repo = repo,
       number = number,
-      body = paste0(
-        "There was a problem merging pull request ",
-        number,
-        ". Error message: ",
-        try_message(out),
-        "\n\nThe bot will retry merging next time it reviews pull requests."
-      )
+      state = "open",
+      .limit = Inf
     )
+    labels <- pull_request_labels(pull_request)
+    if (!(label_retry_review %in% labels)) {
+      gh::gh(
+        "POST /repos/:owner/:repo/issues/:number/comments",
+        owner = owner,
+        repo = repo,
+        number = number,
+        body = paste0(
+          "Pull request ",
+          number,
+          " is approved in its current state, ",
+          "but the bot encountered an error trying to merge it. ",
+          "The bot will repeat the review and retry the merge ",
+          "next time it reviews pull requests."
+        )
+      )
+      gh::gh(
+        "POST /repos/:owner/:repo/issues/:number/labels",
+        owner = owner,
+        repo = repo,
+        number = number,
+        labels = list(label_retry_review)
+      )
+    }
   } else {
     gh::gh(
       "POST /repos/:owner/:repo/issues/:number/comments",
@@ -216,3 +235,5 @@ pull_request_labels <- function(pull_request) {
 }
 
 label_manual_review <- "manual-review"
+
+label_retry_review <- "retry-review"
