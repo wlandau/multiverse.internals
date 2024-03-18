@@ -1,3 +1,8 @@
+# r.releases.internals 0.0.16
+
+* Retry failed merge attempts.
+* Use `testthat`
+
 # r.releases.internals 0.0.15
 
 * Add explicit check that each contribution has only 1 line.

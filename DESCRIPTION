@@ -1,7 +1,7 @@
 Package: r.releases.internals
 Title: Internal Infrastructure for An R Universe of Package Releases
 Description: Internal infrastructure for an R universe of package releases.
-Version: 0.0.15
+Version: 0.0.16
 License: MIT + file LICENSE
 URL: https://github.com/r-releases/r.releases.internals
 BugReports: https://github.com/r-releases/r.releases.internals/issues
@@ -33,6 +33,8 @@ Imports:
   pkgsearch,
   utils,
   vctrs
+Suggests: 
+  testthat (>= 3.0.0)
 Encoding: UTF-8
 Language: en-US
 Config/testthat/edition: 3
