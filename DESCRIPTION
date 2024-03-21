@@ -1,10 +1,10 @@
-Package: r.releases.internals
-Title: Internal Infrastructure for An R Universe of Package Releases
-Description: Internal infrastructure for an R universe of package releases.
-Version: 0.0.16
+Package: multiverse.internals
+Title: Internal Infrastructure for R-multiverse
+Description: Internal Infrastructure for R-multiverse
+Version: 0.1.0
 License: MIT + file LICENSE
-URL: https://github.com/r-releases/r.releases.internals
-BugReports: https://github.com/r-releases/r.releases.internals/issues
+URL: https://github.com/r-multiverse/multiverse.internals
+BugReports: https://github.com/r-multiverse/multiverse.internals/issues
 Authors@R: c(
   person(
     given = c("William", "Michael"),

@@ -7,8 +7,8 @@
 record_versions(
   manifest = "versions.json",
   issues = "version_issues.json",
-  repo = "https://r-releases.r-universe.dev",
-  current = r.releases.internals::get_current_versions(repo = repo)
+  repo = "https://r-multiverse.r-universe.dev",
+  current = multiverse.internals::get_current_versions(repo = repo)
 )
 }
 \arguments{

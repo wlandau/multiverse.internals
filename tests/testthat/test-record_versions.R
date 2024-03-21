@@ -13,7 +13,7 @@ test_that("record versions from a mock repo", {
     version_current = rep("1.0.0", 4L),
     hash_current = rep("hash_1.0.0", 4L)
   )
-  r.releases.internals::record_versions(
+  record_versions(
     manifest = manifest,
     issues = issues,
     current = contents
@@ -45,7 +45,7 @@ test_that("record versions from a mock repo", {
   expect_true(!file.exists(issues))
   # Update the manifest after no changes to packages or versions.
   suppressMessages(
-    r.releases.internals::record_versions(
+    record_versions(
       manifest = manifest,
       issues = issues,
       current = contents
@@ -96,7 +96,7 @@ test_that("record versions from a mock repo", {
   contents$version_current[index] <- "1.0.0"
   contents$hash_current[index] <- "hash_1.0.0-modified"
   for (index in seq_len(2L)) {
-    r.releases.internals::record_versions(
+    record_versions(
       manifest = manifest,
       issues = issues,
       current = contents
@@ -162,7 +162,7 @@ test_that("manifest can be created and updated from the actual repo", {
   issues <- tempfile()
   temp <- utils::capture.output(
     suppressMessages(
-      r.releases.internals::record_versions(
+      record_versions(
         manifest = manifest,
         issues = issues
       )
@@ -174,7 +174,7 @@ test_that("manifest can be created and updated from the actual repo", {
   lapply(contents, function(x) expect_true(!anyNA(x)))
   temp <- utils::capture.output(
     suppressMessages(
-      r.releases.internals::record_versions(
+      record_versions(
         manifest = manifest,
         issues = issues
       )

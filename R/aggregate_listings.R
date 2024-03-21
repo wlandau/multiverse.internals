@@ -1,8 +1,9 @@
-#' @title Build the `packages.json` manifest for the universe.
+#' @title Build an R-universe `packages.json` manifest from a collection of
+#'   text file contributions with individual package URLs.
 #' @export
 #' @keywords internal
-#' @description Create the R-universe `packages.json` file
-#'   from constituent text files with URLs.
+#' @description Build an R-universe `packages.json` manifest from a collection
+#'   of text file contributions with individual package URLs.
 #' @return NULL (invisibly)
 #' @param input Character of length 1, directory path with the
 #'   text file listings of R releases.
@@ -11,7 +12,7 @@
 #' @param release_exceptions Character vector of URLs of GitHub owners
 #'   where `"branch": "*release"` should be omitted. Example:
 #'   `"https://github.com/cran"`.
-write_universe_manifest <- function(
+aggregate_listings <- function(
   input = getwd(),
   output = "packages.json",
   release_exceptions = character(0L)
@@ -20,14 +21,14 @@ write_universe_manifest <- function(
   assert_character_scalar(output, "invalid output")
   assert_file(input)
   packages <- list.files(input, all.files = FALSE, full.names = TRUE)
-  message("Processing ", length(packages), " package entries.")
-  entries <- lapply(
+  message("Processing ", length(packages), " package listings.")
+  listings <- lapply(
     X = packages,
-    FUN = read_package_entry,
+    FUN = read_package_listing,
     release_exceptions = release_exceptions
   )
-  message("Aggregating ", length(entries), " package entries.")
-  aggregated <- do.call(what = vctrs::vec_rbind, args = entries)
+  message("Aggregating ", length(listings), " package listings.")
+  aggregated <- do.call(what = vctrs::vec_rbind, args = listings)
   if (!file.exists(dirname(output))) {
     dir.create(dirname(output))
   }
@@ -36,15 +37,15 @@ write_universe_manifest <- function(
   invisible()
 }
 
-read_package_entry <- function(package, release_exceptions) {
-  message("Processing package entry ", package)
+read_package_listing <- function(package, release_exceptions) {
+  message("Processing package listing ", package)
   name <- trimws(basename(package))
   lines <- readLines(con = package, warn = FALSE)
   json <- try(jsonlite::parse_json(lines), silent = TRUE)
   if (inherits(json, "try-error")) {
-    json <- package_entry_url(name = name, url = lines)
+    json <- package_listing_url(name = name, url = lines)
   } else {
-    json <- package_entry_json(name = name, json = json)
+    json <- package_listing_json(name = name, json = json)
   }
   decide_release_exceptions(
     json = json,
@@ -52,7 +53,7 @@ read_package_entry <- function(package, release_exceptions) {
   )
 }
 
-package_entry_url <- function(name, url) {
+package_listing_url <- function(name, url) {
   message <- assert_package_lite(name = name, url = url)
   if (!is.null(message)) {
     stop(message, call. = FALSE)
@@ -64,7 +65,7 @@ package_entry_url <- function(name, url) {
   )
 }
 
-package_entry_json <- function(name, json) {
+package_listing_json <- function(name, json) {
   fields <- names(json)
   good_fields <- identical(
     sort(fields),
@@ -72,7 +73,7 @@ package_entry_json <- function(name, json) {
   )
   if (!good_fields) {
     stop(
-      "Custom JSON entry for package ",
+      "Custom JSON listing for package ",
       shQuote(name),
       " must have fields 'packages', 'url', 'branch', and 'subdir' ",
       "and no other fields.",
@@ -100,7 +101,7 @@ package_entry_json <- function(name, json) {
       message = paste(
         "Invalid value in field",
         shQuote(field),
-        "in the JSON entry for package name",
+        "in the JSON listing for package name",
         shQuote(name)
       )
     )

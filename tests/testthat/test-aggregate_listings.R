@@ -8,7 +8,7 @@ test_that("ordinary URLs can be written", {
   )
   universe <- file.path(tempfile(), "out")
   suppressMessages(
-    r.releases.internals::write_universe_manifest(
+    aggregate_listings(
       input = packages,
       output = universe
     )
@@ -49,7 +49,7 @@ test_that("\"branch\": \"release\" in certain defined cases", {
   )
   universe <- file.path(tempfile(), "out")
   suppressMessages(
-    r.releases.internals::write_universe_manifest(
+    aggregate_listings(
       input = packages,
       output = universe,
       release_exceptions = c(
@@ -95,7 +95,7 @@ test_that("one URL is malformed", {
   universe <- file.path(tempfile(), "out")
   out <- try(
     suppressMessages(
-      r.releases.internals::write_universe_manifest(
+      aggregate_listings(
         input = packages,
         output = universe
       )
@@ -124,7 +124,7 @@ test_that("acceptable custom JSON", {
   )
   universe <- file.path(tempfile(), "out")
   suppressMessages(
-    r.releases.internals::write_universe_manifest(
+    aggregate_listings(
       input = packages,
       output = universe
     )
@@ -166,7 +166,7 @@ test_that("malformed URL in JSON", {
   universe <- file.path(tempfile(), "out")
   out <- try(
     suppressMessages(
-      r.releases.internals::write_universe_manifest(
+      aggregate_listings(
         input = packages,
         output = universe
       )
@@ -176,7 +176,7 @@ test_that("malformed URL in JSON", {
   expect_true(
     grepl(
       pattern = "Found malformed URL",
-      x = r.releases.internals::try_message(out)
+      x = try_message(out)
     )
   )
   unlink(packages, recursive = TRUE)
@@ -200,7 +200,7 @@ test_that("missing branch field", {
   universe <- file.path(tempfile(), "out")
   out <- try(
     suppressMessages(
-      r.releases.internals::write_universe_manifest(
+      aggregate_listings(
         input = packages,
         output = universe
       )
@@ -210,15 +210,15 @@ test_that("missing branch field", {
   expect_true(inherits(out, "try-error"))
   expect_true(
     grepl(
-      pattern = "JSON entry for package",
-      x = r.releases.internals::try_message(out),
+      pattern = "JSON listing for package",
+      x = try_message(out),
       fixed = TRUE
     )
   )
   expect_true(
     grepl(
       pattern = "must have fields",
-      x = r.releases.internals::try_message(out),
+      x = try_message(out),
       fixed = TRUE
     )
   )
@@ -244,7 +244,7 @@ test_that("disagreeing package field", {
   universe <- file.path(tempfile(), "out")
   out <- try(
     suppressMessages(
-      r.releases.internals::write_universe_manifest(
+      aggregate_listings(
         input = packages,
         output = universe
       )
@@ -255,7 +255,7 @@ test_that("disagreeing package field", {
   expect_true(
     grepl(
       pattern = "The 'packages' field disagrees with the package name",
-      x = r.releases.internals::try_message(out),
+      x = try_message(out),
       fixed = TRUE
     )
   )
@@ -281,7 +281,7 @@ test_that("bad branch field", {
   universe <- file.path(tempfile(), "out")
   out <- try(
     suppressMessages(
-      r.releases.internals::write_universe_manifest(
+      aggregate_listings(
         input = packages,
         output = universe
       )
@@ -292,7 +292,7 @@ test_that("bad branch field", {
   expect_true(
     grepl(
       pattern = "The 'branch' field of package",
-      x = r.releases.internals::try_message(out),
+      x = try_message(out),
       fixed = TRUE
     )
   )
