@@ -1,3 +1,7 @@
+# multiverse.internals 0.1.2
+
+* Remove URL reference.
+
 # multiverse.internals 0.1.1
 
 * Rename internal functions and arguments.
