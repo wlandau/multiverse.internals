@@ -171,11 +171,13 @@ test_that("good GitHub registration", {
 })
 
 test_that("good GitLab registration", {
-  suppressMessages(
-    expect_null(
-      assert_package(
-        name = "test",
-        url = "https://gitlab.com/wlandau/test"
+  tmp <- utils::capture.output(
+    suppressMessages(
+      expect_null(
+        assert_package(
+          name = "test",
+          url = "https://gitlab.com/wlandau/test"
+        )
       )
     )
   )
