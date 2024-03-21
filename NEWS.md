@@ -1,3 +1,7 @@
+# multiverse.internals 0.1.1
+
+* Rename internal functions and arguments.
+
 # multiverse.internals 0.1.0
 
 * Rename the package to `multiverse.internals`.

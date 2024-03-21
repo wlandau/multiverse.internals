@@ -9,13 +9,13 @@
 #'   text file listings of R releases.
 #' @param output Character of length 1, file path where the
 #'   R-universe `packages.json` file will be written.
-#' @param release_exceptions Character vector of URLs of GitHub owners
+#' @param owner_exceptions Character vector of URLs of GitHub owners
 #'   where `"branch": "*release"` should be omitted. Example:
 #'   `"https://github.com/cran"`.
-aggregate_listings <- function(
+aggregate_contributions <- function(
   input = getwd(),
   output = "packages.json",
-  release_exceptions = character(0L)
+  owner_exceptions = character(0L)
 ) {
   assert_character_scalar(input, "invalid input")
   assert_character_scalar(output, "invalid output")
@@ -25,7 +25,7 @@ aggregate_listings <- function(
   listings <- lapply(
     X = packages,
     FUN = read_package_listing,
-    release_exceptions = release_exceptions
+    owner_exceptions = owner_exceptions
   )
   message("Aggregating ", length(listings), " package listings.")
   aggregated <- do.call(what = vctrs::vec_rbind, args = listings)
@@ -37,7 +37,7 @@ aggregate_listings <- function(
   invisible()
 }
 
-read_package_listing <- function(package, release_exceptions) {
+read_package_listing <- function(package, owner_exceptions) {
   message("Processing package listing ", package)
   name <- trimws(basename(package))
   lines <- readLines(con = package, warn = FALSE)
@@ -47,9 +47,9 @@ read_package_listing <- function(package, release_exceptions) {
   } else {
     json <- package_listing_json(name = name, json = json)
   }
-  decide_release_exceptions(
+  decide_owner_exceptions(
     json = json,
-    release_exceptions = release_exceptions
+    owner_exceptions = owner_exceptions
   )
 }
 
@@ -114,8 +114,8 @@ package_listing_json <- function(name, json) {
   as.data.frame(json)
 }
 
-decide_release_exceptions <- function(json, release_exceptions) {
-  if (dirname(trim_url(json$url)) %in% trim_url(release_exceptions)) {
+decide_owner_exceptions <- function(json, owner_exceptions) {
+  if (dirname(trim_url(json$url)) %in% trim_url(owner_exceptions)) {
     json$branch <- NULL
   }
   json
