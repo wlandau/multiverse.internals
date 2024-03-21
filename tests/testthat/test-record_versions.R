@@ -157,14 +157,15 @@ test_that("record versions from a mock repo", {
   unlink(c(manifest, issues))
 })
 
-test_that("manifest can be created and updated from the actual repo", {
+test_that("manifest can be created and updated from an actual repo", {
   manifest <- tempfile()
   issues <- tempfile()
   temp <- utils::capture.output(
     suppressMessages(
       record_versions(
         manifest = manifest,
-        issues = issues
+        issues = issues,
+        repo = "https://wlandau.r-universe.dev"
       )
     )
   )
@@ -176,7 +177,8 @@ test_that("manifest can be created and updated from the actual repo", {
     suppressMessages(
       record_versions(
         manifest = manifest,
-        issues = issues
+        issues = issues,
+        repo = "https://wlandau.r-universe.dev"
       )
     )
   )
