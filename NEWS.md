@@ -1,3 +1,7 @@
+# multiverse.internals 0.1.0
+
+* Rename the package to `multiverse.internals`.
+
 # r.releases.internals 0.0.16
 
 * Retry failed merge attempts.

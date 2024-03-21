@@ -15,7 +15,7 @@
 #' @param number Positive integer of length 1, index of the pull request
 #'   in the repo.
 review_pull_request <- function(
-  owner = "r-releases",
+  owner = "r-multiverse",
   repo = "contributions",
   number
 ) {
@@ -155,7 +155,7 @@ pull_request_defer <- function(owner, repo, number, message) {
     body = paste0(
       message,
       "\n\nThis pull request has been marked for manual review. ",
-      "Please either wait for an R-releases moderator to review, ",
+      "Please either wait for an R-multiverse moderator to review, ",
       "or close this pull request and open a different one ",
       "which passes automated checks."
     )
@@ -215,9 +215,9 @@ pull_request_merge <- function(owner, repo, number) {
       number = number,
       body = paste(
         "This pull request was automatically merged",
-        "to incorporate new packages into R-releases.",
+        "to incorporate new packages into R-multiverse.",
         "An automated GitHub actions job will deploy the packages",
-        "as described at https://r-releases.github.io/.",
+        "as described at https://r-multiverse.github.io/.",
         "Thank you for your contribution."
       )
     )

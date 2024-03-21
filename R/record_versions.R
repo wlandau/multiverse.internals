@@ -18,8 +18,8 @@
 record_versions <- function(
   manifest = "versions.json",
   issues = "version_issues.json",
-  repo = "https://r-releases.r-universe.dev",
-  current = r.releases.internals::get_current_versions(repo = repo)
+  repo = "https://r-multiverse.r-universe.dev",
+  current = multiverse.internals::get_current_versions(repo = repo)
 ) {
   if (!file.exists(manifest)) {
     jsonlite::write_json(x = current, path = manifest, pretty = TRUE)
@@ -43,7 +43,7 @@ record_versions <- function(
 #' @return A data frame of packages with their current versions and hashes.
 #' @inheritParams record_versions
 get_current_versions <- function(
-  repo = "https://r-releases.r-universe.dev"
+  repo = "https://r-multiverse.r-universe.dev"
 ) {
   listing <- file.path(
     contrib.url(repos = repo, type = "source"),

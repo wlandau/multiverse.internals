@@ -74,7 +74,7 @@ no_release_message <- function(url) {
   paste0(
     "No full release found at URL ",
     shQuote(url),
-    ".\n\nThe R-releases project relies on GitHub/GitLab releases ",
+    ".\n\nThe R-multiverse project relies on GitHub/GitLab releases ",
     "to distribute deployed versions of R packages, so we must ",
     "ask that each contributed package host a release for its ",
     "latest non-development version.\n\n",

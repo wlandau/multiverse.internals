@@ -1,7 +1,6 @@
-#' r.releases.internals: Internal infrastructure for an R universe
-#'   of package releases.
-#' @description Utilities for an R universe of package releases.
-#' @name r.releases.internals-package
+#' multiverse.internals: Internal Infrastructure for R-multiverse.
+#' @description Internal Infrastructure for R-multiverse.
+#' @name multiverse.internals-package
 #' @family help
 #' @importFrom gh gh
 #' @importFrom jsonlite parse_json read_json stream_in write_json
