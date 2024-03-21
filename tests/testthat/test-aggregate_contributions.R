@@ -8,7 +8,7 @@ test_that("ordinary URLs can be written", {
   )
   universe <- file.path(tempfile(), "out")
   suppressMessages(
-    aggregate_listings(
+    aggregate_contributions(
       input = packages,
       output = universe
     )
@@ -49,10 +49,10 @@ test_that("\"branch\": \"release\" in certain defined cases", {
   )
   universe <- file.path(tempfile(), "out")
   suppressMessages(
-    aggregate_listings(
+    aggregate_contributions(
       input = packages,
       output = universe,
-      release_exceptions = c(
+      owner_exceptions = c(
         "https://github.com/cran",
         "https://github.com/wlandau"
       )
@@ -95,7 +95,7 @@ test_that("one URL is malformed", {
   universe <- file.path(tempfile(), "out")
   out <- try(
     suppressMessages(
-      aggregate_listings(
+      aggregate_contributions(
         input = packages,
         output = universe
       )
@@ -124,7 +124,7 @@ test_that("acceptable custom JSON", {
   )
   universe <- file.path(tempfile(), "out")
   suppressMessages(
-    aggregate_listings(
+    aggregate_contributions(
       input = packages,
       output = universe
     )
@@ -166,7 +166,7 @@ test_that("malformed URL in JSON", {
   universe <- file.path(tempfile(), "out")
   out <- try(
     suppressMessages(
-      aggregate_listings(
+      aggregate_contributions(
         input = packages,
         output = universe
       )
@@ -200,7 +200,7 @@ test_that("missing branch field", {
   universe <- file.path(tempfile(), "out")
   out <- try(
     suppressMessages(
-      aggregate_listings(
+      aggregate_contributions(
         input = packages,
         output = universe
       )
@@ -244,7 +244,7 @@ test_that("disagreeing package field", {
   universe <- file.path(tempfile(), "out")
   out <- try(
     suppressMessages(
-      aggregate_listings(
+      aggregate_contributions(
         input = packages,
         output = universe
       )
@@ -281,7 +281,7 @@ test_that("bad branch field", {
   universe <- file.path(tempfile(), "out")
   out <- try(
     suppressMessages(
-      aggregate_listings(
+      aggregate_contributions(
         input = packages,
         output = universe
       )
