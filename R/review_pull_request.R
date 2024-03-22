@@ -216,8 +216,7 @@ pull_request_merge <- function(owner, repo, number) {
       body = paste(
         "This pull request was automatically merged",
         "to incorporate new packages into R-multiverse.",
-        "An automated GitHub actions job will deploy the packages",
-        "as described at https://r-multiverse.github.io/.",
+        "An automated GitHub actions job will deploy the packages.",
         "Thank you for your contribution."
       )
     )
