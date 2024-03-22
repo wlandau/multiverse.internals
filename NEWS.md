@@ -1,6 +1,9 @@
-# multiverse.internals 0.1.2
+# multiverse.internals 0.1.3
 
 * In `record_versions()`, left-join old versions into new versions to avoid spamming `versions.json` with an unbounded list of renamed or abandoned packages.
+
+# multiverse.internals 0.1.2
+
 * Remove URL reference.
 
 # multiverse.internals 0.1.1
