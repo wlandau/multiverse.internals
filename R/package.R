@@ -7,5 +7,5 @@
 #' @importFrom nanonext ncurl parse_url status_code
 #' @importFrom pkgsearch cran_package
 #' @importFrom utils available.packages compareVersion contrib.url
-#' @importFrom vctrs vec_rbind
+#' @importFrom vctrs vec_rbind vec_slice
 NULL

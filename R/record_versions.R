@@ -10,14 +10,11 @@
 #' @return `NULL` (invisibly). Writes a package version manifest
 #'   and a manifest of version issues as JSON files.
 #' @param manifest Character of length 1, file path to the JSON manifest.
-#' @param issues Character of length 1, file path to a JSON file
-#'   which records packages with version issues.
 #' @param repo Character string of package repositories to track.
 #' @param current A data frame of current versions and hashes of packages
 #'   in `repo`. This argument is exposed for testing only.
 record_versions <- function(
   manifest = "versions.json",
-  issues = "version_issues.json",
   repo = "https://r-multiverse.r-universe.dev",
   current = multiverse.internals::get_current_versions(repo = repo)
 ) {
@@ -28,11 +25,6 @@ record_versions <- function(
   previous <- read_versions_previous(manifest = manifest)
   new <- update_version_manifest(current = current, previous = previous)
   jsonlite::write_json(x = new, path = manifest, pretty = TRUE)
-  aligned <- (new$version_current == new$version_highest) &
-    (new$hash_current == new$hash_highest)
-  aligned[is.na(aligned)] <- TRUE
-  new_issues <- new[!aligned,, drop = FALSE] # nolint
-  jsonlite::write_json(x = new_issues, path = issues, pretty = TRUE)
   invisible()
 }
 
@@ -63,9 +55,7 @@ get_current_versions <- function(
 }
 
 read_versions_previous <- function(manifest) {
-  out <- jsonlite::read_json(path = manifest)
-  out <- do.call(what = vctrs::vec_rbind, args = out)
-  out <- lapply(out, as.character)
+  out <- jsonlite::read_json(path = manifest, simplifyVector = TRUE)
   if (is.null(out$version_highest)) {
     out$version_highest <- out$version_current
   }
