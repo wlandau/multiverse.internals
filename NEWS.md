@@ -1,3 +1,8 @@
+# multiverse.internals 0.1.4
+
+* Do not write `version_issues.json` from `record_versions()`.
+* Record version issues in separate JSON files in a new `record_issues()` function. Going forward, this function will also write R-universe check results in those individual package-specific files.
+
 # multiverse.internals 0.1.3
 
 * In `record_versions()`, left-join old versions into new versions to avoid spamming `versions.json` with an unbounded list of renamed or abandoned packages.

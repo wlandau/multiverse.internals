@@ -6,16 +6,12 @@
 \usage{
 record_versions(
   manifest = "versions.json",
-  issues = "version_issues.json",
   repo = "https://r-multiverse.r-universe.dev",
   current = multiverse.internals::get_current_versions(repo = repo)
 )
 }
 \arguments{
 \item{manifest}{Character of length 1, file path to the JSON manifest.}
-
-\item{issues}{Character of length 1, file path to a JSON file
-which records packages with version issues.}
 
 \item{repo}{Character string of package repositories to track.}
 

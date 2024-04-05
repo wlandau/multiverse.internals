@@ -1,7 +1,6 @@
-test_that("record versions from a mock repo", {
+test_that("record_versions() in a mock repo", {
   # Temporary files used in the mock test.
   manifest <- tempfile()
-  issues <- tempfile()
   # First update to the manifest.
   contents <- data.frame(
     package = c(
@@ -15,7 +14,6 @@ test_that("record versions from a mock repo", {
   )
   record_versions(
     manifest = manifest,
-    issues = issues,
     current = contents
   )
   written <- jsonlite::read_json(manifest)
@@ -42,12 +40,10 @@ test_that("record versions from a mock repo", {
     )
   )
   expect_true(identical(written, expected))
-  expect_true(!file.exists(issues))
   # Update the manifest after no changes to packages or versions.
   suppressMessages(
     record_versions(
       manifest = manifest,
-      issues = issues,
       current = contents
     )
   )
@@ -83,8 +79,6 @@ test_that("record versions from a mock repo", {
     )
   )
   expect_true(identical(written, expected))
-  expect_true(file.exists(issues))
-  expect_true(identical(jsonlite::read_json(issues), list()))
   # Update the packages in all the ways indicated above.
   index <- contents$package == "version_decremented"
   contents$version_current[index] <- "0.0.1"
@@ -98,7 +92,6 @@ test_that("record versions from a mock repo", {
   for (index in seq_len(2L)) {
     record_versions(
       manifest = manifest,
-      issues = issues,
       current = contents
     )
     written <- jsonlite::read_json(manifest)
@@ -133,38 +126,17 @@ test_that("record versions from a mock repo", {
       )
     )
     expect_true(identical(written, expected))
-    expect_true(file.exists(issues))
-    written_issues <- jsonlite::read_json(issues)
-    expected_issues <- list(
-      list(
-        package = "version_decremented",
-        version_current = "0.0.1",
-        hash_current = "hash_0.0.1",
-        version_highest = "1.0.0",
-        hash_highest = "hash_1.0.0"
-      ),
-      list(
-        package = "version_unmodified",
-        version_current = "1.0.0",
-        hash_current = "hash_1.0.0-modified",
-        version_highest = "1.0.0",
-        hash_highest = "hash_1.0.0"
-      )
-    )
-    expect_true(identical(written_issues, expected_issues))
   }
   # Remove temporary files
-  unlink(c(manifest, issues))
+  unlink(manifest)
 })
 
 test_that("manifest can be created and updated from an actual repo", {
   manifest <- tempfile()
-  issues <- tempfile()
   temp <- utils::capture.output(
     suppressMessages(
       record_versions(
         manifest = manifest,
-        issues = issues,
         repo = "https://wlandau.r-universe.dev"
       )
     )
@@ -177,7 +149,6 @@ test_that("manifest can be created and updated from an actual repo", {
     suppressMessages(
       record_versions(
         manifest = manifest,
-        issues = issues,
         repo = "https://wlandau.r-universe.dev"
       )
     )
@@ -186,6 +157,5 @@ test_that("manifest can be created and updated from an actual repo", {
   expect_true(is.character(contents[[1L]]$package))
   expect_true(length(contents[[1L]]$package) == 1L)
   expect_true(file.exists(manifest))
-  expect_true(file.exists(issues))
-  unlink(c(manifest, issues))
+  unlink(manifest)
 })
