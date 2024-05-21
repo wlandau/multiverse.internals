@@ -8,7 +8,10 @@ check_versions(versions)
 }
 \arguments{
 \item{versions}{Character of length 1, file path to a JSON manifest
-tracking the history of released versions of packages.}
+tracking the history of released versions of packages.
+The official versions file for R-multiverse is maintained and
+updated periodically at
+\url{https://github.com/r-multiverse/checks/blob/main/versions.json}.}
 }
 \value{
 A named list of information about packages which do not comply
@@ -29,13 +32,16 @@ greater than all the versions of all the previous package releases.
 }
 \section{Checks}{
 
-Functions like \code{\link[=check_versions]{check_versions()}} and \code{\link[=check_descriptions]{check_descriptions()}} check
+Functions like \code{\link[=check_versions]{check_versions()}} and \code{\link[=check_descriptions]{check_descriptions()}}
 the packages in \url{https://multiverse.r-multiverse.org}. Only packages
 that pass these checks will appear in
-\url{https://production.r-multiverse.org}.
+\url{https://production.r-multiverse.org}. For a complete list of checks,
+see \url{https://r-multiverse.org/multiverse.internals/reference.html#checks}
 }
 
 \examples{
+  # See https://github.com/r-multiverse/checks/blob/main/versions.json
+  # for the official versions JSON for R-multiverse.
   lines <- c(
     "[",
     " {",
@@ -73,3 +79,9 @@ that pass these checks will appear in
   out <- check_versions(versions)
   str(out)
 }
+\seealso{
+Other checks: 
+\code{\link{check_checks}()},
+\code{\link{check_descriptions}()}
+}
+\concept{checks}

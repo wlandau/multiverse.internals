@@ -1,8 +1,7 @@
-#' @title Check package `DESCRIPTION` files.
+#' @title Check R-universe package check results.
 #' @export
 #' @family checks
-#' @description Check the `DESCRIPTION` files of packages for specific
-#'   issues.
+#' @description Check R-universe package check results.
 #' @details This function scrapes the `src/contrib/PACKAGES.json` file
 #'   of the universe to check the data in the `DESCRIPTION` files of packages
 #'   for compliance. Right now, the only field checked is `Remotes:`.
@@ -14,25 +13,32 @@
 #'   with `DESCRPTION` checks. Each name is a package name,
 #'   and each element contains specific information about
 #'   non-compliance.
-#' @param repo Character of length 1, URL of the repository
-#'   of R package candidates for production.
-#' @param index For testing purposes only,
-#'   an optional pre-computed data frame with details about packages.
+#' @inheritParams check_descriptions
 #' @examples
 #'   str(check_descriptions(repo = "https://multiverse.r-multiverse.org"))
-check_descriptions <- function(
+check_checks <- function(
   repo = "https://multiverse.r-multiverse.org",
   index = NULL
 ) {
-  fields <- "Remotes"
-  index <- index %|||% get_package_index(repo = repo, fields = fields)
-  index <- check_descriptions_remotes(index)
-  index <- index[, c("Package", fields)]
-  check_list(index)
-}
-
-check_descriptions_remotes <- function(index) {
-  index$Remotes <- index$Remotes %|||% replicate(nrow(index), NULL)
-  index$Remotes <- lapply(index$Remotes, function(x) x[nzchar(x)])
-  index[vapply(index$Remotes, length, integer(1L)) > 0L, ]
+  fields_check <- c(
+    "_linuxdevel",
+    "_macbinary",
+    "_wasmbinary",
+    "_winbinary",
+    "_status"
+  )
+  fields_info <- c(
+    "_buildurl"
+  )
+  fields <- c(fields_check, fields_info)
+  index <- index %|||% get_package_api(repo = repo, fields = fields)
+  for (field in fields) {
+    index[[field]][is.na(index[[field]])] <- "src-failure"
+  }
+  success <- rep(TRUE, nrow(index))
+  for (field in fields_check) {
+    success <- success & (index[[field]] %in% c("success", "skipped"))
+  }
+  index <- index[!success,, drop = FALSE] # nolint
+  check_list(index[, c("Package", fields)])
 }
