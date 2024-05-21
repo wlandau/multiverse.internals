@@ -37,21 +37,11 @@ record_versions <- function(
 get_current_versions <- function(
   repo = "https://multiverse.r-multiverse.org"
 ) {
-  listing <- file.path(
-    contrib.url(repos = repo, type = "source"),
-    "PACKAGES.json?fields=RemoteSha"
-  )
-  out <- jsonlite::stream_in(
-    con = gzcon(url(listing)),
-    verbose = TRUE,
-    simplifyVector = TRUE,
-    simplifyDataFrame = TRUE,
-    simplifyMatrix = TRUE
-  )
-  out <- out[, c("Package", "Version", "RemoteSha")]
-  colnames(out) <- c("package", "version_current", "hash_current")
-  rownames(out) <- NULL
-  out
+  index <- get_package_index(repo = repo, fields = "RemoteSha")
+  index <- index[, c("Package", "Version", "RemoteSha")]
+  colnames(index) <- c("package", "version_current", "hash_current")
+  rownames(index) <- NULL
+  index
 }
 
 read_versions_previous <- function(manifest) {

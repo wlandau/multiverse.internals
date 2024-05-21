@@ -4,12 +4,9 @@
 \alias{record_issues}
 \title{Record package issues.}
 \usage{
-record_issues(manifest = "versions.json", output = "issues")
+record_issues(versions = "versions.json", output = "issues")
 }
 \arguments{
-\item{manifest}{Character of length 1, file path to a JSON manifest
-tracking release versions of packages.}
-
 \item{output}{Character of length 1, file path to the folder to record
 new package issues. Each call to \code{record_issues()} overwrites the
 contents of the repo.}
