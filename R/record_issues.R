@@ -1,9 +1,11 @@
 #' @title Record package issues.
 #' @export
+#' @family Recording checks
 #' @description Record package check and version issues in individual JSON
 #'   files.
 #' @return `NULL` (invisibly).
 #' @inheritParams check_checks
+#' @inheritParams check_versions
 #' @param output Character of length 1, file path to the folder to record
 #'   new package issues. Each call to `record_issues()` overwrites the
 #'   contents of the repo.

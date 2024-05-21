@@ -15,6 +15,12 @@ record_issues(
 \item{repo}{Character of length 1, URL of the repository
 of R package candidates for production.}
 
+\item{versions}{Character of length 1, file path to a JSON manifest
+tracking the history of released versions of packages.
+The official versions file for R-multiverse is maintained and
+updated periodically at
+\url{https://github.com/r-multiverse/checks/blob/main/versions.json}.}
+
 \item{output}{Character of length 1, file path to the folder to record
 new package issues. Each call to \code{record_issues()} overwrites the
 contents of the repo.}
@@ -53,3 +59,4 @@ files.
     print(readLines(file.path(output, package)))
   }
 }
+\concept{Recording checks}
