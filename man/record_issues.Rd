@@ -32,9 +32,21 @@ for the \code{mock} argument of each type of check.}
 \code{NULL} (invisibly).
 }
 \description{
-Record package check and version issues in individual JSON
-files.
+Record R-multiverse package issues in compact JSON files.
 }
+\section{Package checks for production}{
+
+Functions like \code{\link[=check_versions]{check_versions()}} and \code{\link[=check_descriptions]{check_descriptions()}}
+perform health checks for all packages in R-multiverse.
+Only packages that pass these checks go to the production repository at
+\url{https://production.r-multiverse.org}. For a complete list of checks, see
+the \verb{check_*()} functions listed at
+\url{https://r-multiverse.org/multiverse.internals/reference.html}.
+\code{\link[=record_versions]{record_versions()}} updates the version number history
+of releases in R-multiverse, and \code{\link[=record_issues]{record_issues()}} gathers
+together all the issues about R-multiverse packages.
+}
+
 \examples{
   # R-multiverse uses https://multiverse.r-multiverse.org as the repo.
   repo <- "https://wlandau.r-universe.dev" # just for testing and examples
@@ -59,4 +71,7 @@ files.
     print(readLines(file.path(output, package)))
   }
 }
-\concept{Recording checks}
+\keyword{check}
+\keyword{data}
+\keyword{management}
+\keyword{package}

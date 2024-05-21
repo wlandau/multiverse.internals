@@ -33,10 +33,24 @@ and their hashes.
 \details{
 This function tracks a manifest containing the current version,
 the current hash, the highest version ever released, and
-the hash of the highest version ever released. It uses this information
+the hash of the highest version ever released.
+\code{\link[=check_versions]{check_versions()}} uses this information
 to determine whether the package complies with best
 practices for version numbers.
 }
+\section{Package checks for production}{
+
+Functions like \code{\link[=check_versions]{check_versions()}} and \code{\link[=check_descriptions]{check_descriptions()}}
+perform health checks for all packages in R-multiverse.
+Only packages that pass these checks go to the production repository at
+\url{https://production.r-multiverse.org}. For a complete list of checks, see
+the \verb{check_*()} functions listed at
+\url{https://r-multiverse.org/multiverse.internals/reference.html}.
+\code{\link[=record_versions]{record_versions()}} updates the version number history
+of releases in R-multiverse, and \code{\link[=record_issues]{record_issues()}} gathers
+together all the issues about R-multiverse packages.
+}
+
 \examples{
   # R-multiverse uses https://multiverse.r-multiverse.org as the repo.
   repo <- "https://wlandau.r-universe.dev" # just for testing and examples
@@ -55,3 +69,4 @@ practices for version numbers.
   )
   readLines(versions)
 }
+\concept{package check data management}

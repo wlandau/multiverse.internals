@@ -1,0 +1,20 @@
+url: https://r-multiverse.org/multiverse.internals/
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#152640"
+
+reference:
+- title: Package contribution reviews
+  contents:
+  - review_pull_request
+  - review_pull_requests
+- title: Package checks for production
+  contents:
+  - check_checks
+  - check_descriptions
+  - check_versions
+- title: Package check data management
+  contents:
+  - record_issues
+  - record_versions

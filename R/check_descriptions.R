@@ -1,6 +1,6 @@
 #' @title Check package `DESCRIPTION` files.
 #' @export
-#' @family checks
+#' @family package checks for production
 #' @description Check the `DESCRIPTION` files of packages for specific
 #'   issues.
 #' @details This function scrapes the `src/contrib/PACKAGES.json` file
@@ -9,7 +9,7 @@
 #'   A packages with a `Remotes:` field in the `DESCRIPTION` file may
 #'   depend on development versions of other packages and so are
 #'   excluded from the production universe.
-#' @inheritSection check_versions Checks
+#' @inheritSection record_issues Package checks for production
 #' @return A named list of information about packages which do not comply
 #'   with `DESCRPTION` checks. Each name is a package name,
 #'   and each element contains specific information about

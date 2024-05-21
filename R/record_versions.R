@@ -1,12 +1,15 @@
 #' @title Record the manifest of package versions.
 #' @export
+#' @family package check data management
 #' @description Record the manifest of versions of packages
 #'   and their hashes.
 #' @details This function tracks a manifest containing the current version,
 #'   the current hash, the highest version ever released, and
-#'   the hash of the highest version ever released. It uses this information
+#'   the hash of the highest version ever released.
+#'   [check_versions()] uses this information
 #'   to determine whether the package complies with best
 #'   practices for version numbers.
+#' @inheritSection record_issues Package checks for production
 #' @return `NULL` (invisibly). Writes a package version manifest
 #'   and a manifest of version issues as JSON files.
 #' @param versions Character of length 1, file path to a JSON manifest

@@ -1,14 +1,11 @@
 #' @title Check R-universe package check results.
 #' @export
-#' @family checks
+#' @family package checks for production
 #' @description Check R-universe package check results.
-#' @details This function scrapes the `src/contrib/PACKAGES.json` file
-#'   of the universe to check the data in the `DESCRIPTION` files of packages
-#'   for compliance. Right now, the only field checked is `Remotes:`.
-#'   A packages with a `Remotes:` field in the `DESCRIPTION` file may
-#'   depend on development versions of other packages and so are
-#'   excluded from the production universe.
-#' @inheritSection check_versions Checks
+#' @details [check_checks()] function scrapes the R-universe check API
+#'   to scan all R-multiverse packages for issues that may have
+#'   happened during building and testing.
+#' @inheritSection record_issues Package checks for production
 #' @return A named list of information about packages which do not comply
 #'   with `DESCRPTION` checks. Each name is a package name,
 #'   and each element contains specific information about

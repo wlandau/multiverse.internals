@@ -32,21 +32,25 @@ A packages with a \verb{Remotes:} field in the \code{DESCRIPTION} file may
 depend on development versions of other packages and so are
 excluded from the production universe.
 }
-\section{Checks}{
+\section{Package checks for production}{
 
 Functions like \code{\link[=check_versions]{check_versions()}} and \code{\link[=check_descriptions]{check_descriptions()}}
-the packages in \url{https://multiverse.r-multiverse.org}. Only packages
-that pass these checks will appear in
-\url{https://production.r-multiverse.org}. For a complete list of checks,
-see \url{https://r-multiverse.org/multiverse.internals/reference.html#checks}
+perform health checks for all packages in R-multiverse.
+Only packages that pass these checks go to the production repository at
+\url{https://production.r-multiverse.org}. For a complete list of checks, see
+the \verb{check_*()} functions listed at
+\url{https://r-multiverse.org/multiverse.internals/reference.html}.
+\code{\link[=record_versions]{record_versions()}} updates the version number history
+of releases in R-multiverse, and \code{\link[=record_issues]{record_issues()}} gathers
+together all the issues about R-multiverse packages.
 }
 
 \examples{
   str(check_descriptions(repo = "https://multiverse.r-multiverse.org"))
 }
 \seealso{
-Other checks: 
+Other package checks for production: 
 \code{\link{check_checks}()},
 \code{\link{check_versions}()}
 }
-\concept{checks}
+\concept{package checks for production}

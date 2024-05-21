@@ -24,28 +24,29 @@ non-compliance.
 Check R-universe package check results.
 }
 \details{
-This function scrapes the \code{src/contrib/PACKAGES.json} file
-of the universe to check the data in the \code{DESCRIPTION} files of packages
-for compliance. Right now, the only field checked is \verb{Remotes:}.
-A packages with a \verb{Remotes:} field in the \code{DESCRIPTION} file may
-depend on development versions of other packages and so are
-excluded from the production universe.
+\code{\link[=check_checks]{check_checks()}} function scrapes the R-universe check API
+to scan all R-multiverse packages for issues that may have
+happened during building and testing.
 }
-\section{Checks}{
+\section{Package checks for production}{
 
 Functions like \code{\link[=check_versions]{check_versions()}} and \code{\link[=check_descriptions]{check_descriptions()}}
-the packages in \url{https://multiverse.r-multiverse.org}. Only packages
-that pass these checks will appear in
-\url{https://production.r-multiverse.org}. For a complete list of checks,
-see \url{https://r-multiverse.org/multiverse.internals/reference.html#checks}
+perform health checks for all packages in R-multiverse.
+Only packages that pass these checks go to the production repository at
+\url{https://production.r-multiverse.org}. For a complete list of checks, see
+the \verb{check_*()} functions listed at
+\url{https://r-multiverse.org/multiverse.internals/reference.html}.
+\code{\link[=record_versions]{record_versions()}} updates the version number history
+of releases in R-multiverse, and \code{\link[=record_issues]{record_issues()}} gathers
+together all the issues about R-multiverse packages.
 }
 
 \examples{
   str(check_descriptions(repo = "https://multiverse.r-multiverse.org"))
 }
 \seealso{
-Other checks: 
+Other package checks for production: 
 \code{\link{check_descriptions}()},
 \code{\link{check_versions}()}
 }
-\concept{checks}
+\concept{package checks for production}

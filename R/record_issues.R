@@ -1,8 +1,17 @@
 #' @title Record package issues.
 #' @export
-#' @family Recording checks
-#' @description Record package check and version issues in individual JSON
-#'   files.
+#' @keywords package check data management
+#' @description Record R-multiverse package issues in compact JSON files.
+#' @section Package checks for production:
+#'   Functions like [check_versions()] and [check_descriptions()]
+#'   perform health checks for all packages in R-multiverse.
+#'   Only packages that pass these checks go to the production repository at
+#'   <https://production.r-multiverse.org>. For a complete list of checks, see
+#'   the `check_*()` functions listed at
+#'   <https://r-multiverse.org/multiverse.internals/reference.html>.
+#'   [record_versions()] updates the version number history
+#'   of releases in R-multiverse, and [record_issues()] gathers
+#'   together all the issues about R-multiverse packages.
 #' @return `NULL` (invisibly).
 #' @inheritParams check_checks
 #' @inheritParams check_versions

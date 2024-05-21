@@ -1,17 +1,12 @@
 #' @title Check package versions.
 #' @export
-#' @family checks
+#' @family package checks for production
 #' @description Check package version number history for compliance.
 #' @details This function checks the version number history of packages
 #'   in R-multiverse and reports any packages with issues. The current
 #'   released version of a given package must be unique, and it must be
 #'   greater than all the versions of all the previous package releases.
-#' @section Checks:
-#'   Functions like [check_versions()] and [check_descriptions()]
-#'   the packages in <https://multiverse.r-multiverse.org>. Only packages
-#'   that pass these checks will appear in
-#'   <https://production.r-multiverse.org>. For a complete list of checks,
-#'   see <https://r-multiverse.org/multiverse.internals/reference.html#checks>
+#' @inheritSection record_issues Package checks for production
 #' @return A named list of information about packages which do not comply
 #'   with version number history checks. Each name is a package name,
 #'   and each element contains specific information about version
