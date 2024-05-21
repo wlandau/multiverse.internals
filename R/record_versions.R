@@ -15,7 +15,7 @@
 #'   in `repo`. This argument is exposed for testing only.
 record_versions <- function(
   manifest = "versions.json",
-  repo = "https://r-multiverse.r-universe.dev",
+  repo = "https://multiverse.r-multiverse.org",
   current = multiverse.internals::get_current_versions(repo = repo)
 ) {
   if (!file.exists(manifest)) {
@@ -35,7 +35,7 @@ record_versions <- function(
 #' @return A data frame of packages with their current versions and hashes.
 #' @inheritParams record_versions
 get_current_versions <- function(
-  repo = "https://r-multiverse.r-universe.dev"
+  repo = "https://multiverse.r-multiverse.org"
 ) {
   listing <- file.path(
     contrib.url(repos = repo, type = "source"),

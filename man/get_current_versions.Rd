@@ -4,7 +4,7 @@
 \alias{get_current_versions}
 \title{Get the current versions of packages}
 \usage{
-get_current_versions(repo = "https://r-multiverse.r-universe.dev")
+get_current_versions(repo = "https://multiverse.r-multiverse.org")
 }
 \arguments{
 \item{repo}{Character string of package repositories to track.}

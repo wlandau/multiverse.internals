@@ -6,7 +6,7 @@
 \usage{
 record_versions(
   manifest = "versions.json",
-  repo = "https://r-multiverse.r-universe.dev",
+  repo = "https://multiverse.r-multiverse.org",
   current = multiverse.internals::get_current_versions(repo = repo)
 )
 }
