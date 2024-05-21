@@ -5,13 +5,17 @@
 \title{Record the manifest of package versions.}
 \usage{
 record_versions(
-  manifest = "versions.json",
+  versions = "versions.json",
   repo = "https://multiverse.r-multiverse.org",
   current = multiverse.internals::get_current_versions(repo = repo)
 )
 }
 \arguments{
-\item{manifest}{Character of length 1, file path to the JSON manifest.}
+\item{versions}{Character of length 1, file path to a JSON manifest
+tracking the history of released versions of packages.
+The official versions file for R-multiverse is maintained and
+updated periodically at
+\url{https://github.com/r-multiverse/checks/blob/main/versions.json}.}
 
 \item{repo}{Character string of package repositories to track.}
 
@@ -32,4 +36,22 @@ the current hash, the highest version ever released, and
 the hash of the highest version ever released. It uses this information
 to determine whether the package complies with best
 practices for version numbers.
+}
+\examples{
+  # R-multiverse uses https://multiverse.r-multiverse.org as the repo.
+  repo <- "https://wlandau.r-universe.dev" # just for testing and examples
+  output <- tempfile()
+  versions <- tempfile()
+  # First snapshot:
+  record_versions(
+    versions = versions,
+    repo = repo
+  )
+  readLines(versions)
+  # In subsequent snapshots, we have historical information about versions.
+  record_versions(
+    versions = versions,
+    repo = repo
+  )
+  readLines(versions)
 }

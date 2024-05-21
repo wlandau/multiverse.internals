@@ -4,12 +4,23 @@
 \alias{record_issues}
 \title{Record package issues.}
 \usage{
-record_issues(versions = "versions.json", output = "issues")
+record_issues(
+  repo = "https://multiverse.r-multiverse.org",
+  versions = "versions.json",
+  output = "issues",
+  mock = NULL
+)
 }
 \arguments{
+\item{repo}{Character of length 1, URL of the repository
+of R package candidates for production.}
+
 \item{output}{Character of length 1, file path to the folder to record
 new package issues. Each call to \code{record_issues()} overwrites the
 contents of the repo.}
+
+\item{mock}{For testing purposes only, a named list of data frames
+for the \code{mock} argument of each type of check.}
 }
 \value{
 \code{NULL} (invisibly).
@@ -17,4 +28,28 @@ contents of the repo.}
 \description{
 Record package check and version issues in individual JSON
 files.
+}
+\examples{
+  # R-multiverse uses https://multiverse.r-multiverse.org as the repo.
+  repo <- "https://wlandau.r-universe.dev" # just for testing and examples
+  output <- tempfile()
+  versions <- tempfile()
+  record_versions(
+    versions = versions,
+    repo = repo
+  )
+  record_issues(
+    repo = repo,
+    versions = versions,
+    output = output
+  )
+  files <- list.files(output)
+  print(files)
+  package <- head(files, n = 1)
+  if (length(package)) {
+    print(package)
+  }
+  if (length(package)) {
+    print(readLines(file.path(output, package)))
+  }
 }

@@ -18,7 +18,7 @@
 #'   str(check_descriptions(repo = "https://multiverse.r-multiverse.org"))
 check_checks <- function(
   repo = "https://multiverse.r-multiverse.org",
-  index = NULL
+  mock = NULL
 ) {
   fields_check <- c(
     "_linuxdevel",
@@ -31,7 +31,7 @@ check_checks <- function(
     "_buildurl"
   )
   fields <- c(fields_check, fields_info)
-  index <- index %|||% get_package_api(repo = repo, fields = fields)
+  index <- mock %|||% get_package_api(repo = repo, fields = fields)
   for (field in fields) {
     index[[field]][is.na(index[[field]])] <- "src-failure"
   }

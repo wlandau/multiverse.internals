@@ -1,72 +1,106 @@
-test_that("record_issues() in a mock repo", {
-  # Temporary files used in the mock test.
-  manifest <- tempfile()
+test_that("record_issues() mocked", {
   output <- tempfile()
-  # First update to the manifest.
-  contents <- data.frame(
-    package = c(
-      "package_unmodified",
-      "version_decremented",
-      "version_incremented",
-      "version_unmodified"
+  record_issues(
+    versions = mock_versions(),
+    mock = list(
+      checks = mock_checks,
+      descriptions = mock_descriptions
     ),
-    version_current = rep("1.0.0", 4L),
-    hash_current = rep("hash_1.0.0", 4L)
+    output = output
   )
-  record_versions(manifest = manifest, current = contents)
-  record_issues(manifest = manifest, output = output)
-  expect_equal(list.files(output), character(0L))
-  # Update the manifest after no changes to packages or versions.
-  suppressMessages(
-    record_versions(manifest = manifest, current = contents)
-  )
-  record_issues(manifest = manifest, output = output)
-  expect_equal(list.files(output), character(0L))
-  # Update the packages in all the ways indicated below.
-  index <- contents$package == "version_decremented"
-  contents$version_current[index] <- "0.0.1"
-  contents$hash_current[index] <- "hash_0.0.1"
-  index <- contents$package == "version_incremented"
-  contents$version_current[index] <- "2.0.0"
-  contents$hash_current[index] <- "hash_2.0.0"
-  index <- contents$package == "version_unmodified"
-  contents$version_current[index] <- "1.0.0"
-  contents$hash_current[index] <- "hash_1.0.0-modified"
-  for (index in seq_len(2L)) {
-    record_versions(
-      manifest = manifest,
-      current = contents
-    )
-    record_issues(manifest = manifest, output = output)
-    expect_equal(
-      sort(list.files(output)),
-      sort(c("version_decremented", "version_unmodified"))
-    )
-    out <- jsonlite::read_json(file.path(output, "version_decremented"))
-    expect_equal(
-      unlist(out, recursive = TRUE),
+  expect_equal(
+    sort(c(list.files(output))),
+    sort(
       c(
-        package = "version_decremented",
+        "audio.whisper",
+        "httpgd",
+        "INLA",
+        "polars",
+        "SBC",
+        "stantargets", 
+        "string2path",
+        "tidypolars",
+        "tidytensor",
+        "version_decremented", 
+        "version_unmodified"
+      )
+    )
+  )
+  runs <- "https://github.com/r-universe/r-multiverse/actions/runs"
+  expect_equal(
+    jsonlite::read_json(file.path(output, "INLA"), simplifyVector = TRUE),
+    list(
+      checks = list(
+        "_linuxdevel" = "src-failure",
+        "_macbinary" = "src-failure", 
+        "_wasmbinary" = "src-failure",
+        "_winbinary" = "src-failure", 
+        "_status" = "src-failure",
+        "_buildurl" = file.path(runs, "8487512222")
+      )
+    )
+  )
+  expect_equal(
+    jsonlite::read_json(
+      file.path(output, "stantargets"),
+      simplifyVector = TRUE
+    ),
+    list(
+      checks = list(
+        "_linuxdevel" = "failure",
+        "_macbinary" = "success", 
+        "_wasmbinary" = "success",
+        "_winbinary" = "success",
+        "_status" = "success", 
+        "_buildurl" = file.path(runs, "8998732490")
+      ), 
+      descriptions = list(
+        remotes = matrix(c("hyunjimoon/SBC", "stan-dev/cmdstanr"), nrow = 1)
+      )
+    )
+  )
+  expect_equal(
+    jsonlite::read_json(
+      file.path(output, "version_decremented"),
+      simplifyVector = TRUE
+    ),
+    list(
+      versions = list(
         version_current = "0.0.1",
-        hash_current = "hash_0.0.1",
+        hash_current = "hash_0.0.1", 
         version_highest = "1.0.0",
-        hash_highest = "hash_1.0.0",
-        version_okay = FALSE
+        hash_highest = "hash_1.0.0"
       )
     )
-    out <- jsonlite::read_json(file.path(output, "version_unmodified"))
-    expect_equal(
-      unlist(out, recursive = TRUE),
-      c(
-        package = "version_unmodified",
+  )
+  expect_equal(
+    jsonlite::read_json(
+      file.path(output, "version_unmodified"),
+      simplifyVector = TRUE
+    ),
+    list(
+      versions = list(
         version_current = "1.0.0",
-        hash_current = "hash_1.0.0-modified",
+        hash_current = "hash_1.0.0-modified", 
         version_highest = "1.0.0",
-        hash_highest = "hash_1.0.0",
-        version_okay = FALSE
+        hash_highest = "hash_1.0.0"
       )
     )
-  }
-  # Remove temporary files
-  unlink(manifest)
+  )
 })
+
+test_that("record_issues() on a small repo", {
+  output <- tempfile()
+  versions <- tempfile()
+  record_versions(
+    manifest = versions,
+    repo = "https://wlandau.r-universe.dev"
+  )
+  record_issues(
+    repo = "https://wlandau.r-universe.dev",
+    versions = versions,
+    output = output
+  )
+  expect_true(dir.exists(output))
+})
+  

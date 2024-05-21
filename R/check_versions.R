@@ -18,11 +18,7 @@
 #'   non-compliance: the current version number, the current version hash,
 #'   and the analogous versions and hashes of the highest-versioned
 #'   release recorded.
-#' @param versions Character of length 1, file path to a JSON manifest
-#'   tracking the history of released versions of packages.
-#'   The official versions file for R-multiverse is maintained and
-#'   updated periodically at
-#'   <https://github.com/r-multiverse/checks/blob/main/versions.json>.
+#' @inheritParams record_versions
 #' @examples
 #'   # See https://github.com/r-multiverse/checks/blob/main/versions.json
 #'   # for the official versions JSON for R-multiverse.

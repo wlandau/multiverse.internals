@@ -4,14 +4,15 @@
 \alias{check_descriptions}
 \title{Check package \code{DESCRIPTION} files.}
 \usage{
-check_descriptions(repo = "https://multiverse.r-multiverse.org", index = NULL)
+check_descriptions(repo = "https://multiverse.r-multiverse.org", mock = NULL)
 }
 \arguments{
 \item{repo}{Character of length 1, URL of the repository
 of R package candidates for production.}
 
-\item{index}{For testing purposes only,
-an optional pre-computed data frame with details about packages.}
+\item{mock}{For testing purposes only,
+an optional pre-computed data frame with details about packages
+for this type of check.}
 }
 \value{
 A named list of information about packages which do not comply

@@ -1,107 +1,5 @@
-test_that("check_checks() mock index", {
-  index <- structure(
-    list(
-      Package = c(
-        "tinytest", "tidytensor", "secretbase",
-        "multiverse.internals", "SBC", "duckdb", "httpgd", "targetsketch",
-        "stantargets", "zstdlite", "INLA", "audio.whisper", "tidypolars",
-        "multitools", "audio.vadwebrtc", "nanonext", "polars", "cmdstanr",
-        "string2path"
-      ),
-      "_user" = c(
-        "r-multiverse", "r-multiverse", "r-multiverse",
-        "r-multiverse", "r-multiverse", "r-multiverse", "r-multiverse",
-        "r-multiverse", "r-multiverse", "r-multiverse", "r-multiverse",
-        "r-multiverse", "r-multiverse", "r-multiverse", "r-multiverse",
-        "r-multiverse", "r-multiverse", "r-multiverse", "r-multiverse"
-      ),
-      "_type" = c(
-        "src", "src", "src", "src", "src", "src", "src",
-        "src", "src", "src", "failure", "src", "src", "src", "src", "src",
-        "src", "src", "src"
-      ),
-      "_status" = c(
-        "success", "failure", "success",
-        "success", "failure", "success", "success", "success", "success",
-        "success", NA, "success", "success", "success", "success", "success",
-        "success", "success", "success"
-      ),
-      "_winbinary" = c(
-        "success", "success", "success", "success",
-        "success", "success", "success",
-        "success", "success", "success", NA, "success", "success", "success",
-        "success", "success", "success", "success", "success"
-      ),
-      "_macbinary" = c(
-        "success", "success", "success", "success",
-        "success", "success", "success",
-        "success", "success", "success", NA, "success", "success", "success",
-        "success", "success", "arm64-failure", "success", "success"
-      ),
-      "_wasmbinary" = c(
-        "success", "success", "success", "success",
-        "success", "success", "none", "success", "success", "success",
-        NA, "success", "success", "success", "success", "success",
-        "none", "success", "none"
-      ),
-      "_linuxdevel" = c(
-        "success", "failure", "success", "success",
-        "failure", "success", "success",
-        "success", "failure", "success", NA,
-        "success", "success",
-        "success", "success", "success",
-        "failure", "success", "success"
-      ),
-      "_buildurl" = c(
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998731783",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998732025",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998731915",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998732064",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998731731",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998731753",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998732459",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998732171",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998732490",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998732389",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8487512222",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998732607",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998732444",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998731870",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998732026",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998732176",
-        "https://github.com/r-universe/r-multiverse/actions/runs/9005231218",
-        "https://github.com/r-universe/r-multiverse/actions/runs/9140511697",
-        "https://github.com/r-universe/r-multiverse/actions/runs/8998732437"
-      ),
-      "_indexed" = c(
-        FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, 
-        FALSE, TRUE, FALSE, FALSE, NA, TRUE, TRUE, TRUE, FALSE, FALSE, 
-        TRUE, TRUE, FALSE),
-      "_binaries" = list(
-        list(), list(), list(), 
-        list(), list(), list(), list(), list(), list(), list(), 
-        list(), list(), list(), list(), list(), list(), list(), 
-        list(), list()
-      ),
-      "_failure" = structure(
-        list(
-          buildurl = c(
-            NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
-            paste0(
-              "https://github.com/r-universe/r-multiverse",
-              "/actions/runs/8487512222"
-            ), 
-            NA, NA, NA, NA, NA, NA, NA, NA
-          )
-        ),
-        class = "data.frame",
-        row.names = c(NA, 19L)
-      )
-    ),
-    class = "data.frame",
-    row.names = c(NA, 19L)
-  )
-  issues <- check_checks(index = index)
+test_that("check_checks() mocked", {
+  issues <- check_checks(mock = mock_checks)
   url <- "https://github.com/r-universe/r-multiverse/actions/runs"
   expected <- list(
     httpgd = list(
@@ -145,4 +43,10 @@ test_that("check_checks() mock index", {
     )
   )
   expect_equal(issues[order(names(issues))], expected[order(names(expected))])
+})
+
+test_that("check_checks() on a small repo", {
+  issues <- check_checks(repo = "https://wlandau.r-universe.dev")
+  expect_true(is.list(issues))
+  expect_named(issues)
 })

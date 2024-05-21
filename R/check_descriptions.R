@@ -16,16 +16,17 @@
 #'   non-compliance.
 #' @param repo Character of length 1, URL of the repository
 #'   of R package candidates for production.
-#' @param index For testing purposes only,
-#'   an optional pre-computed data frame with details about packages.
+#' @param mock For testing purposes only,
+#'   an optional pre-computed data frame with details about packages
+#'   for this type of check.
 #' @examples
 #'   str(check_descriptions(repo = "https://multiverse.r-multiverse.org"))
 check_descriptions <- function(
   repo = "https://multiverse.r-multiverse.org",
-  index = NULL
+  mock = NULL
 ) {
   fields <- "Remotes"
-  index <- index %|||% get_package_index(repo = repo, fields = fields)
+  index <- mock %|||% get_package_index(repo = repo, fields = fields)
   index <- check_descriptions_remotes(index)
   index <- index[, c("Package", fields)]
   check_list(index)

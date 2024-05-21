@@ -1,4 +1,4 @@
-test_that("record_versions() in a mock repo", {
+test_that("record_versions() mocked", {
   # Temporary files used in the mock test.
   manifest <- tempfile()
   # First update to the manifest.
