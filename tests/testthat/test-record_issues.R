@@ -93,7 +93,7 @@ test_that("record_issues() on a small repo", {
   output <- tempfile()
   versions <- tempfile()
   record_versions(
-    manifest = versions,
+    versions = versions,
     repo = "https://wlandau.r-universe.dev"
   )
   record_issues(

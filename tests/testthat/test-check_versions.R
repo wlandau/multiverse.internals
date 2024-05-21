@@ -1,6 +1,6 @@
 test_that("check_versions() mocked", {
   # Temporary files used in the mock test.
-  manifest <- tempfile()
+  versions <- tempfile()
   # First update to the manifest.
   contents <- data.frame(
     package = c(
@@ -12,13 +12,13 @@ test_that("check_versions() mocked", {
     version_current = rep("1.0.0", 4L),
     hash_current = rep("hash_1.0.0", 4L)
   )
-  record_versions(manifest = manifest, current = contents)
-  expect_equal(unname(check_versions(manifest)), list())
+  record_versions(versions = versions, current = contents)
+  expect_equal(unname(check_versions(versions)), list())
   # Update the manifest after no changes to packages or versions.
   suppressMessages(
-    record_versions(manifest = manifest, current = contents)
+    record_versions(versions = versions, current = contents)
   )
-  expect_equal(unname(check_versions(manifest)), list())
+  expect_equal(unname(check_versions(versions)), list())
   # Update the packages in all the ways indicated above.
   index <- contents$package == "version_decremented"
   contents$version_current[index] <- "0.0.1"
@@ -31,10 +31,10 @@ test_that("check_versions() mocked", {
   contents$hash_current[index] <- "hash_1.0.0-modified"
   for (index in seq_len(2L)) {
     record_versions(
-      manifest = manifest,
+      versions = versions,
       current = contents
     )
-    out <- check_versions(manifest)
+    out <- check_versions(versions)
     expect_equal(
       out,
       list(
@@ -54,5 +54,5 @@ test_that("check_versions() mocked", {
     )
   }
   # Remove temporary files
-  unlink(manifest)
+  unlink(versions)
 })
