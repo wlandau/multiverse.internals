@@ -17,11 +17,11 @@ test_that("record_issues() mocked", {
         "INLA",
         "polars",
         "SBC",
-        "stantargets", 
+        "stantargets",
         "string2path",
         "tidypolars",
         "tidytensor",
-        "version_decremented", 
+        "version_decremented",
         "version_unmodified"
       )
     )
@@ -32,9 +32,9 @@ test_that("record_issues() mocked", {
     list(
       checks = list(
         "_linuxdevel" = "src-failure",
-        "_macbinary" = "src-failure", 
+        "_macbinary" = "src-failure",
         "_wasmbinary" = "src-failure",
-        "_winbinary" = "src-failure", 
+        "_winbinary" = "src-failure",
         "_status" = "src-failure",
         "_buildurl" = file.path(runs, "8487512222")
       )
@@ -48,12 +48,12 @@ test_that("record_issues() mocked", {
     list(
       checks = list(
         "_linuxdevel" = "failure",
-        "_macbinary" = "success", 
+        "_macbinary" = "success",
         "_wasmbinary" = "success",
         "_winbinary" = "success",
-        "_status" = "success", 
+        "_status" = "success",
         "_buildurl" = file.path(runs, "8998732490")
-      ), 
+      ),
       descriptions = list(
         remotes = matrix(c("hyunjimoon/SBC", "stan-dev/cmdstanr"), nrow = 1)
       )
@@ -67,7 +67,7 @@ test_that("record_issues() mocked", {
     list(
       versions = list(
         version_current = "0.0.1",
-        hash_current = "hash_0.0.1", 
+        hash_current = "hash_0.0.1",
         version_highest = "1.0.0",
         hash_highest = "hash_1.0.0"
       )
@@ -81,7 +81,7 @@ test_that("record_issues() mocked", {
     list(
       versions = list(
         version_current = "1.0.0",
-        hash_current = "hash_1.0.0-modified", 
+        hash_current = "hash_1.0.0-modified",
         version_highest = "1.0.0",
         hash_highest = "hash_1.0.0"
       )
@@ -103,4 +103,3 @@ test_that("record_issues() on a small repo", {
   )
   expect_true(dir.exists(output))
 })
-  

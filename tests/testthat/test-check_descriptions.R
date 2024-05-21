@@ -1,7 +1,7 @@
 test_that("check_descriptions() mocked", {
   issues <- check_descriptions(mock = mock_descriptions)
   expected <- list(
-    audio.whisper = list(remotes = list("bnosac/audio.vadwebrtc")), 
+    audio.whisper = list(remotes = list("bnosac/audio.vadwebrtc")),
     stantargets = list(
       remotes = list(c("hyunjimoon/SBC", "stan-dev/cmdstanr"))
     ),

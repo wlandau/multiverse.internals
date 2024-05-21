@@ -40,10 +40,10 @@ test_that("check_versions() mocked", {
       list(
         version_decremented = list(
           version_current = "0.0.1",
-          hash_current = "hash_0.0.1", 
+          hash_current = "hash_0.0.1",
           version_highest = "1.0.0",
           hash_highest = "hash_1.0.0"
-        ), 
+        ),
         version_unmodified = list(
           version_current = "1.0.0",
           hash_current = "hash_1.0.0-modified",

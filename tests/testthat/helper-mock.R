@@ -73,13 +73,14 @@ mock_checks <- structure(
       "https://github.com/r-universe/r-multiverse/actions/runs/8998732437"
     ),
     "_indexed" = c(
-      FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, 
-      FALSE, TRUE, FALSE, FALSE, NA, TRUE, TRUE, TRUE, FALSE, FALSE, 
-      TRUE, TRUE, FALSE),
+      FALSE, TRUE, FALSE, TRUE, TRUE, FALSE,
+      FALSE, TRUE, FALSE, FALSE, NA, TRUE, TRUE, TRUE, FALSE, FALSE,
+      TRUE, TRUE, FALSE
+    ),
     "_binaries" = list(
-      list(), list(), list(), 
-      list(), list(), list(), list(), list(), list(), list(), 
-      list(), list(), list(), list(), list(), list(), list(), 
+      list(), list(), list(),
+      list(), list(), list(), list(), list(), list(), list(),
+      list(), list(), list(), list(), list(), list(), list(),
       list(), list()
     ),
     "_failure" = structure(
@@ -89,7 +90,7 @@ mock_checks <- structure(
           paste0(
             "https://github.com/r-universe/r-multiverse",
             "/actions/runs/8487512222"
-          ), 
+          ),
           NA, NA, NA, NA, NA, NA, NA, NA
         )
       ),
@@ -104,18 +105,18 @@ mock_checks <- structure(
 mock_descriptions <- structure(
   list(
     Package = c(
-      "SBC", "audio.vadwebrtc", "audio.whisper", 
-      "cmdstanr", "duckdb", "httpgd", "multitools", "multiverse.internals", 
-      "nanonext", "polars", "secretbase", "stantargets", "string2path", 
+      "SBC", "audio.vadwebrtc", "audio.whisper",
+      "cmdstanr", "duckdb", "httpgd", "multitools", "multiverse.internals",
+      "nanonext", "polars", "secretbase", "stantargets", "string2path",
       "targetsketch", "tidypolars", "tidytensor", "tinytest", "zstdlite"
     ),
     Version = c(
-      "0.3.0.9000", "0.2", "0.4.1", "0.8.0", "0.10.1", 
-      "2.0.1", "0.1.0", "0.1.4", "1.0.0", "0.16.4", "0.5.0", "0.1.1", 
+      "0.3.0.9000", "0.2", "0.4.1", "0.8.0", "0.10.1",
+      "2.0.1", "0.1.0", "0.1.4", "1.0.0", "0.16.4", "0.5.0", "0.1.1",
       "0.1.6", "0.0.1", "0.7.0", "1.0.0", "1.4.1.1", "0.2.6"
     ),
     Remotes = list(
-      NULL, NULL, "bnosac/audio.vadwebrtc", NULL, NULL, NULL, NULL, 
+      NULL, NULL, "bnosac/audio.vadwebrtc", NULL, NULL, NULL, NULL,
       NULL, NULL, NULL, NULL,
       c("hyunjimoon/SBC", "stan-dev/cmdstanr", ""),
       NULL, NULL, "markvanderloo/tinytest/pkg", NULL, NULL, NULL
