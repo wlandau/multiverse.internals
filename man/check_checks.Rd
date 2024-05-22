@@ -42,7 +42,11 @@ together all the issues about R-multiverse packages.
 }
 
 \examples{
-  str(check_checks(repo = "https://multiverse.r-multiverse.org"))
+  issues <- check_checks(
+    # R-multiverse uses https://multiverse.r-multiverse.org
+    repo = "https://wlandau.r-universe.dev"
+  )
+  str(issues)
 }
 \seealso{
 Other package checks for production: 

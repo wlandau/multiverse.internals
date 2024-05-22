@@ -12,7 +12,11 @@
 #'   non-compliance.
 #' @inheritParams check_descriptions
 #' @examples
-#'   str(check_checks(repo = "https://multiverse.r-multiverse.org"))
+#'   issues <- check_checks(
+#'     # R-multiverse uses https://multiverse.r-multiverse.org
+#'     repo = "https://wlandau.r-universe.dev"
+#'   )
+#'   str(issues)
 check_checks <- function(
   repo = "https://multiverse.r-multiverse.org",
   mock = NULL
