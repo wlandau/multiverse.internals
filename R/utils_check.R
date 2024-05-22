@@ -31,10 +31,11 @@ get_package_api <- function(
   listing <- file.path(
     repo,
     "api",
-    paste0("packages?fields=", paste(fields, collapse = ","))
+    paste0("packages?stream=true&fields=", paste(fields, collapse = ","))
   )
-  jsonlite::parse_json(
-    json = nanonext::ncurl(url = listing)$data, # TODO: needs to be paginated
+  jsonlite::stream_in(
+    con = gzcon(url(listing)),
+    verbose = FALSE,
     simplifyVector = TRUE,
     simplifyDataFrame = TRUE,
     simplifyMatrix = TRUE

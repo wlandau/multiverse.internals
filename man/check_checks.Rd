@@ -42,7 +42,7 @@ together all the issues about R-multiverse packages.
 }
 
 \examples{
-  str(check_descriptions(repo = "https://multiverse.r-multiverse.org"))
+  str(check_checks(repo = "https://multiverse.r-multiverse.org"))
 }
 \seealso{
 Other package checks for production: 
