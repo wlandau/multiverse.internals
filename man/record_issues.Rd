@@ -32,7 +32,8 @@ for the \code{mock} argument of each type of check.}
 \code{NULL} (invisibly).
 }
 \description{
-Record R-multiverse package issues in compact JSON files.
+Record R-multiverse package issues in
+package-specific JSON files.
 }
 \section{Package checks for production}{
 
@@ -45,6 +46,19 @@ the \verb{check_*()} functions listed at
 \code{\link[=record_versions]{record_versions()}} updates the version number history
 of releases in R-multiverse, and \code{\link[=record_issues]{record_issues()}} gathers
 together all the issues about R-multiverse packages.
+}
+
+\section{Issue files}{
+
+For each package with observed problems, \code{\link[=record_issues]{record_issues()}} writes
+an issue file. This issue file is a JSON list with one element
+per type of failing check. Each element has an informative name
+(for example, \code{checks}, \code{descriptions}, or \code{versions})
+and a list of diagnostic information.
+
+Each issue file also has a \code{date} field. This date the day that
+an issue was first noticed. It automatically resets the next time
+all package are resolved.
 }
 
 \examples{
