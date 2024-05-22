@@ -20,7 +20,11 @@
 #'   an optional pre-computed data frame with details about packages
 #'   for this type of check.
 #' @examples
-#'   str(check_descriptions(repo = "https://multiverse.r-multiverse.org"))
+#'   issues <- check_descriptions(
+#'     # R-multiverse uses https://multiverse.r-multiverse.org
+#'     repo = "https://wlandau.r-universe.dev"
+#'   )
+#'   str(issues)
 check_descriptions <- function(
   repo = "https://multiverse.r-multiverse.org",
   mock = NULL
