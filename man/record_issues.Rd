@@ -12,8 +12,8 @@ record_issues(
 )
 }
 \arguments{
-\item{repo}{Character of length 1, URL of the repository
-of R package candidates for production.}
+\item{repo}{Character of length 1, URL of the package repository.
+R-multiverse uses \code{"https://multiverse.r-multiverse.org"}.}
 
 \item{versions}{Character of length 1, file path to a JSON manifest
 tracking the history of released versions of packages.
@@ -26,7 +26,7 @@ new package issues. Each call to \code{record_issues()} overwrites the
 contents of the repo.}
 
 \item{mock}{For testing purposes only, a named list of data frames
-for the \code{mock} argument of each type of check.}
+for inputs to various intermediate functions.}
 }
 \value{
 \code{NULL} (invisibly).
@@ -35,13 +35,13 @@ for the \code{mock} argument of each type of check.}
 Record R-multiverse package issues in
 package-specific JSON files.
 }
-\section{Package checks for production}{
+\section{Package issues}{
 
-Functions like \code{\link[=check_versions]{check_versions()}} and \code{\link[=check_descriptions]{check_descriptions()}}
+Functions like \code{\link[=issues_versions]{issues_versions()}} and \code{\link[=issues_descriptions]{issues_descriptions()}}
 perform health checks for all packages in R-multiverse.
 Only packages that pass these checks go to the production repository at
 \url{https://production.r-multiverse.org}. For a complete list of checks, see
-the \verb{check_*()} functions listed at
+the \verb{issues_*()} functions listed at
 \url{https://r-multiverse.org/multiverse.internals/reference.html}.
 \code{\link[=record_versions]{record_versions()}} updates the version number history
 of releases in R-multiverse, and \code{\link[=record_issues]{record_issues()}} gathers
@@ -62,8 +62,7 @@ all package are resolved.
 }
 
 \examples{
-  # R-multiverse uses https://multiverse.r-multiverse.org as the repo.
-  repo <- "https://wlandau.r-universe.dev" # just for testing and examples
+  repo <- "https://wlandau.r-universe.dev"
   output <- tempfile()
   versions <- tempfile()
   record_versions(

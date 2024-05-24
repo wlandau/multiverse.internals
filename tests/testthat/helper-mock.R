@@ -1,6 +1,6 @@
-mock_checks <- structure(
+mock_meta_checks <- structure(
   list(
-    Package = c(
+    package = c(
       "tinytest", "tidytensor", "secretbase",
       "multiverse.internals", "SBC", "duckdb", "httpgd", "targetsketch",
       "stantargets", "zstdlite", "INLA", "audio.whisper", "tidypolars",
@@ -102,20 +102,20 @@ mock_checks <- structure(
   row.names = c(NA, 19L)
 )
 
-mock_descriptions <- structure(
+mock_meta_packages <- structure(
   list(
-    Package = c(
+    package = c(
       "SBC", "audio.vadwebrtc", "audio.whisper",
       "cmdstanr", "duckdb", "httpgd", "multitools", "multiverse.internals",
       "nanonext", "polars", "secretbase", "stantargets", "string2path",
       "targetsketch", "tidypolars", "tidytensor", "tinytest", "zstdlite"
     ),
-    Version = c(
+    version = c(
       "0.3.0.9000", "0.2", "0.4.1", "0.8.0", "0.10.1",
       "2.0.1", "0.1.0", "0.1.4", "1.0.0", "0.16.4", "0.5.0", "0.1.1",
       "0.1.6", "0.0.1", "0.7.0", "1.0.0", "1.4.1.1", "0.2.6"
     ),
-    Remotes = list(
+    remotes = list(
       NULL, NULL, "bnosac/audio.vadwebrtc", NULL, NULL, NULL, NULL,
       NULL, NULL, NULL, NULL,
       c("hyunjimoon/SBC", "stan-dev/cmdstanr", ""),

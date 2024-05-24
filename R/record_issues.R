@@ -3,12 +3,12 @@
 #' @keywords package check data management
 #' @description Record R-multiverse package issues in
 #'   package-specific JSON files.
-#' @section Package checks for production:
-#'   Functions like [check_versions()] and [check_descriptions()]
+#' @section Package issues:
+#'   Functions like [issues_versions()] and [issues_descriptions()]
 #'   perform health checks for all packages in R-multiverse.
 #'   Only packages that pass these checks go to the production repository at
 #'   <https://production.r-multiverse.org>. For a complete list of checks, see
-#'   the `check_*()` functions listed at
+#'   the `issues_*()` functions listed at
 #'   <https://r-multiverse.org/multiverse.internals/reference.html>.
 #'   [record_versions()] updates the version number history
 #'   of releases in R-multiverse, and [record_issues()] gathers
@@ -24,16 +24,16 @@
 #'   an issue was first noticed. It automatically resets the next time
 #'   all package are resolved.
 #' @return `NULL` (invisibly).
-#' @inheritParams check_checks
-#' @inheritParams check_versions
+#' @inheritParams meta_checks
+#' @inheritParams issues_checks
+#' @inheritParams issues_versions
 #' @param output Character of length 1, file path to the folder to record
 #'   new package issues. Each call to `record_issues()` overwrites the
 #'   contents of the repo.
 #' @param mock For testing purposes only, a named list of data frames
-#'   for the `mock` argument of each type of check.
+#'   for inputs to various intermediate functions.
 #' @examples
-#'   # R-multiverse uses https://multiverse.r-multiverse.org as the repo.
-#'   repo <- "https://wlandau.r-universe.dev" # just for testing and examples
+#'   repo <- "https://wlandau.r-universe.dev"
 #'   output <- tempfile()
 #'   versions <- tempfile()
 #'   record_versions(
@@ -61,15 +61,17 @@ record_issues <- function(
   mock = NULL
 ) {
   today <- mock$today %|||% format(Sys.Date(), fmt = "yyyy-mm-dd")
-  list() |>
-    issues(check_checks(repo, mock$checks), "checks") |>
-    issues(check_descriptions(repo, mock$descriptions), "descriptions") |>
-    issues(check_versions(versions = versions), "versions") |>
+  checks <- mock$checks %|||% meta_checks(repo = repo)
+  packages <- mock$packages %|||% meta_packages(repo = repo)
+  issues <- list() |>
+    add_issues(issues_checks(meta = checks), "checks") |>
+    add_issues(issues_descriptions(meta = packages), "descriptions") |>
+    add_issues(issues_versions(versions = versions), "versions") |>
     overwrite_issues(output = output, today = today)
   invisible()
 }
 
-issues <- function(total, subset, category) {
+add_issues <- function(total, subset, category) {
   for (package in names(subset)) {
     total[[package]][[category]] <- subset[[package]]
   }

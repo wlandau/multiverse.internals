@@ -3,8 +3,8 @@ test_that("record_issues() mocked", {
   record_issues(
     versions = mock_versions(),
     mock = list(
-      checks = mock_checks,
-      descriptions = mock_descriptions,
+      checks = mock_meta_checks,
+      packages = mock_meta_packages,
       today = "2024-01-01"
     ),
     output = output
@@ -57,7 +57,7 @@ test_that("record_issues() mocked", {
         "_buildurl" = file.path(runs, "8998732490")
       ),
       descriptions = list(
-        remotes = matrix(c("hyunjimoon/SBC", "stan-dev/cmdstanr"), nrow = 1)
+        remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")
       ),
       date = "2024-01-01"
     )
@@ -99,8 +99,8 @@ test_that("record_issues() date works", {
   record_issues(
     versions = mock_versions(),
     mock = list(
-      checks = mock_checks,
-      descriptions = mock_descriptions,
+      checks = mock_meta_checks,
+      packages = mock_meta_packages,
       today = "2024-01-01"
     ),
     output = output
@@ -108,8 +108,8 @@ test_that("record_issues() date works", {
   record_issues(
     versions = mock_versions(),
     mock = list(
-      checks = mock_checks,
-      descriptions = mock_descriptions
+      checks = mock_meta_checks,
+      packages = mock_meta_packages
     ),
     output = output
   )
@@ -136,8 +136,8 @@ test_that("record_issues() date works", {
   record_issues(
     versions = mock_versions(),
     mock = list(
-      checks = mock_checks,
-      descriptions = mock_descriptions
+      checks = mock_meta_checks,
+      packages = mock_meta_packages
     ),
     output = output
   )

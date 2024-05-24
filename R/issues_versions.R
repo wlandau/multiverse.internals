@@ -1,12 +1,12 @@
 #' @title Check package versions.
 #' @export
-#' @family package checks for production
+#' @family issues
 #' @description Check package version number history for compliance.
 #' @details This function checks the version number history of packages
 #'   in R-multiverse and reports any packages with issues. The current
 #'   released version of a given package must be unique, and it must be
 #'   greater than all the versions of all the previous package releases.
-#' @inheritSection record_issues Package checks for production
+#' @inheritSection record_issues Package issues
 #' @return A named list of information about packages which do not comply
 #'   with version number history checks. Each name is a package name,
 #'   and each element contains specific information about version
@@ -51,13 +51,13 @@
 #'   )
 #'   versions <- tempfile()
 #'   writeLines(lines, versions)
-#'   out <- check_versions(versions)
+#'   out <- issues_versions(versions)
 #'   str(out)
-check_versions <- function(versions) {
+issues_versions <- function(versions) {
   history <- jsonlite::read_json(path = versions, simplifyVector = TRUE)
   aligned <- (history$version_current == history$version_highest) &
     (history$hash_current == history$hash_highest)
   aligned[is.na(aligned)] <- TRUE
   out <- history[!aligned,, drop = FALSE] # nolint
-  check_list(out)
+  issues_list(out)
 }

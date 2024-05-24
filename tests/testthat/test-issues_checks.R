@@ -1,5 +1,5 @@
-test_that("check_checks() mocked", {
-  issues <- check_checks(mock = mock_checks)
+test_that("issues_checks() mocked", {
+  issues <- issues_checks(meta = mock_meta_checks)
   url <- "https://github.com/r-universe/r-multiverse/actions/runs"
   expected <- list(
     httpgd = list(
@@ -45,8 +45,9 @@ test_that("check_checks() mocked", {
   expect_equal(issues[order(names(issues))], expected[order(names(expected))])
 })
 
-test_that("check_checks() on a small repo", {
-  issues <- check_checks(repo = "https://wlandau.r-universe.dev")
+test_that("issues_checks() on a small repo", {
+  meta <- meta_checks(repo = "https://wlandau.r-universe.dev")
+  issues <- issues_checks(meta = meta)
   expect_true(is.list(issues))
   expect_named(issues)
 })

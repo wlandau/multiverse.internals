@@ -1,4 +1,4 @@
-test_that("check_versions() mocked", {
+test_that("issues_versions() mocked", {
   # Temporary files used in the mock test.
   versions <- tempfile()
   # First update to the manifest.
@@ -13,12 +13,12 @@ test_that("check_versions() mocked", {
     hash_current = rep("hash_1.0.0", 4L)
   )
   record_versions(versions = versions, current = contents)
-  expect_equal(unname(check_versions(versions)), list())
+  expect_equal(unname(issues_versions(versions)), list())
   # Update the manifest after no changes to packages or versions.
   suppressMessages(
     record_versions(versions = versions, current = contents)
   )
-  expect_equal(unname(check_versions(versions)), list())
+  expect_equal(unname(issues_versions(versions)), list())
   # Update the packages in all the ways indicated above.
   index <- contents$package == "version_decremented"
   contents$version_current[index] <- "0.0.1"
@@ -34,7 +34,7 @@ test_that("check_versions() mocked", {
       versions = versions,
       current = contents
     )
-    out <- check_versions(versions)
+    out <- issues_versions(versions)
     expect_equal(
       out,
       list(

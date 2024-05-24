@@ -6,10 +6,10 @@
 #' @details This function tracks a manifest containing the current version,
 #'   the current hash, the highest version ever released, and
 #'   the hash of the highest version ever released.
-#'   [check_versions()] uses this information
+#'   [issues_versions()] uses this information
 #'   to determine whether the package complies with best
 #'   practices for version numbers.
-#' @inheritSection record_issues Package checks for production
+#' @inheritSection record_issues Package issues
 #' @return `NULL` (invisibly). Writes a package version manifest
 #'   and a manifest of version issues as JSON files.
 #' @param versions Character of length 1, file path to a JSON manifest
@@ -61,11 +61,11 @@ record_versions <- function(
 get_current_versions <- function(
   repo = "https://multiverse.r-multiverse.org"
 ) {
-  index <- get_package_index(repo = repo, fields = "RemoteSha")
-  index <- index[, c("Package", "Version", "RemoteSha")]
-  colnames(index) <- c("package", "version_current", "hash_current")
-  rownames(index) <- NULL
-  index
+  meta <- meta_packages(repo = repo)
+  meta <- meta[, c("package", "version", "remotesha")]
+  colnames(meta) <- c("package", "version_current", "hash_current")
+  rownames(meta) <- NULL
+  meta
 }
 
 read_versions_previous <- function(versions) {
