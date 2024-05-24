@@ -2,12 +2,13 @@
 % Please edit documentation in R/issues_descriptions.R
 \name{issues_descriptions}
 \alias{issues_descriptions}
-\title{Check package \code{DESCRIPTION} files.}
+\title{Report \code{DESCRIPTION} file issues.}
 \usage{
 issues_descriptions(meta)
 }
 \arguments{
-\item{meta}{A data frame of package metadata returned by \code{\link[=meta_packages]{meta_packages()}}.}
+\item{meta}{A data frame with R-universe package check results
+returned by \code{\link[=meta_checks]{meta_checks()}}.}
 }
 \value{
 A named list of information about packages which do not comply
@@ -16,16 +17,13 @@ and each element contains specific information about
 non-compliance.
 }
 \description{
-Check the \code{DESCRIPTION} files of packages for specific
-issues.
+Report issues with the \code{DESCRIPTION} files of packages.
 }
 \details{
-This function scrapes the \code{src/contrib/PACKAGES.json} file
-of the universe to check the data in the \code{DESCRIPTION} files of packages
-for compliance. Right now, the only field checked is \verb{Remotes:}.
-A packages with a \verb{Remotes:} field in the \code{DESCRIPTION} file may
-depend on development versions of other packages and so are
-excluded from the production universe.
+\code{\link[=issues_descriptions]{issues_descriptions()}} scans downloaded metadata from the
+\code{PACKAGES.json} file of an R universe and reports issues with a
+package's description file, such as the presence of a
+\code{"Remotes"} field.
 }
 \section{Package issues}{
 

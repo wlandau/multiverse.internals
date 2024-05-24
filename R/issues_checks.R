@@ -2,7 +2,8 @@
 #' @export
 #' @family issues
 #' @description Check R-universe package check results.
-#' @details [issues_checks()] function scrapes the R-universe check API
+#' @details [issues_checks()] reads output from
+#'   the R-universe check API
 #'   to scan all R-multiverse packages for issues that may have
 #'   happened during building and testing.
 #' @inheritSection record_issues Package issues

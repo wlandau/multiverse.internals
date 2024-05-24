@@ -20,7 +20,8 @@ non-compliance.
 Check R-universe package check results.
 }
 \details{
-\code{\link[=issues_checks]{issues_checks()}} function scrapes the R-universe check API
+\code{\link[=issues_checks]{issues_checks()}} reads output from
+the R-universe check API
 to scan all R-multiverse packages for issues that may have
 happened during building and testing.
 }
