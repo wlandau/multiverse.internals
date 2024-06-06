@@ -5,15 +5,20 @@
 \title{Record the manifest of package versions.}
 \usage{
 record_versions(
-  manifest = "versions.json",
-  repo = "https://r-multiverse.r-universe.dev",
+  versions = "versions.json",
+  repo = "https://multiverse.r-multiverse.org",
   current = multiverse.internals::get_current_versions(repo = repo)
 )
 }
 \arguments{
-\item{manifest}{Character of length 1, file path to the JSON manifest.}
+\item{versions}{Character of length 1, file path to a JSON manifest
+tracking the history of released versions of packages.
+The official versions file for R-multiverse is maintained and
+updated periodically at
+\url{https://github.com/r-multiverse/checks/blob/main/versions.json}.}
 
-\item{repo}{Character string of package repositories to track.}
+\item{repo}{Character of length 1, URL of the package repository.
+R-multiverse uses \code{"https://multiverse.r-multiverse.org"}.}
 
 \item{current}{A data frame of current versions and hashes of packages
 in \code{repo}. This argument is exposed for testing only.}
@@ -29,7 +34,40 @@ and their hashes.
 \details{
 This function tracks a manifest containing the current version,
 the current hash, the highest version ever released, and
-the hash of the highest version ever released. It uses this information
+the hash of the highest version ever released.
+\code{\link[=issues_versions]{issues_versions()}} uses this information
 to determine whether the package complies with best
 practices for version numbers.
 }
+\section{Package issues}{
+
+Functions like \code{\link[=issues_versions]{issues_versions()}} and \code{\link[=issues_descriptions]{issues_descriptions()}}
+perform health checks for all packages in R-multiverse.
+Only packages that pass these checks go to the production repository at
+\url{https://production.r-multiverse.org}. For a complete list of checks, see
+the \verb{issues_*()} functions listed at
+\url{https://r-multiverse.org/multiverse.internals/reference.html}.
+\code{\link[=record_versions]{record_versions()}} updates the version number history
+of releases in R-multiverse, and \code{\link[=record_issues]{record_issues()}} gathers
+together all the issues about R-multiverse packages.
+}
+
+\examples{
+  # R-multiverse uses https://multiverse.r-multiverse.org as the repo.
+  repo <- "https://wlandau.r-universe.dev" # just for testing and examples
+  output <- tempfile()
+  versions <- tempfile()
+  # First snapshot:
+  record_versions(
+    versions = versions,
+    repo = repo
+  )
+  readLines(versions)
+  # In subsequent snapshots, we have historical information about versions.
+  record_versions(
+    versions = versions,
+    repo = repo
+  )
+  readLines(versions)
+}
+\concept{package check data management}

@@ -1,30 +1,54 @@
 #' @title Record the manifest of package versions.
 #' @export
+#' @family package check data management
 #' @description Record the manifest of versions of packages
 #'   and their hashes.
 #' @details This function tracks a manifest containing the current version,
 #'   the current hash, the highest version ever released, and
-#'   the hash of the highest version ever released. It uses this information
+#'   the hash of the highest version ever released.
+#'   [issues_versions()] uses this information
 #'   to determine whether the package complies with best
 #'   practices for version numbers.
+#' @inheritSection record_issues Package issues
 #' @return `NULL` (invisibly). Writes a package version manifest
 #'   and a manifest of version issues as JSON files.
-#' @param manifest Character of length 1, file path to the JSON manifest.
-#' @param repo Character string of package repositories to track.
+#' @inheritParams meta_checks
+#' @param versions Character of length 1, file path to a JSON manifest
+#'   tracking the history of released versions of packages.
+#'   The official versions file for R-multiverse is maintained and
+#'   updated periodically at
+#'   <https://github.com/r-multiverse/checks/blob/main/versions.json>.
 #' @param current A data frame of current versions and hashes of packages
 #'   in `repo`. This argument is exposed for testing only.
+#' @examples
+#'   # R-multiverse uses https://multiverse.r-multiverse.org as the repo.
+#'   repo <- "https://wlandau.r-universe.dev" # just for testing and examples
+#'   output <- tempfile()
+#'   versions <- tempfile()
+#'   # First snapshot:
+#'   record_versions(
+#'     versions = versions,
+#'     repo = repo
+#'   )
+#'   readLines(versions)
+#'   # In subsequent snapshots, we have historical information about versions.
+#'   record_versions(
+#'     versions = versions,
+#'     repo = repo
+#'   )
+#'   readLines(versions)
 record_versions <- function(
-  manifest = "versions.json",
-  repo = "https://r-multiverse.r-universe.dev",
+  versions = "versions.json",
+  repo = "https://multiverse.r-multiverse.org",
   current = multiverse.internals::get_current_versions(repo = repo)
 ) {
-  if (!file.exists(manifest)) {
-    jsonlite::write_json(x = current, path = manifest, pretty = TRUE)
+  if (!file.exists(versions)) {
+    jsonlite::write_json(x = current, path = versions, pretty = TRUE)
     return(invisible())
   }
-  previous <- read_versions_previous(manifest = manifest)
-  new <- update_version_manifest(current = current, previous = previous)
-  jsonlite::write_json(x = new, path = manifest, pretty = TRUE)
+  previous <- read_versions_previous(versions = versions)
+  new <- update_versions(current = current, previous = previous)
+  jsonlite::write_json(x = new, path = versions, pretty = TRUE)
   invisible()
 }
 
@@ -35,27 +59,17 @@ record_versions <- function(
 #' @return A data frame of packages with their current versions and hashes.
 #' @inheritParams record_versions
 get_current_versions <- function(
-  repo = "https://r-multiverse.r-universe.dev"
+  repo = "https://multiverse.r-multiverse.org"
 ) {
-  listing <- file.path(
-    contrib.url(repos = repo, type = "source"),
-    "PACKAGES.json?fields=RemoteSha"
-  )
-  out <- jsonlite::stream_in(
-    con = gzcon(url(listing)),
-    verbose = TRUE,
-    simplifyVector = TRUE,
-    simplifyDataFrame = TRUE,
-    simplifyMatrix = TRUE
-  )
-  out <- out[, c("Package", "Version", "RemoteSha")]
-  colnames(out) <- c("package", "version_current", "hash_current")
-  rownames(out) <- NULL
-  out
+  meta <- meta_packages(repo = repo)
+  meta <- meta[, c("package", "version", "remotesha")]
+  colnames(meta) <- c("package", "version_current", "hash_current")
+  rownames(meta) <- NULL
+  meta
 }
 
-read_versions_previous <- function(manifest) {
-  out <- jsonlite::read_json(path = manifest, simplifyVector = TRUE)
+read_versions_previous <- function(versions) {
+  out <- jsonlite::read_json(path = versions, simplifyVector = TRUE)
   if (is.null(out$version_highest)) {
     out$version_highest <- out$version_current
   }
@@ -67,7 +81,7 @@ read_versions_previous <- function(manifest) {
   out
 }
 
-update_version_manifest <- function(current, previous) {
+update_versions <- function(current, previous) {
   new <- merge(
     x = current,
     y = previous,
@@ -75,15 +89,15 @@ update_version_manifest <- function(current, previous) {
     all.x = TRUE,
     all.y = FALSE
   )
-  incremented <- manifest_compare_versions(manifest = new) == 1L
+  incremented <- compare_versions(versions = new) == 1L
   new$version_highest[incremented] <- new$version_current[incremented]
   new$hash_highest[incremented] <- new$hash_current[incremented]
   new
 }
 
-manifest_compare_versions <- function(manifest) {
+compare_versions <- function(versions) {
   apply(
-    X = manifest,
+    X = versions,
     MARGIN = 1L,
     FUN = function(row) {
       utils::compareVersion(

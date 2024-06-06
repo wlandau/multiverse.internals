@@ -1,142 +1,170 @@
-test_that("version_issues() in a mock repo", {
-  # Temporary files used in the mock test.
-  manifest <- tempfile()
-  # First update to the manifest.
-  contents <- data.frame(
-    package = c(
-      "package_unmodified",
-      "version_decremented",
-      "version_incremented",
-      "version_unmodified"
+test_that("record_issues() mocked", {
+  output <- tempfile()
+  record_issues(
+    versions = mock_versions(),
+    mock = list(
+      checks = mock_meta_checks,
+      packages = mock_meta_packages,
+      today = "2024-01-01"
     ),
-    version_current = rep("1.0.0", 4L),
-    hash_current = rep("hash_1.0.0", 4L)
-  )
-  record_versions(manifest = manifest, current = contents)
-  expect_equal(
-    version_issues(manifest),
-    data.frame(
-      package = character(0L),
-      version_current = character(0L),
-      hash_current = character(0L)
-    )
-  )
-  # Update the manifest after no changes to packages or versions.
-  suppressMessages(
-    record_versions(manifest = manifest, current = contents)
+    output = output
   )
   expect_equal(
-    version_issues(manifest),
-    data.frame(
-      package = character(0L),
-      version_current = character(0L),
-      hash_current = character(0L),
-      version_highest = character(0L),
-      hash_highest = character(0L)
-    )
-  )
-  # Update the packages in all the ways indicated above.
-  index <- contents$package == "version_decremented"
-  contents$version_current[index] <- "0.0.1"
-  contents$hash_current[index] <- "hash_0.0.1"
-  index <- contents$package == "version_incremented"
-  contents$version_current[index] <- "2.0.0"
-  contents$hash_current[index] <- "hash_2.0.0"
-  index <- contents$package == "version_unmodified"
-  contents$version_current[index] <- "1.0.0"
-  contents$hash_current[index] <- "hash_1.0.0-modified"
-  for (index in seq_len(2L)) {
-    record_versions(
-      manifest = manifest,
-      current = contents
-    )
-    out <- version_issues(manifest)
-    rownames(out) <- NULL
-    expect_equal(
-      out,
-      data.frame(
-        package = c("version_decremented", "version_unmodified"),
-        version_current = c("0.0.1", "1.0.0"),
-        hash_current = c("hash_0.0.1", "hash_1.0.0-modified"),
-        version_highest = c("1.0.0", "1.0.0"),
-        hash_highest = c("hash_1.0.0", "hash_1.0.0"),
-        version_okay = c(FALSE, FALSE)
+    sort(c(list.files(output))),
+    sort(
+      c(
+        "audio.whisper",
+        "httpgd",
+        "INLA",
+        "polars",
+        "SBC",
+        "stantargets",
+        "string2path",
+        "tidypolars",
+        "tidytensor",
+        "version_decremented",
+        "version_unmodified"
       )
     )
-  }
-  # Remove temporary files
-  unlink(manifest)
-})
-
-test_that("record_issues() in a mock repo", {
-  # Temporary files used in the mock test.
-  manifest <- tempfile()
-  output <- tempfile()
-  # First update to the manifest.
-  contents <- data.frame(
-    package = c(
-      "package_unmodified",
-      "version_decremented",
-      "version_incremented",
-      "version_unmodified"
+  )
+  runs <- "https://github.com/r-universe/r-multiverse/actions/runs"
+  expect_equal(
+    jsonlite::read_json(file.path(output, "INLA"), simplifyVector = TRUE),
+    list(
+      checks = list(
+        "_linuxdevel" = "src-failure",
+        "_macbinary" = "src-failure",
+        "_wasmbinary" = "src-failure",
+        "_winbinary" = "src-failure",
+        "_status" = "src-failure",
+        "_buildurl" = file.path(runs, "8487512222")
+      ),
+      date = "2024-01-01"
+    )
+  )
+  expect_equal(
+    jsonlite::read_json(
+      file.path(output, "stantargets"),
+      simplifyVector = TRUE
     ),
-    version_current = rep("1.0.0", 4L),
-    hash_current = rep("hash_1.0.0", 4L)
-  )
-  record_versions(manifest = manifest, current = contents)
-  record_issues(manifest = manifest, output = output)
-  expect_equal(list.files(output), character(0L))
-  # Update the manifest after no changes to packages or versions.
-  suppressMessages(
-    record_versions(manifest = manifest, current = contents)
-  )
-  record_issues(manifest = manifest, output = output)
-  expect_equal(list.files(output), character(0L))
-  # Update the packages in all the ways indicated above.
-  index <- contents$package == "version_decremented"
-  contents$version_current[index] <- "0.0.1"
-  contents$hash_current[index] <- "hash_0.0.1"
-  index <- contents$package == "version_incremented"
-  contents$version_current[index] <- "2.0.0"
-  contents$hash_current[index] <- "hash_2.0.0"
-  index <- contents$package == "version_unmodified"
-  contents$version_current[index] <- "1.0.0"
-  contents$hash_current[index] <- "hash_1.0.0-modified"
-  for (index in seq_len(2L)) {
-    record_versions(
-      manifest = manifest,
-      current = contents
+    list(
+      checks = list(
+        "_linuxdevel" = "failure",
+        "_macbinary" = "success",
+        "_wasmbinary" = "success",
+        "_winbinary" = "success",
+        "_status" = "success",
+        "_buildurl" = file.path(runs, "8998732490")
+      ),
+      descriptions = list(
+        remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")
+      ),
+      date = "2024-01-01"
     )
-    record_issues(manifest = manifest, output = output)
-    expect_equal(
-      sort(list.files(output)),
-      sort(c("version_decremented", "version_unmodified"))
-    )
-    out <- jsonlite::read_json(file.path(output, "version_decremented"))
-    expect_equal(
-      unlist(out, recursive = TRUE),
-      c(
-        package = "version_decremented",
+  )
+  expect_equal(
+    jsonlite::read_json(
+      file.path(output, "version_decremented"),
+      simplifyVector = TRUE
+    ),
+    list(
+      versions = list(
         version_current = "0.0.1",
         hash_current = "hash_0.0.1",
         version_highest = "1.0.0",
-        hash_highest = "hash_1.0.0",
-        version_okay = FALSE
-      )
+        hash_highest = "hash_1.0.0"
+      ),
+      date = "2024-01-01"
     )
-    out <- jsonlite::read_json(file.path(output, "version_unmodified"))
-    expect_equal(
-      unlist(out, recursive = TRUE),
-      c(
-        package = "version_unmodified",
+  )
+  expect_equal(
+    jsonlite::read_json(
+      file.path(output, "version_unmodified"),
+      simplifyVector = TRUE
+    ),
+    list(
+      versions = list(
         version_current = "1.0.0",
         hash_current = "hash_1.0.0-modified",
         version_highest = "1.0.0",
-        hash_highest = "hash_1.0.0",
-        version_okay = FALSE
-      )
+        hash_highest = "hash_1.0.0"
+      ),
+      date = "2024-01-01"
     )
+  )
+})
+
+test_that("record_issues() date works", {
+  output <- tempfile()
+  record_issues(
+    versions = mock_versions(),
+    mock = list(
+      checks = mock_meta_checks,
+      packages = mock_meta_packages,
+      today = "2024-01-01"
+    ),
+    output = output
+  )
+  record_issues(
+    versions = mock_versions(),
+    mock = list(
+      checks = mock_meta_checks,
+      packages = mock_meta_packages
+    ),
+    output = output
+  )
+  for (file in list.files(output, full.names = TRUE)) {
+    date <- jsonlite::read_json(file, simplifyVector = TRUE)$date
+    expect_equal(date, "2024-01-01")
   }
-  # Remove temporary files
-  unlink(manifest)
+  never_fixed <- c(
+    "httpgd",
+    "INLA",
+    "stantargets",
+    "string2path",
+    "tidytensor",
+    "version_decremented"
+  )
+  once_fixed <- c(
+    "audio.whisper",
+    "polars",
+    "SBC",
+    "tidypolars",
+    "version_unmodified"
+  )
+  lapply(file.path(output, once_fixed), unlink)
+  record_issues(
+    versions = mock_versions(),
+    mock = list(
+      checks = mock_meta_checks,
+      packages = mock_meta_packages
+    ),
+    output = output
+  )
+  for (package in never_fixed) {
+    path <- file.path(output, package)
+    date <- jsonlite::read_json(path, simplifyVector = TRUE)$date
+    expect_equal(date, "2024-01-01")
+  }
+  today <- format(Sys.Date(), fmt = "yyyy-mm-dd")
+  for (package in once_fixed) {
+    path <- file.path(output, package)
+    date <- jsonlite::read_json(path, simplifyVector = TRUE)$date
+    expect_equal(date, today)
+  }
+})
+
+test_that("record_issues() on a small repo", {
+  output <- tempfile()
+  versions <- tempfile()
+  record_versions(
+    versions = versions,
+    repo = "https://wlandau.r-universe.dev"
+  )
+  record_issues(
+    repo = "https://wlandau.r-universe.dev",
+    versions = versions,
+    output = output
+  )
+  expect_true(dir.exists(output))
 })

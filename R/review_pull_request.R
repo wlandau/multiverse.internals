@@ -10,8 +10,8 @@
 #'   4. Add a file in a forbidden place (close).
 #'   5. Add a custom JSON file which can be parsed (manual review).
 #' @return `NULL` (invisibly).
-#' @param owner Character of length 1, name of the universe repository owner.
-#' @param repo Character of length 1, name of the universe repository.
+#' @inheritParams meta_checks
+#' @param owner Character of length 1, name of the package repository owner.
 #' @param number Positive integer of length 1, index of the pull request
 #'   in the repo.
 review_pull_request <- function(

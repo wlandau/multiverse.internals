@@ -1,7 +1,7 @@
-test_that("record_versions() in a mock repo", {
+test_that("record_versions() mocked", {
   # Temporary files used in the mock test.
-  manifest <- tempfile()
-  # First update to the manifest.
+  versions <- tempfile()
+  # First update to the version manifest.
   contents <- data.frame(
     package = c(
       "package_unmodified",
@@ -13,10 +13,10 @@ test_that("record_versions() in a mock repo", {
     hash_current = rep("hash_1.0.0", 4L)
   )
   record_versions(
-    manifest = manifest,
+    versions = versions,
     current = contents
   )
-  written <- jsonlite::read_json(manifest)
+  written <- jsonlite::read_json(versions)
   expected <- list(
     list(
       package = "package_unmodified",
@@ -43,11 +43,11 @@ test_that("record_versions() in a mock repo", {
   # Update the manifest after no changes to packages or versions.
   suppressMessages(
     record_versions(
-      manifest = manifest,
+      versions = versions,
       current = contents
     )
   )
-  written <- jsonlite::read_json(manifest)
+  written <- jsonlite::read_json(versions)
   expected <- list(
     list(
       package = "package_unmodified",
@@ -91,10 +91,10 @@ test_that("record_versions() in a mock repo", {
   contents$hash_current[index] <- "hash_1.0.0-modified"
   for (index in seq_len(2L)) {
     record_versions(
-      manifest = manifest,
+      versions = versions,
       current = contents
     )
-    written <- jsonlite::read_json(manifest)
+    written <- jsonlite::read_json(versions)
     expected <- list(
       list(
         package = "package_unmodified",
@@ -128,34 +128,34 @@ test_that("record_versions() in a mock repo", {
     expect_true(identical(written, expected))
   }
   # Remove temporary files
-  unlink(manifest)
+  unlink(versions)
 })
 
-test_that("manifest can be created and updated from an actual repo", {
-  manifest <- tempfile()
+test_that("version manifest can be created and updated from an actual repo", {
+  versions <- tempfile()
   temp <- utils::capture.output(
     suppressMessages(
       record_versions(
-        manifest = manifest,
+        versions = versions,
         repo = "https://wlandau.r-universe.dev"
       )
     )
   )
-  expect_true(file.exists(manifest))
-  contents <- do.call(vctrs::vec_rbind, jsonlite::read_json(manifest))
+  expect_true(file.exists(versions))
+  contents <- do.call(vctrs::vec_rbind, jsonlite::read_json(versions))
   contents <- lapply(contents, as.character)
   lapply(contents, function(x) expect_true(!anyNA(x)))
   temp <- utils::capture.output(
     suppressMessages(
       record_versions(
-        manifest = manifest,
+        versions = versions,
         repo = "https://wlandau.r-universe.dev"
       )
     )
   )
-  contents <- jsonlite::read_json(manifest)
+  contents <- jsonlite::read_json(versions)
   expect_true(is.character(contents[[1L]]$package))
   expect_true(length(contents[[1L]]$package) == 1L)
-  expect_true(file.exists(manifest))
-  unlink(manifest)
+  expect_true(file.exists(versions))
+  unlink(versions)
 })

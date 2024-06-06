@@ -1,3 +1,9 @@
+# multiverse.internals 0.2.0
+
+* Add more checks to `record_issues()`: results from the R-universe check API, plus specific results from package `DESCRIPTION` files.
+* Refactor and document specific checks in `check_checks()`, `check_descriptions()`, and `check_versions()`.
+* Add a `pkgdown` website.
+
 # multiverse.internals 0.1.4
 
 * Do not write `version_issues.json` from `record_versions()`.

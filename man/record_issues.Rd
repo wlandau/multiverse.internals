@@ -4,20 +4,87 @@
 \alias{record_issues}
 \title{Record package issues.}
 \usage{
-record_issues(manifest = "versions.json", output = "issues")
+record_issues(
+  repo = "https://multiverse.r-multiverse.org",
+  versions = "versions.json",
+  output = "issues",
+  mock = NULL
+)
 }
 \arguments{
-\item{manifest}{Character of length 1, file path to a JSON manifest
-tracking release versions of packages.}
+\item{repo}{Character of length 1, URL of the package repository.
+R-multiverse uses \code{"https://multiverse.r-multiverse.org"}.}
+
+\item{versions}{Character of length 1, file path to a JSON manifest
+tracking the history of released versions of packages.
+The official versions file for R-multiverse is maintained and
+updated periodically at
+\url{https://github.com/r-multiverse/checks/blob/main/versions.json}.}
 
 \item{output}{Character of length 1, file path to the folder to record
 new package issues. Each call to \code{record_issues()} overwrites the
 contents of the repo.}
+
+\item{mock}{For testing purposes only, a named list of data frames
+for inputs to various intermediate functions.}
 }
 \value{
 \code{NULL} (invisibly).
 }
 \description{
-Record package check and version issues in individual JSON
-files.
+Record R-multiverse package issues in
+package-specific JSON files.
 }
+\section{Package issues}{
+
+Functions like \code{\link[=issues_versions]{issues_versions()}} and \code{\link[=issues_descriptions]{issues_descriptions()}}
+perform health checks for all packages in R-multiverse.
+Only packages that pass these checks go to the production repository at
+\url{https://production.r-multiverse.org}. For a complete list of checks, see
+the \verb{issues_*()} functions listed at
+\url{https://r-multiverse.org/multiverse.internals/reference.html}.
+\code{\link[=record_versions]{record_versions()}} updates the version number history
+of releases in R-multiverse, and \code{\link[=record_issues]{record_issues()}} gathers
+together all the issues about R-multiverse packages.
+}
+
+\section{Issue files}{
+
+For each package with observed problems, \code{\link[=record_issues]{record_issues()}} writes
+an issue file. This issue file is a JSON list with one element
+per type of failing check. Each element has an informative name
+(for example, \code{checks}, \code{descriptions}, or \code{versions})
+and a list of diagnostic information.
+
+Each issue file also has a \code{date} field. This date the day that
+an issue was first noticed. It automatically resets the next time
+all package are resolved.
+}
+
+\examples{
+  repo <- "https://wlandau.r-universe.dev"
+  output <- tempfile()
+  versions <- tempfile()
+  record_versions(
+    versions = versions,
+    repo = repo
+  )
+  record_issues(
+    repo = repo,
+    versions = versions,
+    output = output
+  )
+  files <- list.files(output)
+  print(files)
+  package <- head(files, n = 1)
+  if (length(package)) {
+    print(package)
+  }
+  if (length(package)) {
+    print(readLines(file.path(output, package)))
+  }
+}
+\keyword{check}
+\keyword{data}
+\keyword{management}
+\keyword{package}

@@ -7,9 +7,10 @@
 review_pull_requests(owner = "r-multiverse", repo = "contributions")
 }
 \arguments{
-\item{owner}{Character of length 1, name of the universe repository owner.}
+\item{owner}{Character of length 1, name of the package repository owner.}
 
-\item{repo}{Character of length 1, name of the universe repository.}
+\item{repo}{Character of length 1, URL of the package repository.
+R-multiverse uses \code{"https://multiverse.r-multiverse.org"}.}
 }
 \value{
 \code{NULL} (invisibly).
