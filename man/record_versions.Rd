@@ -17,7 +17,8 @@ The official versions file for R-multiverse is maintained and
 updated periodically at
 \url{https://github.com/r-multiverse/checks/blob/main/versions.json}.}
 
-\item{repo}{Character string of package repositories to track.}
+\item{repo}{Character of length 1, URL of the package repository.
+R-multiverse uses \code{"https://multiverse.r-multiverse.org"}.}
 
 \item{current}{A data frame of current versions and hashes of packages
 in \code{repo}. This argument is exposed for testing only.}

@@ -24,9 +24,9 @@
 #'   an issue was first noticed. It automatically resets the next time
 #'   all package are resolved.
 #' @return `NULL` (invisibly).
-#' @inheritParams meta_checks
 #' @inheritParams issues_checks
 #' @inheritParams issues_versions
+#' @inheritParams meta_checks
 #' @param output Character of length 1, file path to the folder to record
 #'   new package issues. Each call to `record_issues()` overwrites the
 #'   contents of the repo.
@@ -60,9 +60,9 @@ record_issues <- function(
   output = "issues",
   mock = NULL
 ) {
-  today <- mock$today %|||% format(Sys.Date(), fmt = "yyyy-mm-dd")
-  checks <- mock$checks %|||% meta_checks(repo = repo)
-  packages <- mock$packages %|||% meta_packages(repo = repo)
+  today <- mock$today %||% format(Sys.Date(), fmt = "yyyy-mm-dd")
+  checks <- mock$checks %||% meta_checks(repo = repo)
+  packages <- mock$packages %||% meta_packages(repo = repo)
   issues <- list() |>
     add_issues(issues_checks(meta = checks), "checks") |>
     add_issues(issues_descriptions(meta = packages), "descriptions") |>
@@ -107,7 +107,7 @@ overwrite_package_issues <- function(
   dates
 ) {
   path <- file.path(output, package)
-  issues[[package]]$date <- dates[[package]] %|||% today
+  issues[[package]]$date <- dates[[package]] %||% today
   jsonlite::write_json(
     x = issues[[package]],
     path = file.path(output, package),

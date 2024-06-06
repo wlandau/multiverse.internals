@@ -25,7 +25,7 @@ issues_descriptions <- function(meta) {
 }
 
 issues_descriptions_remotes <- function(meta) {
-  meta[["remotes"]] <- meta[["remotes"]] %|||% replicate(nrow(meta), NULL)
+  meta[["remotes"]] <- meta[["remotes"]] %||% replicate(nrow(meta), NULL)
   meta$remotes <- lapply(meta$remotes, function(x) x[nzchar(x)])
   meta[vapply(meta$remotes, length, integer(1L)) > 0L, ]
 }

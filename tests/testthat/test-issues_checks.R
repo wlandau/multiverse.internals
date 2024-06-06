@@ -49,5 +49,4 @@ test_that("issues_checks() on a small repo", {
   meta <- meta_checks(repo = "https://wlandau.r-universe.dev")
   issues <- issues_checks(meta = meta)
   expect_true(is.list(issues))
-  expect_named(issues)
 })

@@ -7,7 +7,8 @@
 get_current_versions(repo = "https://multiverse.r-multiverse.org")
 }
 \arguments{
-\item{repo}{Character string of package repositories to track.}
+\item{repo}{Character of length 1, URL of the package repository.
+R-multiverse uses \code{"https://multiverse.r-multiverse.org"}.}
 }
 \value{
 A data frame of packages with their current versions and hashes.
