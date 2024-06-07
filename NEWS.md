@@ -1,3 +1,7 @@
+# multiverse.internals 0.2.1
+
+* Bump version to trigger rebuild.
+
 # multiverse.internals 0.2.0
 
 * Add more checks to `record_issues()`: results from the R-universe check API, plus specific results from package `DESCRIPTION` files.
