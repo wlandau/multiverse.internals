@@ -168,3 +168,109 @@ test_that("record_issues() on a small repo", {
   )
   expect_true(dir.exists(output))
 })
+
+test_that("record_issues() with dependency problems", {
+  output <- tempfile()
+  lines <- c(
+    "[",
+    " {",
+    " \"package\": \"nanonext\",",
+    " \"version_current\": \"1.0.0\",",
+    " \"hash_current\": \"hash_1.0.0-modified\",",
+    " \"version_highest\": \"1.0.0\",",
+    " \"hash_highest\": \"hash_1.0.0\"",
+    " }",
+    "]"
+  )
+  versions <- tempfile()
+  writeLines(lines, versions)
+  meta_checks <- mock_meta_checks[1L, ]
+  meta_checks$package <- "crew"
+  meta_checks[["_winbinary"]] <- "failure"
+  record_issues(
+    versions = versions,
+    mock = list(
+      checks = meta_checks,
+      packages = mock_meta_packages_graph,
+      today = "2024-01-01"
+    ),
+    output = output
+  )
+  expect_true(dir.exists(output))
+  expect_equal(
+    jsonlite::read_json(
+      file.path(output, "nanonext"),
+      simplifyVector = TRUE
+    ),
+    list(
+      versions = list(
+        version_current = "1.0.0",
+        hash_current = "hash_1.0.0-modified",
+        version_highest = "1.0.0",
+        hash_highest = "hash_1.0.0"
+      ),
+      date = "2024-01-01"
+    )
+  )
+  expect_equal(
+    jsonlite::read_json(
+      file.path(output, "mirai"),
+      simplifyVector = TRUE
+    ),
+    list(
+      dependencies = list(
+        nanonext = list()
+      ),
+      date = "2024-01-01"
+    )
+  )
+  expect_equal(
+    jsonlite::read_json(
+      file.path(output, "crew"),
+      simplifyVector = TRUE
+    ),
+    list(
+      checks = list(
+        "_linuxdevel" = "success",
+        "_macbinary" = "success",
+        "_wasmbinary" = "success",
+        "_winbinary" = "failure",
+        "_status" = "success",
+        "_buildurl" = file.path(
+          "https://github.com/r-universe/r-multiverse/actions",
+          "runs/8998731783"
+        )
+      ),
+      dependencies = list(
+        nanonext = "mirai"
+      ),
+      date = "2024-01-01"
+    )
+  )
+  expect_equal(
+    jsonlite::read_json(
+      file.path(output, "crew.aws.batch"),
+      simplifyVector = TRUE
+    ),
+    list(
+      dependencies = list(
+        crew = list(),
+        nanonext = "crew"
+      ),
+      date = "2024-01-01"
+    )
+  )
+  expect_equal(
+    jsonlite::read_json(
+      file.path(output, "crew.cluster"),
+      simplifyVector = TRUE
+    ),
+    list(
+      dependencies = list(
+        crew = list(),
+        nanonext = "crew"
+      ),
+      date = "2024-01-01"
+    )
+  )
+})
