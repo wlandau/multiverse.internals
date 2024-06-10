@@ -26,7 +26,7 @@
 #'   The choice in output format from [issues_dependencies()] allows package
 #'   maintainers to more easily figure out which direct dependencies
 #'   are contributing issues and drop those direct dependencies if necessary.
-#' @param names Names of packages with other issues.
+#' @param packages Character vector of names of packages with other issues.
 #' @param meta A data frame with R-universe package check results
 #'   returned by [meta_checks()].
 #' @examples

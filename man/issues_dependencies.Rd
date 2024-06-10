@@ -7,10 +7,10 @@
 issues_dependencies(packages, meta)
 }
 \arguments{
+\item{packages}{Character vector of names of packages with other issues.}
+
 \item{meta}{A data frame with R-universe package check results
 returned by \code{\link[=meta_checks]{meta_checks()}}.}
-
-\item{names}{Names of packages with other issues.}
 }
 \value{
 A nested list of problems triggered by dependencies.
