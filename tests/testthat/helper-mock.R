@@ -1,3 +1,4 @@
+# parse(text = deparse(meta_checks(repo = "https://multiverse.r-multiverse.org"))) # nolint
 mock_meta_checks <- structure(
   list(
     package = c(
@@ -102,6 +103,7 @@ mock_meta_checks <- structure(
   row.names = c(NA, 19L)
 )
 
+# parse(text = deparse(meta_packages(repo = "https://multiverse.r-multiverse.org")) # nolint
 mock_meta_packages <- structure(
   list(
     package = c(
@@ -126,6 +128,137 @@ mock_meta_packages <- structure(
   class = "data.frame"
 )
 
+# parse(text = deparse(meta_packages(repo = "https://wlandau.r-universe.dev")) # nolint
+mock_meta_packages_graph <- structure(
+  list(
+    "_id" = c(
+      "666319a14e86770016661a28", "66580c6dd014ca0014e5afc2",
+      "665179088d83a20014a4037a", "6666d6575e691000165322b1",
+      "6666d6865e691000165322fe"
+    ),
+    package = c(
+      "crew", "crew.aws.batch",
+      "crew.cluster", "mirai", "nanonext"
+    ),
+    version = c(
+      "0.9.3.9002", "0.0.5.9000", "0.3.1", "1.1.0.9000", "1.1.0.9000"
+    ),
+    license = c(
+      "MIT + file LICENSE", "MIT + file LICENSE",
+      "MIT + file LICENSE", "GPL (>= 3)", "GPL (>= 3)"
+    ),
+    remotesha = c(
+      "eafad0276c06dec2344da2f03596178c754c8b5e",
+      "4d9e5b44e2942d119af963339c48d134e84de458",
+      "d4ac61fd9a1d9539088ffebdadcd4bb713c25ee1",
+      "7015695b7ef82f82ab3225ac2d226b2c8f298097",
+      "85dd672a44a92c890eb40ea9ebab7a4e95335c2f"
+    ),
+    needscompilation = c("no", "no", "no", "no", "yes"),
+    md5sum = c(
+      "642e9ac93d39d462ee6f95d8522afbe1",
+      "23c2733447eae95614fd6af1889b57e8",
+      "5707d786c1aa3848fd37e6bf4598ea4c",
+      "3c92053c75031ec0b976b0a15185e3a0",
+      "1507b3a27da7dff5d9acbf8ef181ad78"
+    ),
+    "_type" = c("src", "src", "src", "src", "src"),
+    "_dependencies" = list(
+      structure(
+        list(
+          package = c(
+            "R", "cli", "data.table", "getip", "later", "mirai", "nanonext",
+            "processx", "promises", "ps", "R6", "rlang", "stats", "tibble",
+            "tidyselect", "tools", "utils", "knitr", "markdown", "rmarkdown",
+            "testthat"
+          ),
+          version = c(
+            ">= 4.0.0", ">= 3.1.0", NA, NA, NA, ">= 0.12.0", ">= 0.12.0",
+            NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ">= 1.30", ">= 1.1",
+            ">= 2.4", ">= 3.0.0"
+          ),
+          role = c(
+            "Depends", "Imports", "Imports", "Imports", "Imports", "Imports",
+            "Imports", "Imports", "Imports", "Imports", "Imports", "Imports",
+            "Imports", "Imports", "Imports", "Imports", "Imports", "Suggests",
+            "Suggests", "Suggests", "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 21L)
+      ),
+      structure(
+        list(
+          package = c(
+            "R", "cli", "crew", "paws.common", "paws.compute",
+            "paws.management", "R6", "rlang", "tibble", "utils",
+            "knitr", "markdown", "rmarkdown", "testthat"
+          ),
+          version = c(
+            ">= 4.0.0", ">= 3.1.0", ">= 0.8.0", ">= 0.7.0",
+            NA, NA, NA, NA, NA,  NA, ">= 1.30",
+            ">= 1.1", ">= 2.4", ">= 3.0.0"
+          ),
+          role = c(
+            "Depends", "Imports", "Imports", "Imports",
+            "Imports", "Imports", "Imports", "Imports",
+            "Imports", "Imports", "Suggests", "Suggests",
+            "Suggests", "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 14L)
+      ),
+      structure(
+        list(
+          package = c(
+            "R", "crew", "ps", "lifecycle", "R6", "rlang", "utils", "vctrs",
+            "xml2", "yaml", "knitr", "markdown", "rmarkdown", "testthat"
+          ),
+          version = c(
+            ">= 4.0.0", ">= 0.8.0", NA, NA, NA, NA, NA, NA, NA, NA,
+            ">= 1.30", ">= 1.1", ">= 2.4", ">= 3.0.0"
+          ),
+          role = c(
+            "Depends", "Imports", "Imports", "Imports", "Imports",
+            "Imports", "Imports", "Imports", "Imports", "Imports",
+            "Suggests", "Suggests", "Suggests", "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 14L)
+      ),
+      structure(
+        list(
+          package = c(
+            "R", "nanonext", "knitr", "markdown", "parallel", "promises"
+          ),
+          version = c(">= 3.6", ">= 1.1.0.9000", NA, NA, NA, NA),
+          role = c(
+            "Depends", "Imports", "Suggests",
+            "Suggests", "Enhances", "Enhances"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 6L)
+      ),
+      structure(
+        list(
+          package = c("R", "later", "later", "knitr", "markdown"),
+          version = c(">= 3.5", NA, NA, NA, NA),
+          role = c("Depends", "LinkingTo", "Imports", "Suggests", "Suggests")
+        ),
+        class = "data.frame",
+        row.names = c(NA, 5L)
+      )
+    ),
+    distro = c("noble", "noble", "noble", "noble", "noble")
+  ),
+  class = "data.frame",
+  row.names = c(NA, 5L)
+)
+
+# From tests/testthat/test-record_versions.R
 mock_versions <- function() {
   lines <- c(
     "[",

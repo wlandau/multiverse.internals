@@ -66,8 +66,10 @@ record_issues <- function(
   issues <- list() |>
     add_issues(issues_checks(meta = checks), "checks") |>
     add_issues(issues_descriptions(meta = packages), "descriptions") |>
-    add_issues(issues_versions(versions = versions), "versions") |>
-    overwrite_issues(output = output, today = today)
+    add_issues(issues_versions(versions = versions), "versions")
+  issues <- issues |>
+    add_issues(issues_dependencies(names(issues), packages), "dependencies")
+  overwrite_issues(issues = issues, output = output, today = today)
   invisible()
 }
 
