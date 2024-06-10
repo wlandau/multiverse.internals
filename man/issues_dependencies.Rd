@@ -4,7 +4,7 @@
 \alias{issues_dependencies}
 \title{Report package dependency issues}
 \usage{
-issues_dependencies(packages, meta)
+issues_dependencies(packages, meta = multiverse.internals::meta_packages())
 }
 \arguments{
 \item{packages}{Character vector of names of packages with other issues.}

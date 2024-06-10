@@ -36,7 +36,10 @@
 #'   issues_dependencies(packages = "nanonext", meta = meta)
 #'   issues_dependencies(packages = "crew", meta = meta)
 #'   issues_dependencies(packages = c("crew", "mirai"), meta = meta)
-issues_dependencies <- function(packages, meta) {
+issues_dependencies <- function(
+  packages,
+  meta = multiverse.internals::meta_packages()
+) {
   graph <- issues_dependencies_graph(meta)
   vertices <- names(igraph::V(graph))
   issues <- list()

@@ -4,7 +4,7 @@
 \alias{issues_checks}
 \title{Report issues from R-universe package check results.}
 \usage{
-issues_checks(meta)
+issues_checks(meta = multiverse.internals::meta_checks())
 }
 \arguments{
 \item{meta}{A data frame with R-universe package check results

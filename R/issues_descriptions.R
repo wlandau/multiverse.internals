@@ -17,7 +17,9 @@
 #'   meta <- meta_packages(repo = "https://wlandau.r-universe.dev")
 #'   issues <- issues_descriptions(meta = meta)
 #'   str(issues)
-issues_descriptions <- function(meta) {
+issues_descriptions <- function(
+  meta = multiverse.internals::meta_packages()
+) {
   meta <- issues_descriptions_remotes(meta)
   fields <- "remotes"
   meta <- meta[, c("package", fields)]
