@@ -5,41 +5,36 @@ test_that("issues_checks() mocked", {
     httpgd = list(
       "_linuxdevel" = "success", "_macbinary" = "success",
       "_wasmbinary" = "none", "_winbinary" = "success", "_status" = "success",
-      "_buildurl" = file.path(url, "8998732459")
+      "_buildurl" = file.path(url, "9403635056")
     ),
     INLA = list(
       "_linuxdevel" = "src-failure", "_macbinary" = "src-failure",
       "_wasmbinary" = "src-failure", "_winbinary" = "src-failure",
       "_status" = "src-failure",
-      "_buildurl" = file.path(url, "8487512222")
+      "_buildurl" = file.path(url, "9296256187")
     ),
     polars = list(
       "_linuxdevel" = "failure", "_macbinary" = "arm64-failure",
       "_wasmbinary" = "none", "_winbinary" = "success", "_status" = "success",
-      "_buildurl" = file.path(url, "9005231218")
+      "_buildurl" = file.path(url, "9360739181")
     ),
     SBC = list(
       "_linuxdevel" = "failure", "_macbinary" = "success",
       "_wasmbinary" = "success", "_winbinary" = "success",
       "_status" = "failure",
-      "_buildurl" = file.path(url, "8998731731")
+      "_buildurl" = file.path(url, "9412009979")
     ),
     stantargets = list(
       "_linuxdevel" = "failure", "_macbinary" = "success",
       "_wasmbinary" = "success", "_winbinary" = "success",
       "_status" = "success",
-      "_buildurl" = file.path(url, "8998732490")
-    ),
-    string2path = list(
-      "_linuxdevel" = "success", "_macbinary" = "success",
-      "_wasmbinary" = "none", "_winbinary" = "success", "_status" = "success",
-      "_buildurl" = file.path(url, "8998732437")
+      "_buildurl" = file.path(url, "9412009826")
     ),
     tidytensor = list(
       "_linuxdevel" = "failure", "_macbinary" = "success",
       "_wasmbinary" = "success", "_winbinary" = "success",
       "_status" = "failure",
-      "_buildurl" = file.path(url, "8998732025")
+      "_buildurl" = file.path(url, "9412009544")
     )
   )
   expect_equal(issues[order(names(issues))], expected[order(names(expected))])
