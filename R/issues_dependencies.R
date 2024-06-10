@@ -38,8 +38,9 @@
 #'   issues_dependencies(packages = c("crew", "mirai"), meta = meta)
 issues_dependencies <- function(packages, meta) {
   graph <- issues_dependencies_graph(meta)
+  vertices <- names(igraph::V(graph))
   issues <- list()
-  for (package in packages) {
+  for (package in intersect(packages, vertices)) {
     revdeps <- names(igraph::subcomponent(graph, v = package, mode = "out"))
     revdeps <- setdiff(revdeps, package)
     for (revdep in revdeps) {
