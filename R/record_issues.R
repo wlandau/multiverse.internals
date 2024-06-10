@@ -69,7 +69,12 @@ record_issues <- function(
     add_issues(issues_versions(versions = versions), "versions")
   issues <- issues |>
     add_issues(issues_dependencies(names(issues), packages), "dependencies")
-  overwrite_issues(issues = issues, output = output, today = today)
+  overwrite_issues(
+    issues = issues,
+    output = output,
+    today = today,
+    packages = packages
+  )
   invisible()
 }
 
@@ -80,15 +85,15 @@ add_issues <- function(total, subset, category) {
   total
 }
 
-overwrite_issues <- function(issues, output, today) {
-  packages <- list.files(output)
+overwrite_issues <- function(issues, output, today, packages) {
+  with_issues <- list.files(output)
   dates <- lapply(
-    X = packages,
+    X = with_issues,
     FUN = function(path) {
       jsonlite::read_json(file.path(output, path), simplifyVector = TRUE)$date
     }
   )
-  names(dates) <- packages
+  names(dates) <- with_issues
   unlink(output, recursive = TRUE)
   dir.create(output)
   lapply(
@@ -97,7 +102,8 @@ overwrite_issues <- function(issues, output, today) {
     issues = issues,
     output = output,
     today = today,
-    dates = dates
+    dates = dates,
+    packages = packages
   )
 }
 
@@ -106,10 +112,14 @@ overwrite_package_issues <- function(
   issues,
   output,
   today,
-  dates
+  dates,
+  packages
 ) {
   path <- file.path(output, package)
   issues[[package]]$date <- dates[[package]] %||% today
+  index <- packages$package == package
+  issues[[package]]$version <- packages[["version"]][index]
+  issues[[package]]$remote_hash <- packages[["remotesha"]][index]
   jsonlite::write_json(
     x = issues[[package]],
     path = file.path(output, package),

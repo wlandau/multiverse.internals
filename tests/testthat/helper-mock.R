@@ -2,133 +2,590 @@
 mock_meta_checks <- structure(
   list(
     package = c(
-      "tinytest", "tidytensor", "secretbase",
-      "multiverse.internals", "SBC", "duckdb", "httpgd", "targetsketch",
-      "stantargets", "zstdlite", "INLA", "audio.whisper", "tidypolars",
-      "multitools", "audio.vadwebrtc", "nanonext", "polars", "cmdstanr",
-      "string2path"
+      "zstdlite", "multiverse.internals",
+      "cmdstanr", "tinytest", "tidypolars", "duckdb", "polars", "secretbase",
+      "audio.whisper", "ichimoku", "string2path",
+      "tidytensor", "audio.vadwebrtc",
+      "stantargets", "mirai", "INLA", "multitools", "SBC", "httpgd",
+      "nanonext", "targetsketch"
     ),
     "_user" = c(
-      "r-multiverse", "r-multiverse", "r-multiverse",
+      "r-multiverse", "r-multiverse",
       "r-multiverse", "r-multiverse", "r-multiverse", "r-multiverse",
       "r-multiverse", "r-multiverse", "r-multiverse", "r-multiverse",
       "r-multiverse", "r-multiverse", "r-multiverse", "r-multiverse",
-      "r-multiverse", "r-multiverse", "r-multiverse", "r-multiverse"
+      "r-multiverse", "r-multiverse", "r-multiverse", "r-multiverse",
+      "r-multiverse", "r-multiverse", "r-multiverse"
     ),
     "_type" = c(
-      "src", "src", "src", "src", "src", "src", "src",
-      "src", "src", "src", "failure", "src", "src", "src", "src", "src",
-      "src", "src", "src"
+      "src",
+      "src", "src", "src", "src", "src", "src", "src", "src", "src",
+      "src", "src", "src", "src", "src", "failure", "src", "src", "src",
+      "src", "src"
     ),
     "_status" = c(
-      "success", "failure", "success",
-      "success", "failure", "success", "success", "success", "success",
-      "success", NA, "success", "success", "success", "success", "success",
-      "success", "success", "success"
+      "success", "success", "success",
+      "success", "success", "success", "success", "success", "success",
+      "success", "success", "failure", "success", "success", "success",
+      NA, "success", "failure", "success", "success", "success"
     ),
     "_winbinary" = c(
-      "success", "success", "success", "success",
-      "success", "success", "success",
-      "success", "success", "success", NA, "success", "success", "success",
-      "success", "success", "success", "success", "success"
+      "success",
+      "success", "success", "success", "success", "success", "success",
+      "success", "success", "success", "success", "success", "success",
+      "success", "success", NA, "success", "success", "success", "success",
+      "success"
     ),
     "_macbinary" = c(
-      "success", "success", "success", "success",
       "success", "success", "success",
-      "success", "success", "success", NA, "success", "success", "success",
-      "success", "success", "arm64-failure", "success", "success"
+      "success", "success", "success", "arm64-failure", "success",
+      "success", "success", "success", "success", "success", "success",
+      "success", NA, "success", "success", "success", "success", "success"
     ),
     "_wasmbinary" = c(
       "success", "success", "success", "success",
       "success", "success", "none", "success", "success", "success",
-      NA, "success", "success", "success", "success", "success",
-      "none", "success", "none"
+      "success", "success", "success", "success", "success", NA, "success",
+      "success", "none", "success", "success"
     ),
     "_linuxdevel" = c(
-      "success", "failure", "success", "success",
-      "failure", "success", "success",
-      "success", "failure", "success", NA,
-      "success", "success",
-      "success", "success", "success",
-      "failure", "success", "success"
+      "success",
+      "success", "success", "success", "success", "success", "failure",
+      "success", "success", "success", "success", "failure", "success",
+      "failure", "success", NA, "success", "failure", "success", "success",
+      "success"
     ),
     "_buildurl" = c(
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998731783",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998732025",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998731915",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998732064",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998731731",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998731753",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998732459",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998732171",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998732490",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998732389",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8487512222",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998732607",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998732444",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998731870",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998732026",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998732176",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9005231218",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9140511697",
-      "https://github.com/r-universe/r-multiverse/actions/runs/8998732437"
+      "https://github.com/r-universe/r-multiverse/actions/runs/9412009683",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9420167853",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9407999221",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9352924033",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9364583983",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9412010159",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9360739181",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9412009508",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9412009855",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9423785225",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9326435602",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9412009544",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9412009640",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9412009826",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9423785674",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9296256187",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9288035966",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9412009979",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9403635056",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9354527129",
+      "https://github.com/r-universe/r-multiverse/actions/runs/9412009721"
     ),
     "_indexed" = c(
-      FALSE, TRUE, FALSE, TRUE, TRUE, FALSE,
-      FALSE, TRUE, FALSE, FALSE, NA, TRUE, TRUE, TRUE, FALSE, FALSE,
-      TRUE, TRUE, FALSE
+      FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE,
+      FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, NA, TRUE,
+      FALSE, FALSE, FALSE, FALSE
     ),
     "_binaries" = list(
-      list(), list(), list(),
-      list(), list(), list(), list(), list(), list(), list(),
-      list(), list(), list(), list(), list(), list(), list(),
-      list(), list()
+      list(), list(),
+      list(), list(), list(), list(), list(), list(), list(), list(),
+      list(), list(), list(), list(), list(), list(), list(), list(),
+      list(), list(), list()
     ),
     "_failure" = structure(
       list(
         buildurl = c(
-          NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
-          paste0(
+          NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
+          file.path(
             "https://github.com/r-universe/r-multiverse",
-            "/actions/runs/8487512222"
+            "actions/runs/9296256187"
           ),
-          NA, NA, NA, NA, NA, NA, NA, NA
+          NA, NA, NA, NA, NA
         )
       ),
       class = "data.frame",
-      row.names = c(NA, 19L)
+      row.names = c(NA, 21L)
     )
   ),
   class = "data.frame",
-  row.names = c(NA, 19L)
+  row.names = c(NA, 21L)
 )
 
-# parse(text = deparse(meta_packages(repo = "https://multiverse.r-multiverse.org")) # nolint
+# parse(text = deparse(meta_packages(repo = "https://multiverse.r-multiverse.org"))) # nolint
 mock_meta_packages <- structure(
   list(
+    "_id" = c(
+      "6662a46b4e86770016655c87", "6662991c4e867700166503e4", 
+      "66629ac44e86770016650d77", "66622a203f30cb0016a5dc6d",
+      "6662a8364e86770016656250", 
+      "6661d73b3f30cb0016a57149", "666389894e86770016666b7a",
+      "666389434e86770016666b5a", 
+      "66573e0457bd700012b52712", "666336054e86770016663cda",
+      "665dfd23adaeeb0016e158be", 
+      "665e8c08ccc2e30016c0516a", "666298b94e86770016650285",
+      "66629a064e86770016650798", 
+      "665a79f9f99f020014971e1e", "666299ca4e867700166506e7",
+      "665edf19ccc2e30016c1797b", 
+      "666299114e86770016650371", "665de13afb25640016cf701f",
+      "666299d34e8677001665074b"
+    ),
     package = c(
-      "SBC", "audio.vadwebrtc", "audio.whisper",
-      "cmdstanr", "duckdb", "httpgd", "multitools", "multiverse.internals",
-      "nanonext", "polars", "secretbase", "stantargets", "string2path",
+      "SBC", "audio.vadwebrtc", "audio.whisper", "cmdstanr", 
+      "duckdb", "httpgd", "ichimoku", "mirai", "multitools", "multiverse.internals", 
+      "nanonext", "polars", "secretbase", "stantargets", "string2path", 
       "targetsketch", "tidypolars", "tidytensor", "tinytest", "zstdlite"
     ),
     version = c(
-      "0.3.0.9000", "0.2", "0.4.1", "0.8.0", "0.10.1",
-      "2.0.1", "0.1.0", "0.1.4", "1.0.0", "0.16.4", "0.5.0", "0.1.1",
-      "0.1.6", "0.0.1", "0.7.0", "1.0.0", "1.4.1.1", "0.2.6"
+      "0.3.0.9000", "0.2", "0.4.1", "0.8.1", "0.10.1", 
+      "2.0.2", "1.5.2", "1.1.0", "0.1.1", "0.2.1", "1.1.0", "0.17.0", 
+      "0.5.0", "0.1.1", "0.1.7", "0.0.1", "0.8.0", "1.0.0", "1.4.1.1", 
+      "0.2.6"
+    ),
+    license = c(
+      "MIT + file LICENSE", "MPL-2.0", "MIT + file LICENSE", 
+      "BSD_3_clause + file LICENSE", "MIT + file LICENSE", "GPL (>= 2)", 
+      "GPL (>= 3)", "GPL (>= 3)", "MIT + file LICENSE", "MIT + file LICENSE", 
+      "GPL (>= 3)", "MIT + file LICENSE", "GPL (>= 3)", "MIT + file LICENSE", 
+      "MIT + file LICENSE", "MIT + file LICENSE", "MIT + file LICENSE", 
+      "MIT + file LICENSE", "GPL-3", "MIT + file LICENSE"
+    ),
+    remotesha = c(
+      "9ddc803105f5350dae6efb4ae2657e89d2a54aa8", 
+      "c3de76ddc738dbb4a80ac7ec67ac9da3cba093ba",
+      "4b5c6a288c0f46a4cdc47f50d2d35395d3e32194", 
+      "02259ef7aa2a8b1c8de2fa3fc42a9feafd789288",
+      "498dc55b9ec48c016de9e99ebb4fadf3c0177949", 
+      "b0a5ec38638ca69e3adbc7b24d815757e5f74817",
+      "794e514da2ed6ff94ebe95b970c2434999d632a8", 
+      "049e750168363e80d5d0915d0de9fd515c20f628",
+      "c73b933868d8c6884df4220c25779cd0874ec7de", 
+      "d4740609df6ee38bcf09d1e91691286af23c1b1f",
+      "54c1637c74e7941fbe9f152df70c0a25f8cd37f6", 
+      "038d5ce10afe592ecc197902f661509481c1d143",
+      "80cbbd9840091a1e67a99db255cb89b22ee9e0b6", 
+      "bbdda1b4a44a3d6a22041e03eed38f27319d8f32",
+      "38ce124866879d485f667b7bf3d2a070e6cb37d3", 
+      "a199a734b16f91726698a19e5f147f57f79cb2b6",
+      "7e6e3f7ce76abd960c49ef46cc3f4bf1cc8b0637", 
+      "14f5b87d2dfae20eb35cfd974adf660a4fd89980",
+      "b2c15f2033a04cd0d5da25aa5ac0c27adc296a47", 
+      "585458ccbe36eaa179d8b30f04f1e3a91dc6b993"
+    ),
+    needscompilation = c(
+      "no", 
+      "yes", "yes", "no", "yes", "yes", "yes", "no", "no", "no", "yes", 
+      "yes", "yes", "no", "yes", "no", "no", "no", "no", "yes"),
+    md5sum = c(
+      "7e4c4e683057904821a335dc7bc75fd1", 
+      "111a032d82ccf648be06559cd023022d", "20667588d9037d3bc9e632c2d34b56da", 
+      "1d75cc5e11f05fd8a04981c32bce19a1", "c48e76fa587b7783ae154b52d082456c", 
+      "3663b4618478c1298500a11b5e89aea3", "4bbd715cc6cb3a82f7befc929df6d03d", 
+      "cbe8ac6c9e826bc9714d7e7b2d050c13", "1857661573200eba4db7603cbd1d8af3", 
+      "471b6bde16d3edea7019a46326f3987a", "1f8cd6b292ce88e32112f8dc145e9241", 
+      "26a1388aa633d6dd8dd580f6a6947ce7", "d0a8befb8275606f970ad4f42b39578d", 
+      "60f182d9d6cd4dea7e98799ec8b8dea6", "a8f69782953706816a1f6b8d00f9d49e", 
+      "58e478144e6b35029fafb6230755d895", "6410fcc22099bce823b2be379243bb21", 
+      "3f18e78dffa3e45863e95aeb683aa08b", "7e8e297f00058b895d75201f31e65812", 
+      "31c8eed8564835a1d83b8115c71dfdf4"
+    ),
+    "_type" = c(
+      "src", "src", 
+      "src", "src", "src", "src", "src", "src", "src", "src", "src", 
+      "src", "src", "src", "src", "src", "src", "src", "src", "src"
+    ),
+    "_dependencies" = list(
+      structure(
+        list(
+          package = c(
+            "R6", "posterior", 
+            "ggplot2", "stats", "stringi", "abind", "future.apply", "dplyr", 
+            "tidyr", "tidyselect", "purrr", "memoise", "testthat", "cmdstanr", 
+            "rstan", "knitr", "rmarkdown", "brms", "MCMCpack", "medicaldata", 
+            "formula.tools", "MASS", "mvtnorm", "patchwork", "bayesplot"
+          ), 
+          role = c("Imports", "Imports", "Imports", "Imports", "Imports", 
+                   "Imports", "Imports", "Imports",
+                   "Imports", "Imports", "Imports", 
+                   "Imports", "Suggests", "Suggests", "Suggests", "Suggests", 
+                   "Suggests", "Suggests", "Suggests", "Suggests", "Suggests",
+                   "Suggests", "Suggests", "Suggests", "Suggests"
+          ),
+          version = c(NA, 
+                      ">= 1.0.0", NA, NA, NA, NA, NA, NA, NA,
+                      NA, NA, NA, NA, ">= 0.4.0", 
+                      NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 25L)
+      ),
+      structure(
+        list(
+          package = c(
+            "R", "Rcpp", "abseil", "Rcpp", 
+            "utils", "av", "audio"
+          ),
+          version = c(
+            ">= 2.10", NA, NA, ">= 0.11.5", 
+            NA, NA, NA
+          ),
+          role = c(
+            "Depends", "LinkingTo", "LinkingTo", "Imports", 
+            "Imports", "Suggests", "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 7L)
+      ),
+      structure(
+        list(
+          package = c(
+            "R", "Rcpp", "Rcpp", "utils", 
+            "tinytest", "audio", "data.table", "audio.vadwebrtc"
+          ),
+          version = c(
+            ">= 2.10", NA, ">= 0.11.5", NA, NA, NA, ">= 1.12.4", ">= 0.2.0"
+          ),
+          role = c(
+            "Depends", "LinkingTo", "Imports", "Imports",
+            "Suggests", "Suggests", "Suggests", 
+            "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 8L)
+      ),
+      structure(
+        list(
+          package = c(
+            "R", "checkmate", "data.table", "jsonlite", "posterior", 
+            "processx", "R6", "withr", "rlang", "bayesplot", "ggplot2", 
+            "knitr", "loo", "rmarkdown", "testthat", "Rcpp"
+          ),
+          version = c(
+            ">= 3.5.0", NA, NA, ">= 1.2.0", ">= 1.4.1",
+            ">= 3.5.0", ">= 2.4.0", ">= 2.5.0", 
+            ">= 0.4.7", NA, NA, ">= 1.37", ">= 2.0.0", NA, ">= 2.1.0", NA
+          ),
+          role = c(
+            "Depends", "Imports", "Imports", "Imports", 
+            "Imports", "Imports", "Imports", "Imports", "Imports", "Suggests", 
+            "Suggests", "Suggests", "Suggests", "Suggests", "Suggests", 
+            "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 16L)
+      ),
+      structure(
+        list(
+          package = c(
+            "DBI", "R", "methods", "utils", 
+            "adbcdrivermanager", "arrow", "bit64",
+            "callr", "DBItest", "dbplyr", 
+            "dplyr", "rlang", "testthat", "tibble", "vctrs", "withr"
+          ),
+          role = c(
+            "Depends", "Depends", "Imports", "Imports",
+            "Suggests", "Suggests", "Suggests", 
+            "Suggests", "Suggests", "Suggests",
+            "Suggests", "Suggests", "Suggests", 
+            "Suggests", "Suggests", "Suggests"
+          ),
+          version = c(
+            NA, ">= 3.6.0", NA, NA, NA, ">= 13.0.0",
+            NA, NA, NA, NA, NA, NA, NA, NA, NA, 
+            NA
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 16L)
+      ),
+      structure(
+        list(
+          package = c(
+            "R", "unigd", "cpp11", "AsioHeaders", "unigd", 
+            "testthat", "xml2", "knitr", "rmarkdown", "covr", "future", 
+            "httr", "jsonlite"
+          ),
+          version = c(
+            ">= 3.2.0", NA, ">= 0.2.4", 
+            ">= 1.22.1", NA, NA, ">= 1.0.0", NA, NA, NA, NA, NA, NA
+          ), 
+          role = c(
+            "Depends", "LinkingTo", "LinkingTo", "LinkingTo", 
+            "Imports", "Suggests", "Suggests", "Suggests", "Suggests", 
+            "Suggests", "Suggests", "Suggests", "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 13L)
+      ),
+      structure(
+        list(
+          package = c(
+            "R", "RcppSimdJson", "xts", "ggplot2",
+            "mirai", "nanonext", "RcppSimdJson", "secretbase", 
+            "shiny", "xts", "zoo", "keyring", "knitr", "rmarkdown", "testthat"
+          ),
+          version = c(
+            ">= 3.5", NA, NA, ">= 3.4.0", ">= 1.0.0", ">= 1.0.0", 
+            ">= 0.1.9", ">= 0.3.0", ">= 1.4.0", NA, NA, NA, NA, NA, ">= 3.0.0"
+          ),
+          role = c(
+            "Depends", "LinkingTo", "LinkingTo", "Imports", "Imports", 
+            "Imports", "Imports", "Imports", "Imports", "Imports", "Imports", 
+            "Suggests", "Suggests", "Suggests", "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 15L)),
+      structure(
+        list(
+          package = c(
+            "R", "nanonext", "knitr", "markdown", "parallel", "promises"
+          ),
+          version = c(">= 3.6", ">= 1.1.0", NA, NA, NA, NA),
+          role = c(
+            "Depends", "Imports", "Suggests", "Suggests", 
+            "Enhances", "Enhances"
+          )
+        ),
+        class = "data.frame", row.names = c(NA, 6L)
+      ),
+      structure(
+        list(
+          package = c(
+            "R", "jsonlite", "tibble", "curl", 
+            "knitr", "markdown", "rmarkdown", "testthat"
+          ),
+          version = c(
+            ">= 4.0.0", 
+            NA, NA, NA, ">= 1.30", ">= 1.1", ">= 2.4", ">= 3.0.0"
+          ),
+          role = c(
+            "Depends", 
+            "Imports", "Imports", "Suggests",
+            "Suggests", "Suggests", "Suggests", 
+            "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 8L)
+      ),
+      structure(
+        list(
+          package = c(
+            "R", "gh", "jsonlite", "nanonext", "pkgsearch", 
+            "utils", "vctrs", "testthat"
+          ),
+          version = c(
+            ">= 3.5.0", NA, 
+            NA, NA, NA, NA, NA, ">= 3.0.0"
+          ),
+          role = c(
+            "Depends", "Imports", 
+            "Imports", "Imports", "Imports", "Imports", "Imports", "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 8L)
+      ),
+      structure(
+        list(
+          package = c("R", "later", "later", "knitr", "markdown"), 
+          version = c(">= 3.5", NA, NA, NA, NA),
+          role = c(
+            "Depends", 
+            "LinkingTo", "Imports", "Suggests", "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 5L)
+      ),
+      structure(
+        list(
+          package = c(
+            "R", "utils", "codetools", "methods", 
+            "arrow", "bench", "bit64", "callr", "clock", "curl", "ggplot2", 
+            "jsonlite", "knitr", "lubridate", "nanoarrow", "nycflights13", 
+            "patrick", "pillar", "rlang", "rmarkdown", "testthat", "tibble", 
+            "tools", "vctrs", "withr"
+          ),
+          version = c(
+            ">= 4.2", NA, NA, NA, 
+            ">= 15.0.1", NA, NA, NA, ">= 0.7.0",
+            NA, NA, NA, NA, NA, ">= 0.4.0", 
+            NA, NA, NA, NA, NA, ">= 3.2.1", NA, NA, NA, NA
+          ),
+          role = c(
+            "Depends", 
+            "Imports", "Imports", "Imports",
+            "Suggests", "Suggests", "Suggests",
+            "Suggests", "Suggests", "Suggests",
+            "Suggests", "Suggests", "Suggests", 
+            "Suggests", "Suggests", "Suggests",
+            "Suggests", "Suggests", "Suggests", 
+            "Suggests", "Suggests", "Suggests",
+            "Suggests", "Suggests", "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 25L)
+      ),
+      structure(
+        list(
+          package = "R",
+          version = ">= 3.5",
+          role = "Depends"
+        ),
+        class = "data.frame",
+        row.names = 1L
+      ), 
+      structure(
+        list(
+          package = c(
+            "R", "cmdstanr", "fs", "fst", 
+            "posterior", "purrr", "qs", "rlang", "secretbase", "stats", 
+            "targets", "tarchetypes", "tibble", "tidyselect", "withr", 
+            "dplyr", "ggplot2", "knitr", "R.utils", "rmarkdown", "SBC", 
+            "testthat", "tidyr", "visNetwork"
+          ),
+          version = c(
+            ">= 3.5.0", 
+            ">= 0.5.0", ">= 1.5.0", ">= 0.9.2", ">= 1.0.1", ">= 0.3.4", 
+            ">= 0.23.2", ">= 0.4.10", ">= 0.4.0", NA, ">= 1.6.0", ">= 0.8.0", 
+            ">= 3.0.1", NA, ">= 2.1.2", ">= 1.0.2", ">= 3.0.0", ">= 1.30", 
+            ">= 2.10.1", ">= 2.3", ">= 0.2.0", ">= 3.0.0", ">= 1.0.0", 
+            ">= 2.0.9"
+          ),
+          role = c(
+            "Depends", "Imports", "Imports", "Imports", 
+            "Imports", "Imports", "Imports", "Imports", "Imports", "Imports", 
+            "Imports", "Imports", "Imports", "Imports", "Imports", "Suggests", 
+            "Suggests", "Suggests", "Suggests", "Suggests", "Suggests", 
+            "Suggests", "Suggests", "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 24L)
+      ),
+      structure(
+        list(
+          package = c("R", "tibble", "cli", "testthat"),
+          version = c(">= 4.2", NA, NA, ">= 3.0.0"),
+          role = c("Depends", "Imports", "Imports", "Suggests")
+        ),
+        class = "data.frame",
+        row.names = c(NA, 4L)
+      ),
+      structure(
+        list(
+          package = c(
+            "R", "bs4Dash", "DT", "htmltools", 
+            "markdown", "rclipboard", "shiny", "shinyalert", "shinyAce", 
+            "shinybusy", "shinycssloaders", "shinyFiles", "targets", 
+            "tarchetypes", "visNetwork", "withr", "pkgload", "rmarkdown"
+          ),
+          version = c(
+            ">= 4.1.0", ">= 2.0.0", ">= 0.14", ">= 0.5.0", 
+            NA, NA, ">= 1.5.0", ">= 1.1", ">= 0.4.1", ">= 0.2.0", ">= 0.3", 
+            ">= 0.9.3", ">= 0.2.0", ">= 0.1.0", ">= 2.0.9", ">= 2.2.0", 
+            ">= 1.1.0", ">= 2.3"
+          ),
+          role = c(
+            "Depends", "Imports", "Imports", 
+            "Imports", "Imports", "Imports", "Imports", "Imports", "Imports", 
+            "Imports", "Imports", "Imports", "Imports", "Imports", "Imports", 
+            "Imports", "Suggests", "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 18L)
+      ),
+      structure(
+        list(
+          package = c(
+            "R", "dplyr", "glue", "polars", 
+            "rlang", "tidyr", "tidyselect", "utils", "vctrs", "bench", 
+            "data.table", "knitr", "lubridate", "rmarkdown", "rstudioapi", 
+            "tibble", "tinytest"
+          ),
+          version = c(
+            ">= 4.1.0", NA, NA, ">= 0.17.0", 
+            NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
+          ),
+          role = c(
+            "Depends", 
+            "Imports", "Imports", "Imports", "Imports", "Imports", "Imports", 
+            "Imports", "Imports", "Suggests", "Suggests", "Suggests", 
+            "Suggests", "Suggests", "Suggests", "Suggests", "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 17L)
+      ),
+      structure(
+        list(
+          package = c(
+            "abind", "purrr", "rstackdeque", "magrittr", 
+            "rlang", "tidyselect", "testthat", "reticulate", "stringr", 
+            "keras", "dplyr", "covr", "knitr", "markdown", "ggplot2", 
+            "tidyr"
+          ),
+          role = c(
+            "Imports", "Imports", "Imports", "Imports", 
+            "Imports", "Imports", "Suggests", "Suggests", "Suggests", 
+            "Suggests", "Suggests", "Suggests", "Suggests", "Suggests", 
+            "Suggests", "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 16L)
+      ),
+      structure(
+        list(
+          package = c("R", "parallel", "utils"),
+          version = c(">= 3.0.0", NA, NA),
+          role = c(
+            "Depends", "Imports", 
+            "Imports"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 3L)
+      ), 
+      structure(
+        list(
+          package = c(
+            "R", "knitr", "rmarkdown", "testthat", 
+            "bench"
+          ),
+          version = c(">= 3.4.0", NA, NA, NA, NA),
+          role = c(
+            "Depends", 
+            "Suggests", "Suggests", "Suggests", "Suggests"
+          )
+        ),
+        class = "data.frame",
+        row.names = c(NA, 5L)
+      )
+    ),
+    distro = c(
+      "noble", "noble", "noble", "noble", "noble", 
+      "noble", "noble", "noble", "noble", "noble", "noble", "noble", 
+      "noble", "noble", "noble", "noble", "noble", "noble", "noble", 
+      "noble"
     ),
     remotes = list(
-      NULL, NULL, "bnosac/audio.vadwebrtc", NULL, NULL, NULL, NULL,
-      NULL, NULL, NULL, NULL,
-      c("hyunjimoon/SBC", "stan-dev/cmdstanr", ""),
-      NULL, NULL, "markvanderloo/tinytest/pkg", NULL, NULL, NULL
+      NULL, NULL, "bnosac/audio.vadwebrtc", 
+      NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 
+      c("hyunjimoon/SBC", "stan-dev/cmdstanr", ""), NULL, NULL, 
+      "markvanderloo/tinytest/pkg", NULL, NULL, NULL
     )
   ),
-  row.names = c(NA, 18L),
-  class = "data.frame"
+  class = "data.frame",
+  row.names = c(NA, 20L)
 )
 
-# parse(text = deparse(meta_packages(repo = "https://wlandau.r-universe.dev")) # nolint
+# parse(text = deparse(meta_packages(repo = "https://wlandau.r-universe.dev"))) # nolint
 mock_meta_packages_graph <- structure(
   list(
     "_id" = c(
