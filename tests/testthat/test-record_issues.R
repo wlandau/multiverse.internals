@@ -19,7 +19,6 @@ test_that("record_issues() mocked", {
         "polars",
         "SBC",
         "stantargets",
-        "string2path",
         "tidypolars",
         "tidytensor",
         "version_decremented",
@@ -37,9 +36,11 @@ test_that("record_issues() mocked", {
         "_wasmbinary" = "src-failure",
         "_winbinary" = "src-failure",
         "_status" = "src-failure",
-        "_buildurl" = file.path(runs, "8487512222")
+        "_buildurl" = file.path(runs, "9296256187")
       ),
-      date = "2024-01-01"
+      date = "2024-01-01",
+      version = list(),
+      remote_hash = list()
     )
   )
   expect_equal(
@@ -54,12 +55,14 @@ test_that("record_issues() mocked", {
         "_wasmbinary" = "success",
         "_winbinary" = "success",
         "_status" = "success",
-        "_buildurl" = file.path(runs, "8998732490")
+        "_buildurl" = file.path(runs, "9412009826")
       ),
       descriptions = list(
         remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")
       ),
-      date = "2024-01-01"
+      date = "2024-01-01",
+      version = "0.1.1",
+      remote_hash = "bbdda1b4a44a3d6a22041e03eed38f27319d8f32"
     )
   )
   expect_equal(
@@ -74,7 +77,9 @@ test_that("record_issues() mocked", {
         version_highest = "1.0.0",
         hash_highest = "hash_1.0.0"
       ),
-      date = "2024-01-01"
+      date = "2024-01-01",
+      version = list(),
+      remote_hash = list()
     )
   )
   expect_equal(
@@ -89,7 +94,9 @@ test_that("record_issues() mocked", {
         version_highest = "1.0.0",
         hash_highest = "hash_1.0.0"
       ),
-      date = "2024-01-01"
+      date = "2024-01-01",
+      version = list(),
+      remote_hash = list()
     )
   )
 })
@@ -121,7 +128,6 @@ test_that("record_issues() date works", {
     "httpgd",
     "INLA",
     "stantargets",
-    "string2path",
     "tidytensor",
     "version_decremented"
   )
@@ -209,7 +215,9 @@ test_that("record_issues() with dependency problems", {
         version_highest = "1.0.0",
         hash_highest = "hash_1.0.0"
       ),
-      date = "2024-01-01"
+      date = "2024-01-01",
+      version = "1.1.0.9000",
+      remote_hash = "85dd672a44a92c890eb40ea9ebab7a4e95335c2f"
     )
   )
   expect_equal(
@@ -221,7 +229,9 @@ test_that("record_issues() with dependency problems", {
       dependencies = list(
         nanonext = list()
       ),
-      date = "2024-01-01"
+      date = "2024-01-01",
+      version = "1.1.0.9000",
+      remote_hash = "7015695b7ef82f82ab3225ac2d226b2c8f298097"
     )
   )
   expect_equal(
@@ -238,13 +248,15 @@ test_that("record_issues() with dependency problems", {
         "_status" = "success",
         "_buildurl" = file.path(
           "https://github.com/r-universe/r-multiverse/actions",
-          "runs/8998731783"
+          "runs/9412009683"
         )
       ),
       dependencies = list(
         nanonext = "mirai"
       ),
-      date = "2024-01-01"
+      date = "2024-01-01",
+      version = "0.9.3.9002",
+      remote_hash = "eafad0276c06dec2344da2f03596178c754c8b5e"
     )
   )
   expect_equal(
@@ -257,7 +269,9 @@ test_that("record_issues() with dependency problems", {
         crew = list(),
         nanonext = "crew"
       ),
-      date = "2024-01-01"
+      date = "2024-01-01",
+      version = "0.0.5.9000",
+      remote_hash = "4d9e5b44e2942d119af963339c48d134e84de458"
     )
   )
   expect_equal(
@@ -270,7 +284,9 @@ test_that("record_issues() with dependency problems", {
         crew = list(),
         nanonext = "crew"
       ),
-      date = "2024-01-01"
+      date = "2024-01-01",
+      version = "0.3.1",
+      remote_hash = "d4ac61fd9a1d9539088ffebdadcd4bb713c25ee1"
     )
   )
 })
