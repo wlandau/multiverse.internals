@@ -29,6 +29,7 @@ Depends:
   R (>= 3.5.0)
 Imports:
   gh,
+  igraph,
   jsonlite,
   nanonext,
   pkgsearch,

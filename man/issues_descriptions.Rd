@@ -46,6 +46,7 @@ together all the issues about R-multiverse packages.
 \seealso{
 Other issues: 
 \code{\link{issues_checks}()},
+\code{\link{issues_dependencies}()},
 \code{\link{issues_versions}()}
 }
 \concept{issues}
