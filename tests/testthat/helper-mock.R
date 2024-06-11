@@ -1,4 +1,4 @@
-# parse(text = deparse(meta_checks(repo = "https://multiverse.r-multiverse.org"))) # nolint
+# dput(meta_checks(repo = "https://multiverse.r-multiverse.org")) # nolint
 mock_meta_checks <- structure(
   list(
     package = c(
@@ -108,7 +108,7 @@ mock_meta_checks <- structure(
   row.names = c(NA, 21L)
 )
 
-# parse(text = deparse(meta_packages(repo = "https://multiverse.r-multiverse.org"))) # nolint
+# dput(meta_packages(repo = "https://multiverse.r-multiverse.org")) # nolint
 mock_meta_packages <- structure(
   list(
     "_id" = c(
@@ -590,7 +590,7 @@ mock_meta_packages <- structure(
   row.names = c(NA, 20L)
 )
 
-# parse(text = deparse(meta_packages(repo = "https://wlandau.r-universe.dev"))) # nolint
+# dput(meta_packages(repo = "https://wlandau.r-universe.dev")) # nolint
 mock_meta_packages_graph <- structure(
   list(
     "_id" = c(

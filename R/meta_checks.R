@@ -19,7 +19,7 @@ meta_checks <- function(repo = "https://multiverse.r-multiverse.org") {
     "_status"
   )
   listing <- file.path(
-    repo,
+    trim_trailing_slash(repo),
     "api",
     paste0("packages?stream=true&fields=", paste(fields, collapse = ","))
   )
