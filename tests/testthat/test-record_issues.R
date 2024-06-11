@@ -7,7 +7,8 @@ test_that("record_issues() mocked", {
       packages = mock_meta_packages,
       today = "2024-01-01"
     ),
-    output = output
+    output = output,
+    verbose = FALSE
   )
   expect_equal(
     sort(c(list.files(output))),
@@ -110,7 +111,8 @@ test_that("record_issues() date works", {
       packages = mock_meta_packages,
       today = "2024-01-01"
     ),
-    output = output
+    output = output,
+    verbose = FALSE
   )
   record_issues(
     versions = mock_versions(),
@@ -118,7 +120,8 @@ test_that("record_issues() date works", {
       checks = mock_meta_checks,
       packages = mock_meta_packages
     ),
-    output = output
+    output = output,
+    verbose = FALSE
   )
   for (file in list.files(output, full.names = TRUE)) {
     date <- jsonlite::read_json(file, simplifyVector = TRUE)$date
@@ -145,7 +148,8 @@ test_that("record_issues() date works", {
       checks = mock_meta_checks,
       packages = mock_meta_packages
     ),
-    output = output
+    output = output,
+    verbose = FALSE
   )
   for (package in never_fixed) {
     path <- file.path(output, package)
@@ -170,7 +174,8 @@ test_that("record_issues() on a small repo", {
   record_issues(
     repo = "https://wlandau.r-universe.dev",
     versions = versions,
-    output = output
+    output = output,
+    verbose = FALSE
   )
   expect_true(dir.exists(output))
 })
@@ -193,14 +198,17 @@ test_that("record_issues() with dependency problems", {
   meta_checks <- mock_meta_checks[1L, ]
   meta_checks$package <- "crew"
   meta_checks[["_winbinary"]] <- "failure"
-  record_issues(
-    versions = versions,
-    mock = list(
-      checks = meta_checks,
-      packages = mock_meta_packages_graph,
-      today = "2024-01-01"
-    ),
-    output = output
+  suppressMessages(
+    record_issues(
+      versions = versions,
+      mock = list(
+        checks = meta_checks,
+        packages = mock_meta_packages_graph,
+        today = "2024-01-01"
+      ),
+      output = output,
+      verbose = TRUE
+    )
   )
   expect_true(dir.exists(output))
   expect_equal(

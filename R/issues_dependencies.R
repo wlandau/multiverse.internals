@@ -29,6 +29,8 @@
 #' @param packages Character vector of names of packages with other issues.
 #' @param meta A data frame with R-universe package check results
 #'   returned by [meta_checks()].
+#' @param verbose `TRUE` to print progress while checking issues with
+#'   dependencies, `FALSE` otherwise.
 #' @examples
 #'   meta <- meta_packages(repo = "https://wlandau.r-universe.dev")
 #'   issues_dependencies(packages = character(0L), meta = meta)
@@ -38,8 +40,10 @@
 #'   issues_dependencies(packages = c("crew", "mirai"), meta = meta)
 issues_dependencies <- function(
   packages,
-  meta = multiverse.internals::meta_packages()
+  meta = multiverse.internals::meta_packages(),
+  verbose = TRUE
 ) {
+  if (verbose) message("Constructing the package dependency graph")
   graph <- issues_dependencies_graph(meta)
   vertices <- names(igraph::V(graph))
   edges <- igraph::as_long_data_frame(graph)
@@ -51,6 +55,7 @@ issues_dependencies <- function(
   )
   issues <- list()
   for (package in intersect(packages, vertices)) {
+    if (verbose) message("Flagging reverse dependencies of ", package)
     revdeps <- names(igraph::subcomponent(graph, v = package, mode = "out"))
     revdeps <- setdiff(revdeps, package)
     for (revdep in revdeps) {

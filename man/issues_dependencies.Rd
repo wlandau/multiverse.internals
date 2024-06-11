@@ -4,13 +4,20 @@
 \alias{issues_dependencies}
 \title{Report package dependency issues}
 \usage{
-issues_dependencies(packages, meta = multiverse.internals::meta_packages())
+issues_dependencies(
+  packages,
+  meta = multiverse.internals::meta_packages(),
+  verbose = TRUE
+)
 }
 \arguments{
 \item{packages}{Character vector of names of packages with other issues.}
 
 \item{meta}{A data frame with R-universe package check results
 returned by \code{\link[=meta_checks]{meta_checks()}}.}
+
+\item{verbose}{\code{TRUE} to print progress while checking issues with
+dependencies, \code{FALSE} otherwise.}
 }
 \value{
 A nested list of problems triggered by dependencies.

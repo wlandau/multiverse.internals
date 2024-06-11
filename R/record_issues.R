@@ -25,6 +25,7 @@
 #'   all package are resolved.
 #' @return `NULL` (invisibly).
 #' @inheritParams issues_checks
+#' @inheritParams issues_dependencies
 #' @inheritParams issues_versions
 #' @inheritParams meta_checks
 #' @param output Character of length 1, file path to the folder to record
@@ -58,7 +59,8 @@ record_issues <- function(
   repo = "https://multiverse.r-multiverse.org",
   versions = "versions.json",
   output = "issues",
-  mock = NULL
+  mock = NULL,
+  verbose = TRUE
 ) {
   today <- mock$today %||% format(Sys.Date(), fmt = "yyyy-mm-dd")
   checks <- mock$checks %||% meta_checks(repo = repo)
@@ -68,7 +70,10 @@ record_issues <- function(
     add_issues(issues_descriptions(meta = packages), "descriptions") |>
     add_issues(issues_versions(versions = versions), "versions")
   issues <- issues |>
-    add_issues(issues_dependencies(names(issues), packages), "dependencies")
+    add_issues(
+      issues_dependencies(names(issues), packages, verbose = verbose),
+      "dependencies"
+    )
   overwrite_issues(
     issues = issues,
     output = output,

@@ -15,7 +15,8 @@ test_that("issues_dependencies() no issues", {
   expect_equal(
     issues_dependencies(
       packages = character(0L),
-      meta = mock_meta_packages_graph
+      meta = mock_meta_packages_graph,
+      verbose = FALSE
     ),
     list()
   )
@@ -25,7 +26,8 @@ test_that("issues_dependencies() no revdeps", {
   expect_equal(
     issues_dependencies(
       packages = "crew.aws.batch",
-      meta = mock_meta_packages_graph
+      meta = mock_meta_packages_graph,
+      verbose = FALSE
     ),
     list()
   )
@@ -33,9 +35,11 @@ test_that("issues_dependencies() no revdeps", {
 
 test_that("issues_dependencies() nanonext", {
   expect_equal(
-    issues_dependencies(
-      packages = "nanonext",
-      meta = mock_meta_packages_graph
+    suppressMessages(
+      issues_dependencies(
+        packages = "nanonext",
+        meta = mock_meta_packages_graph
+      )
     ),
     list(
       mirai = list(nanonext = character(0L)),
@@ -50,7 +54,8 @@ test_that("issues_dependencies() mirai", {
   expect_equal(
     issues_dependencies(
       packages = "mirai",
-      meta = mock_meta_packages_graph
+      meta = mock_meta_packages_graph,
+      verbose = FALSE
     ),
     list(
       crew = list(mirai = character(0L)),
@@ -64,7 +69,8 @@ test_that("issues_dependencies() crew", {
   expect_equal(
     issues_dependencies(
       packages = "crew",
-      meta = mock_meta_packages_graph
+      meta = mock_meta_packages_graph,
+      verbose = FALSE
     ),
     list(
       crew.aws.batch = list(crew = character(0L)),
@@ -77,7 +83,8 @@ test_that("issues_dependencies() nanonext and mirai", {
   expect_equal(
     issues_dependencies(
       packages = c("nanonext", "mirai"),
-      meta = mock_meta_packages_graph
+      meta = mock_meta_packages_graph,
+      verbose = FALSE
     ),
     list(
       mirai = list(nanonext = character(0L)),
@@ -92,7 +99,8 @@ test_that("issues_dependencies() nanonext and mirai", {
   expect_equal(
     issues_dependencies(
       packages = c("crew", "mirai"),
-      meta = mock_meta_packages_graph
+      meta = mock_meta_packages_graph,
+      verbose = FALSE
     ),
     list(
       crew.aws.batch = list(crew = character(0L), mirai = "crew"),
@@ -112,7 +120,7 @@ test_that("issues_dependencies() with more than one direct dependency", {
     data.frame(package = "x", version = NA_character_, role = "Imports")
   )
   expect_equal(
-    issues_dependencies(packages = "mirai", meta = meta),
+    issues_dependencies(packages = "mirai", meta = meta, verbose = FALSE),
     list(
       crew = list(mirai = character(0L)),
       x = list(mirai = character(0L)),
@@ -132,7 +140,11 @@ test_that("issues_dependencies() with more than one direct dependency (2)", {
     data.frame(package = "x", version = NA_character_, role = "Imports")
   )
   expect_equal(
-    issues_dependencies(packages = c("mirai", "nanonext"), meta = meta),
+    issues_dependencies(
+      packages = c("mirai", "nanonext"),
+      meta = meta,
+      verbose = FALSE
+    ),
     list(
       crew = list(mirai = character(0L), nanonext = "mirai"),
       x = list(mirai = character(0L), nanonext = "mirai"),
