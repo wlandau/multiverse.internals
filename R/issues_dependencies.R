@@ -64,7 +64,8 @@ issues_dependencies_graph <- function(meta) {
     packages <- .subset2(all, "package")
     role <- .subset2(all, "role")
     strong <- packages[role %in% c("Depends", "Imports", "LinkingTo")]
-    strong <- intersect(setdiff(unique(strong), "R"), repo_packages)
+    strong <- setdiff(unique(strong), "R")
+    strong <- strong[match(strong, repo_packages, nomatch = 0L) > 0L]
     edges <- rep(strong, each = 2L)
     if (length(edges) >= 2L) {
       edges[seq(from = 2L, to = length(edges), by = 2L)] <- package
