@@ -40,7 +40,7 @@
 #'   issues_dependencies(packages = c("crew", "mirai"), meta = meta)
 issues_dependencies <- function(
   packages,
-  meta = multiverse.internals::meta_packages(),
+  meta = meta_packages(),
   verbose = FALSE
 ) {
   if (verbose) message("Constructing the package dependency graph")
