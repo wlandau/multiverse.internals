@@ -60,7 +60,7 @@ record_issues <- function(
   versions = "versions.json",
   output = "issues",
   mock = NULL,
-  verbose = TRUE
+  verbose = FALSE
 ) {
   today <- mock$today %||% format(Sys.Date(), fmt = "yyyy-mm-dd")
   checks <- mock$checks %||% meta_checks(repo = repo)

@@ -9,7 +9,7 @@ record_issues(
   versions = "versions.json",
   output = "issues",
   mock = NULL,
-  verbose = TRUE
+  verbose = FALSE
 )
 }
 \arguments{

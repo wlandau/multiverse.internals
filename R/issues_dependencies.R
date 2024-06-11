@@ -41,7 +41,7 @@
 issues_dependencies <- function(
   packages,
   meta = multiverse.internals::meta_packages(),
-  verbose = TRUE
+  verbose = FALSE
 ) {
   if (verbose) message("Constructing the package dependency graph")
   graph <- issues_dependencies_graph(meta)

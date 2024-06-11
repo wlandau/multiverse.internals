@@ -7,7 +7,7 @@
 issues_dependencies(
   packages,
   meta = multiverse.internals::meta_packages(),
-  verbose = TRUE
+  verbose = FALSE
 )
 }
 \arguments{
