@@ -8,7 +8,8 @@ record_issues(
   repo = "https://multiverse.r-multiverse.org",
   versions = "versions.json",
   output = "issues",
-  mock = NULL
+  mock = NULL,
+  verbose = FALSE
 )
 }
 \arguments{
@@ -27,6 +28,9 @@ contents of the repo.}
 
 \item{mock}{For testing purposes only, a named list of data frames
 for inputs to various intermediate functions.}
+
+\item{verbose}{\code{TRUE} to print progress while checking issues with
+dependencies, \code{FALSE} otherwise.}
 }
 \value{
 \code{NULL} (invisibly).

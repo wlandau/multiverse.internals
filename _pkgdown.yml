@@ -16,6 +16,7 @@ reference:
 - title: Check issues
   contents:
   - issues_checks
+  - issues_dependencies
   - issues_descriptions
   - issues_versions
 - title: Record issues

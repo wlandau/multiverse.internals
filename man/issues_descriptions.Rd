@@ -4,7 +4,7 @@
 \alias{issues_descriptions}
 \title{Report \code{DESCRIPTION} file issues.}
 \usage{
-issues_descriptions(meta)
+issues_descriptions(meta = meta_packages())
 }
 \arguments{
 \item{meta}{A data frame with R-universe package check results
@@ -46,6 +46,7 @@ together all the issues about R-multiverse packages.
 \seealso{
 Other issues: 
 \code{\link{issues_checks}()},
+\code{\link{issues_dependencies}()},
 \code{\link{issues_versions}()}
 }
 \concept{issues}

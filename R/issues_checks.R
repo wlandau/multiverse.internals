@@ -17,7 +17,7 @@
 #'   meta <- meta_checks(repo = "https://wlandau.r-universe.dev")
 #'   issues <- issues_checks(meta = meta)
 #'   str(issues)
-issues_checks <- function(meta) {
+issues_checks <- function(meta = meta_checks()) {
   fields_check <- c(
     "_linuxdevel",
     "_macbinary",

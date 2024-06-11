@@ -4,7 +4,7 @@
 \alias{issues_checks}
 \title{Report issues from R-universe package check results.}
 \usage{
-issues_checks(meta)
+issues_checks(meta = meta_checks())
 }
 \arguments{
 \item{meta}{A data frame with R-universe package check results
@@ -45,6 +45,7 @@ together all the issues about R-multiverse packages.
 }
 \seealso{
 Other issues: 
+\code{\link{issues_dependencies}()},
 \code{\link{issues_descriptions}()},
 \code{\link{issues_versions}()}
 }

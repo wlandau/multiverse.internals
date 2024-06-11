@@ -25,6 +25,7 @@
 #'   all package are resolved.
 #' @return `NULL` (invisibly).
 #' @inheritParams issues_checks
+#' @inheritParams issues_dependencies
 #' @inheritParams issues_versions
 #' @inheritParams meta_checks
 #' @param output Character of length 1, file path to the folder to record
@@ -58,7 +59,8 @@ record_issues <- function(
   repo = "https://multiverse.r-multiverse.org",
   versions = "versions.json",
   output = "issues",
-  mock = NULL
+  mock = NULL,
+  verbose = FALSE
 ) {
   today <- mock$today %||% format(Sys.Date(), fmt = "yyyy-mm-dd")
   checks <- mock$checks %||% meta_checks(repo = repo)
@@ -66,8 +68,18 @@ record_issues <- function(
   issues <- list() |>
     add_issues(issues_checks(meta = checks), "checks") |>
     add_issues(issues_descriptions(meta = packages), "descriptions") |>
-    add_issues(issues_versions(versions = versions), "versions") |>
-    overwrite_issues(output = output, today = today)
+    add_issues(issues_versions(versions = versions), "versions")
+  issues <- issues |>
+    add_issues(
+      issues_dependencies(names(issues), packages, verbose = verbose),
+      "dependencies"
+    )
+  overwrite_issues(
+    issues = issues,
+    output = output,
+    today = today,
+    packages = packages
+  )
   invisible()
 }
 
@@ -78,15 +90,15 @@ add_issues <- function(total, subset, category) {
   total
 }
 
-overwrite_issues <- function(issues, output, today) {
-  packages <- list.files(output)
+overwrite_issues <- function(issues, output, today, packages) {
+  with_issues <- list.files(output)
   dates <- lapply(
-    X = packages,
+    X = with_issues,
     FUN = function(path) {
       jsonlite::read_json(file.path(output, path), simplifyVector = TRUE)$date
     }
   )
-  names(dates) <- packages
+  names(dates) <- with_issues
   unlink(output, recursive = TRUE)
   dir.create(output)
   lapply(
@@ -95,7 +107,8 @@ overwrite_issues <- function(issues, output, today) {
     issues = issues,
     output = output,
     today = today,
-    dates = dates
+    dates = dates,
+    packages = packages
   )
 }
 
@@ -104,10 +117,14 @@ overwrite_package_issues <- function(
   issues,
   output,
   today,
-  dates
+  dates,
+  packages
 ) {
   path <- file.path(output, package)
   issues[[package]]$date <- dates[[package]] %||% today
+  index <- packages$package == package
+  issues[[package]]$version <- packages[["version"]][index]
+  issues[[package]]$remote_hash <- packages[["remotesha"]][index]
   jsonlite::write_json(
     x = issues[[package]],
     path = file.path(output, package),

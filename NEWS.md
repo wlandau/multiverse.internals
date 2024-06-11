@@ -1,3 +1,7 @@
+# multiverse.internals 0.2.2
+
+* Add `issues_dependencies()`.
+
 # multiverse.internals 0.2.1
 
 * Bump version to trigger rebuild.
