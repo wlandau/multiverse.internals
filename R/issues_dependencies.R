@@ -42,13 +42,21 @@ issues_dependencies <- function(
 ) {
   graph <- issues_dependencies_graph(meta)
   vertices <- names(igraph::V(graph))
+  edges <- igraph::as_long_data_frame(graph)
+  from <- tapply(
+    X = edges$from_name,
+    INDEX = edges$to_name,
+    FUN = identity,
+    simplify = FALSE
+  )
   issues <- list()
   for (package in intersect(packages, vertices)) {
     revdeps <- names(igraph::subcomponent(graph, v = package, mode = "out"))
     revdeps <- setdiff(revdeps, package)
     for (revdep in revdeps) {
-      neighbors <- names(igraph::neighbors(graph, v = revdep, mode = "in"))
-      issues[[revdep]][[package]] <- intersect(neighbors, revdeps)
+      neighbors <- from[[revdep]]
+      keep <- match(neighbors, revdeps, nomatch = 0L) > 0L
+      issues[[revdep]][[package]] <- neighbors[keep]
     }
   }
   issues
@@ -57,7 +65,8 @@ issues_dependencies <- function(
 issues_dependencies_graph <- function(meta) {
   repo_packages <- meta$package
   repo_dependencies <- meta[["_dependencies"]]
-  edge_list <- list()
+  from <- list()
+  to <- list()
   for (index in seq_len(nrow(meta))) {
     package <- .subset2(repo_packages, index)
     all <- .subset2(repo_dependencies, index)
@@ -65,12 +74,14 @@ issues_dependencies_graph <- function(meta) {
     role <- .subset2(all, "role")
     strong <- packages[role %in% c("Depends", "Imports", "LinkingTo")]
     strong <- setdiff(unique(strong), "R")
-    strong <- strong[match(strong, repo_packages, nomatch = 0L) > 0L]
-    edges <- rep(strong, each = 2L)
-    if (length(edges) >= 2L) {
-      edges[seq(from = 2L, to = length(edges), by = 2L)] <- package
-      edge_list[[index]] <- edges
-    }
+    from[[index]] <- strong
+    to[[index]] <- rep(package, length(strong))
   }
-  igraph::graph(edges = unlist(edge_list))
+  from <- unlist(from, recursive = FALSE, use.names = FALSE)
+  to <- unlist(to, recursive = FALSE, use.names = FALSE)
+  keep <- match(from, repo_packages, nomatch = 0L) > 0L
+  from <- from[keep]
+  to <- to[keep]
+  edges <- as.character(rbind(from, to))
+  igraph::graph(edges = edges)
 }
