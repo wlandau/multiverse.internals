@@ -1,3 +1,7 @@
+# multiverse.internals 0.2.2.9000 (development)
+
+* Makes `meta_checks()` and `meta_packages()` robust to trailing slashes in the supplied URL.
+
 # multiverse.internals 0.2.2
 
 * Add `issues_dependencies()`.
