@@ -10,7 +10,7 @@
 meta_packages <- function(repo = "https://multiverse.r-multiverse.org") {
   fields <- c("Version", "Remotes", "RemoteSha")
   listing <- file.path(
-    trim_trailing_slash(repo),
+    trim_url(repo),
     "src",
     "contrib",
     paste0("PACKAGES.json?fields=", paste(fields, collapse = ","))
