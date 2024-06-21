@@ -4,11 +4,11 @@
 \alias{meta_packages}
 \title{List package metadata}
 \usage{
-meta_packages(repo = "https://multiverse.r-multiverse.org")
+meta_packages(repo = "https://community.r-multiverse.org")
 }
 \arguments{
 \item{repo}{Character of length 1, URL of the package repository.
-R-multiverse uses \code{"https://multiverse.r-multiverse.org"}.}
+R-multiverse uses \code{"https://community.r-multiverse.org"}.}
 }
 \value{
 A data frame with one row per package and columns with package

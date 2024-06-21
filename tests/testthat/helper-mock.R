@@ -1,4 +1,4 @@
-# dput(meta_checks(repo = "https://multiverse.r-multiverse.org")) # nolint
+# dput(meta_checks(repo = "https://community.r-multiverse.org")) # nolint
 mock_meta_checks <- structure(
   list(
     package = c(
@@ -108,7 +108,7 @@ mock_meta_checks <- structure(
   row.names = c(NA, 21L)
 )
 
-# dput(meta_packages(repo = "https://multiverse.r-multiverse.org")) # nolint
+# dput(meta_packages(repo = "https://community.r-multiverse.org")) # nolint
 mock_meta_packages <- structure(
   list(
     "_id" = c(

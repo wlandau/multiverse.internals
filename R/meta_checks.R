@@ -6,10 +6,10 @@
 #' @return A data frame with one row per package and columns with
 #'   package check results.
 #' @param repo Character of length 1, URL of the package repository.
-#'   R-multiverse uses `"https://multiverse.r-multiverse.org"`.
+#'   R-multiverse uses `"https://community.r-multiverse.org"`.
 #' @examples
 #' meta_checks(repo = "https://wlandau.r-universe.dev")
-meta_checks <- function(repo = "https://multiverse.r-multiverse.org") {
+meta_checks <- function(repo = "https://community.r-multiverse.org") {
   fields <- c(
     "_buildurl",
     "_linuxdevel",

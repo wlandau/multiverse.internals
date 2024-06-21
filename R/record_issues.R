@@ -56,7 +56,7 @@
 #'     print(readLines(file.path(output, package)))
 #'   }
 record_issues <- function(
-  repo = "https://multiverse.r-multiverse.org",
+  repo = "https://community.r-multiverse.org",
   versions = "versions.json",
   output = "issues",
   mock = NULL,

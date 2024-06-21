@@ -7,7 +7,7 @@
 #' @inheritParams meta_checks
 #' @examples
 #' meta_packages(repo = "https://wlandau.r-universe.dev")
-meta_packages <- function(repo = "https://multiverse.r-multiverse.org") {
+meta_packages <- function(repo = "https://community.r-multiverse.org") {
   fields <- c("Version", "Remotes", "RemoteSha")
   listing <- file.path(
     trim_url(repo),

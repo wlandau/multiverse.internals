@@ -4,11 +4,11 @@
 \alias{get_current_versions}
 \title{Get the current versions of packages}
 \usage{
-get_current_versions(repo = "https://multiverse.r-multiverse.org")
+get_current_versions(repo = "https://community.r-multiverse.org")
 }
 \arguments{
 \item{repo}{Character of length 1, URL of the package repository.
-R-multiverse uses \code{"https://multiverse.r-multiverse.org"}.}
+R-multiverse uses \code{"https://community.r-multiverse.org"}.}
 }
 \value{
 A data frame of packages with their current versions and hashes.

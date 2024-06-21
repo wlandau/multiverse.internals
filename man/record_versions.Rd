@@ -6,7 +6,7 @@
 \usage{
 record_versions(
   versions = "versions.json",
-  repo = "https://multiverse.r-multiverse.org",
+  repo = "https://community.r-multiverse.org",
   current = multiverse.internals::get_current_versions(repo = repo)
 )
 }
@@ -18,7 +18,7 @@ updated periodically at
 \url{https://github.com/r-multiverse/checks/blob/main/versions.json}.}
 
 \item{repo}{Character of length 1, URL of the package repository.
-R-multiverse uses \code{"https://multiverse.r-multiverse.org"}.}
+R-multiverse uses \code{"https://community.r-multiverse.org"}.}
 
 \item{current}{A data frame of current versions and hashes of packages
 in \code{repo}. This argument is exposed for testing only.}
@@ -53,7 +53,7 @@ together all the issues about R-multiverse packages.
 }
 
 \examples{
-  # R-multiverse uses https://multiverse.r-multiverse.org as the repo.
+  # R-multiverse uses https://community.r-multiverse.org as the repo.
   repo <- "https://wlandau.r-universe.dev" # just for testing and examples
   output <- tempfile()
   versions <- tempfile()

@@ -4,11 +4,11 @@
 \alias{meta_checks}
 \title{List metadata about R-universe package checks}
 \usage{
-meta_checks(repo = "https://multiverse.r-multiverse.org")
+meta_checks(repo = "https://community.r-multiverse.org")
 }
 \arguments{
 \item{repo}{Character of length 1, URL of the package repository.
-R-multiverse uses \code{"https://multiverse.r-multiverse.org"}.}
+R-multiverse uses \code{"https://community.r-multiverse.org"}.}
 }
 \value{
 A data frame with one row per package and columns with

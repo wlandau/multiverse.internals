@@ -1,5 +1,6 @@
-# multiverse.internals 0.2.2.9000 (development)
+# multiverse.internals 0.2.3
 
+* Updates R-Multiverse repository to `community.r-multiverse.org`.
 * Makes `meta_checks()` and `meta_packages()` robust to trailing slashes in the supplied URL.
 
 # multiverse.internals 0.2.2

@@ -21,7 +21,7 @@
 #' @param current A data frame of current versions and hashes of packages
 #'   in `repo`. This argument is exposed for testing only.
 #' @examples
-#'   # R-multiverse uses https://multiverse.r-multiverse.org as the repo.
+#'   # R-multiverse uses https://community.r-multiverse.org as the repo.
 #'   repo <- "https://wlandau.r-universe.dev" # just for testing and examples
 #'   output <- tempfile()
 #'   versions <- tempfile()
@@ -39,7 +39,7 @@
 #'   readLines(versions)
 record_versions <- function(
   versions = "versions.json",
-  repo = "https://multiverse.r-multiverse.org",
+  repo = "https://community.r-multiverse.org",
   current = multiverse.internals::get_current_versions(repo = repo)
 ) {
   if (!file.exists(versions)) {
@@ -59,7 +59,7 @@ record_versions <- function(
 #' @return A data frame of packages with their current versions and hashes.
 #' @inheritParams record_versions
 get_current_versions <- function(
-  repo = "https://multiverse.r-multiverse.org"
+  repo = "https://community.r-multiverse.org"
 ) {
   meta <- meta_packages(repo = repo)
   meta <- meta[, c("package", "version", "remotesha")]

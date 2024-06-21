@@ -5,7 +5,7 @@
 \title{Record package issues.}
 \usage{
 record_issues(
-  repo = "https://multiverse.r-multiverse.org",
+  repo = "https://community.r-multiverse.org",
   versions = "versions.json",
   output = "issues",
   mock = NULL,
@@ -14,7 +14,7 @@ record_issues(
 }
 \arguments{
 \item{repo}{Character of length 1, URL of the package repository.
-R-multiverse uses \code{"https://multiverse.r-multiverse.org"}.}
+R-multiverse uses \code{"https://community.r-multiverse.org"}.}
 
 \item{versions}{Character of length 1, file path to a JSON manifest
 tracking the history of released versions of packages.
