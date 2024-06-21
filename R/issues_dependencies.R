@@ -48,8 +48,8 @@ issues_dependencies <- function(
   vertices <- names(igraph::V(graph))
   edges <- igraph::as_long_data_frame(graph)
   from <- tapply(
-    X = edges$from_name,
-    INDEX = edges$to_name,
+    X = as.character(edges$from_name),
+    INDEX = as.character(edges$to_name),
     FUN = identity,
     simplify = FALSE
   )
