@@ -1,3 +1,4 @@
+#' @importFrom gert git_clone
 #' @importFrom gh gh
 #' @importFrom igraph graph neighbors subcomponent V
 #' @importFrom jsonlite parse_json read_json stream_in write_json
