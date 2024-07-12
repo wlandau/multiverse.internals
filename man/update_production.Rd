@@ -68,7 +68,7 @@ to production if:
 \url{https://community.r-multiverse.org}.
 \item The package is not in \code{removing.json}.
 To promote the package, an entry is created in the production
-\code{packages.json} with the remote SHA of the latest release.
+\code{packages.json} with the Git hash of the latest release.
 }
 }
 }

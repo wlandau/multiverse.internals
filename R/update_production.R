@@ -30,7 +30,7 @@
 #'         <https://community.r-multiverse.org>.
 #'       * The package is not in `removing.json`.
 #'     To promote the package, an entry is created in the production
-#'     `packages.json` with the remote SHA of the latest release.
+#'     `packages.json` with the Git hash of the latest release.
 #' @return `NULL` (invisibly)
 #' @inheritParams record_issues
 #' @param path_production Character string, directory path to the source
@@ -63,8 +63,8 @@ update_production <- function(
   days_notice = 28L,
   mock = NULL
 ) {
-  meta_production <- mock$production %|||% meta_packages(repo_production)
-  meta_community <- mock$community %|||% meta_packages(repo_community)
+  meta_production <- mock$production %||% meta_packages(repo_production)
+  meta_community <- mock$community %||% meta_packages(repo_community)
   demote_packages(path = path_production, days_notice = days_notice)
   clear_removed(
     path_production = path_production,
@@ -130,7 +130,7 @@ get_demote <- function(path_production, days_notice) {
   packages <- jsonlite::read_json(file, simplifyVector = TRUE)$package
   issues <- list.files(file.path(path_production, "issues"))
   Filter(
-    x = intersect(packages, issues), 
+    x = intersect(packages, issues),
     f = function(package) {
       file <- file.path(path_production, "issues", package)
       json <- jsonlite::read_json(path = file)
@@ -142,7 +142,7 @@ get_demote <- function(path_production, days_notice) {
 
 get_promote <- function(path_production, path_community, meta_community) {
   issues <- Filter(
-    x = list.files(file.path(path_community, "issues")), 
+    x = list.files(file.path(path_community, "issues")),
     f = function(package) {
       json <- jsonlite::read_json(
         path = file.path(path_community, "issues", package)

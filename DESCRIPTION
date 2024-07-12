@@ -28,7 +28,6 @@ Authors@R: c(
 Depends:
   R (>= 3.5.0)
 Imports:
-  gert,
   gh,
   igraph,
   jsonlite,
@@ -36,7 +35,8 @@ Imports:
   pkgsearch,
   utils,
   vctrs
-Suggests: 
+Suggests:
+  gert,
   testthat (>= 3.0.0)
 Encoding: UTF-8
 Language: en-US

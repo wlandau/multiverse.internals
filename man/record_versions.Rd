@@ -12,10 +12,7 @@ record_versions(
 }
 \arguments{
 \item{versions}{Character of length 1, file path to a JSON manifest
-tracking the history of released versions of packages.
-The official versions file for R-multiverse is maintained and
-updated periodically at
-\url{https://github.com/r-multiverse/checks/blob/main/versions.json}.}
+tracking the history of released versions of packages.}
 
 \item{repo}{Character of length 1, URL of the package repository.
 R-multiverse uses \code{"https://community.r-multiverse.org"}.}
@@ -46,7 +43,7 @@ perform health checks for all packages in R-multiverse.
 Only packages that pass these checks go to the production repository at
 \url{https://production.r-multiverse.org}. For a complete list of checks, see
 the \verb{issues_*()} functions listed at
-\url{https://r-multiverse.org/multiverse.internals/reference.html}.
+\url{https://r-multiverse.org/multiverse.internals/reference/index.html}.
 \code{\link[=record_versions]{record_versions()}} updates the version number history
 of releases in R-multiverse, and \code{\link[=record_issues]{record_issues()}} gathers
 together all the issues about R-multiverse packages.
