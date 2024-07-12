@@ -66,7 +66,10 @@ update_production <- function(
   meta_production <- mock$production %|||% meta_packages(repo_production)
   meta_community <- mock$community %|||% meta_packages(repo_community)
   demote_packages(path = path_production, days_notice = days_notice)
-  clear_removed(path = path_production, meta = meta_production)
+  clear_removed(
+    path_production = path_production,
+    meta_production = meta_production
+  )
   promote_packages(
     path_production = path_production,
     path_community = path_community,
@@ -89,11 +92,14 @@ demote_packages <- function(path, days_notice) {
   jsonlite::write_json(unname(json), file, pretty = TRUE)
 }
 
-clear_removed <- function(path, meta) {
-  removing <- intersect(get_removing(path), meta$package)
+clear_removed <- function(path_production, meta_production) {
+  removing <- intersect(
+    get_removing(path_production),
+    meta_production$package
+  )
   jsonlite::write_json(
     removing,
-    file.path(path, "removing.json"),
+    file.path(path_production, "removing.json"),
     pretty = TRUE
   )
 }

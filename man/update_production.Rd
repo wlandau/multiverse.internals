@@ -64,7 +64,8 @@ to production if:
 \itemize{
 \item It passes description checks from \code{\link[=issues_descriptions]{issues_descriptions()}}.
 \item It passes version checks from \code{\link[=issues_versions]{issues_versions()}}.
-\item Builds are available at \url{https://community.r-multiverse.org}.
+\item The package is available to install from
+\url{https://community.r-multiverse.org}.
 \item The package is not in \code{removing.json}.
 To promote the package, an entry is created in the production
 \code{packages.json} with the remote SHA of the latest release.
