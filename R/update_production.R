@@ -26,7 +26,8 @@
 #'     to production if:
 #'       * It passes description checks from [issues_descriptions()].
 #'       * It passes version checks from [issues_versions()].
-#'       * Builds are available at <https://community.r-multiverse.org>.
+#'       * The package is available to install from
+#'         <https://community.r-multiverse.org>.
 #'       * The package is not in `removing.json`.
 #'     To promote the package, an entry is created in the production
 #'     `packages.json` with the remote SHA of the latest release.
@@ -69,7 +70,7 @@ update_production <- function(
   promote_packages(
     path_production = path_production,
     path_community = path_community,
-    meta = meta_community
+    meta_community = meta_community
   )
   invisible()
 }
@@ -77,33 +78,48 @@ update_production <- function(
 demote_packages <- function(path, days_notice) {
   packages <- get_demote(path_production, days_notice)
   removing <- base::union(get_removing(path), packages)
-  jsonlite::write_json(removing, file.path(path, "removing.json"))
+  jsonlite::write_json(
+    removing,
+    file.path(path, "removing.json"),
+    pretty = TRUE
+  )
   file <- file.path(path, "packages.json")
   json <- name_json(jsonlite::read_json(file))
   json[packages] <- NULL
-  jsonlite::write_json(unname(json), file)
+  jsonlite::write_json(unname(json), file, pretty = TRUE)
 }
 
 clear_removed <- function(path, meta) {
   removing <- intersect(get_removing(path), meta$package)
-  jsonlite::write_json(removing, file.path(path, "removing.json"))
+  jsonlite::write_json(
+    removing,
+    file.path(path, "removing.json"),
+    pretty = TRUE
+  )
 }
 
 promote_packages <- function(
   path_production,
   path_community,
-  meta
+  meta_community
 ) {
-  packages <- get_promote(path_community, meta_community)
+  packages <- get_promote(path_production, path_community, meta_community)
   file_production <- file.path(path_production, "packages.json")
   file_community <- file.path(path_community, "packages.json")
-  json_production <- name_json(jsonlite::read_json(file_production))
-  json_community <- name_json(jsonlite::read_json(file_community))
-  for (package in packages) {
-    json_production[[package]] <- json_community[[package]]
-    json_production[[package]][["branch"]] <- meta[package, "remotesha"]
-  }
-  jsonlite::write_json(unname(json_production), file_production)
+  json_production <- jsonlite::read_json(
+    file_production,
+    simplifyVector = TRUE
+  )
+  json_community <- jsonlite::read_json(file_community, simplifyVector = TRUE)
+  promote <- json_community[json_community$package %in% packages,, drop = FALSE] # nolint
+  promote <- merge(promote, meta_community, all.x = TRUE, all.y = FALSE)
+  promote$branch <- promote$remotesha
+  promote$remotesha <- NULL
+  replace <- !(json_production$package %in% packages)
+  json_production <- json_production[replace,, drop = FALSE] # nolint
+  json_production <- rbind(json_production, promote)
+  json_production <- json_production[order(json_production$package),, drop = FALSE ] # nolint
+  jsonlite::write_json(json_production, file_production, pretty = TRUE)
 }
 
 get_demote <- function(path, days_notice) {
@@ -118,7 +134,7 @@ get_demote <- function(path, days_notice) {
   )
 }
 
-get_promote <- function(path_production, path_community, meta) {
+get_promote <- function(path_production, path_community, meta_community) {
   issues <- Filter(
     x = list.files(file.path(path_community, "issues")), 
     f = function(package) {
@@ -129,8 +145,10 @@ get_promote <- function(path_production, path_community, meta) {
     }
   )
   removing <- get_removing(path_production)
-  json <- name_json(jsonlite::read_json(file.path(path, "packages.json")))
-  setdiff(intersect(meta$package, names(json)), c(issues, removing))
+  file_community <- file.path(path_community, "packages.json")
+  json <- jsonlite::read_json(file_community, simplifyVector = TRUE)
+  candidates <- intersect(meta_community$package, json$package)
+  setdiff(candidates, c(issues, removing))
 }
 
 get_removing <- function(path) {
