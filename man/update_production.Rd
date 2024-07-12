@@ -73,6 +73,7 @@ To promote the package, an entry is created in the production
 }
 }
 \examples{
+\dontrun{
 url_production = "https://github.com/r-multiverse/production"
 url_community = "https://github.com/r-multiverse/community"
 path_production <- tempfile()
@@ -86,4 +87,5 @@ update_production(
   path_community = tempfile(),
   days_notice = 28L
 )
+}
 }

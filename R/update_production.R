@@ -42,6 +42,7 @@
 #' @param days_notice Integer scalar, number of days between the
 #'   detection of a production issue and removal from the production universe.
 #' @examples
+#' \dontrun{
 #' url_production = "https://github.com/r-multiverse/production"
 #' url_community = "https://github.com/r-multiverse/community"
 #' path_production <- tempfile()
@@ -55,6 +56,7 @@
 #'   path_community = tempfile(),
 #'   days_notice = 28L
 #' )
+#' }
 update_production <- function(
   path_production,
   path_community,
@@ -65,7 +67,10 @@ update_production <- function(
 ) {
   meta_production <- mock$production %||% meta_packages(repo_production)
   meta_community <- mock$community %||% meta_packages(repo_community)
-  demote_packages(path = path_production, days_notice = days_notice)
+  demote_packages(
+    path_production = path_production,
+    days_notice = days_notice
+  )
   clear_removed(
     path_production = path_production,
     meta_production = meta_production
