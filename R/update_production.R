@@ -78,18 +78,15 @@ update_production <- function(
   invisible()
 }
 
-demote_packages <- function(path, days_notice) {
+demote_packages <- function(path_production, days_notice) {
   packages <- get_demote(path_production, days_notice)
-  removing <- base::union(get_removing(path), packages)
-  jsonlite::write_json(
-    removing,
-    file.path(path, "removing.json"),
-    pretty = TRUE
-  )
-  file <- file.path(path, "packages.json")
-  json <- name_json(jsonlite::read_json(file))
-  json[packages] <- NULL
-  jsonlite::write_json(unname(json), file, pretty = TRUE)
+  removing <- sort(unique(c(get_removing(path_production), packages)))
+  file_removing <- file.path(path_production, "removing.json")
+  jsonlite::write_json(removing, file_removing, pretty = TRUE)
+  file_production <- file.path(path_production, "packages.json")
+  json <- jsonlite::read_json(file_production, simplifyVector = TRUE)
+  json <- json[!(json$package %in% removing),, drop = FALSE] # nolint
+  jsonlite::write_json(json, file_production, pretty = TRUE)
 }
 
 clear_removed <- function(path_production, meta_production) {
@@ -128,12 +125,15 @@ promote_packages <- function(
   jsonlite::write_json(json_production, file_production, pretty = TRUE)
 }
 
-get_demote <- function(path, days_notice) {
-  flagged <- list.files(file.path(path, "issues"))
+get_demote <- function(path_production, days_notice) {
+  file <- file.path(path_production, "packages.json")
+  packages <- jsonlite::read_json(file, simplifyVector = TRUE)$package
+  issues <- list.files(file.path(path_production, "issues"))
   Filter(
-    x = flagged, 
+    x = intersect(packages, issues), 
     f = function(package) {
-      json <- jsonlite::read_json(path = file.path(path, "issues", package))
+      file <- file.path(path_production, "issues", package)
+      json <- jsonlite::read_json(path = file)
       delay <- as.integer(Sys.Date() - as.Date(as.character(json$date)))
       delay > days_notice
     }
@@ -157,8 +157,8 @@ get_promote <- function(path_production, path_community, meta_community) {
   setdiff(candidates, c(issues, removing))
 }
 
-get_removing <- function(path) {
-  file <- file.path(path, "removing.json")
+get_removing <- function(path_production) {
+  file <- file.path(path_production, "removing.json")
   if (!file.exists(file)) {
     return(character(0L))
   }
