@@ -1,0 +1,17 @@
+[
+  {
+    "package": "production-good",
+    "url": "https://github.com/owner/production-good",
+    "branch": "sha-production-good"
+  },
+  {
+    "package": "production-notice",
+    "url": "https://github.com/owner/production-notice",
+    "branch": "sha-production-notice"
+  },
+  {
+    "package": "production-remove",
+    "url": "https://github.com/owner/production-remove",
+    "branch": "sha-production-remove"
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "package": "community-good",
+    "url": "https://github.com/owner/community-good",
+    "branch": "*release"
+  },
+  {
+    "package": "community-descriptions",
+    "url": "https://github.com/owner/community-descriptions",
+    "branch": "*release"
+  },
+  {
+    "package": "community-notice",
+    "url": "https://github.com/owner/community-notice",
+    "branch": "*release"
+  },
+  {
+    "package": "community-remove",
+    "url": "https://github.com/owner/community-remove",
+    "branch": "*release"
+  },
+  {
+    "package": "community-versions",
+    "url": "https://github.com/owner/community-versions",
+    "branch": "*release"
+  },
+  {
+    "package": "production-good",
+    "url": "https://github.com/owner/production-good",
+    "branch": "*release"
+  },
+  {
+    "package": "production-notice",
+    "url": "https://github.com/owner/production-notice",
+    "branch": "*release"
+  },
+  {
+    "package": "production-remove",
+    "url": "https://github.com/owner/production-remove",
+    "branch": "*release"
+  },
+  {
+    "package": "production-removing",
+    "url": "https://github.com/owner/production-removing",
+    "branch": "*release"
+  }
+]
