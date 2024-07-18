@@ -49,7 +49,7 @@ perform health checks for all packages in R-multiverse.
 Only packages that pass these checks go to the production repository at
 \url{https://production.r-multiverse.org}. For a complete list of checks, see
 the \verb{issues_*()} functions listed at
-\url{https://r-multiverse.org/multiverse.internals/reference.html}.
+\url{https://r-multiverse.org/multiverse.internals/reference/index.html}.
 \code{\link[=record_versions]{record_versions()}} updates the version number history
 of releases in R-multiverse, and \code{\link[=record_issues]{record_issues()}} gathers
 together all the issues about R-multiverse packages.

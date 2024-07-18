@@ -9,7 +9,7 @@
 #'   Only packages that pass these checks go to the production repository at
 #'   <https://production.r-multiverse.org>. For a complete list of checks, see
 #'   the `issues_*()` functions listed at
-#'   <https://r-multiverse.org/multiverse.internals/reference.html>.
+#'   <https://r-multiverse.org/multiverse.internals/reference/index.html>.
 #'   [record_versions()] updates the version number history
 #'   of releases in R-multiverse, and [record_issues()] gathers
 #'   together all the issues about R-multiverse packages.

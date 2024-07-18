@@ -15,9 +15,6 @@
 #' @inheritParams meta_checks
 #' @param versions Character of length 1, file path to a JSON manifest
 #'   tracking the history of released versions of packages.
-#'   The official versions file for R-multiverse is maintained and
-#'   updated periodically at
-#'   <https://github.com/r-multiverse/checks/blob/main/versions.json>.
 #' @param current A data frame of current versions and hashes of packages
 #'   in `repo`. This argument is exposed for testing only.
 #' @examples

@@ -15,8 +15,6 @@
 #'   release recorded.
 #' @inheritParams record_versions
 #' @examples
-#'   # See https://github.com/r-multiverse/checks/blob/main/versions.json
-#'   # for the official versions JSON for R-multiverse.
 #'   lines <- c(
 #'     "[",
 #'     " {",

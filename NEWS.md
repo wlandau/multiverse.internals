@@ -1,3 +1,7 @@
+# multiverse.internals 0.2.5
+
+* Add `update_production()`.
+
 # multiverse.internals 0.2.4
 
 * Updates R-Multiverse repository to `community.r-multiverse.org`.

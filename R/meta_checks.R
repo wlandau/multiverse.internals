@@ -31,5 +31,6 @@ meta_checks <- function(repo = "https://community.r-multiverse.org") {
     simplifyMatrix = TRUE
   )
   colnames(out) <- tolower(colnames(out))
+  rownames(out) <- out$package
   out
 }
