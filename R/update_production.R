@@ -52,8 +52,8 @@
 #' update_production(
 #'   repo_production = "https://production.r-multiverse.org",
 #'   repo_community = "https://community.r-multiverse.org",
-#'   path_production = tempfile(),
-#'   path_community = tempfile(),
+#'   path_production = path_production,
+#'   path_community = path_community,
 #'   days_notice = 28L
 #' )
 #' }
@@ -120,6 +120,7 @@ promote_packages <- function(
   )
   json_community <- jsonlite::read_json(file_community, simplifyVector = TRUE)
   promote <- json_community[json_community$package %in% packages,, drop = FALSE] # nolint
+  meta_community <- meta_community[, c("package", "remotesha")]
   promote <- merge(promote, meta_community, all.x = TRUE, all.y = FALSE)
   promote$branch <- promote$remotesha
   promote$remotesha <- NULL
@@ -167,5 +168,5 @@ get_removing <- function(path_production) {
   if (!file.exists(file)) {
     return(character(0L))
   }
-  jsonlite::read_json(file, simplifyVector = TRUE)
+  as.character(jsonlite::read_json(file, simplifyVector = TRUE))
 }

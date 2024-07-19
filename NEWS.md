@@ -1,4 +1,8 @@
-# multiverse.internals 0.2.5
+# multiverse.internals 0.2.6
+
+* Exclude superfluous fields from `update_production()` `packages.json`.
+
+# multiverse.internals 0.2.6
 
 * Add `update_production()`.
 

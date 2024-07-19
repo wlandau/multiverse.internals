@@ -83,8 +83,8 @@ gert::git_clone(url = url_community, path = path_community)
 update_production(
   repo_production = "https://production.r-multiverse.org",
   repo_community = "https://community.r-multiverse.org",
-  path_production = tempfile(),
-  path_community = tempfile(),
+  path_production = path_production,
+  path_community = path_community,
   days_notice = 28L
 )
 }
