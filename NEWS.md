@@ -1,6 +1,7 @@
-# multiverse.internals 0.2.6
+# multiverse.internals 0.2.7
 
 * Exclude superfluous fields from `update_production()` `packages.json`.
+* Require verified commits in contributions.
 
 # multiverse.internals 0.2.6
 
