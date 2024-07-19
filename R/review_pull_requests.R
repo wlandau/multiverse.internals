@@ -9,8 +9,8 @@ review_pull_requests <- function(
   owner = "r-multiverse",
   repo = "contributions"
 ) {
-  assert_character_scalar(owner)
-  assert_character_scalar(repo)
+  assert_character_scalar(owner, "owner must be a character string")
+  assert_character_scalar(repo, "repo must be a character string")
   message("Listing pull requests...")
   pull_requests <- gh::gh(
     "/repos/:owner/:repo/pulls",
