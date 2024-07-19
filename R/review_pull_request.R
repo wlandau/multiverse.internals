@@ -23,6 +23,57 @@ review_pull_request <- function(
   assert_character_scalar(repo)
   assert_positive_scalar(number)
   message("Reviewing pull request ", number)
+  merge <- review_pull_request_integrity(owner, repo, number) &&
+    review_pull_request_content(owner, repo, number)
+  if (isTRUE(merge)) {
+    pull_request_merge(
+      owner = owner,
+      repo = repo,
+      number = number
+    )
+  }
+  invisible()
+}
+
+review_pull_request_integrity <- function(owner, repo, number) {
+  pull <- gh::gh(
+    "/repos/:owner/:repo/pulls/:number",
+    owner = owner,
+    repo = repo,
+    number = number
+  )
+  commit <- gh::gh(
+    "GET /repos/:owner/:repo/git/commits/:sha",
+    owner = owner,
+    repo = repo,
+    sha = pull$head$sha
+  )
+  if (!isTRUE(commit$verification$verified)) {
+    pull_request_defer(
+      owner = owner,
+      repo = repo,
+      number = number,
+      message = paste0(
+        "The latest commit (",
+        pull$head$sha,
+        ") of pull request ",
+        number,
+        " is unverified. For security reasons, ",
+        "R-multiverse only merges pull requests with ",
+        "verified commits. You can create a verified commit ",
+        "by contributing through the point-and-click web interface ",
+        "as described at https://r-multiverse.org/contributors.html. ",
+        "For more information on commit signature verification, please see ",
+        "https://docs.github.com/en/authentication/",
+        "managing-commit-signature-verification"
+      )
+    )
+    return(FALSE)
+  }
+  TRUE
+}
+
+review_pull_request_content <- function(owner, repo, number) {
   response <- gh::gh(
     "/repos/:owner/:repo/pulls/:number/files",
     owner = owner,
@@ -46,7 +97,7 @@ review_pull_request <- function(
           "more text files directly inside 'packages/' with package URLs."
         )
       )
-      return(invisible())
+      return(FALSE)
     }
     if (!identical(file$status, "added")) {
       pull_request_defer(
@@ -60,7 +111,7 @@ review_pull_request <- function(
           "folder."
         )
       )
-      return(invisible())
+      return(FALSE)
     }
     name <- basename(file$filename)
     if (file$additions != 1L) {
@@ -79,7 +130,7 @@ review_pull_request <- function(
           "unless it contains custom JSON (which is uncommon)."
         )
       )
-      return(invisible())
+      return(FALSE)
     }
     if (!is_character_scalar(file$patch)) {
       pull_request_defer(
@@ -94,7 +145,7 @@ review_pull_request <- function(
           "."
         )
       )
-      return(invisible())
+      return(FALSE)
     }
     url <- gsub(pattern = "^.*\\+", replacement = "", x = file$patch)
     url <- gsub(pattern = "\\s.*$", replacement = "", x = url)
@@ -111,15 +162,10 @@ review_pull_request <- function(
           result
         )
       )
-      return(invisible())
+      return(FALSE)
     }
   }
-  pull_request_merge(
-    owner = owner,
-    repo = repo,
-    number = number
-  )
-  invisible()
+  TRUE
 }
 
 pull_request_close <- function(owner, repo, number, message) {
