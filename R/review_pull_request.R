@@ -19,9 +19,9 @@ review_pull_request <- function(
   repo = "contributions",
   number
 ) {
-  assert_character_scalar(owner)
-  assert_character_scalar(repo)
-  assert_positive_scalar(number)
+  assert_character_scalar(owner, "owner must be a character string")
+  assert_character_scalar(repo, "repo must be a character string")
+  assert_positive_scalar(number, "number must be a positive integer")
   message("Reviewing pull request ", number)
   merge <- review_pull_request_integrity(owner, repo, number) &&
     review_pull_request_content(owner, repo, number)
@@ -48,7 +48,10 @@ review_pull_request_integrity <- function(owner, repo, number) {
     repo = repo,
     sha = pull$head$sha
   )
-  if (!isTRUE(commit$verification$verified)) {
+  from_web_ui <- isTRUE(commit$verification$verified) &&
+    identical(commit$committer$name, "GitHub") &&
+    identical(commit$committer$email, "noreply@github.com")
+  if (!from_web_ui) {
     pull_request_defer(
       owner = owner,
       repo = repo,
@@ -58,14 +61,11 @@ review_pull_request_integrity <- function(owner, repo, number) {
         pull$head$sha,
         ") of pull request ",
         number,
-        " is unverified. For security reasons, ",
-        "R-multiverse only merges pull requests with ",
-        "verified commits. You can create a verified commit ",
-        "by contributing through the point-and-click web interface ",
-        "as described at https://r-multiverse.org/contributors.html. ",
-        "For more information on commit signature verification, please see ",
-        "https://docs.github.com/en/authentication/",
-        "managing-commit-signature-verification"
+        " was not created using the point-and-click ",
+        "web user interface on GitHub.com. ",
+        "For security reasons, the R-multiverse bot only ",
+        "merges commits created manually through a web browser ",
+        "as described at https://r-multiverse.org/contributors.html."
       )
     )
     return(FALSE)

@@ -1,3 +1,7 @@
+# multiverse.internals 0.2.8
+
+* Only merge contributions created through the web interface.
+
 # multiverse.internals 0.2.7
 
 * Exclude superfluous fields from `update_production()` `packages.json`.
