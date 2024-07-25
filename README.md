@@ -5,4 +5,4 @@
 
 `multiverse.internals` is an R package to support the internal infrastructure for the R-multiverse project.
 
-To learn about specific pieces of the R-multiverse infrastructure for reviewing and checking packages, please visit <https://r-multiverse.org/multiverse.internals/reference>.
+To learn about specific pieces of the R-multiverse infrastructure for reviewing and checking packages, please visit <https://r-multiverse.org/multiverse.internals/reference/index.html>.

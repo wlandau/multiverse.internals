@@ -1,3 +1,7 @@
+# multiverse.internals 0.2.9
+
+* Implement community/staging idea from (@jeroen).
+
 # multiverse.internals 0.2.8
 
 * Only merge contributions created through the web interface.

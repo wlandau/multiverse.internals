@@ -6,8 +6,7 @@
 #' @section Package issues:
 #'   Functions like [issues_versions()] and [issues_descriptions()]
 #'   perform health checks for all packages in R-multiverse.
-#'   Only packages that pass these checks go to the production repository at
-#'   <https://production.r-multiverse.org>. For a complete list of checks, see
+#'   For a complete list of checks, see
 #'   the `issues_*()` functions listed at
 #'   <https://r-multiverse.org/multiverse.internals/reference/index.html>.
 #'   [record_versions()] updates the version number history
