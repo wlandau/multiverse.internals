@@ -40,8 +40,7 @@ practices for version numbers.
 
 Functions like \code{\link[=issues_versions]{issues_versions()}} and \code{\link[=issues_descriptions]{issues_descriptions()}}
 perform health checks for all packages in R-multiverse.
-Only packages that pass these checks go to the production repository at
-\url{https://production.r-multiverse.org}. For a complete list of checks, see
+For a complete list of checks, see
 the \verb{issues_*()} functions listed at
 \url{https://r-multiverse.org/multiverse.internals/reference/index.html}.
 \code{\link[=record_versions]{record_versions()}} updates the version number history

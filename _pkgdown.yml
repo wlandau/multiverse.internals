@@ -23,6 +23,6 @@ reference:
   contents:
   - record_issues
   - record_versions
-- title: Production
+- title: Staging
   contents:
-  - update_production
+  - update_staging

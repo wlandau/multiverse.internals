@@ -1,47 +1,32 @@
 [
   {
-    "package": "community-good",
-    "url": "https://github.com/owner/community-good",
+    "package": "promote",
+    "url": "https://github.com/owner/promote",
     "branch": "*release"
   },
   {
-    "package": "community-descriptions",
-    "url": "https://github.com/owner/community-descriptions",
+    "package": "change",
+    "url": "https://github.com/owner/change",
     "branch": "*release"
   },
   {
-    "package": "community-notice",
-    "url": "https://github.com/owner/community-notice",
+    "package": "keep",
+    "url": "https://github.com/owner/keep",
     "branch": "*release"
   },
   {
-    "package": "community-remove",
-    "url": "https://github.com/owner/community-remove",
+    "package": "checks",
+    "url": "https://github.com/owner/checks",
     "branch": "*release"
   },
   {
-    "package": "community-versions",
-    "url": "https://github.com/owner/community-versions",
+    "package": "descriptions",
+    "url": "https://github.com/owner/descriptions",
     "branch": "*release"
   },
   {
-    "package": "production-good",
-    "url": "https://github.com/owner/production-good",
-    "branch": "*release"
-  },
-  {
-    "package": "production-notice",
-    "url": "https://github.com/owner/production-notice",
-    "branch": "*release"
-  },
-  {
-    "package": "production-remove",
-    "url": "https://github.com/owner/production-remove",
-    "branch": "*release"
-  },
-  {
-    "package": "production-removing",
-    "url": "https://github.com/owner/production-removing",
+    "package": "versions",
+    "url": "https://github.com/owner/versions",
     "branch": "*release"
   }
 ]

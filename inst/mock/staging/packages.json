@@ -1,0 +1,12 @@
+[
+  {
+    "package": "change",
+    "url": "https://github.com/owner/change",
+    "branch": "original"
+  },
+  {
+    "package": "keep",
+    "url": "https://github.com/owner/keep",
+    "branch": "sha-keep"
+  }
+]
