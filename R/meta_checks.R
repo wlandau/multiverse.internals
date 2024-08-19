@@ -1,6 +1,6 @@
 #' @title List metadata about R-universe package checks
 #' @export
-#' @family list
+#' @family meta
 #' @description List package checks results reported by the
 #'   R-universe package API.
 #' @return A data frame with one row per package and columns with
