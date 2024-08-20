@@ -37,20 +37,21 @@ update_staging <- function(
   file_community <- file.path(path_community, "packages.json")
   json_staging <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   json_community <- jsonlite::read_json(file_community, simplifyVector = TRUE)
+  meta_community <- mock$community %||% meta_packages(repo_community)
   issues <- list.files(
     file.path(path_staging, "issues"),
     all.files = TRUE,
     no.. = TRUE
   )
-  freeze <- setdiff(meta_staging$package, issues)
+  freeze <- setdiff(json_staging$package, issues)
   update <- setdiff(json_community$package, freeze)
-  json_freeze <- json_staging[json_staging$package %in% freeze, ]
+  should_freeze <- json_staging$package %in% freeze
+  json_freeze <- json_staging[should_freeze, ]
   json_update <- json_community[json_community$package %in% update, ]
   json_freeze$subdir <- json_freeze$subdir %||%
     rep(NA_character_, nrow(json_freeze))
   json_update$subdir <- json_update$subdir %||%
     rep(NA_character_, nrow(json_update))
-  meta_community <- mock$community %||% meta_packages(repo_community)
   branches <- meta_community[
     meta_community$package %in% update,
     c("package", "remotesha")

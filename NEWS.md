@@ -1,3 +1,8 @@
+# multiverse.internals 0.2.10
+
+* Implement freezing mechanism in `update_staging()`.
+* Implement `staging_is_active()` to detect when the staging universe should be active.
+
 # multiverse.internals 0.2.9
 
 * Implement community/staging idea from (@jeroen).

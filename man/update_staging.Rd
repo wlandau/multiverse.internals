@@ -50,3 +50,8 @@ update_staging(
 )
 }
 }
+\seealso{
+Other staging: 
+\code{\link{staging_is_active}()}
+}
+\concept{staging}

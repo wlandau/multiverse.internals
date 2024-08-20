@@ -20,4 +20,8 @@ List package metadata in an R universe.
 \examples{
 meta_packages(repo = "https://wlandau.r-universe.dev")
 }
+\seealso{
+Other meta: 
+\code{\link{meta_checks}()}
+}
 \concept{meta}
