@@ -9,6 +9,9 @@
 #' @return `NULL` (invisibly)
 #' @inheritParams update_staging
 #' @param repo_staging Character string, URL of the staging universe.
+#' @param types Character vector, what to pass to the `types` field in the
+#'   snapshot API URL. Controls the types of binaries and documentation
+#'   included in the snapshot.
 #' @examples
 #' \dontrun{
 #' url_staging = "https://github.com/r-multiverse/staging"
@@ -22,6 +25,7 @@
 propose_snapshot <- function(
   path_staging,
   repo_staging = "https://staging.r-multiverse.org",
+  types = c("win", "mac"),
   mock = NULL
 ) {
   issues <- list.files(
@@ -46,8 +50,9 @@ propose_snapshot <- function(
   file_snapshot <- file.path(path_staging, "snapshot.json")
   jsonlite::write_json(staging, file_snapshot, pretty = TRUE)
   url <- paste0(
-    "https://staging.r-multiverse.org/api/snapshot/zip",
-    "?types=src,win,mac,linux,wasm,docs&packages=",
+    "https://staging.r-multiverse.org/api/snapshot/zip?types=",
+    paste(types, collapse = ","),
+    "&packages=",
     paste(staging$package, collapse = ",")
   )
   writeLines(url, file.path(path_staging, "snapshot.url"))

@@ -7,6 +7,7 @@
 propose_snapshot(
   path_staging,
   repo_staging = "https://staging.r-multiverse.org",
+  types = c("win", "mac"),
   mock = NULL
 )
 }
@@ -15,6 +16,10 @@ propose_snapshot(
 files of the staging universe.}
 
 \item{repo_staging}{Character string, URL of the staging universe.}
+
+\item{types}{Character vector, what to pass to the \code{types} field in the
+snapshot API URL. Controls the types of binaries and documentation
+included in the snapshot.}
 
 \item{mock}{For testing purposes only, a named list of data frames
 for inputs to various intermediate functions.}

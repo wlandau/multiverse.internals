@@ -48,7 +48,7 @@ test_that("propose_snapshot()", {
     url,
     paste0(
       "https://staging.r-multiverse.org/api/snapshot/zip",
-      "?types=src,win,mac,linux,wasm,docs&packages=good1,good2"
+      "?types=win,mac&packages=good1,good2"
     )
   )
 })
