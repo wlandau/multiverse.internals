@@ -2,7 +2,7 @@
 #' @export
 #' @family staging
 #' @description Propose a Production snapshot of Staging.
-#' @details [recommend_snapshot()] proposes a snapshot of Staging
+#' @details [propose_snapshot()] proposes a snapshot of Staging
 #'   to migrate to Production. The recommended snapshot is the list of
 #'   packages for which (1) the build and check results of the current
 #'   release are in Staging, and (2) there are no issues.
