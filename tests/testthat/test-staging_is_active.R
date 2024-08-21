@@ -1,5 +1,5 @@
 test_that("staging_is_active()", {
-  thresholds <- c("01-15", "04-15", "07-15", "10-15")
+  start <- c("01-15", "04-15", "07-15", "10-15")
   active <- c(
     "2024-01-15",
     "2024-01-16",
@@ -17,7 +17,7 @@ test_that("staging_is_active()", {
   for (today in active) {
     expect_true(
       staging_is_active(
-        thresholds = thresholds,
+        start = start,
         today = today
       )
     )
@@ -35,7 +35,7 @@ test_that("staging_is_active()", {
   for (today in inactive) {
     expect_false(
       staging_is_active(
-        thresholds = thresholds,
+        start = start,
         today = today
       )
     )
