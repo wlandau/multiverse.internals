@@ -1,3 +1,7 @@
+# multiverse.internals 0.2.11
+
+* Implement `propose_snapshot()`.
+
 # multiverse.internals 0.2.10
 
 * Implement freezing mechanism in `update_staging()`.
