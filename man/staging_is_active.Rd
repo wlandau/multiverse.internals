@@ -6,18 +6,16 @@
 \usage{
 staging_is_active(
   thresholds = c("01-15", "04-15", "07-15", "10-15"),
-  duration = 30L,
-  today = format(Sys.Date(), "\%Y-\%m-\%d")
+  today = Sys.Date()
 )
 }
 \arguments{
 \item{thresholds}{Character vector of \code{"\%m-\%d"} dates that the
-staging universe becomes active.}
+staging universe becomes active. Staging will then last for a full calendar
+month until, but not including, the same date a month later.}
 
-\item{duration}{Positive integer, number of days that the staging
-universe remains active after each threshold.}
-
-\item{today}{Character string with today's date in \code{"\%Y-\%m-\%d"} format.}
+\item{today}{Character string with today's date in \code{"\%Y-\%m-\%d"} format or an
+object convertible to POSIXlt format.}
 }
 \value{
 \code{TRUE} if the staging universe is active, \code{FALSE} otherwise.
