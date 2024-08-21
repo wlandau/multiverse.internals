@@ -1,8 +1,8 @@
 Package: multiverse.internals
 Title: Internal Infrastructure for R-multiverse
-Description: R-multiverse requires this internal internal infrastructure
-  package to automate contribution reviews and populate universes.
-Version: 0.2.9
+Description: R-multiverse requires this internal infrastructure package to
+  automate contribution reviews and populate universes.
+Version: 0.2.10
 License: MIT + file LICENSE
 URL: https://github.com/r-multiverse/multiverse.internals
 BugReports: https://github.com/r-multiverse/multiverse.internals/issues
@@ -26,7 +26,7 @@ Authors@R: c(
     role = "cph"
   ))
 Depends:
-  R (>= 3.5.0)
+  R (>= 3.6)
 Imports:
   gh,
   igraph,

@@ -1,12 +1,22 @@
 [
   {
-    "package": "change",
-    "url": "https://github.com/owner/change",
+    "package": "freeze",
+    "url": "https://github.com/owner/freeze",
     "branch": "original"
   },
   {
-    "package": "keep",
-    "url": "https://github.com/owner/keep",
-    "branch": "sha-keep"
+    "package": "issue",
+    "url": "https://github.com/owner/issue",
+    "branch": "original"
+  },
+  {
+    "package": "removed-has-issue",
+    "url": "https://github.com/owner/removed-has-issue",
+    "branch": "original"
+  },
+  {
+    "package": "removed-no-issue",
+    "url": "https://github.com/owner/removed-no-issue",
+    "branch": "original"
   }
 ]

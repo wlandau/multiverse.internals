@@ -26,3 +26,4 @@ reference:
 - title: Staging
   contents:
   - update_staging
+  - staging_is_active

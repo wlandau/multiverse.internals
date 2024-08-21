@@ -21,4 +21,8 @@ R-universe package API.
 \examples{
 meta_checks(repo = "https://wlandau.r-universe.dev")
 }
-\concept{list}
+\seealso{
+Other meta: 
+\code{\link{meta_packages}()}
+}
+\concept{meta}

@@ -1,32 +1,17 @@
 [
   {
-    "package": "promote",
-    "url": "https://github.com/owner/promote",
+    "package": "add",
+    "url": "https://github.com/owner/add",
     "branch": "*release"
   },
   {
-    "package": "change",
-    "url": "https://github.com/owner/change",
+    "package": "freeze",
+    "url": "https://github.com/owner/freeze",
     "branch": "*release"
   },
   {
-    "package": "keep",
-    "url": "https://github.com/owner/keep",
-    "branch": "*release"
-  },
-  {
-    "package": "checks",
-    "url": "https://github.com/owner/checks",
-    "branch": "*release"
-  },
-  {
-    "package": "descriptions",
-    "url": "https://github.com/owner/descriptions",
-    "branch": "*release"
-  },
-  {
-    "package": "versions",
-    "url": "https://github.com/owner/versions",
+    "package": "issue",
+    "url": "https://github.com/owner/issue",
     "branch": "*release"
   }
 ]

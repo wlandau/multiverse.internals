@@ -1,8 +1,0 @@
-{
-  "descriptions": {
-    "remotes": ["owner1/repo1", "owner2/repo2"]
-  },
-  "date": ["2024-06-21"],
-  "version": ["0.1.1"],
-  "remote_hash": ["abcdefabcdef1234567890"]
-}
