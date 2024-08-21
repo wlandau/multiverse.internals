@@ -26,7 +26,7 @@ staging_is_active <- function(
 within_staging <- function(start, today) {
   month <- today$mon + 1L
   day <- today$mday
-  stopifnot(day <= 28L)
+  stopifnot(start$mday <= 28L)
   (month == start[1L] && day >= start[2L]) ||
     (month == start[1L] + 1L && day < start[2L])
 }
