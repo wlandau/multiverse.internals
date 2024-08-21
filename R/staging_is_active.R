@@ -26,7 +26,12 @@ staging_is_active <- function(
 within_staging <- function(start, today) {
   month <- today$mon + 1L
   day <- today$mday
-  stopifnot(start$mday <= 28L)
+  if (start[1L] > 28L) {
+    stop(
+      "a staging start date cannot be later than day 28 of the given month.",
+      call. = FALSE
+    )
+  }
   (month == start[1L] && day >= start[2L]) ||
     (month == start[1L] + 1L && day < start[2L])
 }
