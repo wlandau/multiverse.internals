@@ -5,3 +5,4 @@ json
 repo
 pkgdown
 pre
+POSIXlt
