@@ -1,6 +1,5 @@
 test_that("staging_is_active()", {
   thresholds <- c("01-15", "04-15", "07-15", "10-15")
-  duration <- 30L
   active <- c(
     "2024-01-15",
     "2024-01-16",
@@ -19,26 +18,24 @@ test_that("staging_is_active()", {
     expect_true(
       staging_is_active(
         thresholds = thresholds,
-        duration = duration,
         today = today
       )
     )
   }
   inactive <- c(
     "2024-01-12",
-    "2024-02-14",
+    "2024-02-15",
     "2024-04-14",
     "2024-05-15",
     "2024-07-12",
-    "2024-08-14",
+    "2024-08-15",
     "2024-10-14",
-    "2024-11-14"
+    "2024-11-15"
   )
   for (today in inactive) {
     expect_false(
       staging_is_active(
         thresholds = thresholds,
-        duration = duration,
         today = today
       )
     )
