@@ -6,7 +6,17 @@
 #'   to migrate to Production. The recommended snapshot is the list of
 #'   packages for which (1) the build and check results of the current
 #'   release are in Staging, and (2) there are no issues.
-#' @return `NULL` (invisibly)
+#'   Writes `snapshot.json` with an R-universe-like manifest
+#'   of the packages recommended for the snapshot, and a
+#'   `snapshot.url` file containing an R-universe snapshot API URL
+#'   to download those packages. Both these files are written to the
+#'   directory given by the `path_staging` argument.
+#' @return `NULL` (invisibly). Called for its side effects.
+#'   [propose_snapshot()] writes `snapshot.json` with an R-universe-like
+#'   manifest of the packages recommended for the snapshot, and a
+#'   `snapshot.url` file containing an R-universe snapshot API URL
+#'   to download those packages. Both these files are written to the
+#'   directory given by the `path_staging` argument.
 #' @inheritParams update_staging
 #' @param repo_staging Character string, URL of the staging universe.
 #' @param types Character vector, what to pass to the `types` field in the
