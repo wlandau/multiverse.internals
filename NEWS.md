@@ -1,6 +1,7 @@
 # multiverse.internals 0.2.11
 
 * Implement `propose_snapshot()`.
+* Exempt Production from WASM checks.
 
 # multiverse.internals 0.2.10
 

@@ -21,7 +21,6 @@ issues_checks <- function(meta = meta_checks()) {
   fields_check <- c(
     "_linuxdevel",
     "_macbinary",
-    "_wasmbinary",
     "_winbinary",
     "_status"
   )
