@@ -15,7 +15,6 @@ test_that("record_issues() mocked", {
     sort(
       c(
         "audio.whisper",
-        "httpgd",
         "INLA",
         "polars",
         "SBC",
@@ -34,7 +33,6 @@ test_that("record_issues() mocked", {
       checks = list(
         "_linuxdevel" = "src-failure",
         "_macbinary" = "src-failure",
-        "_wasmbinary" = "src-failure",
         "_winbinary" = "src-failure",
         "_status" = "src-failure",
         "_buildurl" = file.path(runs, "9296256187")
@@ -53,7 +51,6 @@ test_that("record_issues() mocked", {
       checks = list(
         "_linuxdevel" = "failure",
         "_macbinary" = "success",
-        "_wasmbinary" = "success",
         "_winbinary" = "success",
         "_status" = "success",
         "_buildurl" = file.path(runs, "9412009826")
@@ -128,7 +125,6 @@ test_that("record_issues() date works", {
     expect_equal(date, "2024-01-01")
   }
   never_fixed <- c(
-    "httpgd",
     "INLA",
     "stantargets",
     "tidytensor",
@@ -251,7 +247,6 @@ test_that("record_issues() with dependency problems", {
       checks = list(
         "_linuxdevel" = "success",
         "_macbinary" = "success",
-        "_wasmbinary" = "success",
         "_winbinary" = "failure",
         "_status" = "success",
         "_buildurl" = file.path(

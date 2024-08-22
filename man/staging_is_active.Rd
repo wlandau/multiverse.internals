@@ -30,6 +30,7 @@ staging_is_active()
 }
 \seealso{
 Other staging: 
+\code{\link{propose_snapshot}()},
 \code{\link{update_staging}()}
 }
 \concept{staging}
