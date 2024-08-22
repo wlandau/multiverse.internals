@@ -43,12 +43,23 @@ test_that("propose_snapshot()", {
   )
   expect_equal(json_snapshot$branch, rep("original", 2L))
   expect_equal(ncol(json_snapshot), 3L)
-  url <- readLines(file.path(path_staging, "snapshot.url"))
   expect_equal(
-    url,
+    readLines(file.path(path_staging, "snapshot.url")),
     paste0(
       "https://staging.r-multiverse.org/api/snapshot/zip",
       "?types=win,mac&packages=good1,good2"
+    )
+  )
+  propose_snapshot(
+    path_staging = path_staging,
+    mock = list(staging = meta_staging),
+    r_versions = c("4.5", "4.4")
+  )
+  expect_equal(
+    readLines(file.path(path_staging, "snapshot.url")),
+    paste0(
+      "https://staging.r-multiverse.org/api/snapshot/zip",
+      "?types=win,mac&binaries=4.5,4.4&packages=good1,good2"
     )
   )
 })

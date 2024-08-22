@@ -22,6 +22,9 @@
 #' @param types Character vector, what to pass to the `types` field in the
 #'   snapshot API URL. Controls the types of binaries and documentation
 #'   included in the snapshot.
+#' @param r_versions Character vector of `major.minor` versions of R
+#'   to download binaries. For example, `r_versions = c("4.4", "4.3")`.
+#'   Set to `NULL` to let R-universe choose default versions.
 #' @examples
 #' \dontrun{
 #' url_staging = "https://github.com/r-multiverse/staging"
@@ -36,6 +39,7 @@ propose_snapshot <- function(
   path_staging,
   repo_staging = "https://staging.r-multiverse.org",
   types = c("win", "mac"),
+  r_versions = NULL,
   mock = NULL
 ) {
   issues <- list.files(
@@ -59,9 +63,14 @@ propose_snapshot <- function(
   staging$remotesha <- NULL
   file_snapshot <- file.path(path_staging, "snapshot.json")
   jsonlite::write_json(staging, file_snapshot, pretty = TRUE)
+  if (!is.null(r_versions)) {
+    r_versions <- paste0("&binaries=", paste(r_versions, collapse = ","))
+  }
   url <- paste0(
-    "https://staging.r-multiverse.org/api/snapshot/zip?types=",
+    "https://staging.r-multiverse.org/api/snapshot/zip",
+    "?types=",
     paste(types, collapse = ","),
+    r_versions,
     "&packages=",
     paste(staging$package, collapse = ",")
   )

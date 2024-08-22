@@ -8,6 +8,7 @@ propose_snapshot(
   path_staging,
   repo_staging = "https://staging.r-multiverse.org",
   types = c("win", "mac"),
+  r_versions = NULL,
   mock = NULL
 )
 }
@@ -20,6 +21,10 @@ files of the staging universe.}
 \item{types}{Character vector, what to pass to the \code{types} field in the
 snapshot API URL. Controls the types of binaries and documentation
 included in the snapshot.}
+
+\item{r_versions}{Character vector of \code{major.minor} versions of R
+to download binaries. For example, \code{r_versions = c("4.4", "4.3")}.
+Set to \code{NULL} to let R-universe choose default versions.}
 
 \item{mock}{For testing purposes only, a named list of data frames
 for inputs to various intermediate functions.}
