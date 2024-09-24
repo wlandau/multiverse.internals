@@ -7,4 +7,5 @@
 #' @importFrom stats aggregate
 #' @importFrom utils available.packages compareVersion
 #' @importFrom vctrs vec_rbind vec_slice
+#' @importFrom yaml read_yaml
 NULL
