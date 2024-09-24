@@ -25,7 +25,7 @@ issues_descriptions <- function(meta = meta_packages()) {
   meta <- issues_descriptions_advisories(meta)
   meta <- issues_descriptions_remotes(meta)
   meta <- meta[meta$issue,, drop = FALSE] # nolint
-  issues_list(meta[, c("package", "advisory", "remotes")])
+  issues_list(meta[, c("package", "advisories", "remotes")])
 }
 
 issues_descriptions_advisories <- function(meta) {
@@ -37,7 +37,7 @@ issues_descriptions_advisories <- function(meta) {
     all.x = TRUE,
     all.y = FALSE
   )
-  meta$issue <- meta$issue | !is.na(meta$advisory)
+  meta$issue <- meta$issue | !vapply(meta$advisories, anyNA, logical(1L))
   meta
 }
 
@@ -62,8 +62,7 @@ read_advisories <- function() {
     full.names = TRUE
   )
   out <- do.call(vctrs::vec_rbind, lapply(advisories, read_advisory))
-  keep <- !duplicated(out[, c("package", "version")])
-  out[keep,, drop = FALSE] # nolint
+  stats::aggregate(x = advisories ~ package + version, data = out, FUN = list)
 }
 
 read_advisory <- function(path) {
@@ -79,7 +78,7 @@ advisory_entry <- function(entry, path) {
   data.frame(
     package = entry$package$name,
     version = entry$versions,
-    advisory = file.path(
+    advisories = file.path(
       "https://github.com/RConsortium/r-advisory-database/blob/main/vulns",
       entry$package$name,
       basename(path)
