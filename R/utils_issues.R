@@ -3,7 +3,9 @@ issues_list <- function(x) {
   out <- list()
   for (index in seq_len(nrow(x))) {
     for (field in setdiff(colnames(x), "package")) {
-      out[[x$package[index]]][[field]] <- x[[field]][[index]]
+      if (!all(is.na(x[[field]][[index]]))) {
+        out[[x$package[index]]][[field]] <- x[[field]][[index]]
+      }
     }
   }
   out[order(as.character(names(out)))]
