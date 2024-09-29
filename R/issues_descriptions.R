@@ -29,7 +29,7 @@ issues_descriptions <- function(meta = meta_packages()) {
 }
 
 issues_descriptions_advisories <- function(meta) {
-  advisories <- read_advisories()
+  advisories <- read_advisories(timeout = 60000L, retries = 3L)
   meta <- merge(
     x = meta,
     y = advisories,
@@ -48,19 +48,28 @@ issues_descriptions_remotes <- function(meta) {
   meta
 }
 
-read_advisories <- function() {
+read_advisories <- function(timeout, retries) {
   path <- tempfile()
+  dir.create(path)
   on.exit(unlink(path, recursive = TRUE, force = TRUE))
-  gert::git_clone(
-    url = "https://github.com/RConsortium/r-advisory-database",
-    path = path,
-    verbose = FALSE
-  )
-  advisories <- list.files(
-    file.path(path, "vulns"),
-    recursive = TRUE,
-    full.names = TRUE
-  )
+  zipfile <- file.path(path, "file.zip")
+  for (i in seq_len(retries)) {
+    res <- nanonext::ncurl(
+      "https://github.com/RConsortium/r-advisory-database/zipball/main",
+      convert = FALSE,
+      follow = TRUE,
+      timeout = timeout
+    )
+    res[["status"]] == 200L && break
+    i == retries && stop(
+      "Obtaining advisories from R Consortium database failed with status: ",
+      status_code(res[["status"]]),
+      call. = FALSE
+    )
+  }
+  writeBin(res[["data"]], zipfile)
+  unzip(zipfile, exdir = path, junkpaths = TRUE)
+  advisories <- Sys.glob(file.path(path, "RSEC*.yaml"))
   out <- do.call(vctrs::vec_rbind, lapply(advisories, read_advisory))
   stats::aggregate(x = advisories ~ package + version, data = out, FUN = list)
 }
