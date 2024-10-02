@@ -21,9 +21,14 @@ Report issues with the \code{DESCRIPTION} files of packages.
 }
 \details{
 \code{\link[=issues_descriptions]{issues_descriptions()}} scans downloaded metadata from the
-\code{PACKAGES.json} file of an R universe and reports issues with a
-package's description file, such as the presence of a
-\code{"Remotes"} field.
+\code{PACKAGES.json} file of an R universe and scans for specific issues in a
+package's description file:
+\enumerate{
+\item The presence of a \code{"Remotes"} field.
+\item There is a security advisory at
+\url{https://github.com/RConsortium/r-advisory-database}
+for the given package version.
+}
 }
 \section{Package issues}{
 

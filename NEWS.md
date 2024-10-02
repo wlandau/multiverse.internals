@@ -1,3 +1,7 @@
+# multiverse.internals 0.2.13
+
+* Record issues for vulnerabilities in <https://github.com/RConsortium/r-advisory-database>.
+
 # multiverse.internals 0.2.12
 
 * Amend argument defaults in `propose_snapshot()` to include source files.
