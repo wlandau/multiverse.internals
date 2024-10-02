@@ -53,21 +53,25 @@ read_advisories <- function(timeout, retries) {
   dir.create(path)
   on.exit(unlink(path, recursive = TRUE, force = TRUE))
   zipfile <- file.path(path, "file.zip")
-  for (i in seq_len(retries)) {
-    res <- nanonext::ncurl(
+  for (try in seq_len(retries)) {
+    response <- nanonext::ncurl(
       "https://github.com/RConsortium/r-advisory-database/zipball/main",
       convert = FALSE,
       follow = TRUE,
       timeout = timeout
     )
-    res[["status"]] == 200L && break
-    i == retries && stop(
-      "Obtaining advisories from R Consortium database failed with status: ",
-      status_code(res[["status"]]),
-      call. = FALSE
-    )
+    if (all(response[["status"]] == 200L)) {
+      break
+    }
+    if (all(try == retries)) {
+      stop(
+        "Failed to download R Consortium advisories database. Status: ",
+        status_code(response[["status"]]),
+        call. = FALSE
+      )
+    }
   }
-  writeBin(res[["data"]], zipfile)
+  writeBin(response[["data"]], zipfile)
   unzip(zipfile, exdir = path, junkpaths = TRUE)
   advisories <- Sys.glob(file.path(path, "RSEC*.yaml"))
   out <- do.call(vctrs::vec_rbind, lapply(advisories, read_advisory))
