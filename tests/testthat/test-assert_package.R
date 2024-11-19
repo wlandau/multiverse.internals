@@ -24,8 +24,22 @@ test_that("invalid package name with dot", {
 test_that("custom JSON", {
   expect_true(
     grepl(
-      "looks like custom JSON",
+      "looks like JSON",
       assert_package(name = "xy", url = "{"),
+      fixed = TRUE
+    )
+  )
+})
+
+test_that("advisory", {
+  expect_true(
+    grepl(
+      "advisory",
+      assert_package(
+        name = "def",
+        url = "https://github.com/abc/def",
+        advisories = c("abc", "def")
+      ),
       fixed = TRUE
     )
   )

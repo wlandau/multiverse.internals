@@ -4,7 +4,12 @@
 \alias{review_pull_request}
 \title{Review an R-multiverse contribution}
 \usage{
-review_pull_request(owner = "r-multiverse", repo = "contributions", number)
+review_pull_request(
+  owner = "r-multiverse",
+  repo = "contributions",
+  number,
+  advisories = character(0L)
+)
 }
 \arguments{
 \item{owner}{Character of length 1, name of the package repository owner.}
@@ -14,6 +19,9 @@ R-multiverse uses \code{"https://community.r-multiverse.org"}.}
 
 \item{number}{Positive integer of length 1, index of the pull request
 in the repo.}
+
+\item{advisories}{Character vector of names of packages with advisories
+in the R Consortium Advisory Database.}
 }
 \value{
 \code{NULL} (invisibly).

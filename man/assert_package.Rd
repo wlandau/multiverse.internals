@@ -4,12 +4,15 @@
 \alias{assert_package}
 \title{Validate a Package Entry}
 \usage{
-assert_package(name, url)
+assert_package(name, url, advisories = character(0L))
 }
 \arguments{
 \item{name}{Character of length 1, package name.}
 
 \item{url}{Usually a character of length 1 with the package URL.}
+
+\item{advisories}{Character vector of names of packages with advisories
+in the R Consortium Advisory Database.}
 }
 \value{
 A character string if there is a problem with the package entry,

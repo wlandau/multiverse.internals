@@ -7,17 +7,20 @@
 #' @param owner Character of length 1, name of the package repository owner.
 #' @param number Positive integer of length 1, index of the pull request
 #'   in the repo.
+#' @param advisories Character vector of names of packages with advisories
+#'   in the R Consortium Advisory Database.
 review_pull_request <- function(
   owner = "r-multiverse",
   repo = "contributions",
-  number
+  number,
+  advisories = character(0L)
 ) {
   assert_character_scalar(owner, "owner must be a character string")
   assert_character_scalar(repo, "repo must be a character string")
   assert_positive_scalar(number, "number must be a positive integer")
   message("Reviewing pull request ", number)
   merge <- review_pull_request_integrity(owner, repo, number) &&
-    review_pull_request_content(owner, repo, number)
+    review_pull_request_content(owner, repo, number, advisories)
   if (isTRUE(merge)) {
     pull_request_merge(
       owner = owner,
@@ -66,7 +69,7 @@ review_pull_request_integrity <- function(owner, repo, number) {
   TRUE
 }
 
-review_pull_request_content <- function(owner, repo, number) {
+review_pull_request_content <- function(owner, repo, number, advisories) {
   response <- gh::gh(
     "/repos/:owner/:repo/pulls/:number/files",
     owner = owner,
@@ -140,7 +143,7 @@ review_pull_request_content <- function(owner, repo, number) {
     }
     url <- gsub(pattern = "^.*\\+", replacement = "", x = file$patch)
     url <- gsub(pattern = "\\s.*$", replacement = "", x = url)
-    result <- assert_package(name = name, url = url)
+    result <- assert_package(name = name, url = url, advisories = advisories)
     if (!is.null(result)) {
       pull_request_defer(
         owner = owner,
