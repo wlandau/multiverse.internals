@@ -54,7 +54,7 @@ read_package_listing <- function(package, owner_exceptions) {
 }
 
 package_listing_url <- function(name, url) {
-  message <- assert_package_lite(name = name, url = url)
+  message <- assert_package_listing(name = name, url = url)
   if (!is.null(message)) {
     stop(message, call. = FALSE)
   }
@@ -107,7 +107,7 @@ package_listing_json <- function(name, json) {
     )
     json[[field]] <- trimws(json[[field]])
   }
-  message <- assert_package_lite(name = json$package, url = json$url)
+  message <- assert_package_listing(name = json$package, url = json$url)
   if (!is.null(message)) {
     stop(message, call. = FALSE)
   }

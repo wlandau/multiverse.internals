@@ -12,7 +12,7 @@ assert_package <- function(name, url) {
       paste("Entry of package", shQuote(name), "looks like custom JSON")
     )
   }
-  if (!is.null(out <- assert_package_lite(name = name, url = url))) {
+  if (!is.null(out <- assert_package_listing(name = name, url = url))) {
     return(out)
   }
   name <- trimws(name)
@@ -29,7 +29,7 @@ assert_package <- function(name, url) {
   assert_release_exists(url = url)
 }
 
-assert_package_lite <- function(name, url) {
+assert_package_listing <- function(name, url) {
   if (!is_package_name(name)) {
     return("Invalid package name")
   }
@@ -47,13 +47,6 @@ assert_package_lite <- function(name, url) {
   if (!identical(parsed_url[["scheme"]], "https")) {
     return(paste("Scheme of URL", shQuote(url), "is not https"))
   }
-}
-
-is_package_name <- function(name) {
-  is_character_scalar(name) && grepl(
-    pattern = "^[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9]$",
-    x = trimws(name)
-  )
 }
 
 assert_package_lints <- function(name, url) {
@@ -100,4 +93,11 @@ assert_url_exists <- function(url) {
       )
     )
   }
+}
+
+is_package_name <- function(name) {
+  is_character_scalar(name) && grepl(
+    pattern = "^[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9]$",
+    x = trimws(name)
+  )
 }
