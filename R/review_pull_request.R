@@ -1,14 +1,7 @@
-#' @title Review a pull request.
+#' @title Review an R-multiverse contribution
 #' @export
 #' @family pull request reviews
-#' @description Review a pull request to add packages to `packages.json`.
-#' @section Testing:
-#'   Testing of this function unfortunately needs to be manual. Test cases:
-#'   1. Add a package correctly (automatically merge).
-#'   2. Add a bad URL (manual review).
-#'   3. Change a URL (manual review).
-#'   4. Add a file in a forbidden place (close).
-#'   5. Add a custom JSON file which can be parsed (manual review).
+#' @description Review a pull request to add packages to R-multiverse.
 #' @return `NULL` (invisibly).
 #' @inheritParams meta_checks
 #' @param owner Character of length 1, name of the package repository owner.

@@ -2,7 +2,6 @@
 #' @export
 #' @family pull request reviews
 #' @description Review pull requests which add packages to `packages.json`.
-#' @inheritSection review_pull_request Testing
 #' @return `NULL` (invisibly).
 #' @inheritParams review_pull_request
 review_pull_requests <- function(

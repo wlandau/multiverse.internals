@@ -8,9 +8,7 @@
 #' @param url Usually a character of length 1 with the package URL.
 assert_package <- function(name, url) {
   if (any(grepl(pattern = "\\}|\\{", x = url))) {
-    return(
-      paste("Entry of package", shQuote(name), "looks like custom JSON")
-    )
+    return(paste("Listing of package", name, "looks like custom JSON"))
   }
   if (!is.null(out <- assert_package_listing(name = name, url = url))) {
     return(out)
@@ -26,7 +24,9 @@ assert_package <- function(name, url) {
   if (!is.null(out <- assert_cran_url(name = name, url = url))) {
     return(out)
   }
-  assert_release_exists(url = url)
+  if (!is.null(out <- assert_release_exists(url = url))) {
+    return(out)
+  }
 }
 
 assert_package_listing <- function(name, url) {

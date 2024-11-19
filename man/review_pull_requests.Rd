@@ -18,18 +18,6 @@ R-multiverse uses \code{"https://community.r-multiverse.org"}.}
 \description{
 Review pull requests which add packages to \code{packages.json}.
 }
-\section{Testing}{
-
-Testing of this function unfortunately needs to be manual. Test cases:
-\enumerate{
-\item Add a package correctly (automatically merge).
-\item Add a bad URL (manual review).
-\item Change a URL (manual review).
-\item Add a file in a forbidden place (close).
-\item Add a custom JSON file which can be parsed (manual review).
-}
-}
-
 \seealso{
 Other pull request reviews: 
 \code{\link{review_pull_request}()}
