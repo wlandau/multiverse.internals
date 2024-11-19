@@ -84,7 +84,7 @@ review_pull_request_content <- function(owner, repo, number) {
     close <- !identical(dirname(file$filename), "packages") ||
       !identical(dirname(dirname(file$filename)), ".")
     if (close) {
-      pull_request_close(
+      pull_request_defer(
         owner = owner,
         repo = repo,
         number = number,
@@ -92,9 +92,7 @@ review_pull_request_content <- function(owner, repo, number) {
           "Pull request ",
           number,
           " attempts to modify files outside the 'packages/' folder ",
-          "or in a subdirectory of 'packages/'. ",
-          "Please open a different pull request that simply adds one or ",
-          "more text files directly inside 'packages/' with package URLs."
+          "or in a subdirectory of 'packages/'. "
         )
       )
       return(FALSE)
@@ -166,23 +164,6 @@ review_pull_request_content <- function(owner, repo, number) {
     }
   }
   TRUE
-}
-
-pull_request_close <- function(owner, repo, number, message) {
-  gh::gh(
-    "PATCH /repos/:owner/:repo/pulls/:number",
-    owner = owner,
-    repo = repo,
-    number = number,
-    state = "closed"
-  )
-  gh::gh(
-    "POST /repos/:owner/:repo/issues/:number/comments",
-    owner = owner,
-    repo = repo,
-    number = number,
-    body = message
-  )
 }
 
 pull_request_defer <- function(owner, repo, number, message) {
