@@ -14,12 +14,7 @@ list_organizations <- function(
   owner = "r-multiverse",
   repo = "contributions"
 ) {
-  response <- gh::gh(
-    "/repos/{owner}/{repo}/contents/organizations",
-    owner = owner,
-    repo = repo,
-    ref = "main"
-  )
-  text <- rawToChar(base64enc::base64decode(response$content))
+  url <- file.path("https://github.com", owner, repo)
+  text <- get_repo_file(url = url, path = "organizations")
   trimws(unlist(strsplit(text, split = "\n")))
 }

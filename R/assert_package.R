@@ -32,6 +32,9 @@ assert_package <- function(name, url, advisories = character(0L)) {
   if (!is.null(out <- assert_release_exists(url = url))) {
     return(out)
   }
+  if (!is.null(out <- assert_package_description(name = name, url = url))) {
+    return(out)
+  }
 }
 
 assert_package_listing <- function(name, url) {
