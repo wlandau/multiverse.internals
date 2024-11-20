@@ -1,3 +1,7 @@
+# multiverse.internals 0.2.15
+
+* Align contribution reviews with revised review policy in https://github.com/r-multiverse/r-multiverse.github.io/pull/33.
+
 # multiverse.internals 0.2.14
 
 * Allow `update_staging()` to work if the staging `packages.json` does not exist.
