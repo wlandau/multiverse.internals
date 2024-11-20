@@ -8,7 +8,8 @@ review_pull_request(
   owner = "r-multiverse",
   repo = "contributions",
   number,
-  advisories = character(0L)
+  advisories = character(0L),
+  organizations = character(0L)
 )
 }
 \arguments{

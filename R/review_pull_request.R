@@ -13,7 +13,8 @@ review_pull_request <- function(
   owner = "r-multiverse",
   repo = "contributions",
   number,
-  advisories = character(0L)
+  advisories = character(0L),
+  organizations = character(0L)
 ) {
   assert_character_scalar(owner, "owner must be a character string")
   assert_character_scalar(repo, "repo must be a character string")
@@ -31,6 +32,10 @@ review_pull_request <- function(
   invisible()
 }
 
+review_pull_request_author <- function(owner, repo, number) {
+  
+}
+
 review_pull_request_integrity <- function(owner, repo, number) {
   pull <- gh::gh(
     "/repos/:owner/:repo/pulls/:number",
@@ -39,7 +44,7 @@ review_pull_request_integrity <- function(owner, repo, number) {
     number = number
   )
   commit <- gh::gh(
-    "GET /repos/:owner/:repo/git/commits/:sha",
+    "/repos/:owner/:repo/git/commits/:sha",
     owner = owner,
     repo = repo,
     sha = pull$head$sha

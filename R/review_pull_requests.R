@@ -26,13 +26,16 @@ review_pull_requests <- function(
   pull_requests <- pull_requests[!skip]
   message("Skimming the R Consortium Advisory Database...")
   advisories <- unique(read_advisories()$package)
+  message("Listing trusted GitHub organizations...")
+  organizations <- list_organizations(owner = owner, repo = repo)
   message("About to review ", length(pull_requests), " open pull requests.")
   for (pull_request in pull_requests) {
     review_pull_request(
       owner = owner,
       repo = repo,
       number = pull_request$number,
-      advisories = advisories
+      advisories = advisories,
+      organizations = organizations
     )
   }
   invisible()

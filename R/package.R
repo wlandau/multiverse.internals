@@ -1,3 +1,4 @@
+#' @importFrom base64enc base64decode
 #' @importFrom gh gh
 #' @importFrom igraph make_graph neighbors subcomponent V
 #' @importFrom jsonlite parse_json read_json stream_in write_json
