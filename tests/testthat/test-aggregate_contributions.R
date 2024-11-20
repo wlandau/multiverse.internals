@@ -93,16 +93,58 @@ test_that("one URL is malformed", {
     file.path(packages, "jsonlite")
   )
   universe <- file.path(tempfile(), "out")
-  out <- try(
-    suppressMessages(
-      aggregate_contributions(
-        input = packages,
-        output = universe
-      )
-    ),
-    silent = TRUE
+  suppressMessages(
+    aggregate_contributions(
+      input = packages,
+      output = universe
+    )
   )
-  expect_true(inherits(out, "try-error"))
+  out <- jsonlite::read_json(path = universe)
+  exp <- list(
+    list(
+      package = "gh",
+      url = "https://github.com/r-lib/gh",
+      branch = "*release"
+    )
+  )
+  expect_true(identical(out, exp))
+  unlink(packages, recursive = TRUE)
+  unlink(universe)
+})
+
+test_that("placeholder listing for a package withheld from R-multiverse", {
+  packages <- tempfile()
+  dir.create(packages)
+  writeLines("https://github.com/r-lib/gh", file.path(packages, "gh"))
+  writeLines(
+    "This package is withheld from R-multiverse due to a policy violation",
+    file.path(packages, "withheld")
+  )
+  writeLines(
+    "https://github.com/jeroen/jsonlite",
+    file.path(packages, "jsonlite")
+  )
+  universe <- file.path(tempfile(), "out")
+  suppressMessages(
+    aggregate_contributions(
+      input = packages,
+      output = universe
+    )
+  )
+  out <- jsonlite::read_json(path = universe)
+  exp <- list(
+    list(
+      package = "gh",
+      url = "https://github.com/r-lib/gh",
+      branch = "*release"
+    ),
+    list(
+      package = "jsonlite",
+      url = "https://github.com/jeroen/jsonlite",
+      branch = "*release"
+    )
+  )
+  expect_true(identical(out, exp))
   unlink(packages, recursive = TRUE)
   unlink(universe)
 })

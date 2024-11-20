@@ -27,8 +27,9 @@ aggregate_contributions <- function(
     FUN = read_package_listing,
     owner_exceptions = owner_exceptions
   )
-  message("Aggregating ", length(listings), " package listings.")
+  message("Aggregating positive package listings.")
   aggregated <- do.call(what = vctrs::vec_rbind, args = listings)
+  message("Aggregated ", nrow(aggregated), " positive package listings.")
   if (!file.exists(dirname(output))) {
     dir.create(dirname(output))
   }
@@ -38,13 +39,24 @@ aggregate_contributions <- function(
 }
 
 read_package_listing <- function(package, owner_exceptions) {
-  message("Processing package listing ", package)
   name <- trimws(basename(package))
   lines <- readLines(con = package, warn = FALSE)
   json <- try(jsonlite::parse_json(lines), silent = TRUE)
-  if (inherits(json, "try-error")) {
+  url <- try(package_listing_url(name = name, url = lines), silent = TRUE)
+  if (inherits(json, "try-error") && inherits(url, "try-error")) {
+    message("Omitting package listing ", package, "(malformed or placeholder)")
+    return(
+      data.frame(
+        package = character(0L),
+        url = character(0L),
+        branch = character(0L)
+      )
+    )
+  } else if (inherits(json, "try-error")) {
+    message("URL package listing ", package)
     json <- package_listing_url(name = name, url = lines)
   } else {
+    message("JSON package listing ", package)
     json <- package_listing_json(name = name, json = json)
   }
   decide_owner_exceptions(
