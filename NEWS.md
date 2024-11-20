@@ -1,3 +1,7 @@
+# multiverse.internals 0.2.16
+
+* Add `interpret_issue()` to help create RSS feeds.
+
 # multiverse.internals 0.2.14
 
 * Allow `update_staging()` to work if the staging `packages.json` does not exist.
