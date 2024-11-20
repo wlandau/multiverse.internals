@@ -9,6 +9,9 @@
 #'   in the repo.
 #' @param advisories Character vector of names of packages with advisories
 #'   in the R Consortium Advisory Database.
+#' @param organizations Character vector of names of GitHub organizations.
+#'   Pull requests from authors who are not members of at least one of
+#'   these organizations will be flagged for manual review.
 review_pull_request <- function(
   owner = "r-multiverse",
   repo = "contributions",
@@ -20,7 +23,7 @@ review_pull_request <- function(
   assert_character_scalar(repo, "repo must be a character string")
   assert_positive_scalar(number, "number must be a positive integer")
   message("Reviewing pull request ", number)
-  merge <- review_pull_request_integrity(owner, repo, number) &&
+  merge <- review_pull_request_integrity(owner, repo, number, organizations) &&
     review_pull_request_content(owner, repo, number, advisories)
   if (isTRUE(merge)) {
     pull_request_merge(
@@ -32,11 +35,7 @@ review_pull_request <- function(
   invisible()
 }
 
-review_pull_request_author <- function(owner, repo, number) {
-  
-}
-
-review_pull_request_integrity <- function(owner, repo, number) {
+review_pull_request_integrity <- function(owner, repo, number, organizations) {
   pull <- gh::gh(
     "/repos/:owner/:repo/pulls/:number",
     owner = owner,
@@ -67,6 +66,41 @@ review_pull_request_integrity <- function(owner, repo, number) {
         "For security reasons, the R-multiverse bot only ",
         "merges commits created manually through a web browser ",
         "as described at https://r-multiverse.org/contributors.html."
+      )
+    )
+    return(FALSE)
+  }
+  if (!is_member_organization(pull$user$login, organizations)) {
+    pull_request_defer(
+      owner = owner,
+      repo = repo,
+      number = number,
+      message = paste0(
+        "Author ",
+        shQuote(pull$user$login),
+        " of pull request ",
+        number,
+        " is not a public member of one of the GitHub organizations ",
+        "listed at ",
+        file.path(
+          "https://github.com/r-multiverse/contributions",
+          "blob/main/organizations"
+        ),
+        ". For security, R-multiverse requires manual review ",
+        "by a moderator in such cases. \n\n",
+        "Or, if you would like to add an organization to the list, ",
+        "please submit a pull request to ",
+        "https://github.com/r-multiverse/contributions to add it to the ",
+        "'organizations' file. ",
+        "If you are already a member of one of the listed ",
+        "organizations, you may need to edit settings in GitHub ",
+        "to [make your membership publicly visible](",
+        file.path(
+          "https://docs.github.com/en/account-and-profile",
+          "setting-up-and-managing-your-personal-account-on-github",
+          "managing-your-membership-in-organizations",
+          "publicizing-or-hiding-organization-membership)."
+        )
       )
     )
     return(FALSE)

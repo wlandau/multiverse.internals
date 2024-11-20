@@ -23,6 +23,10 @@ in the repo.}
 
 \item{advisories}{Character vector of names of packages with advisories
 in the R Consortium Advisory Database.}
+
+\item{organizations}{Character vector of names of GitHub organizations.
+Pull requests from authors who are not members of at least one of
+these organizations will be flagged for manual review.}
 }
 \value{
 \code{NULL} (invisibly).
