@@ -83,14 +83,21 @@ review_pull_request_integrity <- function(owner, repo, number, organizations) {
         " is not a public member of one of the GitHub organizations ",
         "listed at ",
         file.path(
-          "https://github.com/r-multiverse/contributions",
+          "https://github.com",
+          owner,
+          repo,
           "blob/main/organizations"
         ),
         ". For security, R-multiverse requires manual review ",
         "by a moderator in such cases. \n\n",
         "Or, if you would like to add an organization to the list, ",
         "please submit a pull request to ",
-        "https://github.com/r-multiverse/contributions to add it to the ",
+        file.path(
+          "https://github.com",
+          owner,
+          repo
+        ),
+        " to add it to the ",
         "'organizations' file. ",
         "If you are already a member of one of the listed ",
         "organizations, you may need to edit settings in GitHub ",
