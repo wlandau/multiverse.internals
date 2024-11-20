@@ -5,10 +5,10 @@
 #' @return A character string summarizing the issues of a package in prose.
 #' @param path Character string, file path to a JSON issue file
 #'   of a package.
-interpert_issue <- function(path) {
+interpret_issue <- function(path) {
   package <- basename(path)
   if (!file.exists(path)) {
-    return(paste("Package", package, "is healthy."))
+    return(paste("Package", package, "has no recorded issues."))
   }
   issue <- jsonlite::read_json(path, simplifyVector = TRUE)
   c(
