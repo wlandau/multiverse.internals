@@ -190,6 +190,7 @@ test_that("record_issues() with dependency problems", {
     "]"
   )
   versions <- tempfile()
+  on.exit(unlink(c(output, versions), recursive = TRUE))
   writeLines(lines, versions)
   meta_checks <- mock_meta_checks[1L, ]
   meta_checks$package <- "crew"

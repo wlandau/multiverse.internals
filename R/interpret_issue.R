@@ -1,4 +1,4 @@
-#' @description Interpret a set of package issues
+#' @title Interpret a set of package issues
 #' @export
 #' @family issues
 #' @description Summarize the issues of a package in human-readable text.
@@ -11,7 +11,7 @@ interpret_issue <- function(path) {
     return(paste("Package", package, "has no recorded issues."))
   }
   issue <- jsonlite::read_json(path, simplifyVector = TRUE)
-  c(
+  paste0(
     interpret_title(issue, package),
     interpret_advisories(issue),
     interpret_checks(issue),
@@ -102,7 +102,7 @@ interpret_dependencies <- function(issue, package) {
       as.character(yaml::as.yaml(dependencies[indirect]))
     )
   }
-  text
+  paste0(text, "\n\n")
 }
 
 interpret_remotes <- function(issue) {
