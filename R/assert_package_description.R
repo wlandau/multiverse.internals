@@ -74,7 +74,10 @@ assert_parsed_description <- function(name, description) {
       paste(
         "DESCRIPTION of package",
         name,
-        "does not list an author or maintainer."
+        "does not list an author or maintainer.",
+        "Each package contributed to R-multiverse must correctly attribute",
+        "authorship and ownership to protect the intellectual property",
+        "rights of the package owners."
       )
     )
   }
@@ -87,7 +90,10 @@ assert_parsed_description <- function(name, description) {
       paste(
         "DESCRIPTION file of package",
         name,
-        "has no license."
+        "lists no license.",
+        "Each package contributed to R-multiverse must have a valid",
+        "open-source license to protect the intellectual property",
+        "rights of the package owners."
       )
     )
   }
@@ -96,7 +102,10 @@ assert_parsed_description <- function(name, description) {
       paste(
         "Detected license",
         shQuote(license),
-        "which requires review by a moderator."
+        "which requires review by a moderator.",
+        "Each package contributed to R-multiverse must have a valid",
+        "open-source license to protect the intellectual property",
+        "rights of the package owners."
       )
     )
   }

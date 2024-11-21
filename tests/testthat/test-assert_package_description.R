@@ -92,7 +92,7 @@ test_that("assert_parsed_description() no license", {
     name = "multiverse.internals",
     description = description
   )
-  expect_true(grepl("has no license", out))
+  expect_true(grepl("lists no license", out))
 })
 
 test_that("assert_parsed_description() uncommon license", {
