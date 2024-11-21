@@ -18,7 +18,7 @@ assert_package_description <- function(name, url) {
       )
     )
   }
-  if (!is.null(out <- assert_local_description(name, text))) {
+  if (!is.null(out <- assert_description_local(name, text))) {
     return(out)
   }
   license <- desc::description$new(text = text)$get("License")
@@ -41,12 +41,12 @@ assert_package_description <- function(name, url) {
       )
     )
   }
-  if (!is.null(out <- assert_local_license(name, path, text))) {
+  if (!is.null(out <- assert_license_local(name, path, text))) {
     return(out)
   }
 }
 
-assert_local_description <- function(name, text) {
+assert_description_local <- function(name, text) {
   description <- try(
     desc::description$new(text = text),
     silent = TRUE
@@ -105,21 +105,7 @@ assert_parsed_description <- function(name, description) {
   }
 }
 
-assert_license_file <- function(url, license) {
-  
-  text <- try(get_repo_file(url, path), silent = TRUE)
-  if (inherits(text, "try-error")) {
-    return(
-      paste(
-        "Could not read a DESCRIPTION file at the top-level of",
-        url,
-        sprintf("(error: %s)", conditionMessage(attr(text, "condition")))
-      )
-    )
-  }
-}
-
-assert_local_license <- function(name, path, text) {
+assert_license_local <- function(name, path, text) {
   lines <- unlist(strsplit(text, split = "\n"))
   keys <- trimws(gsub(":.*$", "", lines))
   acceptable <- c("COPYRIGHT HOLDER", "ORGANISATION", "ORGANIZATION", "YEAR")

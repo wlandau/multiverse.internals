@@ -36,12 +36,12 @@ test_that("assert_package_description() GitHub + no license", {
   )
 })
 
-test_that("assert_local_description() on bad DESCRIPTION file", {
-  out <- assert_local_description("name", list())
+test_that("assert_description_local() on bad DESCRIPTION file", {
+  out <- assert_description_local("name", list())
   expect_true(grepl("DESCRPTION file could not be parsed", out))
 })
 
-test_that("assert_local_description() good result", {
+test_that("assert_description_local() good result", {
   path <- system.file(
     "DESCRIPTION",
     package = "multiverse.internals",
@@ -49,21 +49,21 @@ test_that("assert_local_description() good result", {
   )
   text <- paste(readLines(path), collapse = "\n")
   expect_null(
-    assert_local_description(
+    assert_description_local(
       name = "multiverse.internals",
       text = text
     )
   )
 })
 
-test_that("assert_local_description() different name", {
+test_that("assert_description_local() different name", {
   path <- system.file(
     "DESCRIPTION",
     package = "multiverse.internals",
     mustWork = TRUE
   )
   text <- paste(readLines(path), collapse = "\n")
-  out <- assert_local_description(
+  out <- assert_description_local(
     name = "different",
     text = text
   )
@@ -120,8 +120,8 @@ test_that("assert_parsed_description() uncommon license", {
   expect_true(grepl("Detected license 'uncommon'", out))
 })
 
-test_that("assert_local_license() with free form text", {
-  out <- assert_local_license(
+test_that("assert_license_local() with free form text", {
+  out <- assert_license_local(
     name = "test",
     path = "LICENSE",
     text = "free form text"
@@ -129,8 +129,8 @@ test_that("assert_local_license() with free form text", {
   expect_true(grepl("contains text more complicated than the usual", out))
 })
 
-test_that("assert_local_license() with empty fields", {
-  out <- assert_local_license(
+test_that("assert_license_local() with empty fields", {
+  out <- assert_license_local(
     name = "test",
     path = "LICENSE",
     text = "YEAR:\nCOPYRIGHT HOLDER:person"
