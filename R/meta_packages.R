@@ -23,7 +23,7 @@ meta_packages <- function(repo = "https://community.r-multiverse.org") {
   )
   colnames(out) <- tolower(colnames(out))
   rownames(out) <- out$package
-  foss <- available.packages(repos = repo, filters = "license/FOSS")
+  foss <- utils::available.packages(repos = repo, filters = "license/FOSS")
   out$foss <- FALSE
   out[as.character(foss[, "Package"]), "foss"] <- TRUE
   out
