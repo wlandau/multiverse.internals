@@ -184,17 +184,16 @@ test_that("good GitHub registration", {
   )
 })
 
-test_that("good GitLab registration", {
+test_that("GitLab registration with free-form license", {
   tmp <- utils::capture.output(
     suppressMessages(
-      expect_null(
-        assert_package(
-          name = "test",
-          url = "https://gitlab.com/wlandau/test"
-        )
+      out <- assert_package(
+        name = "test",
+        url = "https://gitlab.com/wlandau/test"
       )
     )
   )
+  expect_true(grepl("LICENSE contains text more complicated than", out))
 })
 
 test_that("good registration with trailing slash", {

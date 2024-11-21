@@ -17,12 +17,21 @@ test_that("assert_package_description() GitHub", {
   )
 })
 
-test_that("assert_package_description() GitLab", {
+test_that("assert_package_description() GitLab + free-form license file", {
+  skip_if_offline()
+  out <- assert_package_description(
+    name = "test",
+    url = "https://gitlab.com/wlandau/test"
+  )
+  expect_true(grepl("contains text more complicated than the usual", out))
+})
+
+test_that("assert_package_description() GitHub + no license", {
   skip_if_offline()
   expect_null(
     assert_package_description(
-      name = "test",
-      url = "https://gitlab.com/wlandau/test"
+      name = "multiverse.internals",
+      url = "https://github.com/r-multiverse/multiverse.internals"
     )
   )
 })
@@ -109,4 +118,22 @@ test_that("assert_parsed_description() uncommon license", {
     description = description
   )
   expect_true(grepl("Detected license 'uncommon'", out))
+})
+
+test_that("assert_local_license() with free form text", {
+  out <- assert_local_license(
+    name = "test",
+    path = "LICENSE",
+    text = "free form text"
+  )
+  expect_true(grepl("contains text more complicated than the usual", out))
+})
+
+test_that("assert_local_license() with empty fields", {
+  out <- assert_local_license(
+    name = "test",
+    path = "LICENSE",
+    text = "YEAR:\nCOPYRIGHT HOLDER:person"
+  )
+  expect_true(grepl("key-value pairs with empty values", out))
 })

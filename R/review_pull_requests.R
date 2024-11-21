@@ -8,6 +8,13 @@ review_pull_requests <- function(
   owner = "r-multiverse",
   repo = "contributions"
 ) {
+  defaults <- list(
+    cli.ansi = getOption("cli.ansi"),
+    cli.num_colors = getOption("cli.num_colors"),
+    cli.unicode = getOption("cli.unicode")
+  )
+  options(cli.ansi = FALSE, cli.num_colors = 1L, cli.unicode = FALSE)
+  on.exit(do.call(what = options, args = defaults))
   assert_character_scalar(owner, "owner must be a character string")
   assert_character_scalar(repo, "repo must be a character string")
   message("Listing pull requests...")

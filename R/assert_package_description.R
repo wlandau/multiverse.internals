@@ -18,7 +18,32 @@ assert_package_description <- function(name, url) {
       )
     )
   }
-  assert_local_description(name, text)
+  if (!is.null(out <- assert_local_description(name, text))) {
+    return(out)
+  }
+  license <- desc::description$new(text = text)$get("License")
+  if (any(grepl("LICENSE", license))) {
+    path <- "LICENSE"
+  } else if (any(grepl("LICENCE", license))) {
+    path <- "LICENCE"
+  } else {
+    return()
+  }
+  text <- try(get_repo_file(url, path), silent = TRUE)
+  if (inherits(text, "try-error")) {
+    return(
+      paste(
+        "Could not download license file",
+        path,
+        "of package",
+        name,
+        sprintf("(error: %s)", conditionMessage(attr(text, "condition")))
+      )
+    )
+  }
+  if (!is.null(out <- assert_local_license(name, path, text))) {
+    return(out)
+  }
 }
 
 assert_local_description <- function(name, text) {
@@ -75,6 +100,50 @@ assert_parsed_description <- function(name, description) {
         "Each package contributed to R-multiverse must have a valid",
         "open-source license to protect the intellectual property",
         "rights of the package owners."
+      )
+    )
+  }
+}
+
+assert_license_file <- function(url, license) {
+  
+  text <- try(get_repo_file(url, path), silent = TRUE)
+  if (inherits(text, "try-error")) {
+    return(
+      paste(
+        "Could not read a DESCRIPTION file at the top-level of",
+        url,
+        sprintf("(error: %s)", conditionMessage(attr(text, "condition")))
+      )
+    )
+  }
+}
+
+assert_local_license <- function(name, path, text) {
+  lines <- unlist(strsplit(text, split = "\n"))
+  keys <- trimws(gsub(":.*$", "", lines))
+  acceptable <- c("COPYRIGHT HOLDER", "ORGANISATION", "ORGANIZATION", "YEAR")
+  if (!all(keys %in% acceptable)) {
+    return(
+      paste(
+        "Package",
+        name,
+        "license file",
+        path,
+        "contains text more complicated than the usual",
+        "'YEAR', 'COPYRIGHT HOLDER', and 'ORGANIZATION' key-value pairs."
+      )
+    )
+  }
+  values <- trimws(gsub("^.*:", "", lines))
+  if (!all(nzchar(values))) {
+    return(
+      paste(
+        "Package",
+        name,
+        "license file",
+        path,
+        "contains colon-separated key-value pairs with empty values."
       )
     )
   }
