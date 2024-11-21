@@ -29,6 +29,7 @@ Depends:
   R (>= 3.6)
 Imports:
   base64enc,
+  desc,
   gh,
   igraph,
   jsonlite,

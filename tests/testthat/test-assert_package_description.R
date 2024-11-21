@@ -68,10 +68,10 @@ test_that("assert_parsed_description() no author", {
     mustWork = TRUE
   )
   text <- paste(readLines(path), collapse = "\n")
-  description <- parse_description(text)
-  description[["Authors@R"]] <- NULL
-  description[["Author"]] <- NULL
-  description[["Maintainer"]] <- NULL
+  description <- desc::description$new(text = text)
+  description$del("Authors@R")
+  description$del("Authors")
+  description$del("Maintainer")
   out <- assert_parsed_description(
     name = "multiverse.internals",
     description = description
@@ -86,13 +86,13 @@ test_that("assert_parsed_description() no license", {
     mustWork = TRUE
   )
   text <- paste(readLines(path), collapse = "\n")
-  description <- parse_description(text)
-  description[["License"]] <- NULL
+  description <- desc::description$new(text = text)
+  description$del("License")
   out <- assert_parsed_description(
     name = "multiverse.internals",
     description = description
   )
-  expect_true(grepl("lists no license", out))
+  expect_true(grepl("Detected license 'NA'", out))
 })
 
 test_that("assert_parsed_description() uncommon license", {
@@ -102,11 +102,11 @@ test_that("assert_parsed_description() uncommon license", {
     mustWork = TRUE
   )
   text <- paste(readLines(path), collapse = "\n")
-  description <- parse_description(text)
-  description[["License"]] <- "uncommon"
+  description <- desc::description$new(text = text)
+  description$set(License = "uncommon")
   out <- assert_parsed_description(
     name = "multiverse.internals",
     description = description
   )
-  expect_true(grepl("Detected license", out))
+  expect_true(grepl("Detected license 'uncommon'", out))
 })

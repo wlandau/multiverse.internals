@@ -23,7 +23,7 @@ assert_package_description <- function(name, url) {
 
 assert_local_description <- function(name, text) {
   description <- try(
-    parse_description(text),
+    desc::description$new(text = text),
     silent = TRUE
   )
   if (inherits(description, "try-error")) {
@@ -37,39 +37,23 @@ assert_local_description <- function(name, text) {
   assert_parsed_description(name, description)
 }
 
-parse_description <- function(text) {
-  lines <- unlist(strsplit(text, "(?<=\\n)(?=[^ ])", perl = TRUE))
-  lines <- gsub(" +", " ", lines)
-  lines <- gsub("\n", "", lines)
-  splits <- strsplit(lines, split = ": ")
-  names <- unlist(lapply(splits, function(split) trimws(split[[1L]])))
-  values <- lapply(splits, function(split) {
-    paste(trimws(split[-1L]), collapse = " ")
-  })
-  names(values) <- names
-  values
-}
-
 assert_parsed_description <- function(name, description) {
-  if (!identical(name, as.character(description$Package))) {
+  if (!identical(name, as.character(description$get("Package")))) {
     return(
       paste(
         "R-multiverse listing name",
         shQuote(name),
         "is different from the package name in the DESCRIPTION FILE:",
-        shQuote(description$Package)
+        shQuote(description$get("Package"))
       )
     )
   }
-  has_author <- FALSE
-  for (field in c("Authors@R", "Author", "Maintainer")) {
-    field_has_author <- !is.null(description[[field]]) &&
-      is.character(description[[field]]) &&
-      !anyNA(description[[field]]) &&
-      all(nzchar(description[[field]]))
-    has_author <- has_author || field_has_author
-  }
-  if (!has_author) {
+  authors <- c(
+    description$get("Authors@R"),
+    description$get("Author"),
+    description$get("Maintainer")
+  )
+  if (!length(authors) || all(is.na(authors))) {
     return(
       paste(
         "DESCRIPTION of package",
@@ -81,23 +65,7 @@ assert_parsed_description <- function(name, description) {
       )
     )
   }
-  license <- paste(description$License, collapse = " ")
-  has_license <- is.character(license) &&
-    !anyNA(license) &&
-    all(nzchar(license))
-  if (!has_license) {
-    return(
-      paste(
-        "DESCRIPTION file of package",
-        name,
-        "lists no license.",
-        "Each package contributed to R-multiverse must have a valid free and",
-        "open-source (FOSS) license to protect the intellectual property",
-        "rights of the package owners (c.f.",
-        "<https://en.wikipedia.org/wiki/Free_and_open-source_software>)."
-      )
-    )
-  }
+  license <- description$get("License")
   if (!(license %in% trusted_licenses)) {
     return(
       paste(
