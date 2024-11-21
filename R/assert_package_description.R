@@ -91,9 +91,10 @@ assert_parsed_description <- function(name, description) {
         "DESCRIPTION file of package",
         name,
         "lists no license.",
-        "Each package contributed to R-multiverse must have a valid",
-        "open-source license to protect the intellectual property",
-        "rights of the package owners."
+        "Each package contributed to R-multiverse must have a valid free and",
+        "open-source (FOSS) license to protect the intellectual property",
+        "rights of the package owners (c.f.",
+        "<https://en.wikipedia.org/wiki/Free_and_open-source_software>)."
       )
     )
   }
