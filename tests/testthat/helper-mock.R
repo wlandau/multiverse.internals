@@ -144,7 +144,7 @@ mock_meta_packages <- structure(
       "BSD_3_clause + file LICENSE", "MIT + file LICENSE", "GPL (>= 2)",
       "GPL (>= 3)", "GPL (>= 3)", "MIT + file LICENSE", "MIT + file LICENSE",
       "GPL (>= 3)", "MIT + file LICENSE", "GPL (>= 3)", "MIT + file LICENSE",
-      "MIT + file LICENSE", "MIT + file LICENSE", "MIT + file LICENSE",
+      "MIT + file LICENSE", "non-standard", "MIT + file LICENSE",
       "MIT + file LICENSE", "GPL-3", "MIT + file LICENSE"
     ),
     remotesha = c(
@@ -574,7 +574,7 @@ mock_meta_packages <- structure(
       )
     ),
     distro = c(
-      "noble", "noble", "noble", "noble", "noble",
+      "noble", "noble", "noble", "noble", "nomock_meta_packages_graphble",
       "noble", "noble", "noble", "noble", "noble", "noble", "noble",
       "noble", "noble", "noble", "noble", "noble", "noble", "noble",
       "noble"
@@ -584,7 +584,8 @@ mock_meta_packages <- structure(
       NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
       c("hyunjimoon/SBC", "stan-dev/cmdstanr", ""), NULL, NULL,
       "markvanderloo/tinytest/pkg", NULL, NULL, NULL
-    )
+    ),
+    foss = c(rep(TRUE, 15L), FALSE, rep(TRUE, 4L))
   ),
   class = "data.frame",
   row.names = c(NA, 20L)
@@ -714,7 +715,8 @@ mock_meta_packages_graph <- structure(
         row.names = c(NA, 5L)
       )
     ),
-    distro = c("noble", "noble", "noble", "noble", "noble")
+    distro = c("noble", "noble", "noble", "noble", "noble"),
+    foss = rep(TRUE, 5L)
   ),
   class = "data.frame",
   row.names = c(NA, 5L)

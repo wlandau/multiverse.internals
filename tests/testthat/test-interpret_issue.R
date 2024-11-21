@@ -7,14 +7,22 @@ test_that("interpret_issue() with no problems", {
 
 test_that("interpret_issue() with advisories", {
   skip_if_offline()
-  example <- mock_meta_packages$package == "nanonext"
-  commonmark <- mock_meta_packages[example,, drop = FALSE] # nolint
+  mock <- mock_meta_packages
+  for (field in c("_id", "_dependencies", "distro", "remotes")) {
+    mock[[field]] <- NULL
+  }
+  example <- mock$package == "nanonext"
+  commonmark <- mock[example,, drop = FALSE] # nolint
   commonmark$package <- "commonmark"
   commonmark$version <- "0.2"
-  readxl <- mock_meta_packages[example,, drop = FALSE] # nolint
+  readxl <- mock[example,, drop = FALSE] # nolint
   readxl$package <- "readxl"
   readxl$version <- "1.4.1"
-  meta <- rbind(mock_meta_packages, commonmark, readxl)
+  meta <- rbind(
+    mock[seq_len(nrow(mock)), ], # to suppress a warning
+    commonmark,
+    readxl
+  )
   output <- tempfile()
   versions <- tempfile()
   record_versions(
@@ -31,6 +39,30 @@ test_that("interpret_issue() with advisories", {
   expect_true(
     grepl(
       "Found the following advisories in the R Consortium Advisory Database",
+      out
+    )
+  )
+})
+
+test_that("interpret_issue() with bad licenses", {
+  skip_if_offline()
+  mock <- mock_meta_packages[mock_meta_packages$package == "targetsketch", ]
+  output <- tempfile()
+  versions <- tempfile()
+  record_versions(
+    versions = versions,
+    repo = "https://wlandau.r-universe.dev"
+  )
+  on.exit(unlink(c(output, versions), recursive = TRUE))
+  record_issues(
+    mock = list(packages = mock, checks = mock_meta_checks),
+    output = output,
+    versions = versions
+  )
+  out <- interpret_issue(file.path(output, "targetsketch"))
+  expect_true(
+    grepl(
+      "targetsketch declares license 'non-standard'",
       out
     )
   )

@@ -16,6 +16,7 @@ interpret_issue <- function(path) {
     interpret_advisories(issue),
     interpret_checks(issue),
     interpret_dependencies(issue, package),
+    interpret_licenses(issue, package),
     interpret_remotes(issue),
     interpret_versions(issue)
   )
@@ -32,7 +33,7 @@ interpret_title <- function(issue, package) {
   if (is.character(issue$remote_hash)) {
     title <- paste(title, "remote hash", issue$remote_hash)
   }
-  paste0(title, " on ", issue$date, ":\n\n")
+  paste0(title, " on ", issue$date, ".")
 }
 
 interpret_advisories <- function(issue) {
@@ -41,7 +42,7 @@ interpret_advisories <- function(issue) {
     return(character(0L))
   }
   paste0(
-    "Found the following advisories in the ",
+    "\n\nFound the following advisories in the ",
     "R Consortium Advisory Database:\n\n",
     as.character(yaml::as.yaml(advisories))
   )
@@ -53,13 +54,12 @@ interpret_checks <- function(issue) {
     return(character(0L))
   }
   paste0(
-    "Not all checks succeeded on R-universe. ",
+    "\n\nNot all checks succeeded on R-universe. ",
     "The following output shows the check status on each platform, ",
     "the overall build status, and the ",
     "build URL. Visit the build URL for specific details ",
     "on the check failures.\n\n",
-    as.character(yaml::as.yaml(checks)),
-    "\n\n"
+    as.character(yaml::as.yaml(checks))
   )
 }
 
@@ -71,7 +71,7 @@ interpret_dependencies <- function(issue, package) {
   direct <- names(dependencies)[lengths(dependencies) < 1L]
   indirect <- setdiff(names(dependencies), direct)
   text <- paste0(
-    "One or more dependencies have issues. Packages ",
+    "\n\nOne or more dependencies have issues. Packages ",
     paste(names(dependencies), collapse = ", "),
     " are causing problems upstream. "
   )
@@ -102,7 +102,26 @@ interpret_dependencies <- function(issue, package) {
       as.character(yaml::as.yaml(dependencies[indirect]))
     )
   }
-  paste0(text, "\n\n")
+  text
+}
+
+interpret_licenses <- function(issue, package) {
+  license <- issue$descriptions$license
+  if (is.null(license)) {
+    return(character(0L))
+  }
+  paste(
+    "\n\nPackage",
+    package,
+    "declares license",
+    shQuote(license),
+    "in its DESCRIPTION file. R-multiverse cannot verify that",
+    "this license is a valid free and open-source license",
+    "(c.f. https://en.wikipedia.org/wiki/Free_and_open-source_software).",
+    "Each package contributed to R-multiverse must have a valid",
+    "open-source license to protect the intellectual property",
+    "rights of the package owners."
+  )
 }
 
 interpret_remotes <- function(issue) {
@@ -111,7 +130,7 @@ interpret_remotes <- function(issue) {
     return(character(0L))
   }
   paste0(
-    "Package releases should not use the 'Remotes:' field. Found:\n\n",
+    "\n\nPackage releases should not use the 'Remotes:' field. Found:",
     as.character(yaml::as.yaml(remotes))
   )
 }
@@ -122,7 +141,7 @@ interpret_versions <- function(issue) {
     return(character(0L))
   }
   paste0(
-    "The version number of the current release ",
+    "\n\nThe version number of the current release ",
     "should be highest version of all the releases so far. ",
     "Here is the current version of the package, ",
     "the highest version number ever recorded by R-multiverse, ",
