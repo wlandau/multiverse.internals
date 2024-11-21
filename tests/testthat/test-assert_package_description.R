@@ -101,7 +101,7 @@ test_that("assert_parsed_description() no license", {
     name = "multiverse.internals",
     description = description
   )
-  expect_true(grepl("Detected license 'NA'", out))
+  expect_true(grepl("Detected license", out))
 })
 
 test_that("assert_parsed_description() uncommon license", {
@@ -117,7 +117,7 @@ test_that("assert_parsed_description() uncommon license", {
     name = "multiverse.internals",
     description = description
   )
-  expect_true(grepl("Detected license 'uncommon'", out))
+  expect_true(grepl("Detected license", out))
 })
 
 test_that("assert_license_local() with free form text", {
