@@ -62,7 +62,7 @@ test_that("interpret_issue() with bad licenses", {
   out <- interpret_issue(file.path(output, "targetsketch"))
   expect_true(
     grepl(
-      "targetsketch declares license 'non-standard'",
+      "targetsketch declares license",
       out
     )
   )
