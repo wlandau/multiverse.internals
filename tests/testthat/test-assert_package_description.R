@@ -70,7 +70,7 @@ test_that("assert_parsed_description() no author", {
   text <- paste(readLines(path), collapse = "\n")
   description <- desc::description$new(text = text)
   description$del("Authors@R")
-  description$del("Authors")
+  description$del("Author")
   description$del("Maintainer")
   out <- assert_parsed_description(
     name = "multiverse.internals",
