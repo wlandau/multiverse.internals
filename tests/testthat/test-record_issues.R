@@ -19,6 +19,7 @@ test_that("record_issues() mocked", {
         "polars",
         "SBC",
         "stantargets",
+        "targetsketch",
         "tidypolars",
         "tidytensor",
         "version_decremented",
@@ -61,6 +62,20 @@ test_that("record_issues() mocked", {
       date = "2024-01-01",
       version = "0.1.1",
       remote_hash = "bbdda1b4a44a3d6a22041e03eed38f27319d8f32"
+    )
+  )
+  expect_equal(
+    jsonlite::read_json(
+      file.path(output, "targetsketch"),
+      simplifyVector = TRUE
+    ),
+    list(
+      descriptions = list(
+        license = "non-standard"
+      ),
+      date = "2024-01-01",
+      version = "0.0.1",
+      remote_hash = "a199a734b16f91726698a19e5f147f57f79cb2b6"
     )
   )
   expect_equal(
@@ -190,6 +205,7 @@ test_that("record_issues() with dependency problems", {
     "]"
   )
   versions <- tempfile()
+  on.exit(unlink(c(output, versions), recursive = TRUE))
   writeLines(lines, versions)
   meta_checks <- mock_meta_checks[1L, ]
   meta_checks$package <- "crew"

@@ -1,14 +1,13 @@
-#' @title Report `DESCRIPTION` file issues.
+#' @title Report `DESCRIPTION`-level issues.
 #' @export
 #' @family issues
-#' @description Report issues with the `DESCRIPTION` files of packages.
-#' @details [issues_descriptions()] scans downloaded metadata from the
-#'   `PACKAGES.json` file of an R universe and scans for specific issues in a
-#'   package's description file:
-#'   1. The presence of a `"Remotes"` field.
-#'   2. There is a security advisory at
-#'     <https://github.com/RConsortium/r-advisory-database>
-#'     for the given package version.
+#' @description Report issues with `DESCRIPTION`-level metadata of packages.
+#' @details [issues_descriptions()] reports specific issues in the
+#'   `DESCRIPTION`-level metadata of packages:
+#'   1. Security advisories at
+#'     <https://github.com/RConsortium/r-advisory-database>.
+#'   2. Licenses that cannot be verified as free and open-source.
+#'   3. The presence of a `"Remotes"` field.
 #' @inheritSection record_issues Package issues
 #' @return A named list of information about packages which do not comply
 #'   with `DESCRPTION` checks. Each name is a package name,
@@ -23,9 +22,10 @@
 issues_descriptions <- function(meta = meta_packages()) {
   meta$issue <- FALSE
   meta <- issues_descriptions_advisories(meta)
+  meta <- issues_descriptions_licenses(meta)
   meta <- issues_descriptions_remotes(meta)
   meta <- meta[meta$issue,, drop = FALSE] # nolint
-  issues_list(meta[, c("package", "advisories", "remotes")])
+  issues_list(meta[, c("package", "advisories", "license", "remotes")])
 }
 
 issues_descriptions_advisories <- function(meta) {
@@ -38,6 +38,12 @@ issues_descriptions_advisories <- function(meta) {
     all.y = FALSE
   )
   meta$issue <- meta$issue | !vapply(meta$advisories, anyNA, logical(1L))
+  meta
+}
+
+issues_descriptions_licenses <- function(meta) {
+  meta$license[meta$foss] <- NA_character_
+  meta$issue <- meta$issue | !meta$foss
   meta
 }
 

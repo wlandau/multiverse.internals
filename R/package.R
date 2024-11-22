@@ -6,7 +6,7 @@
 #' @importFrom nanonext ncurl parse_url status_code
 #' @importFrom pkgsearch cran_package
 #' @importFrom stats aggregate
-#' @importFrom utils available.packages compareVersion unzip
+#' @importFrom utils available.packages compareVersion contrib.url unzip
 #' @importFrom vctrs vec_rbind vec_slice
 #' @importFrom yaml read_yaml
 NULL

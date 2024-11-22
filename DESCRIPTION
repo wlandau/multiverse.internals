@@ -4,7 +4,9 @@ Description: R-multiverse requires this internal infrastructure package to
   automate contribution reviews and populate universes.
 Version: 0.2.15
 License: MIT + file LICENSE
-URL: https://github.com/r-multiverse/multiverse.internals
+URL:
+  https://r-multiverse.org/multiverse.internals,
+  https://github.com/r-multiverse/multiverse.internals
 BugReports: https://github.com/r-multiverse/multiverse.internals/issues
 Authors@R: c(
   person(

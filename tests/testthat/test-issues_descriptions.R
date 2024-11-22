@@ -5,6 +5,7 @@ test_that("issues_descriptions() mocked", {
     stantargets = list(
       remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")
     ),
+    targetsketch = list(license = "non-standard"),
     tidypolars = list(remotes = "markvanderloo/tinytest/pkg")
   )
   expect_equal(issues, expected)
@@ -24,7 +25,11 @@ test_that("issues_descriptions() with security advisories", {
   readxl <- mock_meta_packages[example,, drop = FALSE] # nolint
   readxl$package <- "readxl"
   readxl$version <- "1.4.1"
-  meta <- rbind(mock_meta_packages, commonmark, readxl)
+  meta <- rbind(
+    mock_meta_packages,
+    commonmark,
+    readxl
+  )
   out <- issues_descriptions(meta)
   exp <- list(
     audio.whisper = list(remotes = "bnosac/audio.vadwebrtc"),
@@ -42,6 +47,7 @@ test_that("issues_descriptions() with security advisories", {
       )
     ),
     stantargets = list(remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")),
+    targetsketch = list(license = "non-standard"),
     tidypolars = list(remotes = "markvanderloo/tinytest/pkg")
   )
   expect_equal(out, exp)

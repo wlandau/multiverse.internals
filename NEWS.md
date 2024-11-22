@@ -1,6 +1,11 @@
-# multiverse.internals 0.2.15
+# multiverse.internals 0.2.17
 
 * Align contribution reviews with revised review policy in https://github.com/r-multiverse/r-multiverse.github.io/pull/33.
+
+# multiverse.internals 0.2.16
+
+* Add `interpret_issue()` to help create RSS feeds.
+* Add `record_nonstandard_licenses()`
 
 # multiverse.internals 0.2.14
 
