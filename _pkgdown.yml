@@ -19,9 +19,10 @@ reference:
   - issues_dependencies
   - issues_descriptions
   - issues_versions
-- title: Record issues
+- title: Record problems
   contents:
   - record_issues
+  - record_nonstandard_licenses
   - record_versions
 - title: Communicate issues
   contents:
