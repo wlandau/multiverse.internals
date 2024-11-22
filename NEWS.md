@@ -1,3 +1,7 @@
+# multiverse.internals 0.2.14.9000 (development)
+
+* Add `record_nonstandard_licenses()`
+
 # multiverse.internals 0.2.14
 
 * Allow `update_staging()` to work if the staging `packages.json` does not exist.

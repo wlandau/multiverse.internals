@@ -10,9 +10,7 @@
 meta_packages <- function(repo = "https://community.r-multiverse.org") {
   fields <- c("Version", "Remotes", "RemoteSha")
   listing <- file.path(
-    trim_url(repo),
-    "src",
-    "contrib",
+    utils::contrib.url(trim_url(repo), type = "source"),
     paste0("PACKAGES.json?fields=", paste(fields, collapse = ","))
   )
   out <- jsonlite::stream_in(
