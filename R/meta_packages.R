@@ -8,9 +8,10 @@
 #' @examples
 #' meta_packages(repo = "https://wlandau.r-universe.dev")
 meta_packages <- function(repo = "https://community.r-multiverse.org") {
-  fields <- c("Version", "Remotes", "RemoteSha")
+  repo <- trim_url(repo)
+  fields <- c("Version", "License", "Remotes", "RemoteSha")
   listing <- file.path(
-    utils::contrib.url(trim_url(repo), type = "source"),
+    utils::contrib.url(repos = repo, type = "source"),
     paste0("PACKAGES.json?fields=", paste(fields, collapse = ","))
   )
   out <- jsonlite::stream_in(
@@ -22,5 +23,8 @@ meta_packages <- function(repo = "https://community.r-multiverse.org") {
   )
   colnames(out) <- tolower(colnames(out))
   rownames(out) <- out$package
+  foss <- utils::available.packages(repos = repo, filters = "license/FOSS")
+  out$foss <- FALSE
+  out[as.character(foss[, "Package"]), "foss"] <- TRUE
   out
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/issues_descriptions.R
 \name{issues_descriptions}
 \alias{issues_descriptions}
-\title{Report \code{DESCRIPTION} file issues.}
+\title{Report \code{DESCRIPTION}-level issues.}
 \usage{
 issues_descriptions(meta = meta_packages())
 }
@@ -17,17 +17,16 @@ and each element contains specific information about
 non-compliance.
 }
 \description{
-Report issues with the \code{DESCRIPTION} files of packages.
+Report issues with \code{DESCRIPTION}-level metadata of packages.
 }
 \details{
-\code{\link[=issues_descriptions]{issues_descriptions()}} scans downloaded metadata from the
-\code{PACKAGES.json} file of an R universe and scans for specific issues in a
-package's description file:
+\code{\link[=issues_descriptions]{issues_descriptions()}} reports specific issues in the
+\code{DESCRIPTION}-level metadata of packages:
 \enumerate{
+\item Security advisories at
+\url{https://github.com/RConsortium/r-advisory-database}.
+\item Licenses that cannot be verified as free and open-source.
 \item The presence of a \code{"Remotes"} field.
-\item There is a security advisory at
-\url{https://github.com/RConsortium/r-advisory-database}
-for the given package version.
 }
 }
 \section{Package issues}{
@@ -49,6 +48,7 @@ together all the issues about R-multiverse packages.
 }
 \seealso{
 Other issues: 
+\code{\link{interpret_issue}()},
 \code{\link{issues_checks}()},
 \code{\link{issues_dependencies}()},
 \code{\link{issues_versions}()}

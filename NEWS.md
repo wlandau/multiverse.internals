@@ -1,5 +1,6 @@
-# multiverse.internals 0.2.14.9000 (development)
+# multiverse.internals 0.2.16
 
+* Add `interpret_issue()` to help create RSS feeds.
 * Add `record_nonstandard_licenses()`
 
 # multiverse.internals 0.2.14

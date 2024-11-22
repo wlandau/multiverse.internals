@@ -24,6 +24,9 @@ reference:
   - record_issues
   - record_nonstandard_licenses
   - record_versions
+- title: Communicate issues
+  contents:
+  - interpret_issue
 - title: Staging
   contents:
   - update_staging
