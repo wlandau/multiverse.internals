@@ -2,9 +2,15 @@
 % Please edit documentation in R/review_pull_request.R
 \name{review_pull_request}
 \alias{review_pull_request}
-\title{Review a pull request.}
+\title{Review an R-multiverse contribution}
 \usage{
-review_pull_request(owner = "r-multiverse", repo = "contributions", number)
+review_pull_request(
+  owner = "r-multiverse",
+  repo = "contributions",
+  number,
+  advisories = character(0L),
+  organizations = character(0L)
+)
 }
 \arguments{
 \item{owner}{Character of length 1, name of the package repository owner.}
@@ -14,25 +20,20 @@ R-multiverse uses \code{"https://community.r-multiverse.org"}.}
 
 \item{number}{Positive integer of length 1, index of the pull request
 in the repo.}
+
+\item{advisories}{Character vector of names of packages with advisories
+in the R Consortium Advisory Database.}
+
+\item{organizations}{Character vector of names of GitHub organizations.
+Pull requests from authors who are not members of at least one of
+these organizations will be flagged for manual review.}
 }
 \value{
 \code{NULL} (invisibly).
 }
 \description{
-Review a pull request to add packages to \code{packages.json}.
+Review a pull request to add packages to R-multiverse.
 }
-\section{Testing}{
-
-Testing of this function unfortunately needs to be manual. Test cases:
-\enumerate{
-\item Add a package correctly (automatically merge).
-\item Add a bad URL (manual review).
-\item Change a URL (manual review).
-\item Add a file in a forbidden place (close).
-\item Add a custom JSON file which can be parsed (manual review).
-}
-}
-
 \seealso{
 Other pull request reviews: 
 \code{\link{review_pull_requests}()}

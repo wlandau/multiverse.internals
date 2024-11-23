@@ -24,8 +24,22 @@ test_that("invalid package name with dot", {
 test_that("custom JSON", {
   expect_true(
     grepl(
-      "looks like custom JSON",
+      "looks like JSON",
       assert_package(name = "xy", url = "{"),
+      fixed = TRUE
+    )
+  )
+})
+
+test_that("advisory", {
+  expect_true(
+    grepl(
+      "advisory",
+      assert_package(
+        name = "def",
+        url = "https://github.com/abc/def",
+        advisories = c("abc", "def")
+      ),
       fixed = TRUE
     )
   )
@@ -170,17 +184,16 @@ test_that("good GitHub registration", {
   )
 })
 
-test_that("good GitLab registration", {
+test_that("GitLab registration with free-form license", {
   tmp <- utils::capture.output(
     suppressMessages(
-      expect_null(
-        assert_package(
-          name = "test",
-          url = "https://gitlab.com/wlandau/test"
-        )
+      out <- assert_package(
+        name = "test",
+        url = "https://gitlab.com/wlandau/test"
       )
     )
   )
+  expect_true(grepl("LICENSE contains text more complicated than", out))
 })
 
 test_that("good registration with trailing slash", {

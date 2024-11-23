@@ -2,13 +2,19 @@
 #' @export
 #' @family pull request reviews
 #' @description Review pull requests which add packages to `packages.json`.
-#' @inheritSection review_pull_request Testing
 #' @return `NULL` (invisibly).
 #' @inheritParams review_pull_request
 review_pull_requests <- function(
   owner = "r-multiverse",
   repo = "contributions"
 ) {
+  defaults <- list(
+    cli.ansi = getOption("cli.ansi"),
+    cli.num_colors = getOption("cli.num_colors"),
+    cli.unicode = getOption("cli.unicode")
+  )
+  options(cli.ansi = FALSE, cli.num_colors = 1L, cli.unicode = FALSE)
+  on.exit(do.call(what = options, args = defaults))
   assert_character_scalar(owner, "owner must be a character string")
   assert_character_scalar(repo, "repo must be a character string")
   message("Listing pull requests...")
@@ -25,12 +31,18 @@ review_pull_requests <- function(
     skip[index] <- label_manual_review %in% labels
   }
   pull_requests <- pull_requests[!skip]
+  message("Skimming the R Consortium Advisory Database...")
+  advisories <- unique(read_advisories()$package)
+  message("Listing trusted GitHub organizations...")
+  organizations <- list_organizations(owner = owner, repo = repo)
   message("About to review ", length(pull_requests), " open pull requests.")
   for (pull_request in pull_requests) {
     review_pull_request(
       owner = owner,
       repo = repo,
-      number = pull_request$number
+      number = pull_request$number,
+      advisories = advisories,
+      organizations = organizations
     )
   }
   invisible()

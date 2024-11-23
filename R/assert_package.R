@@ -6,17 +6,20 @@
 #'   otherwise `NULL` if there are no issues.
 #' @param name Character of length 1, package name.
 #' @param url Usually a character of length 1 with the package URL.
-assert_package <- function(name, url) {
+#' @param advisories Character vector of names of packages with advisories
+#'   in the R Consortium Advisory Database.
+assert_package <- function(name, url, advisories = character(0L)) {
   if (any(grepl(pattern = "\\}|\\{", x = url))) {
-    return(
-      paste("Entry of package", shQuote(name), "looks like custom JSON")
-    )
+    return(paste("Listing of package", shQuote(name), "looks like JSON"))
   }
-  if (!is.null(out <- assert_package_lite(name = name, url = url))) {
+  if (!is.null(out <- assert_package_listing(name = name, url = url))) {
     return(out)
   }
   name <- trimws(name)
   url <- trimws(trim_trailing_slash(url))
+  if (!is.null(out <- assert_no_advisories(name, advisories = advisories))) {
+    return(out)
+  }
   if (!is.null(out <- assert_package_lints(name = name, url = url))) {
     return(out)
   }
@@ -26,10 +29,15 @@ assert_package <- function(name, url) {
   if (!is.null(out <- assert_cran_url(name = name, url = url))) {
     return(out)
   }
-  assert_release_exists(url = url)
+  if (!is.null(out <- assert_release_exists(url = url))) {
+    return(out)
+  }
+  if (!is.null(out <- assert_package_description(name = name, url = url))) {
+    return(out)
+  }
 }
 
-assert_package_lite <- function(name, url) {
+assert_package_listing <- function(name, url) {
   if (!is_package_name(name)) {
     return("Invalid package name")
   }
@@ -49,11 +57,17 @@ assert_package_lite <- function(name, url) {
   }
 }
 
-is_package_name <- function(name) {
-  is_character_scalar(name) && grepl(
-    pattern = "^[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9]$",
-    x = trimws(name)
-  )
+assert_no_advisories <- function(name, advisories) {
+  if (name %in% advisories) {
+    return(
+      paste(
+        "Package",
+        shQuote(name),
+        "has one or more advisories in the R Consortium Advisory Database",
+        "at https://github.com/RConsortium/r-advisory-database"
+      )
+    )
+  }
 }
 
 assert_package_lints <- function(name, url) {
@@ -100,4 +114,11 @@ assert_url_exists <- function(url) {
       )
     )
   }
+}
+
+is_package_name <- function(name) {
+  is_character_scalar(name) && grepl(
+    pattern = "^[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9]$",
+    x = trimws(name)
+  )
 }

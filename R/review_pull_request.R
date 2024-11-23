@@ -1,30 +1,30 @@
-#' @title Review a pull request.
+#' @title Review an R-multiverse contribution
 #' @export
 #' @family pull request reviews
-#' @description Review a pull request to add packages to `packages.json`.
-#' @section Testing:
-#'   Testing of this function unfortunately needs to be manual. Test cases:
-#'   1. Add a package correctly (automatically merge).
-#'   2. Add a bad URL (manual review).
-#'   3. Change a URL (manual review).
-#'   4. Add a file in a forbidden place (close).
-#'   5. Add a custom JSON file which can be parsed (manual review).
+#' @description Review a pull request to add packages to R-multiverse.
 #' @return `NULL` (invisibly).
 #' @inheritParams meta_checks
 #' @param owner Character of length 1, name of the package repository owner.
 #' @param number Positive integer of length 1, index of the pull request
 #'   in the repo.
+#' @param advisories Character vector of names of packages with advisories
+#'   in the R Consortium Advisory Database.
+#' @param organizations Character vector of names of GitHub organizations.
+#'   Pull requests from authors who are not members of at least one of
+#'   these organizations will be flagged for manual review.
 review_pull_request <- function(
   owner = "r-multiverse",
   repo = "contributions",
-  number
+  number,
+  advisories = character(0L),
+  organizations = character(0L)
 ) {
   assert_character_scalar(owner, "owner must be a character string")
   assert_character_scalar(repo, "repo must be a character string")
   assert_positive_scalar(number, "number must be a positive integer")
   message("Reviewing pull request ", number)
-  merge <- review_pull_request_integrity(owner, repo, number) &&
-    review_pull_request_content(owner, repo, number)
+  merge <- review_pull_request_integrity(owner, repo, number, organizations) &&
+    review_pull_request_content(owner, repo, number, advisories)
   if (isTRUE(merge)) {
     pull_request_merge(
       owner = owner,
@@ -35,7 +35,7 @@ review_pull_request <- function(
   invisible()
 }
 
-review_pull_request_integrity <- function(owner, repo, number) {
+review_pull_request_integrity <- function(owner, repo, number, organizations) {
   pull <- gh::gh(
     "/repos/:owner/:repo/pulls/:number",
     owner = owner,
@@ -43,7 +43,7 @@ review_pull_request_integrity <- function(owner, repo, number) {
     number = number
   )
   commit <- gh::gh(
-    "GET /repos/:owner/:repo/git/commits/:sha",
+    "/repos/:owner/:repo/git/commits/:sha",
     owner = owner,
     repo = repo,
     sha = pull$head$sha
@@ -70,10 +70,52 @@ review_pull_request_integrity <- function(owner, repo, number) {
     )
     return(FALSE)
   }
+  if (!is_member_organization(pull$user$login, organizations)) {
+    pull_request_defer(
+      owner = owner,
+      repo = repo,
+      number = number,
+      message = paste0(
+        "Author ",
+        shQuote(pull$user$login),
+        " of pull request ",
+        number,
+        " is not a public member of one of the GitHub organizations ",
+        "listed at ",
+        file.path(
+          "https://github.com",
+          owner,
+          repo,
+          "blob/main/organizations"
+        ),
+        ". For security, R-multiverse requires manual review ",
+        "by a moderator in such cases. \n\n",
+        "Or, if you would like to add an organization to the list, ",
+        "please submit a pull request to ",
+        file.path(
+          "https://github.com",
+          owner,
+          repo
+        ),
+        " to add it to the ",
+        "'organizations' file. ",
+        "If you are already a member of one of the listed ",
+        "organizations, you may need to edit settings in GitHub ",
+        "to [make your membership publicly visible](",
+        file.path(
+          "https://docs.github.com/en/account-and-profile",
+          "setting-up-and-managing-your-personal-account-on-github",
+          "managing-your-membership-in-organizations",
+          "publicizing-or-hiding-organization-membership)."
+        )
+      )
+    )
+    return(FALSE)
+  }
   TRUE
 }
 
-review_pull_request_content <- function(owner, repo, number) {
+review_pull_request_content <- function(owner, repo, number, advisories) {
   response <- gh::gh(
     "/repos/:owner/:repo/pulls/:number/files",
     owner = owner,
@@ -84,7 +126,7 @@ review_pull_request_content <- function(owner, repo, number) {
     close <- !identical(dirname(file$filename), "packages") ||
       !identical(dirname(dirname(file$filename)), ".")
     if (close) {
-      pull_request_close(
+      pull_request_defer(
         owner = owner,
         repo = repo,
         number = number,
@@ -92,9 +134,7 @@ review_pull_request_content <- function(owner, repo, number) {
           "Pull request ",
           number,
           " attempts to modify files outside the 'packages/' folder ",
-          "or in a subdirectory of 'packages/'. ",
-          "Please open a different pull request that simply adds one or ",
-          "more text files directly inside 'packages/' with package URLs."
+          "or in a subdirectory of 'packages/'. "
         )
       )
       return(FALSE)
@@ -149,7 +189,7 @@ review_pull_request_content <- function(owner, repo, number) {
     }
     url <- gsub(pattern = "^.*\\+", replacement = "", x = file$patch)
     url <- gsub(pattern = "\\s.*$", replacement = "", x = url)
-    result <- assert_package(name = name, url = url)
+    result <- assert_package(name = name, url = url, advisories = advisories)
     if (!is.null(result)) {
       pull_request_defer(
         owner = owner,
@@ -166,23 +206,6 @@ review_pull_request_content <- function(owner, repo, number) {
     }
   }
   TRUE
-}
-
-pull_request_close <- function(owner, repo, number, message) {
-  gh::gh(
-    "PATCH /repos/:owner/:repo/pulls/:number",
-    owner = owner,
-    repo = repo,
-    number = number,
-    state = "closed"
-  )
-  gh::gh(
-    "POST /repos/:owner/:repo/issues/:number/comments",
-    owner = owner,
-    repo = repo,
-    number = number,
-    body = message
-  )
 }
 
 pull_request_defer <- function(owner, repo, number, message) {
