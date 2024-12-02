@@ -74,15 +74,7 @@ are resolved.
     versions = versions,
     output = output
   )
-  files <- list.files(output)
-  print(files)
-  package <- head(files, n = 1)
-  if (length(package)) {
-    print(package)
-  }
-  if (length(package)) {
-    print(readLines(file.path(output, package)))
-  }
+  writeLines(readLines(output))
 }
 \keyword{check}
 \keyword{data}

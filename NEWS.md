@@ -1,3 +1,7 @@
+# multiverse.internals 0.2.18.9000
+
+* Fix help file examples of `record_issues()`.
+
 # multiverse.internals 0.2.18
 
 * Use a single JSON file for upstream issue data.
