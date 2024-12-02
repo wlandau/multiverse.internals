@@ -26,7 +26,7 @@ reference:
   - record_versions
 - title: Communicate issues
   contents:
-  - interpret_issue
+  - interpret_issues
 - title: Staging
   contents:
   - update_staging

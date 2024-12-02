@@ -1,4 +1,4 @@
-#' @title Interpret a set of package issues
+#' @title Interpret the issues of a package
 #' @export
 #' @family issues
 #' @description Summarize the issues of a package in human-readable text.
@@ -6,7 +6,7 @@
 #' @param package Character string, name of the package.
 #' @param issues A list with one issue per package. Obtained by
 #'   reading the results of [record_issues()].
-interpret_issue <- function(package, issues) {
+interpret_issues <- function(package, issues) {
   if (is.null(issues[[package]])) {
     return(paste("Package", package, "has no recorded issues."))
   }
