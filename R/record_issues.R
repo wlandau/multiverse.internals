@@ -45,15 +45,7 @@
 #'     versions = versions,
 #'     output = output
 #'   )
-#'   files <- list.files(output)
-#'   print(files)
-#'   package <- head(files, n = 1)
-#'   if (length(package)) {
-#'     print(package)
-#'   }
-#'   if (length(package)) {
-#'     print(readLines(file.path(output, package)))
-#'   }
+#'   writeLines(readLines(output))
 record_issues <- function(
   repo = "https://community.r-multiverse.org",
   versions = "versions.json",
