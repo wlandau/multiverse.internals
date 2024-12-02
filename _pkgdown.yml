@@ -24,9 +24,10 @@ reference:
   - record_issues
   - record_nonstandard_licenses
   - record_versions
-- title: Communicate issues
+- title: Package status repository
   contents:
-  - interpret_issue
+  - interpret_status
+  - update_status
 - title: Staging
   contents:
   - update_staging

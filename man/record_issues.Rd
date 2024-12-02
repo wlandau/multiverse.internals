@@ -7,7 +7,7 @@
 record_issues(
   repo = "https://community.r-multiverse.org",
   versions = "versions.json",
-  output = "issues",
+  output = "issues.json",
   mock = NULL,
   verbose = FALSE
 )
@@ -19,9 +19,9 @@ R-multiverse uses \code{"https://community.r-multiverse.org"}.}
 \item{versions}{Character of length 1, file path to a JSON manifest
 tracking the history of released versions of packages.}
 
-\item{output}{Character of length 1, file path to the folder to record
+\item{output}{Character of length 1, file path to the JSON file to record
 new package issues. Each call to \code{record_issues()} overwrites the
-contents of the repo.}
+contents of the file.}
 
 \item{mock}{For testing purposes only, a named list of data frames
 for inputs to various intermediate functions.}
@@ -48,17 +48,17 @@ of releases in R-multiverse, and \code{\link[=record_issues]{record_issues()}} g
 together all the issues about R-multiverse packages.
 }
 
-\section{Issue files}{
+\section{Issue data}{
 
 For each package with observed problems, \code{\link[=record_issues]{record_issues()}} writes
-an issue file. This issue file is a JSON list with one element
-per type of failing check. Each element has an informative name
+a JSON list entry in the output JSON file
+with one element for each type of failing check.
+Each check-specific element has an informative name
 (for example, \code{checks}, \code{descriptions}, or \code{versions})
-and a list of diagnostic information.
-
-Each issue file also has a \code{date} field. This date the day that
-an issue was first noticed. It automatically resets the next time
-all package are resolved.
+and a list of diagnostic information. In addition, there is a \code{date}
+field to indicate when an issue was first detected. The \code{date}
+automatically resets the next time all the issues in the package
+are resolved.
 }
 
 \examples{

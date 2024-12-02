@@ -42,11 +42,11 @@ propose_snapshot <- function(
   r_versions = NULL,
   mock = NULL
 ) {
-  issues <- list.files(
-    file.path(path_staging, "issues"),
-    all.files = TRUE,
-    no.. = TRUE
-  )
+  path_issues <- file.path(path_staging, "issues.json")
+  issues <- character(0L)
+  if (file.exists(path_issues)) {
+    issues <- names(jsonlite::read_json(path_issues, simplifyVector = TRUE))
+  }
   file_staging <- file.path(path_staging, "packages.json")
   json_staging <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   json_staging <- json_staging[, c("package", "url", "branch")]

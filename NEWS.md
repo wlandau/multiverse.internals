@@ -1,3 +1,9 @@
+# multiverse.internals 0.2.18
+
+* Use a single JSON file for upstream issue data.
+* Rename `interpret_issue()` to `interpret_status()`.
+* Add `update_status()`.
+
 # multiverse.internals 0.2.17
 
 * Align contribution reviews with revised review policy in https://github.com/r-multiverse/r-multiverse.github.io/pull/33.

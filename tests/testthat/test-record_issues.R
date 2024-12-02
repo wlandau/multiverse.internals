@@ -10,8 +10,9 @@ test_that("record_issues() mocked", {
     output = output,
     verbose = FALSE
   )
+  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
   expect_equal(
-    sort(c(list.files(output))),
+    sort(names(issues)),
     sort(
       c(
         "audio.whisper",
@@ -29,7 +30,7 @@ test_that("record_issues() mocked", {
   )
   runs <- "https://github.com/r-universe/r-multiverse/actions/runs"
   expect_equal(
-    jsonlite::read_json(file.path(output, "INLA"), simplifyVector = TRUE),
+    issues$INLA,
     list(
       checks = list(
         "_linuxdevel" = "src-failure",
@@ -44,10 +45,7 @@ test_that("record_issues() mocked", {
     )
   )
   expect_equal(
-    jsonlite::read_json(
-      file.path(output, "stantargets"),
-      simplifyVector = TRUE
-    ),
+    issues$stantargets,
     list(
       checks = list(
         "_linuxdevel" = "failure",
@@ -65,10 +63,7 @@ test_that("record_issues() mocked", {
     )
   )
   expect_equal(
-    jsonlite::read_json(
-      file.path(output, "targetsketch"),
-      simplifyVector = TRUE
-    ),
+    issues$targetsketch,
     list(
       descriptions = list(
         license = "non-standard"
@@ -79,10 +74,7 @@ test_that("record_issues() mocked", {
     )
   )
   expect_equal(
-    jsonlite::read_json(
-      file.path(output, "version_decremented"),
-      simplifyVector = TRUE
-    ),
+    issues$version_decremented,
     list(
       versions = list(
         version_current = "0.0.1",
@@ -96,10 +88,7 @@ test_that("record_issues() mocked", {
     )
   )
   expect_equal(
-    jsonlite::read_json(
-      file.path(output, "version_unmodified"),
-      simplifyVector = TRUE
-    ),
+    issues$version_unmodified,
     list(
       versions = list(
         version_current = "1.0.0",
@@ -135,9 +124,9 @@ test_that("record_issues() date works", {
     output = output,
     verbose = FALSE
   )
-  for (file in list.files(output, full.names = TRUE)) {
-    date <- jsonlite::read_json(file, simplifyVector = TRUE)$date
-    expect_equal(date, "2024-01-01")
+  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
+  for (package in names(issues)) {
+    expect_equal(issues[[package]]$date, "2024-01-01")
   }
   never_fixed <- c(
     "INLA",
@@ -152,7 +141,10 @@ test_that("record_issues() date works", {
     "tidypolars",
     "version_unmodified"
   )
-  lapply(file.path(output, once_fixed), unlink)
+  for (package in once_fixed) {
+    issues[[package]] <- NULL
+  }
+  jsonlite::write_json(x = issues, path = output, pretty = TRUE)
   record_issues(
     versions = mock_versions(),
     mock = list(
@@ -162,16 +154,13 @@ test_that("record_issues() date works", {
     output = output,
     verbose = FALSE
   )
+  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
   for (package in never_fixed) {
-    path <- file.path(output, package)
-    date <- jsonlite::read_json(path, simplifyVector = TRUE)$date
-    expect_equal(date, "2024-01-01")
+    expect_equal(issues[[package]]$date, "2024-01-01")
   }
   today <- format(Sys.Date(), fmt = "yyyy-mm-dd")
   for (package in once_fixed) {
-    path <- file.path(output, package)
-    date <- jsonlite::read_json(path, simplifyVector = TRUE)$date
-    expect_equal(date, today)
+    expect_equal(issues[[package]]$date, today)
   }
 })
 
@@ -188,7 +177,7 @@ test_that("record_issues() on a small repo", {
     output = output,
     verbose = FALSE
   )
-  expect_true(dir.exists(output))
+  expect_true(file.exists(output))
 })
 
 test_that("record_issues() with dependency problems", {
@@ -222,12 +211,10 @@ test_that("record_issues() with dependency problems", {
       verbose = TRUE
     )
   )
-  expect_true(dir.exists(output))
+  expect_true(file.exists(output))
+  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
   expect_equal(
-    jsonlite::read_json(
-      file.path(output, "nanonext"),
-      simplifyVector = TRUE
-    ),
+    issues$nanonext,
     list(
       versions = list(
         version_current = "1.0.0",
@@ -241,10 +228,7 @@ test_that("record_issues() with dependency problems", {
     )
   )
   expect_equal(
-    jsonlite::read_json(
-      file.path(output, "mirai"),
-      simplifyVector = TRUE
-    ),
+    issues$mirai,
     list(
       dependencies = list(
         nanonext = list()
@@ -255,10 +239,7 @@ test_that("record_issues() with dependency problems", {
     )
   )
   expect_equal(
-    jsonlite::read_json(
-      file.path(output, "crew"),
-      simplifyVector = TRUE
-    ),
+    issues$crew,
     list(
       checks = list(
         "_linuxdevel" = "success",
@@ -279,10 +260,7 @@ test_that("record_issues() with dependency problems", {
     )
   )
   expect_equal(
-    jsonlite::read_json(
-      file.path(output, "crew.aws.batch"),
-      simplifyVector = TRUE
-    ),
+    issues$crew.aws.batch,
     list(
       dependencies = list(
         crew = list(),
@@ -294,10 +272,7 @@ test_that("record_issues() with dependency problems", {
     )
   )
   expect_equal(
-    jsonlite::read_json(
-      file.path(output, "crew.cluster"),
-      simplifyVector = TRUE
-    ),
+    issues$crew.cluster,
     list(
       dependencies = list(
         crew = list(),

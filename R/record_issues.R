@@ -12,24 +12,24 @@
 #'   [record_versions()] updates the version number history
 #'   of releases in R-multiverse, and [record_issues()] gathers
 #'   together all the issues about R-multiverse packages.
-#' @section Issue files:
+#' @section Issue data:
 #'   For each package with observed problems, [record_issues()] writes
-#'   an issue file. This issue file is a JSON list with one element
-#'   per type of failing check. Each element has an informative name
+#'   a JSON list entry in the output JSON file
+#'   with one element for each type of failing check.
+#'   Each check-specific element has an informative name
 #'   (for example, `checks`, `descriptions`, or `versions`)
-#'   and a list of diagnostic information.
-#'
-#'   Each issue file also has a `date` field. This date the day that
-#'   an issue was first noticed. It automatically resets the next time
-#'   all package are resolved.
+#'   and a list of diagnostic information. In addition, there is a `date`
+#'   field to indicate when an issue was first detected. The `date`
+#'   automatically resets the next time all the issues in the package
+#'   are resolved.
 #' @return `NULL` (invisibly).
 #' @inheritParams issues_checks
 #' @inheritParams issues_dependencies
 #' @inheritParams issues_versions
 #' @inheritParams meta_checks
-#' @param output Character of length 1, file path to the folder to record
+#' @param output Character of length 1, file path to the JSON file to record
 #'   new package issues. Each call to `record_issues()` overwrites the
-#'   contents of the repo.
+#'   contents of the file.
 #' @param mock For testing purposes only, a named list of data frames
 #'   for inputs to various intermediate functions.
 #' @examples
@@ -57,7 +57,7 @@
 record_issues <- function(
   repo = "https://community.r-multiverse.org",
   versions = "versions.json",
-  output = "issues",
+  output = "issues.json",
   mock = NULL,
   verbose = FALSE
 ) {
@@ -90,43 +90,15 @@ add_issues <- function(total, subset, category) {
 }
 
 overwrite_issues <- function(issues, output, today, packages) {
-  with_issues <- list.files(output)
-  dates <- lapply(
-    X = with_issues,
-    FUN = function(path) {
-      jsonlite::read_json(file.path(output, path), simplifyVector = TRUE)$date
-    }
-  )
-  names(dates) <- with_issues
-  unlink(output, recursive = TRUE)
-  dir.create(output)
-  lapply(
-    X = names(issues),
-    FUN = overwrite_package_issues,
-    issues = issues,
-    output = output,
-    today = today,
-    dates = dates,
-    packages = packages
-  )
-}
-
-overwrite_package_issues <- function(
-  package,
-  issues,
-  output,
-  today,
-  dates,
-  packages
-) {
-  path <- file.path(output, package)
-  issues[[package]]$date <- dates[[package]] %||% today
-  index <- packages$package == package
-  issues[[package]]$version <- packages[["version"]][index]
-  issues[[package]]$remote_hash <- packages[["remotesha"]][index]
-  jsonlite::write_json(
-    x = issues[[package]],
-    path = file.path(output, package),
-    pretty = TRUE
-  )
+  previous <- list()
+  if (file.exists(output)) {
+    previous <- jsonlite::read_json(output, simplifyVector = TRUE)
+  }
+  for (package in names(issues)) {
+    issues[[package]]$date <- previous[[package]]$date %||% today
+    index <- packages$package == package
+    issues[[package]]$version <- packages$version[index]
+    issues[[package]]$remote_hash <- packages$remotesha[index]
+  }
+  jsonlite::write_json(x = issues, path = output, pretty = TRUE)
 }

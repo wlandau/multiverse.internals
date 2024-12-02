@@ -1,11 +1,11 @@
-test_that("interpret_issue() with no problems", {
+test_that("interpret_status() with no problems", {
   expect_equal(
-    interpret_issue("abc"),
+    interpret_status("abc", list()),
     "Package abc has no recorded issues."
   )
 })
 
-test_that("interpret_issue() with advisories", {
+test_that("interpret_status() with advisories", {
   skip_if_offline()
   mock <- mock_meta_packages
   for (field in c("_id", "_dependencies", "distro", "remotes")) {
@@ -35,7 +35,8 @@ test_that("interpret_issue() with advisories", {
     output = output,
     versions = versions
   )
-  out <- interpret_issue(file.path(output, "commonmark"))
+  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
+  out <- interpret_status("commonmark", issues)
   expect_true(
     grepl(
       "Found the following advisories in the R Consortium Advisory Database",
@@ -44,7 +45,7 @@ test_that("interpret_issue() with advisories", {
   )
 })
 
-test_that("interpret_issue() with bad licenses", {
+test_that("interpret_status() with bad licenses", {
   skip_if_offline()
   mock <- mock_meta_packages[mock_meta_packages$package == "targetsketch", ]
   output <- tempfile()
@@ -59,7 +60,8 @@ test_that("interpret_issue() with bad licenses", {
     output = output,
     versions = versions
   )
-  out <- interpret_issue(file.path(output, "targetsketch"))
+  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
+  out <- interpret_status("targetsketch", issues)
   expect_true(
     grepl(
       "targetsketch declares license",
@@ -68,7 +70,7 @@ test_that("interpret_issue() with bad licenses", {
   )
 })
 
-test_that("interpret_issue() checks etc.", {
+test_that("interpret_status() checks etc.", {
   skip_if_offline()
   output <- tempfile()
   lines <- c(
@@ -90,47 +92,48 @@ test_that("interpret_issue() checks etc.", {
     output = output,
     versions = versions
   )
+  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
   expect_true(
     grepl(
       "Not all checks succeeded on R-universe",
-      interpret_issue(file.path(output, "INLA"))
+      interpret_status("INLA", issues)
     )
   )
   expect_true(
     grepl(
       "Not all checks succeeded on R-universe",
-      interpret_issue(file.path(output, "polars"))
+      interpret_status("polars", issues)
     )
   )
   expect_true(
     grepl(
       "Package releases should not use the 'Remotes:' field",
-      interpret_issue(file.path(output, "audio.whisper")),
+      interpret_status("audio.whisper", issues),
       fixed = TRUE
     )
   )
   expect_true(
     grepl(
       "bnosac/audio.vadwebrtc",
-      interpret_issue(file.path(output, "audio.whisper")),
+      interpret_status("audio.whisper", issues),
       fixed = TRUE
     )
   )
   expect_true(
     grepl(
       "One or more dependencies have issues",
-      interpret_issue(file.path(output, "tidypolars"))
+      interpret_status("tidypolars", issues)
     )
   )
   expect_true(
     grepl(
       "The version number of the current release should be highest version",
-      interpret_issue(file.path(output, "constantversion"))
+      interpret_status("constantversion", issues)
     )
   )
 })
 
-test_that("interpret_issue() with complicated dependency problems", {
+test_that("interpret_status() with complicated dependency problems", {
   output <- tempfile()
   lines <- c(
     "[",
@@ -161,12 +164,10 @@ test_that("interpret_issue() with complicated dependency problems", {
       verbose = TRUE
     )
   )
-  expect_true(dir.exists(output))
+  expect_true(file.exists(output))
+  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
   expect_equal(
-    jsonlite::read_json(
-      file.path(output, "nanonext"),
-      simplifyVector = TRUE
-    ),
+    issues$nanonext,
     list(
       versions = list(
         version_current = "1.0.0",
@@ -180,10 +181,7 @@ test_that("interpret_issue() with complicated dependency problems", {
     )
   )
   expect_equal(
-    jsonlite::read_json(
-      file.path(output, "mirai"),
-      simplifyVector = TRUE
-    ),
+    issues$mirai,
     list(
       dependencies = list(
         nanonext = list()
@@ -194,10 +192,7 @@ test_that("interpret_issue() with complicated dependency problems", {
     )
   )
   expect_equal(
-    jsonlite::read_json(
-      file.path(output, "crew"),
-      simplifyVector = TRUE
-    ),
+    issues$crew,
     list(
       checks = list(
         "_linuxdevel" = "success",
@@ -219,20 +214,20 @@ test_that("interpret_issue() with complicated dependency problems", {
   )
   expect_true(
     grepl(
-      "\nnanonext: mirai\n",
-      interpret_issue(file.path(output, "crew"))
+      "nanonext: mirai",
+      interpret_status("crew", issues)
     )
   )
   expect_true(
     grepl(
-      "\nnanonext: crew\n",
-      interpret_issue(file.path(output, "crew.aws.batch"))
+      "nanonext: crew",
+      interpret_status("crew.aws.batch", issues)
     )
   )
   expect_true(
     grepl(
       "Dependency nanonext is explicitly mentioned in",
-      interpret_issue(file.path(output, "mirai"))
+      interpret_status("mirai", issues)
     )
   )
 })
