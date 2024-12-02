@@ -45,11 +45,11 @@ update_staging <- function(
   }
   json_community <- jsonlite::read_json(file_community, simplifyVector = TRUE)
   meta_community <- mock$community %||% meta_packages(repo_community)
-  issues <- list.files(
-    file.path(path_staging, "issues"),
-    all.files = TRUE,
-    no.. = TRUE
-  )
+  path_issues <- file.path(path_staging, "issues.json")
+  issues <- character(0L)
+  if (file.exists(path_issues)) {
+    issues <- names(jsonlite::read_json(path_issues, simplifyVector = TRUE))
+  }
   freeze <- setdiff(json_staging$package, issues)
   update <- setdiff(json_community$package, freeze)
   should_freeze <- json_staging$package %in% freeze
