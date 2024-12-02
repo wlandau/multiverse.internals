@@ -1,11 +1,11 @@
-test_that("interpret_issues() with no problems", {
+test_that("interpret_status() with no problems", {
   expect_equal(
-    interpret_issues("abc", list()),
+    interpret_status("abc", list()),
     "Package abc has no recorded issues."
   )
 })
 
-test_that("interpret_issues() with advisories", {
+test_that("interpret_status() with advisories", {
   skip_if_offline()
   mock <- mock_meta_packages
   for (field in c("_id", "_dependencies", "distro", "remotes")) {
@@ -36,7 +36,7 @@ test_that("interpret_issues() with advisories", {
     versions = versions
   )
   issues <- jsonlite::read_json(output, simplifyVector = TRUE)
-  out <- interpret_issues("commonmark", issues)
+  out <- interpret_status("commonmark", issues)
   expect_true(
     grepl(
       "Found the following advisories in the R Consortium Advisory Database",
@@ -45,7 +45,7 @@ test_that("interpret_issues() with advisories", {
   )
 })
 
-test_that("interpret_issues() with bad licenses", {
+test_that("interpret_status() with bad licenses", {
   skip_if_offline()
   mock <- mock_meta_packages[mock_meta_packages$package == "targetsketch", ]
   output <- tempfile()
@@ -61,7 +61,7 @@ test_that("interpret_issues() with bad licenses", {
     versions = versions
   )
   issues <- jsonlite::read_json(output, simplifyVector = TRUE)
-  out <- interpret_issues("targetsketch", issues)
+  out <- interpret_status("targetsketch", issues)
   expect_true(
     grepl(
       "targetsketch declares license",
@@ -70,7 +70,7 @@ test_that("interpret_issues() with bad licenses", {
   )
 })
 
-test_that("interpret_issues() checks etc.", {
+test_that("interpret_status() checks etc.", {
   skip_if_offline()
   output <- tempfile()
   lines <- c(
@@ -96,44 +96,44 @@ test_that("interpret_issues() checks etc.", {
   expect_true(
     grepl(
       "Not all checks succeeded on R-universe",
-      interpret_issues("INLA", issues)
+      interpret_status("INLA", issues)
     )
   )
   expect_true(
     grepl(
       "Not all checks succeeded on R-universe",
-      interpret_issues("polars", issues)
+      interpret_status("polars", issues)
     )
   )
   expect_true(
     grepl(
       "Package releases should not use the 'Remotes:' field",
-      interpret_issues("audio.whisper", issues),
+      interpret_status("audio.whisper", issues),
       fixed = TRUE
     )
   )
   expect_true(
     grepl(
       "bnosac/audio.vadwebrtc",
-      interpret_issues("audio.whisper", issues),
+      interpret_status("audio.whisper", issues),
       fixed = TRUE
     )
   )
   expect_true(
     grepl(
       "One or more dependencies have issues",
-      interpret_issues("tidypolars", issues)
+      interpret_status("tidypolars", issues)
     )
   )
   expect_true(
     grepl(
       "The version number of the current release should be highest version",
-      interpret_issues("constantversion", issues)
+      interpret_status("constantversion", issues)
     )
   )
 })
 
-test_that("interpret_issues() with complicated dependency problems", {
+test_that("interpret_status() with complicated dependency problems", {
   output <- tempfile()
   lines <- c(
     "[",
@@ -214,20 +214,20 @@ test_that("interpret_issues() with complicated dependency problems", {
   )
   expect_true(
     grepl(
-      "\nnanonext: mirai\n",
-      interpret_issues("crew", issues)
+      "nanonext: mirai",
+      interpret_status("crew", issues)
     )
   )
   expect_true(
     grepl(
-      "\nnanonext: crew\n",
-      interpret_issues("crew.aws.batch", issues)
+      "nanonext: crew",
+      interpret_status("crew.aws.batch", issues)
     )
   )
   expect_true(
     grepl(
       "Dependency nanonext is explicitly mentioned in",
-      interpret_issues("mirai", issues)
+      interpret_status("mirai", issues)
     )
   )
 })

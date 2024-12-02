@@ -1,0 +1,96 @@
+#' @title Update the package status repository
+#' @export
+#' @family status
+#' @description Update the repository which reports the status on individual
+#'   packages.
+#' @inheritParams update_staging
+#' @param path_status Character string, directory path to the source files
+#'   of the package status repository.
+#' @examples
+#' \dontrun{
+#' url_staging = "https://github.com/r-multiverse/staging"
+#' url_community = "https://github.com/r-multiverse/community"
+#' path_status <- tempfile()
+#' path_staging <- tempfile()
+#' path_community <- tempfile()
+#' gert::git_clone(url = url_staging, path = path_staging)
+#' gert::git_clone(url = url_community, path = path_community)
+#' update_status(
+#'   path_status = path_status,
+#'   path_staging = path_staging,
+#'   path_community = path_community,
+#'   repo_staging = "https://staging.r-multiverse.org",
+#'   repo_community = "https://community.r-multiverse.org"
+#' )
+#' }
+update_status <- function(
+  path_status,
+  path_staging,
+  path_community,
+  repo_staging = "https://staging.r-multiverse.org",
+  repo_community = "https://community.r-multiverse.org",
+  mock = NULL
+) {
+  meta_staging <- mock$staging %||% meta_packages(repo_staging)
+  meta_community <- mock$community %||% meta_packages(repo_community)
+  update_status_directory(
+    output = path_status,
+    input = path_staging,
+    meta = meta_staging,
+    directory = "staging"
+  )
+  update_status_directory(
+    output = path_status,
+    input = path_community,
+    meta = meta_community,
+    directory = "community"
+  )
+}
+
+update_status_directory <- function(output, input, meta, directory) {
+  path_directory <- file.path(output, directory)
+  unlink(path_directory, recursive = TRUE, force = TRUE)
+  dir.create(path_directory, recursive = TRUE)
+  path_issues <- file.path(input, "issues.json")
+  issues <- list()
+  if (file.exists(path_issues)) {
+    issues <- jsonlite::read_json(path_issues, simplifyVector = TRUE)
+  }
+  for (package in meta$package) {
+    suffix <- ifelse(is.null(issues[[package]]), "success", "issues found")
+    title <- paste0(package, ": ", suffix)
+    status <- interpret_status(package, issues)
+    status <- gsub(pattern <- "\n", replacement = "<br>", x = status)
+    update_status_html(package, title, status, path_directory)
+    update_status_xml(package, title, status, path_directory)
+  }
+}
+
+update_status_html <- function(package, title, status, path_directory) {
+  path_template <- system.file(
+    file.path("status", "status.html"),
+    package = "multiverse.internals",
+    mustWork = TRUE
+  )
+  text <- readLines(path_template)
+  text <- gsub(pattern = "TITLE", replacement = title, x = text)
+  text <- gsub(pattern = "STATUS", replacement = status, x = text)
+  path <- file.path(path_directory, paste0(package, ".html"))
+  writeLines(text, path)
+}
+
+update_status_xml <- function(package, title, status, path_directory) {
+  path_template <- system.file(
+    file.path("status", "status.xml"),
+    package = "multiverse.internals",
+    mustWork = TRUE
+  )
+  directory <- basename(path_directory)
+  text <- readLines(path_template)
+  text <- gsub(pattern = "TITLE", replacement = title, x = text)
+  text <- gsub(pattern = "PACKAGE", replacement = package, x = text)
+  text <- gsub(pattern = "DIRECTORY", replacement = directory, x = text)
+  text <- gsub(pattern = "STATUS", replacement = status, x = text)
+  path <- file.path(path_directory, paste0(package, ".xml"))
+  writeLines(text, path)
+}

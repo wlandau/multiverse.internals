@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>PACKAGE</title>
+  <atom:link href="https://r-multiverse.org/status/DIRECTORY/PACKAGE.xml" rel="self" type="application/rss+xml"/>
+  <link>https://r-multiverse.org/status/DIRECTORY/PACKAGE.html</link>
+  <description>PACKAGE</description>
+  <item>
+    <title>TITLE</title>
+    <guid isPermaLink="false">GUID</guid>
+    <link>https://r-multiverse.org/status/DIRECTORY/PACKAGE.html</link>
+    <description>STATUS</description>
+  </item>
+</channel>
+</rss>

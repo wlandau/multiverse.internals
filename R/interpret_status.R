@@ -1,25 +1,29 @@
-#' @title Interpret the issues of a package
+#' @title Interpret the status of a package
 #' @export
-#' @family issues
+#' @family status
 #' @description Summarize the issues of a package in human-readable text.
 #' @return A character string summarizing the issues of a package in prose.
 #' @param package Character string, name of the package.
 #' @param issues A list with one issue per package. Obtained by
 #'   reading the results of [record_issues()].
-interpret_issues <- function(package, issues) {
+interpret_status <- function(package, issues) {
   if (is.null(issues[[package]])) {
     return(paste("Package", package, "has no recorded issues."))
   }
   issue <- issues[[package]]
-  paste0(
-    interpret_title(issue, package),
-    interpret_advisories(issue),
-    interpret_checks(issue),
-    interpret_dependencies(issue, package),
-    interpret_licenses(issue, package),
-    interpret_remotes(issue),
-    interpret_versions(issue)
+  out <- paste(
+    c(
+      interpret_title(issue, package),
+      interpret_advisories(issue),
+      interpret_checks(issue),
+      interpret_dependencies(issue, package),
+      interpret_licenses(issue, package),
+      interpret_remotes(issue),
+      interpret_versions(issue)
+    ),
+    collapse = ""
   )
+  trimws(out)
 }
 
 interpret_title <- function(issue, package) {
