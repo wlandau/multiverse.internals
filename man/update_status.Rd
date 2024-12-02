@@ -23,6 +23,8 @@ files of the staging universe.}
 \item{path_community}{Character string, directory path to the source
 files of the community universe.}
 
+\item{repo_staging}{Character string, URL of the staging universe.}
+
 \item{repo_community}{Character string, URL of the community universe.}
 
 \item{mock}{For testing purposes only, a named list of data frames

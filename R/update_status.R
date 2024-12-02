@@ -6,6 +6,7 @@
 #' @inheritParams update_staging
 #' @param path_status Character string, directory path to the source files
 #'   of the package status repository.
+#' @param repo_staging Character string, URL of the staging universe.
 #' @examples
 #' \dontrun{
 #' url_staging = "https://github.com/r-multiverse/staging"
