@@ -92,6 +92,14 @@ test_that("update_status()", {
     expect_true(
       any(
         grepl(
+          pattern = "sha-freeze",
+          readLines(file.path(path_status, repo, "freeze.xml"))
+        )
+      )
+    )
+    expect_true(
+      any(
+        grepl(
           pattern = "issues found",
           readLines(file.path(path_status, repo, "issue.html"))
         )
@@ -101,6 +109,14 @@ test_that("update_status()", {
       any(
         grepl(
           pattern = "issues found",
+          readLines(file.path(path_status, repo, "issue.xml"))
+        )
+      )
+    )
+    expect_true(
+      any(
+        grepl(
+          pattern = "sha-issue",
           readLines(file.path(path_status, repo, "issue.xml"))
         )
       )
