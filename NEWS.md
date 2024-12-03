@@ -1,3 +1,7 @@
+# multiverse.internals 0.2.20
+
+* Ensure valid RSS feeds created by `update_status()`.
+
 # multiverse.internals 0.2.19
 
 * Fix help file examples of `record_issues()`.

@@ -84,7 +84,7 @@ test_that("update_status()", {
     expect_true(
       any(
         grepl(
-          pattern = "has no recorded issues",
+          pattern = "success",
           readLines(file.path(path_status, repo, "freeze.xml"))
         )
       )

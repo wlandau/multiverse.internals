@@ -63,9 +63,8 @@ update_status_directory <- function(output, input, meta, directory) {
     suffix <- ifelse(is.null(issues[[package]]), "success", "issues found")
     title <- paste0(package, ": ", suffix)
     status <- interpret_status(package, issues)
-    status <- gsub(pattern <- "\n", replacement = "<br>", x = status)
     update_status_html(package, title, status, path_directory)
-    update_status_xml(package, title, status, path_directory, guid)
+    update_status_xml(package, title, path_directory, guid)
   }
 }
 
@@ -90,7 +89,7 @@ update_status_html <- function(package, title, status, path_directory) {
   writeLines(text, path)
 }
 
-update_status_xml <- function(package, title, status, path_directory, guid) {
+update_status_xml <- function(package, title, path_directory, guid) {
   path_template <- system.file(
     file.path("status", "status.xml"),
     package = "multiverse.internals",
@@ -102,7 +101,6 @@ update_status_xml <- function(package, title, status, path_directory, guid) {
   text <- gsub(pattern = "PACKAGE", replacement = package, x = text)
   text <- gsub(pattern = "GUID", replacement = guid, x = text)
   text <- gsub(pattern = "DIRECTORY", replacement = directory, x = text)
-  text <- gsub(pattern = "STATUS", replacement = status, x = text)
   path <- file.path(path_directory, paste0(package, ".xml"))
   writeLines(text, path)
 }
