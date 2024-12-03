@@ -24,11 +24,14 @@ reference:
   - record_issues
   - record_nonstandard_licenses
   - record_versions
-- title: Package status repository
-  contents:
-  - interpret_status
-  - update_status
 - title: Staging
   contents:
   - update_staging
   - propose_snapshot
+- title: Package status
+  contents:
+  - interpret_status
+  - update_status
+- title: Topics
+  contents:
+  - update_topics
