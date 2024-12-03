@@ -1,3 +1,7 @@
+# multiverse.internals 0.2.21
+
+* Add back HTML line breaks in `update_status()`.
+
 # multiverse.internals 0.2.20
 
 * Ensure valid RSS feeds created by `update_status()`.
