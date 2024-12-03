@@ -50,6 +50,16 @@ update_status(
   repo_staging = "https://staging.r-multiverse.org",
   repo_community = "https://community.r-multiverse.org"
 )
+writeLines(
+  readLines(
+    file.path(path_status, "community", "multiverse.internals.html")
+  )
+)
+writeLines(
+  readLines(
+    file.path(path_status, "community", "multiverse.internals.xml")
+  )
+)
 }
 }
 \seealso{
