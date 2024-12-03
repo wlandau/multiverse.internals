@@ -75,8 +75,16 @@ update_status_html <- function(package, title, status, path_directory) {
     package = "multiverse.internals",
     mustWork = TRUE
   )
+  directory <- basename(path_directory)
+  rss <- file.path(
+    "https://r-multiverse.org/status",
+    directory,
+    paste0(package, ".xml")
+  )
   text <- readLines(path_template)
   text <- gsub(pattern = "TITLE", replacement = title, x = text)
+  text <- gsub(pattern = "PACKAGE", replacement = package, x = text)
+  text <- gsub(pattern = "RSS", replacement = rss, x = text)
   text <- gsub(pattern = "STATUS", replacement = status, x = text)
   path <- file.path(path_directory, paste0(package, ".html"))
   writeLines(text, path)

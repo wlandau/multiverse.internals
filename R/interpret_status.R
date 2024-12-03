@@ -15,9 +15,9 @@ interpret_status <- function(package, issues) {
     c(
       interpret_title(issue, package),
       interpret_advisories(issue),
+      interpret_licenses(issue, package),
       interpret_checks(issue),
       interpret_dependencies(issue, package),
-      interpret_licenses(issue, package),
       interpret_remotes(issue),
       interpret_versions(issue)
     ),

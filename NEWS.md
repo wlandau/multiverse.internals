@@ -1,6 +1,7 @@
-# multiverse.internals 0.2.18.9000
+# multiverse.internals 0.2.19
 
 * Fix help file examples of `record_issues()`.
+* Link to RSS feed from status page.
 
 # multiverse.internals 0.2.18
 
