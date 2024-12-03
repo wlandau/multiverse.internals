@@ -5,11 +5,14 @@
 #' @return A data frame with one row per package and columns with package
 #'   metadata.
 #' @inheritParams meta_checks
+#' @param fields Character string of fields to query.
 #' @examples
 #' meta_packages(repo = "https://wlandau.r-universe.dev")
-meta_packages <- function(repo = "https://community.r-multiverse.org") {
+meta_packages <- function(
+  repo = "https://community.r-multiverse.org",
+  fields = c("Version", "License", "Remotes", "RemoteSha")
+) {
   repo <- trim_url(repo)
-  fields <- c("Version", "License", "Remotes", "RemoteSha")
   listing <- file.path(
     utils::contrib.url(repos = repo, type = "source"),
     paste0("PACKAGES.json?fields=", paste(fields, collapse = ","))
