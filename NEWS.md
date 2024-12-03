@@ -1,3 +1,7 @@
+# multiverse.internals 0.3.0
+
+* Add `update_topics()`.
+
 # multiverse.internals 0.2.21
 
 * Add back HTML line breaks in `update_status()`.
