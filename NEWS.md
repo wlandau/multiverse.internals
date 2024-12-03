@@ -1,3 +1,7 @@
+# multiverse.internals 0.3.0.9000 (development)
+
+* Test `update_topics()` on an empty topic.
+
 # multiverse.internals 0.3.0
 
 * Add `update_topics()`.
