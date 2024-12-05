@@ -137,3 +137,56 @@ test_that("assert_license_local() with empty fields", {
   )
   expect_true(grepl("key-value pairs with empty values", out))
 })
+
+test_that("assert_parsed_description() detects malformed Authors@R", {
+  text <- paste(
+    c(
+      "Package: x",
+      "Title: What the Package Does (One Line, Title Case)",
+      "Version: 0.0.0.9000",
+      "Authors@R: c(",
+      "  person(\"First\", \"Last\", ,",
+      "   \"first.last@example.com\", role = c(\"aut\", \"cre\"),",
+      "   comment = c(ORCID = \"YOUR-ORCID-ID\")),",
+      "   person(\"First\", \"Last\", ,",
+      "  \"first.last@example.com\", role = c(\"aut\", \"cre\"),",
+      "   comment = c(ORCID = \"YOUR-ORCID-ID\"))",
+      "Description: What the package does (one paragraph).",
+      "License: GPL-3"),
+    collapse = "\n"
+  )
+  x <- desc::description$new(text = text)
+  expect_true(
+    grepl(
+      "Could not parse the Authors@R field of the package DESCRIPTION",
+      assert_parsed_description("x", x),
+      fixed = TRUE
+    )
+  )
+})
+
+test_that("assert_parsed_description() detects usethis default Authors@R", {
+  text <- paste(
+    c(
+      "Package: x",
+      "Title: What the Package Does (One Line, Title Case)",
+      "Version: 0.0.0.9000",
+      "Authors@R: c(",
+      "  person(\"First\", \"Last\", ,",
+      "   \"first.last@example.com\", role = c(\"aut\", \"cre\"),",
+      "   comment = c(ORCID = \"YOUR-ORCID-ID\")),",
+      "   person(\"First\", \"Last\", ,",
+      "  \"first.last@example.com\", role = c(\"aut\", \"cre\"),",
+      "   comment = c(ORCID = \"YOUR-ORCID-ID\")))",
+      "Description: What the package does (one paragraph).",
+      "License: GPL-3"),
+    collapse = "\n"
+  )
+  x <- desc::description$new(text = text)
+  expect_true(
+    grepl(
+      "not a serious author name",
+      assert_parsed_description("x", x)
+    )
+  )
+})

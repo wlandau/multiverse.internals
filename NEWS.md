@@ -1,3 +1,7 @@
+# multiverse.internals 0.3.1
+
+* Add extra checks for `Authors@R` in `assert_parsed_description()`.
+
 # multiverse.internals 0.3.0.9000 (development)
 
 * Test `update_topics()` on an empty topic.

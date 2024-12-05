@@ -90,6 +90,22 @@ assert_parsed_description <- function(name, description) {
       )
     )
   }
+  authors_r <- try(
+    eval(parse(text = description$get("Authors@R"))),
+    silent = TRUE
+  )
+  if (inherits(authors_r, "try-error")) {
+    return("Could not parse the Authors@R field of the package DESCRIPTION.")
+  }
+  if (any(grepl("first[ \t]*last", tolower(authors_r)))) {
+    return(
+      paste(
+        "'First Last' is not a serious author name.",
+        "Packages must correctly attribute ownership and authorship in",
+        "the DESCRIPTION and license."
+      )
+    )
+  }
   license <- description$get("License")
   if (!(license %in% trusted_licenses)) {
     return(
