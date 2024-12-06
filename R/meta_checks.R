@@ -4,7 +4,7 @@
 #' @description List package checks results reported by the
 #'   R-universe package API.
 #' @return A data frame with one row per package and columns with
-#'   package check results.
+#'   package check details.
 #' @param repo Character of length 1, URL of the package repository.
 #'   R-multiverse uses `"https://community.r-multiverse.org"`.
 #' @examples

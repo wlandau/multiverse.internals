@@ -15,16 +15,11 @@ test_that("record_issues() mocked", {
     sort(names(issues)),
     sort(
       c(
-        "audio.whisper",
-        "INLA",
-        "polars",
-        "SBC",
-        "stantargets",
-        "targetsketch",
-        "tidypolars",
-        "tidytensor",
-        "version_decremented",
-        "version_unmodified"
+        "audio.whisper", "colorout", "demographr", "geographr", "glaredb",
+        "healthyr", "igraph", "INLA", "loneliness",
+        "prqlr", "SBC", "stantargets",
+        "taxizedb", "tidytensor", "webseq", "wildfires", "targetsketch",
+        "tidypolars", "version_decremented", "version_unmodified"
       )
     )
   )
@@ -33,14 +28,15 @@ test_that("record_issues() mocked", {
     issues$INLA,
     list(
       checks = list(
-        "_linuxdevel" = "src-failure",
-        "_macbinary" = "src-failure",
-        "_winbinary" = "src-failure",
-        "_status" = "src-failure",
-        "_buildurl" = file.path(runs, "9296256187")
+        url = file.path(runs, "11566311732"),
+        issues = list(
+          `linux R-devel` = "MISSING",
+          `mac R-release` = "MISSING",
+          `win R-release` = "MISSING"
+        )
       ),
       date = "2024-01-01",
-      version = list(),
+      version = list(), 
       remote_hash = list()
     )
   )
@@ -48,17 +44,18 @@ test_that("record_issues() mocked", {
     issues$stantargets,
     list(
       checks = list(
-        "_linuxdevel" = "failure",
-        "_macbinary" = "success",
-        "_winbinary" = "success",
-        "_status" = "success",
-        "_buildurl" = file.path(runs, "9412009826")
+        url = file.path(runs, "12139784185"),
+        issues = list(
+          `linux R-4.5.0` = "WARNING",
+          `mac R-4.4.2` = "WARNING",
+          `win R-4.4.2` = "WARNING"
+        )
       ),
       descriptions = list(
         remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")
       ),
       date = "2024-01-01",
-      version = "0.1.1",
+      version = "0.1.1", 
       remote_hash = "bbdda1b4a44a3d6a22041e03eed38f27319d8f32"
     )
   )
