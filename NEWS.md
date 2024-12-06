@@ -1,3 +1,7 @@
+# multiverse.internals 0.3.3
+
+* Remove a superfluous text replacement in status system.
+
 # multiverse.internals 0.3.2
 
 * Use the `_binaries` field of the R-universe check API.
