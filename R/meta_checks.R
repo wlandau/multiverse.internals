@@ -18,34 +18,40 @@ meta_checks <- function(repo = "https://community.r-multiverse.org") {
     simplifyDataFrame = TRUE,
     simplifyMatrix = TRUE
   )
-  out$build_url <- out[["_buildurl"]]
-  out$issues <- as.character(
-    lapply(out[["_binaries"]], meta_checks_issues)
-  )
+  out$url <- out[["_buildurl"]]
+  out$issues <- lapply(out[["_binaries"]], meta_checks_issues)
   colnames(out) <- tolower(colnames(out))
   rownames(out) <- out$package
-  out[, c("package", "build_url", "issues")]
+  out[, c("package", "url", "issues")]
 }
 
 meta_checks_issues <- function(binaries) {
   check <- .subset2(binaries, "check")
   os <- .subset2(binaries, "os")
+  arch <- .subset2(binaries, "arch")
   r <- .subset2(binaries, "r")
   devel <- is_r_devel(r)
   release <- is_r_release(r)
   results <- c(
-    target_check("linux", "R-devel", os, r, devel, check),
-    target_check("mac", "R-release", os, r, release, check),
-    target_check("win", "R-release", os, r, release, check)
+    target_check("linux", "R-devel", os, arch, r, devel, check),
+    target_check("mac", "R-release", os, arch, r, release, check),
+    target_check("win", "R-release", os, arch, r, release, check)
   )
-  if (length(results)) {
-    paste(results, collapse = "\n")
-  } else {
-    NA_character_
+  if (!length(results)) {
+    results <- NA_character_
   }
+  results
 }
 
-target_check <- function(target_os, target_r, os, r, is_target_r, check) {
+target_check <- function(
+  target_os,
+  target_r,
+  os,
+  arch,
+  r,
+  is_target_r,
+  check
+) {
   is_target <- (target_os == os) & is_target_r
   if (!any(is_target)) {
     return(paste0(target_os, " ", target_r, ": MISSING"))
@@ -54,7 +60,15 @@ target_check <- function(target_os, target_r, os, r, is_target_r, check) {
   if (!any(is_failure)) {
     return(character(0L))
   }
-  paste0(os[is_failure], " R-", r[is_failure], ": ", check[is_failure])
+  check <- check[is_failure]
+  os <- os[is_failure]
+  r <- paste0("R-", r[is_failure])
+  if (!is.null(arch)) {
+    arch <- arch[is_failure]
+    os <- paste(os, arch, sep = "_")
+  }
+  names(check) <- paste(os, r, sep = "_")
+  check
 }
 
 is_r_release <- function(r) {
