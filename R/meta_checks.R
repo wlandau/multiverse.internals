@@ -31,7 +31,7 @@ meta_checks_issues <- function(binaries) {
   check <- .subset2(binaries, "check")
   os <- .subset2(binaries, "os")
   r <- .subset2(binaries, "r")
-  is_failure <- is_enforced(os, r) & (check %in% c("WARNING", "ERROR"))
+  is_failure <- failed_check(check) & r_enforced(os, r)
   if (!any(is_failure)) {
     return(NA_character_)
   }
@@ -45,7 +45,11 @@ meta_checks_issues <- function(binaries) {
   paste(paste0(os, " R-", r, " ", check), collapse = ", ")
 }
 
-is_enforced <- function(os, r) {
+failed_check <- function(check) {
+  check %in% c("WARNING", "ERROR")
+}
+
+r_enforced <- function(os, r) {
   is_release <- is_r_release(r)
   is_devel <- is_r_devel(r)
   (os == "linux" & is_devel) |
