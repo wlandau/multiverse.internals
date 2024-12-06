@@ -46,9 +46,9 @@ interpret_advisories <- function(issue) {
     return(character(0L))
   }
   paste0(
-    "\n\nFound the following advisories in the ",
-    "R Consortium Advisory Database:\n\n",
-    as.character(yaml::as.yaml(advisories))
+    "<br><br>Found the following advisories in the ",
+    "R Consortium Advisory Database:<br><br>",
+    as.character(yaml_html(advisories))
   )
 }
 
@@ -57,13 +57,15 @@ interpret_checks <- function(issue) {
   if (is.null(checks)) {
     return(character(0L))
   }
+  checks$url <- sprintf("<a href=\"%s\">%s</a>", checks$url, checks$url)
   paste0(
-    "\n\nNot all checks succeeded on R-universe. ",
-    "The following output shows the check status on each platform, ",
-    "the overall build status, and the ",
-    "build URL. Visit the build URL for specific details ",
-    "on the check failures.\n\n",
-    as.character(yaml::as.yaml(checks))
+    "<br><br>Not all checks succeeded on R-universe. ",
+    "The following output shows the check status on each enforced platform ",
+    "and version of R. The GitHub Actions URL links to the check logs ",
+    "on all platforms that R-universe runs.",
+    "Visit that URL to see specific details ",
+    "on the check failures.<br><br>",
+    as.character(yaml_html(checks))
   )
 }
 
@@ -75,7 +77,7 @@ interpret_dependencies <- function(issue, package) {
   direct <- names(dependencies)[lengths(dependencies) < 1L]
   indirect <- setdiff(names(dependencies), direct)
   text <- paste0(
-    "\n\nOne or more dependencies have issues. Packages ",
+    "<br><br>One or more dependencies have issues. Packages ",
     paste(names(dependencies), collapse = ", "),
     " are causing problems upstream. "
   )
@@ -102,8 +104,8 @@ interpret_dependencies <- function(issue, package) {
       package,
       ", but ",
       ifelse(length(indirect) == 1L, "it is", "they are"),
-      " upstream of one or more direct dependencies:\n\n",
-      as.character(yaml::as.yaml(dependencies[indirect]))
+      " upstream of one or more direct dependencies:<br><br>",
+      as.character(yaml_html(dependencies[indirect]))
     )
   }
   text
@@ -115,7 +117,7 @@ interpret_licenses <- function(issue, package) {
     return(character(0L))
   }
   paste(
-    "\n\nPackage",
+    "<br><br>Package",
     package,
     "declares license",
     shQuote(license),
@@ -134,8 +136,8 @@ interpret_remotes <- function(issue) {
     return(character(0L))
   }
   paste0(
-    "\n\nPackage releases should not use the 'Remotes:' field. Found:",
-    as.character(yaml::as.yaml(remotes))
+    "<br><br>Package releases should not use the 'Remotes:' field. Found:",
+    as.character(yaml_html(remotes))
   )
 }
 
@@ -145,11 +147,16 @@ interpret_versions <- function(issue) {
     return(character(0L))
   }
   paste0(
-    "\n\nThe version number of the current release ",
+    "<br><br>The version number of the current release ",
     "should be highest version of all the releases so far. ",
     "Here is the current version of the package, ",
     "the highest version number ever recorded by R-multiverse, ",
-    "and the latest remote hash of each:\n\n",
-    as.character(yaml::as.yaml(versions))
+    "and the latest remote hash of each:<br><br>",
+    as.character(yaml_html(versions))
   )
+}
+
+yaml_html <- function(x) {
+  out <- yaml::as.yaml(x, line.sep = "\n")
+  gsub(pattern= "\n", replacement = "<br>", x = out)
 }
