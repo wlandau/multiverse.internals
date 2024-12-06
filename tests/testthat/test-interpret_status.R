@@ -102,7 +102,7 @@ test_that("interpret_status() checks etc.", {
   expect_true(
     grepl(
       "Not all checks succeeded on R-universe",
-      interpret_status("polars", issues)
+      interpret_status("colorout", issues)
     )
   )
   expect_true(
@@ -119,6 +119,7 @@ test_that("interpret_status() checks etc.", {
       fixed = TRUE
     )
   )
+  issues$tidypolars$dependencies <- list(x = "y")
   expect_true(
     grepl(
       "One or more dependencies have issues",
@@ -151,7 +152,6 @@ test_that("interpret_status() with complicated dependency problems", {
   writeLines(lines, versions)
   meta_checks <- mock_meta_checks[1L, ]
   meta_checks$package <- "crew"
-  meta_checks[["_winbinary"]] <- "failure"
   suppressMessages(
     record_issues(
       versions = versions,
@@ -195,18 +195,17 @@ test_that("interpret_status() with complicated dependency problems", {
     issues$crew,
     list(
       checks = list(
-        "_linuxdevel" = "success",
-        "_macbinary" = "success",
-        "_winbinary" = "failure",
-        "_status" = "success",
-        "_buildurl" = file.path(
+        url = file.path(
           "https://github.com/r-universe/r-multiverse/actions",
-          "runs/9412009683"
+          "runs/11898760503"
+        ),
+        issues = list(
+          `linux R-4.5.0` = "WARNING",
+          `mac R-4.4.2` = "WARNING",
+          `win R-4.4.2` = "WARNING"
         )
       ),
-      dependencies = list(
-        nanonext = "mirai"
-      ),
+      dependencies = list(nanonext = "mirai"),
       date = "2024-01-01",
       version = "0.9.3.9002",
       remote_hash = "eafad0276c06dec2344da2f03596178c754c8b5e"

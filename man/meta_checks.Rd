@@ -12,7 +12,7 @@ R-multiverse uses \code{"https://community.r-multiverse.org"}.}
 }
 \value{
 A data frame with one row per package and columns with
-package check results.
+package check details.
 }
 \description{
 List package checks results reported by the

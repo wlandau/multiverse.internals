@@ -2,34 +2,124 @@ test_that("issues_checks() mocked", {
   issues <- issues_checks(meta = mock_meta_checks)
   url <- "https://github.com/r-universe/r-multiverse/actions/runs"
   expected <- list(
-    INLA = list(
-      "_linuxdevel" = "src-failure", "_macbinary" = "src-failure",
-      "_winbinary" = "src-failure",
-      "_status" = "src-failure",
-      "_buildurl" = file.path(url, "9296256187")
+    audio.whisper = list(
+      url = file.path(url, "12103194809"),
+      issues = list(
+        "linux x86_64 R-4.5.0" = "WARNING",
+        "mac aarch64 R-4.4.2" = "WARNING",
+        "mac x86_64 R-4.4.2" = "WARNING",
+        "win x86_64 R-4.4.2" = "WARNING"
+      )
     ),
-    polars = list(
-      "_linuxdevel" = "failure", "_macbinary" = "arm64-failure",
-      "_winbinary" = "success", "_status" = "success",
-      "_buildurl" = file.path(url, "9360739181")
+    colorout = list(
+      url = file.path(url, "12063016496"),
+      issues = list(
+        "mac aarch64 R-4.4.2" = "WARNING",
+        "mac x86_64 R-4.4.2" = "WARNING",
+        "win R-release" = "MISSING"
+      )
+    ),
+    demographr = list(
+      url = file.path(url, "11898760503"),
+      issues = list(
+        "linux R-4.5.0" = "WARNING",
+        "mac R-4.4.2" = "WARNING",
+        "win R-4.4.2" = "WARNING"
+      )
+    ),
+    geographr = list(
+      url = file.path(url, "11898762523"),
+      issues = list(
+        "linux R-4.5.0" = "WARNING",
+        "mac R-4.4.2" = "WARNING",
+        "win R-4.4.2" = "WARNING"
+      )
+    ),
+    glaredb = list(
+      url = file.path(url, "11876493507"),
+      issues = list("win R-release" = "MISSING")
+    ),
+    healthyr = list(
+      url = file.path(url, "11898763290"),
+      issues = list(
+        "linux R-4.5.0" = "WARNING",
+        "mac R-4.4.2" = "WARNING",
+        "win R-4.4.2" = "WARNING"
+      )
+    ),
+    igraph = list(
+      url = file.path(url, "12133807748"),
+      issues = list("win x86_64 R-4.4.2" = "WARNING")
+    ),
+    INLA = list(
+      url = file.path(url, "11566311732"),
+      issues = list(
+        "linux R-devel" = "MISSING",
+        "mac R-release" = "MISSING",
+        "win R-release" = "MISSING"
+      )
+    ),
+    loneliness = list(
+      url = file.path(url, "11898763908"),
+      issues = list(
+        "linux R-4.5.0" = "WARNING",
+        "mac R-4.4.2" = "WARNING",
+        "win R-4.4.2" = "WARNING"
+      )
+    ),
+    prqlr = list(
+      url = file.path(url, "11620617366"),
+      issues = list(
+        "mac R-release" = "MISSING",
+        "win R-release" = "MISSING"
+      )
     ),
     SBC = list(
-      "_linuxdevel" = "failure", "_macbinary" = "success",
-      "_winbinary" = "success",
-      "_status" = "failure",
-      "_buildurl" = file.path(url, "9412009979")
+      url = file.path(url, "11947266936"),
+      issues = list(
+        "linux R-4.5.0" = "WARNING",
+        "mac R-4.4.2" = "WARNING",
+        "win R-4.4.2" = "WARNING"
+      )
     ),
     stantargets = list(
-      "_linuxdevel" = "failure", "_macbinary" = "success",
-      "_winbinary" = "success",
-      "_status" = "success",
-      "_buildurl" = file.path(url, "9412009826")
+      url = file.path(url, "12139784185"),
+      issues = list(
+        "linux R-4.5.0" = "WARNING",
+        "mac R-4.4.2" = "WARNING",
+        "win R-4.4.2" = "WARNING"
+      )
+    ),
+    taxizedb = list(
+      url = file.path(url, "11825909535"),
+      issues = list(
+        "mac R-4.4.2" = "ERROR",
+        "win R-4.4.2" = "ERROR"
+      )
     ),
     tidytensor = list(
-      "_linuxdevel" = "failure", "_macbinary" = "success",
-      "_winbinary" = "success",
-      "_status" = "failure",
-      "_buildurl" = file.path(url, "9412009544")
+      url = file.path(url, "12133663821"),
+      issues = list(
+        "linux R-4.5.0" = "WARNING",
+        "mac R-4.4.2" = "WARNING",
+        "win R-4.4.2" = "WARNING"
+      )
+    ),
+    webseq = list(
+      url = file.path(url, "11825909757"),
+      issues = list(
+        "linux R-4.5.0" = "WARNING",
+        "mac R-4.4.2" = "WARNING",
+        "win R-4.4.2" = "WARNING"
+      )
+    ),
+    wildfires = list(
+      url = file.path(url, "11898765070"),
+      issues = list(
+        "linux R-4.5.0" = "WARNING",
+        "mac R-4.4.2" = "WARNING",
+        "win R-4.4.2" = "WARNING"
+      )
     )
   )
   expect_equal(issues[order(names(issues))], expected[order(names(expected))])

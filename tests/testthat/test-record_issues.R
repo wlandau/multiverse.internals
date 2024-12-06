@@ -15,16 +15,11 @@ test_that("record_issues() mocked", {
     sort(names(issues)),
     sort(
       c(
-        "audio.whisper",
-        "INLA",
-        "polars",
-        "SBC",
-        "stantargets",
-        "targetsketch",
-        "tidypolars",
-        "tidytensor",
-        "version_decremented",
-        "version_unmodified"
+        "audio.whisper", "colorout", "demographr", "geographr", "glaredb",
+        "healthyr", "igraph", "INLA", "loneliness",
+        "prqlr", "SBC", "stantargets",
+        "taxizedb", "tidytensor", "webseq", "wildfires", "targetsketch",
+        "tidypolars", "version_decremented", "version_unmodified"
       )
     )
   )
@@ -33,11 +28,12 @@ test_that("record_issues() mocked", {
     issues$INLA,
     list(
       checks = list(
-        "_linuxdevel" = "src-failure",
-        "_macbinary" = "src-failure",
-        "_winbinary" = "src-failure",
-        "_status" = "src-failure",
-        "_buildurl" = file.path(runs, "9296256187")
+        url = file.path(runs, "11566311732"),
+        issues = list(
+          `linux R-devel` = "MISSING",
+          `mac R-release` = "MISSING",
+          `win R-release` = "MISSING"
+        )
       ),
       date = "2024-01-01",
       version = list(),
@@ -48,11 +44,12 @@ test_that("record_issues() mocked", {
     issues$stantargets,
     list(
       checks = list(
-        "_linuxdevel" = "failure",
-        "_macbinary" = "success",
-        "_winbinary" = "success",
-        "_status" = "success",
-        "_buildurl" = file.path(runs, "9412009826")
+        url = file.path(runs, "12139784185"),
+        issues = list(
+          `linux R-4.5.0` = "WARNING",
+          `mac R-4.4.2` = "WARNING",
+          `win R-4.4.2` = "WARNING"
+        )
       ),
       descriptions = list(
         remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")
@@ -136,7 +133,6 @@ test_that("record_issues() date works", {
   )
   once_fixed <- c(
     "audio.whisper",
-    "polars",
     "SBC",
     "tidypolars",
     "version_unmodified"
@@ -198,7 +194,6 @@ test_that("record_issues() with dependency problems", {
   writeLines(lines, versions)
   meta_checks <- mock_meta_checks[1L, ]
   meta_checks$package <- "crew"
-  meta_checks[["_winbinary"]] <- "failure"
   suppressMessages(
     record_issues(
       versions = versions,
@@ -241,16 +236,7 @@ test_that("record_issues() with dependency problems", {
   expect_equal(
     issues$crew,
     list(
-      checks = list(
-        "_linuxdevel" = "success",
-        "_macbinary" = "success",
-        "_winbinary" = "failure",
-        "_status" = "success",
-        "_buildurl" = file.path(
-          "https://github.com/r-universe/r-multiverse/actions",
-          "runs/9412009683"
-        )
-      ),
+      checks = list(url = meta_checks$url, issues = meta_checks$issues[[1L]]),
       dependencies = list(
         nanonext = "mirai"
       ),

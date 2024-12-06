@@ -1,3 +1,10 @@
+# multiverse.internals 0.3.2
+
+* Use the `_binaries` field of the R-universe check API.
+* Enforce `R CMD check` errors and warnings.
+* Report check errors more clearly.
+* Make it easy to add/remove the check platforms and R versions we enforce.
+
 # multiverse.internals 0.3.1
 
 * Add extra checks for `Authors@R` in `assert_parsed_description()`.
