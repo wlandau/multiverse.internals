@@ -36,7 +36,7 @@ test_that("record_issues() mocked", {
         )
       ),
       date = "2024-01-01",
-      version = list(), 
+      version = list(),
       remote_hash = list()
     )
   )
@@ -55,7 +55,7 @@ test_that("record_issues() mocked", {
         remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")
       ),
       date = "2024-01-01",
-      version = "0.1.1", 
+      version = "0.1.1",
       remote_hash = "bbdda1b4a44a3d6a22041e03eed38f27319d8f32"
     )
   )
@@ -133,7 +133,6 @@ test_that("record_issues() date works", {
   )
   once_fixed <- c(
     "audio.whisper",
-    "polars",
     "SBC",
     "tidypolars",
     "version_unmodified"
@@ -195,7 +194,6 @@ test_that("record_issues() with dependency problems", {
   writeLines(lines, versions)
   meta_checks <- mock_meta_checks[1L, ]
   meta_checks$package <- "crew"
-  meta_checks[["_winbinary"]] <- "failure"
   suppressMessages(
     record_issues(
       versions = versions,
@@ -238,16 +236,7 @@ test_that("record_issues() with dependency problems", {
   expect_equal(
     issues$crew,
     list(
-      checks = list(
-        "_linuxdevel" = "success",
-        "_macbinary" = "success",
-        "_winbinary" = "failure",
-        "_status" = "success",
-        "_buildurl" = file.path(
-          "https://github.com/r-universe/r-multiverse/actions",
-          "runs/9412009683"
-        )
-      ),
+      checks = list(url = meta_checks$url, issues = meta_checks$issues[[1L]]),
       dependencies = list(
         nanonext = "mirai"
       ),
