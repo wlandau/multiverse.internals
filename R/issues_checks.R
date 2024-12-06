@@ -17,24 +17,7 @@
 #'   meta <- meta_checks(repo = "https://wlandau.r-universe.dev")
 #'   issues <- issues_checks(meta = meta)
 #'   str(issues)
-issues_checks <- function(meta = meta_checks()) {
-  fields_check <- c(
-    "_linuxdevel",
-    "_macbinary",
-    "_winbinary",
-    "_status"
-  )
-  fields_info <- c(
-    "_buildurl"
-  )
-  fields <- c(fields_check, fields_info)
-  for (field in fields) {
-    meta[[field]][is.na(meta[[field]])] <- "src-failure"
-  }
-  success <- rep(TRUE, nrow(meta))
-  for (field in fields_check) {
-    success <- success & (meta[[field]] %in% c("success", "skipped"))
-  }
-  meta <- meta[!success,, drop = FALSE] # nolint
-  issues_list(meta[, c("package", fields)])
+issues_checks <- function(meta = meta_checks()) {s
+  meta <- meta[!is.na(meta$issues),, drop = FALSE] # nolint
+  issues_list(meta[, c("package", "url", "issues")])
 }

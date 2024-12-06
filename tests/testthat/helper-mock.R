@@ -65,56 +65,86 @@ mock_meta_checks <- structure(
       "https://github.com/r-universe/r-multiverse/actions/runs/11927536639"
     ),
     issues = list(
-      c(
-        `linux_R-4.5.0` = "WARNING", `mac_R-4.4.2` = "WARNING",
-        `win_R-4.4.2` = "WARNING"), NA_character_,
-      c(`linux_R-4.5.0` = "WARNING",
-        `mac_R-4.4.2` = "WARNING", `win_R-4.4.2` = "WARNING"), NA_character_,
-      NA_character_, NA_character_, NA_character_,
-      c(`win_x86_64_R-4.4.2` = "WARNING"),
-      NA_character_, NA_character_,
-      c("mac R-release: MISSING",
-        "win R-release: MISSING"),
-      NA_character_, "win R-release: MISSING",
-      NA_character_, c(`linux_R-4.5.0` = "WARNING",
-                       `mac_R-4.4.2` = "WARNING",
-                       `win_R-4.4.2` = "WARNING"),
-      c(
-        `linux_R-4.5.0` = "WARNING",
-        `mac_R-4.4.2` = "WARNING", `win_R-4.4.2` = "WARNING"
+      list(
+        `linux R-4.5.0` = "WARNING",
+        `mac R-4.4.2` = "WARNING",
+        `win R-4.4.2` = "WARNING"
       ),
-      c(
-        `linux_x86_64_R-4.5.0` = "WARNING",
-        `mac_aarch64_R-4.4.2` = "WARNING", `mac_x86_64_R-4.4.2` = "WARNING",
-        `win_x86_64_R-4.4.2` = "WARNING"
+      list(),
+      list(
+        `linux R-4.5.0` = "WARNING",
+        `mac R-4.4.2` = "WARNING",
+        `win R-4.4.2` = "WARNING"
       ),
-      NA_character_, NA_character_,
-      NA_character_, NA_character_, NA_character_, NA_character_,
-      NA_character_, NA_character_, NA_character_, NA_character_,
-      c(`mac_aarch64_R-4.4.2` = "WARNING", `mac_x86_64_R-4.4.2` = "WARNING",
-        "win R-release: MISSING"), NA_character_, NA_character_,
-      NA_character_, NA_character_, NA_character_, NA_character_,
-      NA_character_, c(
-        `linux_R-4.5.0` = "WARNING", `mac_R-4.4.2` = "WARNING",
-        `win_R-4.4.2` = "WARNING"
+      list(), list(), list(), list(),
+      list(`win x86_64 R-4.4.2` = "WARNING"),
+      list(), list(),
+      list(`mac R-release` = "MISSING", `win R-release` = "MISSING"),
+      list(),
+      list(`win R-release` = "MISSING"),
+      list(),
+      list(
+        `linux R-4.5.0` = "WARNING",
+        `mac R-4.4.2` = "WARNING",
+        `win R-4.4.2` = "WARNING"
       ),
-      NA_character_, NA_character_,
-      c(`linux_R-4.5.0` = "WARNING", `mac_R-4.4.2` = "WARNING",
-        `win_R-4.4.2` = "WARNING"),
-      c(`linux_R-4.5.0` = "WARNING",
-        `mac_R-4.4.2` = "WARNING", `win_R-4.4.2` = "WARNING"), NA_character_,
-      NA_character_, NA_character_,
-      c(`linux_R-4.5.0` = "WARNING",
-        `mac_R-4.4.2` = "WARNING", `win_R-4.4.2` = "WARNING"),
-      c(`mac_R-4.4.2` = "ERROR",
-        `win_R-4.4.2` = "ERROR"),
-      c(`linux_R-4.5.0` = "WARNING",
-        `mac_R-4.4.2` = "WARNING", `win_R-4.4.2` = "WARNING"
+      list(
+        `linux R-4.5.0` = "WARNING",
+        `mac R-4.4.2` = "WARNING",
+        `win R-4.4.2` = "WARNING"
       ),
-      c("linux R-devel: MISSING",
-        "mac R-release: MISSING", "win R-release: MISSING"),
-      NA_character_,
-      NA_character_
+      list(
+        `linux x86_64 R-4.5.0` = "WARNING",
+        `mac aarch64 R-4.4.2` = "WARNING",
+        `mac x86_64 R-4.4.2` = "WARNING",
+        `win x86_64 R-4.4.2` = "WARNING"
+      ),
+      list(), list(), list(),
+      list(), list(), list(), list(), list(), list(), list(),
+      list(
+        `mac aarch64 R-4.4.2` = "WARNING",
+        `mac x86_64 R-4.4.2` = "WARNING",
+        `win R-release` = "MISSING"
+      ),
+      list(), list(), list(),
+      list(), list(), list(), list(),
+      list(
+        `linux R-4.5.0` = "WARNING",
+        `mac R-4.4.2` = "WARNING",
+        `win R-4.4.2` = "WARNING"
+      ),
+      list(), list(),
+      list(
+        `linux R-4.5.0` = "WARNING",
+        `mac R-4.4.2` = "WARNING",
+        `win R-4.4.2` = "WARNING"
+      ),
+      list(
+        `linux R-4.5.0` = "WARNING",
+        `mac R-4.4.2` = "WARNING",
+        `win R-4.4.2` = "WARNING"
+      ),
+      list(), list(), list(),
+      list(
+        `linux R-4.5.0` = "WARNING",
+        `mac R-4.4.2` = "WARNING",
+        `win R-4.4.2` = "WARNING"
+      ),
+      list(
+        `mac R-4.4.2` = "ERROR",
+        `win R-4.4.2` = "ERROR"
+      ),
+      list(
+        `linux R-4.5.0` = "WARNING",
+        `mac R-4.4.2` = "WARNING",
+        `win R-4.4.2` = "WARNING"
+      ),
+      list(
+        `linux R-devel` = "MISSING",
+        `mac R-release` = "MISSING",
+        `win R-release` = "MISSING"
+      ),
+      list(), list()
     )
   ),
   class = "data.frame",

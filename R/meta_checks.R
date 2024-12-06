@@ -37,10 +37,7 @@ meta_checks_issues <- function(binaries) {
     target_check("mac", "R-release", os, arch, r, release, check),
     target_check("win", "R-release", os, arch, r, release, check)
   )
-  if (!length(results)) {
-    results <- NA_character_
-  }
-  results
+  as.list(results)
 }
 
 target_check <- function(
@@ -54,20 +51,22 @@ target_check <- function(
 ) {
   is_target <- (target_os == os) & is_target_r
   if (!any(is_target)) {
-    return(paste0(target_os, " ", target_r, ": MISSING"))
+    out <- "MISSING"
+    names(out) <- paste0(target_os, " ", target_r)
+    return(out)
   }
   is_failure <- is_target & check %in% c("WARNING", "ERROR")
   if (!any(is_failure)) {
-    return(character(0L))
+    return()
   }
   check <- check[is_failure]
   os <- os[is_failure]
   r <- paste0("R-", r[is_failure])
   if (!is.null(arch)) {
     arch <- arch[is_failure]
-    os <- paste(os, arch, sep = "_")
+    os <- paste(os, arch, sep = " ")
   }
-  names(check) <- paste(os, r, sep = "_")
+  names(check) <- paste(os, r, sep = " ")
   check
 }
 
