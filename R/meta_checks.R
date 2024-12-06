@@ -31,30 +31,30 @@ meta_checks_issues <- function(binaries) {
   check <- .subset2(binaries, "check")
   os <- .subset2(binaries, "os")
   r <- .subset2(binaries, "r")
-  is_failure <- failed_check(check) & r_enforced(os, r)
+  devel <- is_r_devel(r)
+  release <- is_r_release(r)
+  results <- c(
+    target_check("linux", "R-devel", os, r, devel, check),
+    target_check("mac", "R-release", os, r, release, check),
+    target_check("win", "R-release", os, r, release, check)
+  )
+  if (length(results)) {
+    paste(results, collapse = "\n")
+  } else {
+    NA_character_
+  }
+}
+
+target_check <- function(target_os, target_r, os, r, is_target_r, check) {
+  is_target <- (target_os == os) & is_target_r
+  if (!any(is_target)) {
+    return(paste0(target_os, " ", target_r, ": MISSING"))
+  }
+  is_failure <- is_target & check %in% c("WARNING", "ERROR")
   if (!any(is_failure)) {
-    return(NA_character_)
+    return(character(0L))
   }
-  check <- check[is_failure]
-  os <- os[is_failure]
-  arch <- .subset2(binaries, "arch")
-  if (!is.null(arch)) {
-    os <- paste0(os, "_", arch[is_failure])
-  }
-  r <- r[is_failure]
-  paste(paste0(os, " R-", r, " ", check), collapse = ", ")
-}
-
-failed_check <- function(check) {
-  check %in% c("WARNING", "ERROR")
-}
-
-r_enforced <- function(os, r) {
-  is_release <- is_r_release(r)
-  is_devel <- is_r_devel(r)
-  (os == "linux" & is_devel) |
-    (os == "mac" & is_release) |
-    (os == "win" & is_release)
+  paste0(os[is_failure], " R-", r[is_failure], ": ", check[is_failure])
 }
 
 is_r_release <- function(r) {
@@ -68,7 +68,7 @@ is_r_devel <- function(r) {
   if (is.null(r_versions_envir$all)) {
     history <- rversions::r_versions(dots = TRUE)
     cutoff <- as.POSIXct(Sys.Date() - as.difftime(104, units = "weeks"))
-    r_versions_envir$all <- history$version[history$date > two_years_ago]
+    r_versions_envir$all <- history$version[history$date > cutoff]
   }
   !(r %in% r_versions_envir$all)
 }
