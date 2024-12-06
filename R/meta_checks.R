@@ -28,24 +28,45 @@ meta_checks <- function(repo = "https://community.r-multiverse.org") {
 }
 
 meta_checks_issues <- function(binaries) {
-  build <- .subset2(binaries, "status")
   check <- .subset2(binaries, "check")
-  status <- .subset2(binaries, "status")
-  no_check <- is.na(check)
-  check[no_check] <- status[no_check]
   os <- .subset2(binaries, "os")
-  is_failure <- (os != "wasm") &
-    ((status != "success") | (check %in% c("WARNING", "ERROR")))
+  r <- .subset2(binaries, "r")
+  is_failure <- is_enforced(os, r) & (check %in% c("WARNING", "ERROR"))
   if (!any(is_failure)) {
     return(NA_character_)
   }
-  build <- build[is_failure]
   check <- check[is_failure]
   os <- os[is_failure]
   arch <- .subset2(binaries, "arch")
   if (!is.null(arch)) {
     os <- paste0(os, "_", arch[is_failure])
   }
-  r <- .subset2(binaries, "r")[is_failure]
+  r <- r[is_failure]
   paste(paste0(os, " R-", r, " ", check), collapse = ", ")
 }
+
+is_enforced <- function(os, r) {
+  is_release <- is_r_release(r)
+  is_devel <- is_r_devel(r)
+  (os == "linux" & is_devel) |
+    (os == "mac" & is_release) |
+    (os == "win" & is_release)
+}
+
+is_r_release <- function(r) {
+  if (is.null(r_versions_envir$release)) {
+    r_versions_envir$release <- rversions::r_release(dots = TRUE)$version
+  }
+  r == r_versions_envir$release
+}
+
+is_r_devel <- function(r) {
+  if (is.null(r_versions_envir$all)) {
+    history <- rversions::r_versions(dots = TRUE)
+    cutoff <- as.POSIXct(Sys.Date() - as.difftime(104, units = "weeks"))
+    r_versions_envir$all <- history$version[history$date > two_years_ago]
+  }
+  !(r %in% r_versions_envir$all)
+}
+
+r_versions_envir <- new.env(parent = emptyenv())
