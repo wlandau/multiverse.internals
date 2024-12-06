@@ -73,7 +73,6 @@ update_status_directory <- function(output, input, meta, directory) {
     suffix <- ifelse(is.null(issues[[package]]), "success", "issues found")
     title <- paste0(package, ": ", suffix)
     status <- interpret_status(package, issues)
-    status <- gsub(pattern <- "\n", replacement = "<br>", x = status)
     update_status_html(package, title, status, path_directory)
     update_status_xml(package, title, path_directory, guid)
   }
