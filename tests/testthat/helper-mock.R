@@ -2,110 +2,105 @@
 mock_meta_checks <- structure(
   list(
     package = c(
-      "zstdlite", "multiverse.internals",
-      "cmdstanr", "tinytest", "tidypolars", "duckdb", "polars", "secretbase",
-      "audio.whisper", "ichimoku", "string2path",
-      "tidytensor", "audio.vadwebrtc",
-      "stantargets", "mirai", "INLA", "multitools", "SBC", "httpgd",
-      "nanonext", "targetsketch"
+      "demographr", "httpgd", "healthyr",
+      "prophet", "jagstargets", "adbcdrivermanager", "duckdb", "igraph",
+      "targetsketch", "nanonext", "prqlr", "milRex", "glaredb", "polars",
+      "stantargets", "wildfires", "audio.whisper", "unigd", "secretbase",
+      "arrow", "rJavaEnv", "IMD", "adbcflightsql", "crew", "string2path",
+      "rlang", "tidypolars", "colorout", "adbcsnowflake", "asylum",
+      "cmdstanr", "adbcbigquery", "multiverse.internals", "webchem",
+      "audio.vadwebrtc", "tidytensor", "later", "zstdlite", "loneliness",
+      "webseq", "mirai", "multitools", "nanoarrow", "geographr", "taxizedb",
+      "SBC", "INLA", "litedown", "ichimoku"
     ),
-    "_user" = c(
-      "r-multiverse", "r-multiverse",
-      "r-multiverse", "r-multiverse", "r-multiverse", "r-multiverse",
-      "r-multiverse", "r-multiverse", "r-multiverse", "r-multiverse",
-      "r-multiverse", "r-multiverse", "r-multiverse", "r-multiverse",
-      "r-multiverse", "r-multiverse", "r-multiverse", "r-multiverse",
-      "r-multiverse", "r-multiverse", "r-multiverse"
+    build_url = c(
+      "https://github.com/r-universe/r-multiverse/actions/runs/11898760503", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11967099549", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11898763290", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12111791338", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12169701148", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11809347578", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12191121856", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12133807748", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12024341431", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12131104675", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11620617366", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11759164159", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11876493507", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11915003763", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12139784185", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11898765070", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12103194809", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11736635533", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12102519290", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11998874677", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11791709062", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12079584194", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11997200932", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11859816932", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11997101671", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11867687560", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11917344474", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12063016496", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11997200944", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11905603813", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12103194199", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11997200992", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12186568387", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11863597537", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12133502918", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12133663821", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12061739398", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11906793626", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11898763908", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11825909757", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11855336066", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11886155826", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11789981334", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11898762523", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11825909535", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11947266936", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11566311732", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/12194073268", 
+      "https://github.com/r-universe/r-multiverse/actions/runs/11927536639"
     ),
-    "_type" = c(
-      "src",
-      "src", "src", "src", "src", "src", "src", "src", "src", "src",
-      "src", "src", "src", "src", "src", "failure", "src", "src", "src",
-      "src", "src"
-    ),
-    "_status" = c(
-      "success", "success", "success",
-      "success", "success", "success", "success", "success", "success",
-      "success", "success", "failure", "success", "success", "success",
-      NA, "success", "failure", "success", "success", "success"
-    ),
-    "_winbinary" = c(
-      "success",
-      "success", "success", "success", "success", "success", "success",
-      "success", "success", "success", "success", "success", "success",
-      "success", "success", NA, "success", "success", "success", "success",
-      "success"
-    ),
-    "_macbinary" = c(
-      "success", "success", "success",
-      "success", "success", "success", "arm64-failure", "success",
-      "success", "success", "success", "success", "success", "success",
-      "success", NA, "success", "success", "success", "success", "success"
-    ),
-    "_wasmbinary" = c(
-      "success", "success", "success", "success",
-      "success", "success", "none", "success", "success", "success",
-      "success", "success", "success", "success", "success", NA, "success",
-      "success", "none", "success", "success"
-    ),
-    "_linuxdevel" = c(
-      "success",
-      "success", "success", "success", "success", "success", "failure",
-      "success", "success", "success", "success", "failure", "success",
-      "failure", "success", NA, "success", "failure", "success", "success",
-      "success"
-    ),
-    "_buildurl" = c(
-      "https://github.com/r-universe/r-multiverse/actions/runs/9412009683",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9420167853",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9407999221",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9352924033",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9364583983",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9412010159",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9360739181",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9412009508",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9412009855",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9423785225",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9326435602",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9412009544",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9412009640",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9412009826",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9423785674",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9296256187",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9288035966",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9412009979",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9403635056",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9354527129",
-      "https://github.com/r-universe/r-multiverse/actions/runs/9412009721"
-    ),
-    "_indexed" = c(
-      FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE,
-      FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, NA, TRUE,
-      FALSE, FALSE, FALSE, FALSE
-    ),
-    "_binaries" = list(
-      list(), list(),
-      list(), list(), list(), list(), list(), list(), list(), list(),
-      list(), list(), list(), list(), list(), list(), list(), list(),
-      list(), list(), list()
-    ),
-    "_failure" = structure(
-      list(
-        buildurl = c(
-          NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
-          file.path(
-            "https://github.com/r-universe/r-multiverse",
-            "actions/runs/9296256187"
-          ),
-          NA, NA, NA, NA, NA
-        )
-      ),
-      class = "data.frame",
-      row.names = c(NA, 21L)
-    )
+    issues = c(
+      "linux R-4.5.0: WARNING\nmac R-4.4.2: WARNING\nwin R-4.4.2: WARNING",
+      NA, "linux R-4.5.0: WARNING\nmac R-4.4.2: WARNING",
+      NA, NA, NA, NA, "win R-4.4.2: WARNING", NA, NA,
+      "mac R-release: MISSING\nwin R-release: MISSING",
+      NA, "win R-release: MISSING", NA,
+      "linux R-4.5.0: WARNING\nmac R-4.4.2: WARNING\nwin R-4.4.2: WARNING",
+      "linux R-4.5.0: WARNING\nmac R-4.4.2: WARNING\nwin R-4.4.2: WARNING",
+      "linux R-4.5.0: WARNING\nmac R-4.4.2: WARNING", # nolint
+      NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
+      "mac R-4.4.2: WARNING\nmac R-4.4.2: WARNING\nwin R-release: MISSING",
+      NA, NA, NA, NA, NA, NA, NA,
+      "linux R-4.5.0: WARNING\nmac R-4.4.2: WARNING\nwin R-4.4.2: WARNING",
+      NA, NA,
+      "linux R-4.5.0: WARNING\nmac R-4.4.2: WARNING\nwin R-4.4.2: WARNING",
+      "linux R-4.5.0: WARNING\nmac R-4.4.2: WARNING\nwin R-4.4.2: WARNING",
+      NA, NA, NA,
+      "linux R-4.5.0: WARNING\nmac R-4.4.2: WARNING\nwin R-4.4.2: WARNING",
+      "mac R-4.4.2: ERROR\nwin R-4.4.2: ERROR",
+      "linux R-4.5.0: WARNING",
+      "linux R-devel: MISSING\nmac R-release: MISSING",
+      NA, NA)
   ),
   class = "data.frame",
-  row.names = c(NA, 21L)
+  row.names = c(
+    "demographr",
+    "httpgd",
+    "healthyr", "prophet", "jagstargets", "adbcdrivermanager", "duckdb",
+    "igraph", "targetsketch", "nanonext", "prqlr", "milRex", "glaredb",
+    "polars", "stantargets", "wildfires", "audio.whisper", "unigd",
+    "secretbase", "arrow", "rJavaEnv", "IMD", "adbcflightsql", "crew",
+    "string2path", "rlang", "tidypolars", "colorout", "adbcsnowflake",
+    "asylum", "cmdstanr", "adbcbigquery", "multiverse.internals",
+    "webchem", "audio.vadwebrtc", "tidytensor", "later", "zstdlite",
+    "loneliness", "webseq", "mirai", "multitools", "nanoarrow", "geographr",
+    "taxizedb", "SBC", "INLA", "litedown", "ichimoku"
+  )
 )
 
 # dput(meta_packages(repo = "https://community.r-multiverse.org")) # nolint
