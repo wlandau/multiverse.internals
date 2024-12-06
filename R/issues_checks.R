@@ -17,7 +17,7 @@
 #'   meta <- meta_checks(repo = "https://wlandau.r-universe.dev")
 #'   issues <- issues_checks(meta = meta)
 #'   str(issues)
-issues_checks <- function(meta = meta_checks()) {s
-  meta <- meta[!is.na(meta$issues),, drop = FALSE] # nolint
+issues_checks <- function(meta = meta_checks()) {
+  meta <- meta[lengths(meta$issues) > 0L,, drop = FALSE] # nolint
   issues_list(meta[, c("package", "url", "issues")])
 }
