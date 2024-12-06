@@ -50,7 +50,7 @@ target_check <- function(
   check
 ) {
   is_target <- (target_os == os) & is_target_r
-  if (!any(is_target)) {
+  if (!any(is_target) || all(is.na(check[is_target]))) {
     out <- "MISSING"
     names(out) <- paste0(target_os, " ", target_r)
     return(out)
