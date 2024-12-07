@@ -77,36 +77,38 @@ interpret_dependencies <- function(issue, package) {
   direct <- names(dependencies)[lengths(dependencies) < 1L]
   indirect <- setdiff(names(dependencies), direct)
   text <- paste0(
-    "One or more dependencies have issues. Packages ",
+    "One or more strong R package dependencies have issues: ",
     paste(names(dependencies), collapse = ", "),
-    " are causing problems upstream. "
+    "."
   )
   if (length(direct)) {
     text <- paste0(
       text,
-      ifelse(length(direct) == 1L, "Dependency ", "Dependencies "),
+      ifelse(length(direct) == 1L, " Dependency ", " Dependencies "),
       paste(direct, collapse = ", "),
       ifelse(length(direct) == 1L, " is ", " are "),
       "explicitly mentioned in 'Depends:', 'Imports:', or 'LinkingTo:' ",
-      "in the DESCRIPTION of ",
+      "in the DESCRIPTION file of ",
       package,
-      ".<br><br>"
+      "."
     )
   }
   if (length(indirect)) {
     text <- paste0(
       text,
-      ifelse(length(indirect) == 1L, "Package ", "Packages "),
+      ifelse(length(indirect) == 1L, " Dependency ", " Dependencies "),
       paste(indirect, collapse = ", "),
       ifelse(length(indirect) == 1L, " is ", " are "),
       "not part of 'Depends:', 'Imports:', or 'LinkingTo:' ",
-      "in the DESCRIPTION of ",
+      "in the DESCRIPTION file of ",
       package,
       ", but ",
       ifelse(length(indirect) == 1L, "it is", "they are"),
-      " upstream of one or more direct dependencies:<br>",
+      " upstream of one or more strong direct dependencies:<br>",
       as.character(yaml_html(dependencies[indirect]))
     )
+  } else {
+    text <- paste0(text, "<br><br>")
   }
   text
 }

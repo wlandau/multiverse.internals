@@ -122,7 +122,7 @@ test_that("interpret_status() checks etc.", {
   issues$tidypolars$dependencies <- list(x = "y")
   expect_true(
     grepl(
-      "One or more dependencies have issues",
+      "One or more strong R package dependencies have issues",
       interpret_status("tidypolars", issues)
     )
   )
@@ -130,21 +130,6 @@ test_that("interpret_status() checks etc.", {
     grepl(
       "The version number of the current release should be highest version",
       interpret_status("constantversion", issues)
-    )
-  )
-  issues$bad <- list(
-    checks = issues$audio.whisper$checks,
-    descriptions = list(
-      license = issues$targetsketch$descriptions$license,
-      remotes = issues$tidypolars$descriptions$remotes
-    ),
-    dependencies = list(nanonext = "mirai"),
-    versions = issues$constantversion$versions
-  )
-  expect_true(
-    grepl(
-      "One or more dependencies have issues",
-      interpret_status("bad", issues)
     )
   )
 })
@@ -244,4 +229,65 @@ test_that("interpret_status() with complicated dependency problems", {
       interpret_status("mirai", issues)
     )
   )
+})
+
+test_that("interpret_status(): check these interactively", {
+  skip_if_offline()
+  issues <- list(
+    bad = list(
+      checks = list(
+        url = "https://github.com/12103194809",
+        issues = list(
+          `linux x86_64 R-4.5.0` = "WARNING",
+          `mac aarch64 R-4.4.2` = "WARNING",
+          `mac x86_64 R-4.4.2` = "WARNING",
+          `win x86_64 R-4.4.2` = "WARNING"
+        )
+      ),
+      descriptions = list(
+        license = "non-standard",
+        advisories <- c("link1", "link2", "link3"),
+        remotes = "markvanderloo/tinytest/pkg"
+      ),
+      dependencies = list(
+        nanonext = "mirai",
+        mirai = list(),
+        a = list(),
+        b = c("x", "yasdf", "z")
+      ),
+      versions = list(
+        version_current = "1.0.0",
+        hash_current = "hash_1.0.0-modified",
+        version_highest = "1.0.0",
+        hash_highest = "hash_1.0.0"
+      )
+    )
+  )
+  issues$bad2 <- issues$bad
+  issues$bad2$dependencies <- list(
+    nanonext = "mirai",
+    b = c("x", "yasdf", "z")
+  )
+  issues$bad3 <- issues$bad
+  issues$bad3$dependencies <- list(
+    nanonext = list(),
+    b = list()
+  )
+  issues$bad4 <- issues$bad
+  issues$bad4$dependencies <- list(
+    nanonext = "mirai"
+  )
+  issues$bad5 <- issues$bad
+  issues$bad5$dependencies <- list(
+    nanonext = list()
+  )
+  temp <- tempfile(fileext = ".html")
+  on.exit(unlink(temp))
+  for (package in names(issues)) {
+    text <- interpret_status(package, issues)
+    expect_true(grepl("found issues", text))
+    writeLines(text, temp)
+    # browseURL(temp) # nolint
+    # browser() # nolint
+  }
 })
