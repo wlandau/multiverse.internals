@@ -132,6 +132,21 @@ test_that("interpret_status() checks etc.", {
       interpret_status("constantversion", issues)
     )
   )
+  issues$bad <- list(
+    checks = issues$audio.whisper$checks,
+    descriptions = list(
+      license = issues$targetsketch$descriptions$license,
+      remotes = issues$tidypolars$descriptions$remotes
+    ),
+    dependencies = list(nanonext = "mirai"),
+    versions = issues$constantversion$versions
+  )
+  expect_true(
+    grepl(
+      "One or more dependencies have issues",
+      interpret_status("bad", issues)
+    )
+  )
 })
 
 test_that("interpret_status() with complicated dependency problems", {
