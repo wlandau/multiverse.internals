@@ -1,3 +1,7 @@
+# multiverse.internals 0.3.4
+
+* Use `<pre>` to render YAML in HTML.
+
 # multiverse.internals 0.3.3
 
 * Remove a superfluous text replacement in status system.
