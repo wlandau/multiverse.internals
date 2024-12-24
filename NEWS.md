@@ -1,3 +1,7 @@
+# multiverse.internals 0.3.4.9000
+
+* Depend on R >= 4.4.0 for the base coalescing operator `%||%`.
+
 # multiverse.internals 0.3.4
 
 * Use `<pre>` to render YAML in HTML.
