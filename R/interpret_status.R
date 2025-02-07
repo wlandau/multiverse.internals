@@ -31,7 +31,7 @@ interpret_title <- function(issue, package) {
     "R-multiverse found issues with package ",
     package
   )
-  if (is.character(issue$version)) {
+  if (is.character(issue$versions)) {
     title <- paste(title, "version", issue$version)
   }
   if (is.character(issue$remote_hash)) {

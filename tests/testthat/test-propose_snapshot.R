@@ -47,7 +47,10 @@ test_that("propose_snapshot()", {
     readLines(file.path(path_staging, "snapshot.url")),
     paste0(
       "https://staging.r-multiverse.org/api/snapshot/zip",
-      "?types=src,win,mac&packages=good1,good2"
+      "?types=src,win,mac",
+      "&binaries=",
+      gsub("\\.[0-9]*$", "", rversions::r_release()$version),
+      "&packages=good1,good2"
     )
   )
   propose_snapshot(

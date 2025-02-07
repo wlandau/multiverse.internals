@@ -1,6 +1,7 @@
-# multiverse.internals 0.3.4.9000
+# multiverse.internals 0.3.5
 
 * Depend on R >= 4.4.0 for the base coalescing operator `%||%`.
+* Only snapshot binaries for the current R release.
 
 # multiverse.internals 0.3.4
 
