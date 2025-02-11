@@ -125,12 +125,6 @@ test_that("interpret_status() checks etc.", {
       interpret_status("SBC", issues)
     )
   )
-  expect_true(
-    grepl(
-      "On Bioconductor",
-      interpret_status("stantargets", issues)
-    )
-  )
   issues$tidypolars$dependencies <- list(x = "y")
   expect_true(
     grepl(

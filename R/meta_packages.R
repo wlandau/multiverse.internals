@@ -3,7 +3,18 @@
 #' @family meta
 #' @description List package metadata in an R universe.
 #' @return A data frame with one row per package and columns with package
-#'   metadata.
+#'   metadata. The most important columns are:
+#'   * `package`: character vector of package names.
+#'   * `version`: character vector of package versions in the repo.
+#'   * `license`: character vector of license names.
+#'   * `remotesha`: character vector of GitHub/GitLab commit hashes.
+#'   * `remotes`: list of character vectors with dependencies in the
+#'     `Remotes:` field of the `DESCRIPTION` files.
+#'   * `foss`: `TRUE` if the package has a valid free open-source license,
+#'     `FALSE` otherwise.
+#'   * `cran`: character vector of versions. Each version is the version of
+#'     the package that was on CRAN during the first day of the most recent
+#'     R-multiverse staging period.
 #' @inheritParams meta_checks
 #' @param fields Character string of fields to query.
 #' @examples
@@ -29,19 +40,23 @@ meta_packages <- function(
   foss <- utils::available.packages(repos = repo, filters = "license/FOSS")
   out$foss <- FALSE
   out[as.character(foss[, "Package"]), "foss"] <- TRUE
-  cran <- utils::available.packages(repos = "https://cloud.r-project.org")
+  freeze <- meta_packages_staging_freeze()
+  p3m <- "https://packagemanager.posit.co"
+  repo_cran <- file.path(p3m, "cran", freeze)
+  cran <- utils::available.packages(repos = repo_cran)
   cran <- data.frame(
     package = as.character(cran[, "Package"]),
     cran = as.character(cran[, "Version"])
   )
-  repos <- suppressMessages(BiocManager::repositories())
-  repos <- repos[names(repos) != "CRAN"]
-  bioconductor <- utils::available.packages(repos = repos)
-  bioconductor <- data.frame(
-    package = as.character(bioconductor[, "Package"]),
-    bioconductor = as.character(bioconductor[, "Version"])
-  )
   out <- merge(x = out, y = cran, all.x = TRUE, all.y = FALSE)
-  out <- merge(x = out, y = bioconductor, all.x = TRUE, all.y = FALSE)
   out
+}
+
+meta_packages_staging_freeze <- function() {
+  today <- Sys.Date()
+  year <- as.integer(format(today, "%Y"))
+  years <- as.character(rep(c(year - 1L, year), each = 4L))
+  months <- rep(c("01-15", "04-15", "07-15", "10-15"), times = 2L)
+  freezes <- as.Date(paste(years, months, sep = "-"))
+  as.character(max(freezes[freezes <= today]))
 }

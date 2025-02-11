@@ -3,8 +3,7 @@ test_that("issues_descriptions() mocked", {
   expected <- list(
     audio.whisper = list(remotes = "bnosac/audio.vadwebrtc"),
     stantargets = list(
-      remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr"),
-      bioconductor = "9.0.0"
+      remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")
     ),
     SBC = list(cran = "1.0.0"),
     targetsketch = list(license = "non-standard"),
@@ -51,8 +50,7 @@ test_that("issues_descriptions() with security advisories", {
       )
     ),
     stantargets = list(
-      remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr"),
-      bioconductor = "9.0.0"
+      remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")
     ),
     SBC = list(cran = "1.0.0"),
     targetsketch = list(license = "non-standard"),

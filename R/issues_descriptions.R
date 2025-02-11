@@ -8,8 +8,8 @@
 #'     <https://github.com/RConsortium/r-advisory-database>.
 #'   2. Licenses that cannot be verified as free and open-source.
 #'   3. The presence of a `"Remotes"` field.
-#'   4. A lower version number on R-multiverse than on CRAN or Bioconductor,
-#'     if the package is on either of these other package repositories.
+#'   4. A lower version number on R-multiverse than on CRAN,
+#'     if the package is also published on the latter.
 #' @inheritSection record_issues Package issues
 #' @return A named list of information about packages which do not comply
 #'   with `DESCRPTION` checks. Each name is a package name,
@@ -27,15 +27,13 @@ issues_descriptions <- function(meta = meta_packages()) {
   meta <- issues_descriptions_licenses(meta)
   meta <- issues_descriptions_remotes(meta)
   meta <- issues_descriptions_version_conflict(meta, repo = "cran")
-  meta <- issues_descriptions_version_conflict(meta, repo = "bioconductor")
   meta <- meta[meta$issue,, drop = FALSE] # nolint
   fields <- c(
     "package",
     "advisories",
     "license",
     "remotes",
-    "cran",
-    "bioconductor"
+    "cran"
   )
   issues_list(meta[, fields])
 }

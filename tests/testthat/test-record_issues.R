@@ -52,8 +52,7 @@ test_that("record_issues() mocked", {
         )
       ),
       descriptions = list(
-        remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr"),
-        bioconductor = "9.0.0"
+        remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")
       ),
       date = "2024-01-01",
       version = "0.1.1",

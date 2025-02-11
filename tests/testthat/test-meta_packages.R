@@ -6,8 +6,7 @@ test_that("meta_packages()", {
     "package",
     "version",
     "remotesha",
-    "cran",
-    "bioconductor"
+    "cran"
   )
   expect_true(all(fields %in% colnames(out)))
 })

@@ -174,19 +174,6 @@ interpert_version_conflicts <- function(issues) {
       "in the DESCRIPTION file.<br><br>"
     )
   }
-  if (!is.null(issues$descriptions$bioconductor)) {
-    out <- paste(
-      out,
-      "On Bioconductor, this package had version",
-      issues$descriptions$bioconductor,
-      "during the first day of the most recent R-multiverse Staging period.",
-      "The version on R-multiverse is lower,",
-      "which causes install.packages() to prefer Bioconductor.",
-      "If you have not already done so, please ensure the latest",
-      "GitHub/GitLab release has a suitably recent version",
-      "in the DESCRIPTION file.<br><br>"
-    )
-  }
   trimws(out)
 }
 

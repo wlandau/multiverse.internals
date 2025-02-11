@@ -644,11 +644,6 @@ mock_meta_packages <- structure(
       "1.0.0", NA, NA, NA, "0.0.1", "0.0.1", "0.0.1", "1.1.0",
       NA, NA, "0.0.1", NA, "0.0.1", NA, "0.0.1", NA, NA, NA, "0.0.1",
       NA
-    ),
-    bioconductor = c(
-      rep(NA_character_, 13L),
-      "9.0.0",
-      rep(NA_character_, 6L)
     )
   ),
   class = "data.frame",
@@ -781,8 +776,7 @@ mock_meta_packages_graph <- structure(
     ),
     distro = c("noble", "noble", "noble", "noble", "noble"),
     foss = rep(TRUE, 5L),
-    cran = rep(NA_character_, 5L),
-    bioconductor = rep(NA_character_, 5L)
+    cran = rep(NA_character_, 5L)
   ),
   class = "data.frame",
   row.names = c(NA, 5L)
