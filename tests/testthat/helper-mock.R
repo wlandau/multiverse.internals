@@ -639,7 +639,13 @@ mock_meta_packages <- structure(
       c("hyunjimoon/SBC", "stan-dev/cmdstanr", ""), NULL, NULL,
       "markvanderloo/tinytest/pkg", NULL, NULL, NULL
     ),
-    foss = c(rep(TRUE, 15L), FALSE, rep(TRUE, 4L))
+    foss = c(rep(TRUE, 15L), FALSE, rep(TRUE, 4L)),
+    cran = c(
+      "1.0.0", NA, NA, NA, "1.1.3-2", "2.0.2", "1.5.5", "2.1.0", 
+      NA, NA, "1.5.0", NA, "1.0.4", NA, "0.2.0", NA, NA, NA, "1.4.1", 
+      NA
+    ),
+    bioconductor = rep(NA_character_, 20L)
   ),
   class = "data.frame",
   row.names = c(NA, 20L)
