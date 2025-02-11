@@ -27,6 +27,8 @@ Report issues with \code{DESCRIPTION}-level metadata of packages.
 \url{https://github.com/RConsortium/r-advisory-database}.
 \item Licenses that cannot be verified as free and open-source.
 \item The presence of a \code{"Remotes"} field.
+\item A lower version number on R-multiverse than on CRAN or Bioconductor,
+if the package is on either of these other package repositories.
 }
 }
 \section{Package issues}{

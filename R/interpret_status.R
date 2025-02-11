@@ -19,6 +19,7 @@ interpret_status <- function(package, issues) {
       interpret_checks(issue),
       interpret_dependencies(issue, package),
       interpret_remotes(issue),
+      interpert_version_conflicts(issue),
       interpret_versions(issue)
     ),
     collapse = ""
@@ -31,7 +32,7 @@ interpret_title <- function(issue, package) {
     "R-multiverse found issues with package ",
     package
   )
-  if (is.character(issue$versions)) {
+  if (is.character(issue$version)) {
     title <- paste(title, "version", issue$version)
   }
   if (is.character(issue$remote_hash)) {
@@ -156,6 +157,36 @@ interpret_versions <- function(issue) {
     "and the latest remote hash of each:<br>",
     as.character(yaml_html(versions))
   )
+}
+
+interpert_version_conflicts <- function(issues) {
+  out <- character(0L)
+  if (!is.null(issues$cran)) {
+    out <- paste(
+      out,
+      "On CRAN, this package had version",
+      issues$cran,
+      "at the beginning of the most recent R-multiverse Staging period.",
+      "The version on R-multiverse is lower,",
+      "which causes install.packages() to prefer CRAN.",
+      "If you have not already done so, please ensure the latest",
+      "GitHub/GitLab release has a suitably recent version",
+      "in the DESCRIPTION file."
+    )
+  }
+  if (!is.null(issues$bioconductor)) {
+    out <- paste(
+      out,
+      "On Bioconductor, this package had version",
+      issues$bioconductor,
+      "at the beginning of the most recent R-multiverse Staging period.",
+      "The version on R-multiverse is lower,",
+      "which causes install.packages() to prefer Bioconductor.",
+      "If you have not already done so, please ensure the latest",
+      "GitHub/GitLab release has a suitably recent version",
+      "in the DESCRIPTION file."
+    )
+  }
 }
 
 yaml_html <- function(x) {
