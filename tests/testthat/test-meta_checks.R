@@ -32,12 +32,13 @@ test_that("meta_checks_process_json() with a source failure", {
         structure(
           list(
             r = c(
-              "4.5.0", "4.4.2", "4.5.0", "4.3.3", "4.4.2", "4.3.3", 
+              "4.5.0", "4.4.2", "4.5.0", "4.3.3", "4.4.2", "4.3.3",
               "4.4.1", "4.5.0", "4.3.3", "4.4.2"
             ),
-            os = c("linux", "linux", 
-                   "mac", "mac", "mac", "wasm", "wasm", "win", "win", "win"
-            ), 
+            os = c(
+              "linux", "linux",
+              "mac", "mac", "mac", "wasm", "wasm", "win", "win", "win"
+            ),
             commit = c(
               "645738f41fbfac835bbce76596d6f924ce3c9549",
               "645738f41fbfac835bbce76596d6f924ce3c9549",
@@ -51,21 +52,22 @@ test_that("meta_checks_process_json() with a source failure", {
               "645738f41fbfac835bbce76596d6f924ce3c9549"
             ),
             status = c(
-              "success", "success", "success", "success", 
+              "success", "success", "success", "success",
               "success", "success", "success", "success", "success", "success"
             ),
             check = c(
-              "OK", NA, "OK", "OK", "OK", NA, NA, "OK", "OK", "OK"),
+              "OK", NA, "OK", "OK", "OK", NA, NA, "OK", "OK", "OK"
+            ),
             buildurl = c(
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
               "https://github.com/r-universe/r-multiverse-staging/binary"
             )
           ),
@@ -75,11 +77,11 @@ test_that("meta_checks_process_json() with a source failure", {
         structure(
           list(
             r = c(
-              "4.5.0", "4.4.2", "4.3.3", "4.4.2", "4.3.3", "4.4.1", 
+              "4.5.0", "4.4.2", "4.3.3", "4.4.2", "4.3.3", "4.4.1",
               "4.5.0", "4.3.3", "4.4.2"
             ),
             os = c(
-              "linux", "linux", "mac", 
+              "linux", "linux", "mac",
               "mac", "wasm", "wasm", "win", "win", "win"
             ),
             commit = c(
@@ -89,24 +91,24 @@ test_that("meta_checks_process_json() with a source failure", {
               "859a9b465e25e0ced329c36206488fb61382880c",
               "859a9b465e25e0ced329c36206488fb61382880c",
               "859a9b465e25e0ced329c36206488fb61382880c",
-              "859a9b465e25e0ced329c36206488fb61382880c", 
+              "859a9b465e25e0ced329c36206488fb61382880c",
               "859a9b465e25e0ced329c36206488fb61382880c",
               "859a9b465e25e0ced329c36206488fb61382880c"
             ),
             status = c(
-              "success", "success", "success", "success", 
+              "success", "success", "success", "success",
               "success", "success", "success", "success", "success"
             ),
             check = c("OK", NA, "OK", "OK", NA, NA, "OK", "OK", "OK"),
             buildurl = c(
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
-              "https://github.com/r-universe/r-multiverse-staging/binary", 
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
+              "https://github.com/r-universe/r-multiverse-staging/binary",
               "https://github.com/r-universe/r-multiverse-staging/binary"
             )
           ),
@@ -125,12 +127,13 @@ test_that("meta_checks_process_json() with a source failure", {
             class = "data.frame"
           ),
           buildurl = c(
-            NA, 
+            NA,
             "https://github.com/r-universe/r-multiverse-staging/falure"
           )
         ),
         row.names = c(6L, 13L),
-        class = "data.frame")
+        class = "data.frame"
+      )
     ),
     row.names = c(6L, 13L),
     class = "data.frame"

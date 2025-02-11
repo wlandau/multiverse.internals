@@ -1,3 +1,7 @@
+# multiverse.internals 0.3.6
+
+* Detect source failures as issues.
+
 # multiverse.internals 0.3.5
 
 * Depend on R >= 4.4.0 for the base coalescing operator `%||%`.
