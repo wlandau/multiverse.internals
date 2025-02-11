@@ -5,7 +5,9 @@ test_that("meta_packages()", {
   fields <- c(
     "package",
     "version",
-    "remotesha"
+    "remotesha",
+    "cran",
+    "bioconductor"
   )
   expect_true(all(fields %in% colnames(out)))
 })

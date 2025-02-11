@@ -29,5 +29,19 @@ meta_packages <- function(
   foss <- utils::available.packages(repos = repo, filters = "license/FOSS")
   out$foss <- FALSE
   out[as.character(foss[, "Package"]), "foss"] <- TRUE
+  cran <- utils::available.packages(repos = "https://cloud.r-project.org")
+  cran <- data.frame(
+    package = as.character(cran[, "Package"]),
+    cran = as.character(cran[, "Version"])
+  )
+  repos <- suppressMessages(BiocManager::repositories())
+  repos <- repos[names(repos) != "CRAN"]
+  bioconductor <- utils::available.packages(repos = repos)
+  bioconductor <- data.frame(
+    package = as.character(bioconductor[, "Package"]),
+    bioconductor = as.character(bioconductor[, "Version"])
+  )
+  out <- merge(x = out, y = cran, all.x = TRUE, all.y = FALSE)
+  out <- merge(x = out, y = bioconductor, all.x = TRUE, all.y = FALSE)
   out
 }
