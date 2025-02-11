@@ -72,62 +72,7 @@ metadata.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">meta_packages</span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"https://wlandau.r-universe.dev"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     _id        package    version</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> autometric     6784912a040e85d8a67224db     autometric 0.1.2.9000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew           67a641b44083faa4562ddbbd           crew 1.0.0.9001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.aws.batch 67a39e3e83ace1b0aa3bfc75 crew.aws.batch      0.0.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.cluster   67a39e1b83ace1b0aa3bfc3c   crew.cluster 0.3.4.9000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mirai          67a5df7c4083faa4562d5571          mirai 2.1.0.9000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> nanonext       67a5612e4083faa4562bc609       nanonext 1.5.0.9000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                           license                                remotesha</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> autometric     MIT + file LICENSE 13ec8d2cfba955081cf3e19eb5e74af07ba89bef</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew           MIT + file LICENSE 7d460e26f4c45233bee15ff4db9564503ec4b21a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.aws.batch MIT + file LICENSE 136fedb9df30123b7c216ac75a66f29e8e94f2c1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.cluster   MIT + file LICENSE f9ecd38a1b8736157b06635f5e0cb43cb80c09a4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mirai                  GPL (&gt;= 3) 67f95d0eee0b35637d02589fc4ecd78303ada586</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> nanonext               GPL (&gt;= 3) c52954a35fa7fe10de340811a1405897e603ba9a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                needscompilation                           md5sum _type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> autometric                  yes c5c4fb3ba112cc8217c6754ad8879508   src</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew                         no c8a78b74aa4c15fd96a9fb8259e6f78e   src</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.aws.batch               no 41cb06e4ff71a43b97fcba6240ab1ec8   src</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.cluster                 no 1ffb744c7d5f78b7d3d0a1ea059a3d20   src</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mirai                        no 503c6cb586b5c8370f961ae0d89af473   src</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> nanonext                    yes 8fd414d456c93462b1c9711b754c2e3f   src</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                         _fileid</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> autometric     7323e5490f368203f3360e142c6b594b7bfa8a298a1e83490898bbfefc8dee7b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew           0af52280edb8f56cd4422e83045e0bbe94276e11fed4364a3a534319e45f4cd2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.aws.batch 5653359fc41384cebab63acf150566affa1c81f257cd773ab6dc8ba47607bf94</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.cluster   f56df6cc525926983aef4ddc8633fc0186fa790c93566c6c4e681fce623e6bce</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mirai          6bdc4d7615e299a484b16b0a60d5b0c88520cb7baddb5cfc6e915755d8f306cf</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> nanonext       1661ec9da9d2fd90eea79b0df6a74b1f88d45208900d210871ac426650f669b3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      _dependencies</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> autometric                                                                                                                                                                                                                                                                                                                                                                                                      R, graphics, utils, grDevices, ps, tinytest, &gt;= 3.5.0, NA, NA, NA, NA, NA, Depends, Imports, Imports, Suggests, Suggests, Suggests</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew           R, cli, data.table, getip, later, mirai, nanonext, processx, promises, ps, R6, rlang, stats, tibble, tidyselect, tools, utils, autometric, knitr, markdown, rmarkdown, testthat, &gt;= 4.0.0, &gt;= 3.1.0, NA, NA, NA, &gt;= 2.0.1, &gt;= 1.4.0, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, &gt;= 0.1.0, &gt;= 1.30, &gt;= 1.1, &gt;= 2.4, &gt;= 3.0.0, Depends, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Suggests, Suggests, Suggests, Suggests, Suggests</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.aws.batch                                                                                                                                                                       R, cli, crew, paws.common, paws.compute, paws.management, R6, rlang, tibble, utils, knitr, markdown, rmarkdown, testthat, &gt;= 4.0.0, &gt;= 3.1.0, &gt;= 1.0.0, &gt;= 0.7.0, NA, NA, NA, NA, NA, NA, &gt;= 1.30, &gt;= 1.1, &gt;= 2.4, &gt;= 3.0.0, Depends, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Suggests, Suggests, Suggests, Suggests</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.cluster                                                                                                                                                                                                            R, crew, ps, lifecycle, R6, rlang, utils, vctrs, xml2, yaml, knitr, markdown, rmarkdown, testthat, &gt;= 4.0.0, &gt;= 1.0.0, NA, NA, NA, NA, NA, NA, NA, NA, &gt;= 1.30, &gt;= 1.1, &gt;= 2.4, &gt;= 3.0.0, Depends, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Imports, Suggests, Suggests, Suggests, Suggests</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mirai                                                                                                                                                                                                                                                                                                                                                                                                   R, nanonext, cli, litedown, parallel, promises, &gt;= 3.6, &gt;= 1.5.0, NA, NA, NA, NA, Depends, Imports, Suggests, Suggests, Enhances, Enhances</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> nanonext                                                                                                                                                                                                                                                                                                                                                                                                                                                   R, later, litedown, promises, &gt;= 3.6, NA, NA, NA, Depends, Suggests, Suggests, Enhances</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                filesize distro</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> autometric       273551  noble</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew            1083488  noble</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.aws.batch   572616  noble</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.cluster     389512  noble</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mirai            395358  noble</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> nanonext        1039134  noble</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                          sha256</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> autometric     7323e5490f368203f3360e142c6b594b7bfa8a298a1e83490898bbfefc8dee7b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew           0af52280edb8f56cd4422e83045e0bbe94276e11fed4364a3a534319e45f4cd2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.aws.batch 5653359fc41384cebab63acf150566affa1c81f257cd773ab6dc8ba47607bf94</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.cluster   f56df6cc525926983aef4ddc8633fc0186fa790c93566c6c4e681fce623e6bce</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mirai          6bdc4d7615e299a484b16b0a60d5b0c88520cb7baddb5cfc6e915755d8f306cf</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> nanonext       1661ec9da9d2fd90eea79b0df6a74b1f88d45208900d210871ac426650f669b3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                foss</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> autometric     TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew           TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.aws.batch TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> crew.cluster   TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mirai          TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> nanonext       TRUE</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in loadNamespace(x):</span> there is no package called ‘BiocManager’</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
