@@ -38,7 +38,7 @@ interpret_title <- function(issue, package) {
   if (is.character(issue$remote_hash)) {
     title <- paste(title, "remote hash", issue$remote_hash)
   }
-  paste0(title, " since ", issue$date, ".<br><br>")
+  paste0(title, " (as of ", issue$date, ").<br><br>")
 }
 
 interpret_advisories <- function(issue) {
@@ -161,32 +161,33 @@ interpret_versions <- function(issue) {
 
 interpert_version_conflicts <- function(issues) {
   out <- character(0L)
-  if (!is.null(issues$cran)) {
+  if (!is.null(issues$descriptions$cran)) {
     out <- paste(
       out,
       "On CRAN, this package had version",
-      issues$cran,
-      "at the beginning of the most recent R-multiverse Staging period.",
+      issues$descriptions$cran,
+      "during the first day of the most recent R-multiverse Staging period.",
       "The version on R-multiverse is lower,",
       "which causes install.packages() to prefer CRAN.",
       "If you have not already done so, please ensure the latest",
       "GitHub/GitLab release has a suitably recent version",
-      "in the DESCRIPTION file."
+      "in the DESCRIPTION file.<br><br>"
     )
   }
-  if (!is.null(issues$bioconductor)) {
+  if (!is.null(issues$descriptions$bioconductor)) {
     out <- paste(
       out,
       "On Bioconductor, this package had version",
-      issues$bioconductor,
-      "at the beginning of the most recent R-multiverse Staging period.",
+      issues$descriptions$bioconductor,
+      "during the first day of the most recent R-multiverse Staging period.",
       "The version on R-multiverse is lower,",
       "which causes install.packages() to prefer Bioconductor.",
       "If you have not already done so, please ensure the latest",
       "GitHub/GitLab release has a suitably recent version",
-      "in the DESCRIPTION file."
+      "in the DESCRIPTION file.<br><br>"
     )
   }
+  trimws(out)
 }
 
 yaml_html <- function(x) {
