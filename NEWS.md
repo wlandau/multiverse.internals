@@ -3,6 +3,7 @@
 * Detect source failures as issues.
 * Flag R-multiverse packages whose CRAN versions from the day of the Staging freeze are higher than the current versions in R-multiverse.
 * Use the whole R version in `propose_snapshot()` so downstream automation can grep the snapshot URL for the version instead of needing to install R and the `rversions` package.
+* Write `config.json` in Staging to select the CRAN snapshot from the start of the freeze.
 
 # multiverse.internals 0.3.5
 

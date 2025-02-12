@@ -40,7 +40,7 @@ meta_packages <- function(
   foss <- utils::available.packages(repos = repo, filters = "license/FOSS")
   out$foss <- FALSE
   out[as.character(foss[, "Package"]), "foss"] <- TRUE
-  freeze <- meta_packages_staging_freeze()
+  freeze <- date_staging_freeze()
   p3m <- "https://packagemanager.posit.co"
   repo_cran <- file.path(p3m, "cran", freeze)
   cran <- utils::available.packages(repos = repo_cran)
@@ -50,13 +50,4 @@ meta_packages <- function(
   )
   out <- merge(x = out, y = cran, all.x = TRUE, all.y = FALSE)
   out
-}
-
-meta_packages_staging_freeze <- function() {
-  today <- Sys.Date()
-  year <- as.integer(format(today, "%Y"))
-  years <- as.character(rep(c(year - 1L, year), each = 4L))
-  months <- rep(c("01-15", "04-15", "07-15", "10-15"), times = 2L)
-  freezes <- as.Date(paste(years, months, sep = "-"))
-  as.character(max(freezes[freezes <= today]))
 }
