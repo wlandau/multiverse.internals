@@ -9,7 +9,7 @@
 #'   2. Licenses that cannot be verified as free and open-source.
 #'   3. The presence of a `"Remotes"` field.
 #'   4. A lower version number on R-multiverse than on CRAN,
-#'     if the package is also published on the latter.
+#'     if the package is also published there.
 #' @inheritSection record_issues Package issues
 #' @return A named list of information about packages which do not comply
 #'   with `DESCRPTION` checks. Each name is a package name,
