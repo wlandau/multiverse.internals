@@ -128,7 +128,7 @@ test_that("meta_checks_process_json() with a source failure", {
           ),
           buildurl = c(
             NA,
-            "https://github.com/r-universe/r-multiverse-staging/falure"
+            "https://github.com/r-universe/r-multiverse-staging/failure"
           )
         ),
         row.names = c(6L, 13L),
