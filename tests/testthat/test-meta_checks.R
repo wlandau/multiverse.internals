@@ -147,7 +147,7 @@ test_that("meta_checks_process_json() with a source failure", {
   )
   expect_equal(
     out$url[out$package == "crew"],
-    "https://github.com/r-universe/r-multiverse-staging/falure"
+    "https://github.com/r-universe/r-multiverse-staging/failure"
   )
   expect_equal(out$issues[[which(out$package == "mirai")]], list())
   expect_equal(
