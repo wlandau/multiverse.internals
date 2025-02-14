@@ -28,7 +28,7 @@ Report issues with \code{DESCRIPTION}-level metadata of packages.
 \item Licenses that cannot be verified as free and open-source.
 \item The presence of a \code{"Remotes"} field.
 \item A lower version number on R-multiverse than on CRAN,
-if the package is also published on the latter.
+if the package is also published there.
 }
 }
 \section{Package issues}{
