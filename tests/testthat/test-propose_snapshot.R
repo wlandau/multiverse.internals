@@ -28,9 +28,11 @@ test_that("propose_snapshot()", {
     package = c("good1", "good2", "issue", "removed", "unsynced"),
     remotesha = c(rep("original", 4), "sha-unsynced")
   )
+  version <- rversions::r_release()$version
   propose_snapshot(
     path_staging = path_staging,
-    mock = list(staging = meta_staging)
+    mock = list(staging = meta_staging),
+    r_versions = version
   )
   json_snapshot <- jsonlite::read_json(
     file.path(path_staging, "snapshot.json"),
@@ -49,7 +51,7 @@ test_that("propose_snapshot()", {
       "https://staging.r-multiverse.org/api/snapshot/zip",
       "?types=src,win,mac",
       "&binaries=",
-      gsub("\\.[0-9]*$", "", rversions::r_release()$version),
+      version,
       "&packages=good1,good2"
     )
   )
