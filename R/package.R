@@ -5,9 +5,9 @@
 #' @importFrom jsonlite parse_json read_json stream_in write_json
 #' @importFrom nanonext ncurl parse_url status_code
 #' @importFrom pkgsearch cran_package
-#' @importFrom rversions r_release r_versions
+#' @importFrom rversions r_versions
 #' @importFrom stats aggregate
-#' @importFrom utils available.packages compareVersion contrib.url unzip
+#' @importFrom utils available.packages compareVersion contrib.url tail unzip
 #' @importFrom vctrs vec_rbind vec_slice
 #' @importFrom yaml read_yaml
 NULL

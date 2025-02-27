@@ -28,6 +28,8 @@ reference:
   contents:
   - update_staging
   - propose_snapshot
+  - staging_r_version
+  - staging_start
 - title: Package status
   contents:
   - interpret_status
