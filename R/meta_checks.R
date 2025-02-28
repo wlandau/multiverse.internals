@@ -80,19 +80,12 @@ target_check <- function(
 }
 
 is_r_release <- function(r) {
-  if (is.null(r_versions_envir$release)) {
-    r_versions_envir$release <- rversions::r_release(dots = TRUE)$version
-  }
-  r == r_versions_envir$release
+  r_version_short(r) == staging_r_version()$short
 }
 
 is_r_devel <- function(r) {
-  if (is.null(r_versions_envir$all)) {
-    history <- rversions::r_versions(dots = TRUE)
-    cutoff <- as.POSIXct(Sys.Date() - as.difftime(104, units = "weeks"))
-    r_versions_envir$all <- history$version[history$date > cutoff]
-  }
-  !(r %in% r_versions_envir$all)
+  major <- r_version_major(r)
+  minor <- r_version_minor(r)
+  staging <- staging_r_version()
+  major > staging$major | ((major == staging$major) & (minor > staging$minor))
 }
-
-r_versions_envir <- new.env(parent = emptyenv())

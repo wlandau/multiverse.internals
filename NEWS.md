@@ -1,3 +1,8 @@
+# multiverse.internals 0.3.7
+
+* Shift yearly Staging schedule to begin in January and end in December.
+* Freeze the targeted base R version at the start of Staging each quarter.
+
 # multiverse.internals 0.3.6
 
 * Detect source failures as issues.

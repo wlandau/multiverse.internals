@@ -28,11 +28,9 @@ test_that("propose_snapshot()", {
     package = c("good1", "good2", "issue", "removed", "unsynced"),
     remotesha = c(rep("original", 4), "sha-unsynced")
   )
-  version <- rversions::r_release()$version
   propose_snapshot(
     path_staging = path_staging,
-    mock = list(staging = meta_staging),
-    r_versions = version
+    mock = list(staging = meta_staging)
   )
   json_snapshot <- jsonlite::read_json(
     file.path(path_staging, "snapshot.json"),
@@ -51,20 +49,24 @@ test_that("propose_snapshot()", {
       "https://staging.r-multiverse.org/api/snapshot/zip",
       "?types=src,win,mac",
       "&binaries=",
-      version,
+      staging_r_version()$short,
       "&packages=good1,good2"
     )
   )
-  propose_snapshot(
-    path_staging = path_staging,
-    mock = list(staging = meta_staging),
-    r_versions = c("4.5", "4.4")
+  expect_equal(
+    readLines(file.path(path_staging, "date_snapshot.txt")),
+    as.character(Sys.Date())
   )
   expect_equal(
-    readLines(file.path(path_staging, "snapshot.url")),
-    paste0(
-      "https://staging.r-multiverse.org/api/snapshot/zip",
-      "?types=src,win,mac&binaries=4.5,4.4&packages=good1,good2"
-    )
+    readLines(file.path(path_staging, "date_staging_start.txt")),
+    as.character(staging_start())
+  )
+  expect_equal(
+    readLines(file.path(path_staging, "r_version_full.txt")),
+    as.character(staging_r_version()$full)
+  )
+  expect_equal(
+    readLines(file.path(path_staging, "r_version_short.txt")),
+    as.character(staging_r_version()$short)
   )
 })

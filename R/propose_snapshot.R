@@ -22,9 +22,6 @@
 #' @param types Character vector, what to pass to the `types` field in the
 #'   snapshot API URL. Controls the types of binaries and documentation
 #'   included in the snapshot.
-#' @param r_versions Character vector of `major.minor` versions of R
-#'   to download binaries. For example, `r_versions = c("4.4", "4.3")`.
-#'   Set to `NULL` to let R-universe choose default versions.
 #' @examples
 #' \dontrun{
 #' url_staging = "https://github.com/r-multiverse/staging"
@@ -39,7 +36,6 @@ propose_snapshot <- function(
   path_staging,
   repo_staging = "https://staging.r-multiverse.org",
   types = c("src", "win", "mac"),
-  r_versions = rversions::r_release()$version,
   mock = NULL
 ) {
   path_issues <- file.path(path_staging, "issues.json")
@@ -63,17 +59,26 @@ propose_snapshot <- function(
   staging$remotesha <- NULL
   file_snapshot <- file.path(path_staging, "snapshot.json")
   jsonlite::write_json(staging, file_snapshot, pretty = TRUE)
-  if (!is.null(r_versions)) {
-    r_versions <- paste0("&binaries=", paste(r_versions, collapse = ","))
-  }
+  r_version <- staging_r_version()
+  binaries <- paste0("&binaries=", r_version$short)
   url <- paste0(
     "https://staging.r-multiverse.org/api/snapshot/zip",
     "?types=",
     paste(types, collapse = ","),
-    r_versions,
+    binaries,
     "&packages=",
     paste(staging$package, collapse = ",")
   )
   writeLines(url, file.path(path_staging, "snapshot.url"))
+  writeLines(r_version$full, file.path(path_staging, "r_version_full.txt"))
+  writeLines(r_version$short, file.path(path_staging, "r_version_short.txt"))
+  writeLines(
+    staging_start(),
+    file.path(path_staging, "date_staging_start.txt")
+  )
+  writeLines(
+    as.character(Sys.Date()),
+    file.path(path_staging, "date_snapshot.txt")
+  )
   invisible()
 }
