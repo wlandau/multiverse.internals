@@ -1,3 +1,7 @@
+# multiverse.internals 0.3.8
+
+* In the status repo, list all packages with check issues for each of Community and Staging.
+
 # multiverse.internals 0.3.7
 
 * Shift yearly Staging schedule to begin in January and end in December.
