@@ -52,6 +52,11 @@ test_that("update_status()", {
     path_community = path_community,
     mock = list(staging = meta_staging, community = meta_community)
   )
+  expect_true(
+    all(
+      file.exists(file.path(path_status, c("community.html", "staging.html")))
+    )
+  )
   out_staging <- file.path(path_status, "staging")
   out_community <- file.path(path_status, "community")
   expect_equal(

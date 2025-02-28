@@ -76,6 +76,33 @@ update_status_directory <- function(output, input, meta, directory) {
     update_status_html(package, title, status, path_directory)
     update_status_xml(package, title, path_directory, guid)
   }
+  update_issue_summary(output, directory, sort(names(issues)))
+}
+
+update_issue_summary <- function(output, directory, packages) {
+  package_list <- ""
+  if (length(packages)) {
+    package_list <- sprintf(
+      "<li><a href=\"https://r-multiverse.org/status/%s/%s.html\">%s</a>",
+      directory,
+      packages,
+      packages
+    )
+    package_list <- paste(package_list, collapse = "\n")
+  }
+  template <- system.file(
+    file.path("status", "repository.html"),
+    package = "multiverse.internals",
+    mustWork = TRUE
+  )
+  lines <- readLines(template)
+  lines <- gsub(
+    pattern = "DIRECTORY",
+    replacement = tools::toTitleCase(directory),
+    x = lines
+  )
+  lines <- gsub(pattern = "PACKAGES", replacement = package_list, x = lines)
+  writeLines(lines, file.path(output, paste0(directory, ".html")))
 }
 
 update_status_html <- function(package, title, status, path_directory) {
