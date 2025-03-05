@@ -35,7 +35,7 @@
 propose_snapshot <- function(
   path_staging,
   repo_staging = "https://staging.r-multiverse.org",
-  types = c("src", "win", "mac"),
+  types = "src",
   mock = NULL
 ) {
   path_issues <- file.path(path_staging, "issues.json")
@@ -66,8 +66,8 @@ propose_snapshot <- function(
     "?types=",
     paste(types, collapse = ","),
     binaries,
-    "&packages=",
-    paste(staging$package, collapse = ",")
+    "&skip_packages=",
+    paste(issues, collapse = ",")
   )
   writeLines(url, file.path(path_staging, "snapshot.url"))
   meta <- list(

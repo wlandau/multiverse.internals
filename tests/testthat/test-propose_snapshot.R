@@ -47,10 +47,10 @@ test_that("propose_snapshot()", {
     readLines(file.path(path_staging, "snapshot.url")),
     paste0(
       "https://staging.r-multiverse.org/api/snapshot/zip",
-      "?types=src,win,mac",
+      "?types=src",
       "&binaries=",
       staging_r_version()$short,
-      "&packages=good1,good2"
+      "&skip_packages=issue,removed-has-issue"
     )
   )
   meta <- jsonlite::read_json(
