@@ -65,7 +65,9 @@ propose_snapshot <- function(
     "https://staging.r-multiverse.org/api/snapshot/zip",
     "?types=",
     paste(types, collapse = ","),
-    binaries
+    binaries,
+    "&packages=",
+    paste(staging$package, collapse = ",")
   )
   writeLines(url, file.path(path_staging, "snapshot.url"))
   meta <- list(

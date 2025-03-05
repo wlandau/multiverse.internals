@@ -49,7 +49,8 @@ test_that("propose_snapshot()", {
       "https://staging.r-multiverse.org/api/snapshot/zip",
       "?types=src,win,mac",
       "&binaries=",
-      staging_r_version()$short
+      staging_r_version()$short,
+      "&packages=good1,good2"
     )
   )
   meta <- jsonlite::read_json(
