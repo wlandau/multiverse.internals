@@ -1,3 +1,8 @@
+# multiverse.internals 0.3.10
+
+* Download all of staging in `propose_snapshot()` assuming staging has been finalized (contains only healthy packages) (#144).
+* Organize R version and snapshot/staging date information more neatly in `meta.json`.
+
 # multiverse.internals 0.3.9
 
 * Target Linux R-release instead of Linux R-devel (#112).
