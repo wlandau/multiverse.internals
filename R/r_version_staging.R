@@ -1,5 +1,6 @@
 #' @title Staging R version
 #' @export
+#' @family snapshot metadata
 #' @description Get the version of R from the date of the start of the
 #'   most recent Staging period.
 #' @return A data frame with one row and columns for the `POSIXct` date,

@@ -59,7 +59,7 @@ propose_snapshot <- function(
   staging$remotesha <- NULL
   file_snapshot <- file.path(path_staging, "snapshot.json")
   jsonlite::write_json(staging, file_snapshot, pretty = TRUE)
-  r_version <- staging_r_version()
+  r_version <- r_version_staging()
   binaries <- paste0("&binaries=", r_version$short)
   url <- paste0(
     "https://staging.r-multiverse.org/api/snapshot/tar",
@@ -72,7 +72,7 @@ propose_snapshot <- function(
   writeLines(url, file.path(path_staging, "snapshot.url"))
   meta <- list(
     date = data.frame(
-      staging = staging_start(),
+      staging = date_staging(),
       snapshot = as.character(Sys.Date())
     ),
     r_version = r_version[c("full", "short")]

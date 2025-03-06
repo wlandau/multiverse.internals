@@ -49,7 +49,7 @@ test_that("propose_snapshot()", {
       "https://staging.r-multiverse.org/api/snapshot/tar",
       "?types=src,win,mac",
       "&binaries=",
-      staging_r_version()$short,
+      r_version_staging()$short,
       "&skip_packages=issue,removed-has-issue"
     )
   )
