@@ -297,12 +297,10 @@ test_that("update_staging() with frozen package removed from Community", {
   file_staging <- file.path(path_staging, "packages.json")
   file_community <- file.path(path_community, "packages.json")
   json_staging <- jsonlite::read_json(file_staging)
-  json_community <- jsonlite::read_json(file_community)
-  names_community <- vapply(
-    json_community,
-    function(x) x$package,
-    FUN.VALUE = character(1L)
-  )
+  json_community <- jsonlite::read_json(file_community, simplifyVector = TRUE)
+  json_community <- json_community[json_community$package != "freeze", ]
+  jsonlite::write_json(json_community, file_community, pretty = TRUE)
+  names_community <- json_community$package
   meta_community <- data.frame(
     package = names_community,
     remotesha = paste0("sha-", names_community)

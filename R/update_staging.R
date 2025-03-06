@@ -39,7 +39,7 @@ update_staging <- function(
   meta_community <- meta_community[!is.na(meta_community$remotesha),, drop = FALSE] # nolint
   json_community <- merge(
     x = jsonlite::read_json(file_community, simplifyVector = TRUE),
-    y = meta_community[, c("package", "remotesha")],
+    y = meta_community[, c("package", "remotesha"), drop = FALSE],
     by = "package",
     all.x = TRUE, # Must be in Community packages.json.
     all.y = TRUE # Must be built on the Community universe.
