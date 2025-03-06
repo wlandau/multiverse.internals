@@ -29,6 +29,7 @@ reference:
   - update_staging
   - propose_snapshot
 - title: Snapshot metadata
+  contents:
   - date_snapshot
   - date_staging
   - r_version_staging
