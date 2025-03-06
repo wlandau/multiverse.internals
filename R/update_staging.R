@@ -46,15 +46,20 @@ update_staging <- function(
   json_community <- jsonlite::read_json(file_community, simplifyVector = TRUE)
   meta_community <- mock$community %||% meta_packages(repo_community)
   path_issues <- file.path(path_staging, "issues.json")
-  issues <- character(0L)
+  json_issues <- list()
   if (file.exists(path_issues)) {
-    issues <- names(jsonlite::read_json(path_issues, simplifyVector = TRUE))
+    json_issues <- jsonlite::read_json(path_issues, simplifyVector = TRUE)
   }
-  freeze <- setdiff(json_staging$package, issues)
-  update <- setdiff(json_community$package, freeze)
+  candidates <- if_any(
+    file.exists("frozen.json"), # If a Staging is already underway,
+    json_staging$package, # do not change the list of release candidates,
+    json_community$package # otherwise pull from Community.
+  )
+  freeze <- Filter(json_issues, f = function(issue) isTRUE(issue$success))
+  update <- setdiff(candidates, freeze)
   should_freeze <- json_staging$package %in% freeze
-  json_freeze <- json_staging[should_freeze, ]
-  json_update <- json_community[json_community$package %in% update, ]
+  json_freeze <- json_staging[should_freeze,, drop = FALSE] # nolint
+  json_update <- json_community[json_community$package %in% update,, drop = FALSE] # nolint
   json_freeze$subdir <- json_freeze$subdir %||%
     rep(NA_character_, nrow(json_freeze))
   json_update$subdir <- json_update$subdir %||%
@@ -84,5 +89,7 @@ update_staging <- function(
     pretty = TRUE,
     auto_unbox = TRUE
   )
+  file_frozen <- file.path(path_staging, "frozen.json")
+  jsonlite::write_json(frozen, file_frozen, pretty = TRUE)
   invisible()
 }

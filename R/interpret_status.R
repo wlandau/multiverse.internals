@@ -49,11 +49,7 @@ interpret_success <- function(issue, package) {
     out,
     " (last changed: ",
     issue$date,
-    "). ",
-    "During an active Staging cycle, ",
-    "the first occurrence of a healthy result like this one ",
-    "in Staging guarantees entry ",
-    "into the next Production snapshot."
+    ")."
   )
 }
 

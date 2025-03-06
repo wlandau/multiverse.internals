@@ -20,9 +20,7 @@ test_that("interpret_status() with a successful package", {
     ),
     paste(
       "R-multiverse checks passed for package abc version v remote",
-      "hash h (last changed: d). During an active Staging cycle, the first",
-      "occurrence of a healthy result like this one in Staging",
-      "guarantees entry into the next Production snapshot."
+      "hash h (last changed: d)."
     )
   )
 })
