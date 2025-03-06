@@ -58,8 +58,8 @@ test_that("propose_snapshot()", {
     simplifyVector = TRUE
   )
   expect_equal(sort(names(meta)), sort(c("date", "r_version")))
-  expect_true(is.character(meta$date$staging))
-  expect_true(is.character(meta$date$snapshot))
-  expect_true(is.character(meta$r_version$full))
-  expect_true(is.character(meta$r_version$short))
+  expect_equal(meta$date$staging, date_staging())
+  expect_equal(meta$date$snapshot, date_snapshot())
+  expect_equal(meta$r_version$full, r_version_staging()$full)
+  expect_equal(meta$r_version$short, r_version_staging()$short)
 })

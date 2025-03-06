@@ -73,7 +73,7 @@ propose_snapshot <- function(
   meta <- list(
     date = data.frame(
       staging = date_staging(),
-      snapshot = as.character(Sys.Date())
+      snapshot = date_snapshot()
     ),
     r_version = r_version[c("full", "short")]
   )
