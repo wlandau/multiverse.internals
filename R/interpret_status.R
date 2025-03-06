@@ -6,7 +6,7 @@
 #' @param package Character string, name of the package.
 #' @param issues A list with one issue per package. Obtained by
 #'   reading the results of [record_issues()].
-interpret_status <- function(package, issues, is_staging) {
+interpret_status <- function(package, issues) {
   issue <- issues[[package]]
   if (is.null(issue)) {
     return(interpret_null(package))
