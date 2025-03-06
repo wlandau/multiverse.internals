@@ -4,25 +4,15 @@
 \alias{propose_snapshot}
 \title{Propose snapshot}
 \usage{
-propose_snapshot(
-  path_staging,
-  repo_staging = "https://staging.r-multiverse.org",
-  types = c("src", "win", "mac"),
-  mock = NULL
-)
+propose_snapshot(path_staging, types = c("src", "win", "mac"))
 }
 \arguments{
 \item{path_staging}{Character string, directory path to the source
 files of the staging universe.}
 
-\item{repo_staging}{Character string, URL of the staging universe.}
-
 \item{types}{Character vector, what to pass to the \code{types} field in the
 snapshot API URL. Controls the types of binaries and documentation
 included in the snapshot.}
-
-\item{mock}{For testing purposes only, a named list of data frames
-for inputs to various intermediate functions.}
 }
 \value{
 \code{NULL} (invisibly). Called for its side effects.
@@ -51,10 +41,7 @@ directory given by the \code{path_staging} argument.
 url_staging = "https://github.com/r-multiverse/staging"
 path_staging <- tempfile()
 gert::git_clone(url = url_staging, path = path_staging)
-propose_snapshot(
-  path_staging = path_staging,
-  repo_staging = "https://staging.r-multiverse.org"
-)
+propose_snapshot(path_staging = path_staging)
 }
 }
 \seealso{

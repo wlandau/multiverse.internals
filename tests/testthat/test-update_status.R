@@ -57,6 +57,10 @@ test_that("update_status()", {
       file.exists(file.path(path_status, c("community.html", "staging.html")))
     )
   )
+  lines_staging <- readLines(file.path(path_status, "staging.html"))
+  expect_true(any(grepl(">issue<", lines_staging, fixed = TRUE)))
+  expect_true(any(grepl(">removed-has-issue<", lines_staging, fixed = TRUE)))
+  expect_false(any(grepl(">freeze<", lines_staging, fixed = TRUE)))
   out_staging <- file.path(path_status, "staging")
   out_community <- file.path(path_status, "community")
   expect_equal(
@@ -81,7 +85,7 @@ test_that("update_status()", {
     expect_true(
       any(
         grepl(
-          pattern = "has no recorded issues",
+          pattern = "R-multiverse checks passed",
           readLines(file.path(path_status, repo, "freeze.html"))
         )
       )
@@ -89,8 +93,8 @@ test_that("update_status()", {
     expect_true(
       any(
         grepl(
-          pattern = "success",
-          readLines(file.path(path_status, repo, "freeze.xml"))
+          pattern = "freeze: success",
+          readLines(file.path(path_status, repo, "freeze.html"))
         )
       )
     )
@@ -105,7 +109,7 @@ test_that("update_status()", {
     expect_true(
       any(
         grepl(
-          pattern = "issues found",
+          pattern = "found issues",
           readLines(file.path(path_status, repo, "issue.html"))
         )
       )
@@ -113,7 +117,7 @@ test_that("update_status()", {
     expect_true(
       any(
         grepl(
-          pattern = "issues found",
+          pattern = "issue: issues found",
           readLines(file.path(path_status, repo, "issue.xml"))
         )
       )

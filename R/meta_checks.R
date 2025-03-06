@@ -39,7 +39,7 @@ meta_checks_issues_binaries <- function(binaries) {
   os <- .subset2(binaries, "os")
   arch <- .subset2(binaries, "arch")
   r <- .subset2(binaries, "r")
-  is_release <- r_version_short(r) == staging_r_version()$short
+  is_release <- r_version_short(r) == r_version_staging()$short
   results <- c(
     target_check("linux", os, arch, r, is_release, check),
     target_check("mac", os, arch, r, is_release, check),

@@ -7,10 +7,13 @@
 #' @param issues A list with one issue per package. Obtained by
 #'   reading the results of [record_issues()].
 interpret_status <- function(package, issues) {
-  if (is.null(issues[[package]])) {
-    return(paste("Package", package, "has no recorded issues."))
-  }
   issue <- issues[[package]]
+  if (is.null(issue)) {
+    return(interpret_null(package))
+  }
+  if (isTRUE(issue$success)) {
+    return(interpret_success(issue, package))
+  }
   out <- paste(
     c(
       interpret_title(issue, package),
@@ -27,6 +30,29 @@ interpret_status <- function(package, issues) {
   trimws(out)
 }
 
+interpret_null <- function(package) {
+  paste0("Data not found on package ", package, ".")
+}
+
+interpret_success <- function(issue, package) {
+  out <- paste0(
+    "R-multiverse checks passed for package ",
+    package
+  )
+  if (is.character(issue$version)) {
+    out <- paste(out, "version", issue$version)
+  }
+  if (is.character(issue$remote_hash)) {
+    out <- paste(out, "remote hash", issue$remote_hash)
+  }
+  paste0(
+    out,
+    " (last changed: ",
+    issue$date,
+    ")."
+  )
+}
+
 interpret_title <- function(issue, package) {
   title <- paste0(
     "R-multiverse found issues with package ",
@@ -38,7 +64,7 @@ interpret_title <- function(issue, package) {
   if (is.character(issue$remote_hash)) {
     title <- paste(title, "remote hash", issue$remote_hash)
   }
-  paste0(title, " (as of ", issue$date, ").<br><br>")
+  paste0(title, " (last changed: ", issue$date, ").<br><br>")
 }
 
 interpret_advisories <- function(issue) {

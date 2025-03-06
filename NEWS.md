@@ -1,3 +1,10 @@
+# multiverse.internals 0.4.0
+
+* Organize R version and snapshot/staging date information more neatly in `meta.json`.
+* Use the new `skip_packages` parameter in the R-universe snapshot API.
+* Disallow packages to enter or leave the Staging universe `packages.json` during the Staging period.
+* Record healthy packages in `record_issues()` to support the above.
+
 # multiverse.internals 0.3.9
 
 * Target Linux R-release instead of Linux R-devel (#112).

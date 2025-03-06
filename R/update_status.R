@@ -70,13 +70,21 @@ update_status_directory <- function(output, input, meta, directory) {
   for (index in seq_len(nrow(meta))) {
     package <- meta$package[index]
     guid <- meta$remotesha[index]
-    suffix <- ifelse(is.null(issues[[package]]), "success", "issues found")
+    success <- issues[[package]]$success
+    if (isTRUE(success)) {
+      suffix <- "success"
+    } else if (isFALSE(success)) {
+      suffix <- "issues found"
+    } else {
+      suffix <- "status unknown"
+    }
     title <- paste0(package, ": ", suffix)
     status <- interpret_status(package, issues)
     update_status_html(package, title, status, path_directory)
     update_status_xml(package, title, path_directory, guid)
   }
-  update_issue_summary(output, directory, sort(names(issues)))
+  failures <- names(Filter(issues, f = function(issue) isFALSE(issue$success)))
+  update_issue_summary(output, directory, failures)
 }
 
 update_issue_summary <- function(output, directory, packages) {

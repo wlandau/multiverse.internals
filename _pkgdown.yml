@@ -28,8 +28,11 @@ reference:
   contents:
   - update_staging
   - propose_snapshot
-  - staging_r_version
-  - staging_start
+- title: Snapshot metadata
+  contents:
+  - date_snapshot
+  - date_staging
+  - r_version_staging
 - title: Package status
   contents:
   - interpret_status

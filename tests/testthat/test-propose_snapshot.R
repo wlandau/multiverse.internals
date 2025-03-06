@@ -1,6 +1,5 @@
 test_that("propose_snapshot()", {
   dir_staging <- tempfile()
-  dir_community <- tempfile()
   path_staging <- file.path(dir_staging, "staging")
   dir.create(dir_staging)
   on.exit(unlink(path_staging, recursive = TRUE))
@@ -14,29 +13,12 @@ test_that("propose_snapshot()", {
     to = dir_staging,
     recursive = TRUE
   )
-  file_staging <- file.path(path_staging, "packages.json")
-  json_staging <- data.frame(
-    package = c("good1", "good2", "unsynced", "issue")
-  )
-  json_staging$url <- file.path(
-    "https://github.com/owner",
-    json_staging$package
-  )
-  json_staging$branch <- "original"
-  jsonlite::write_json(json_staging, file_staging, pretty = TRUE)
-  meta_staging <- data.frame(
-    package = c("good1", "good2", "issue", "removed", "unsynced"),
-    remotesha = c(rep("original", 4), "sha-unsynced")
-  )
-  propose_snapshot(
-    path_staging = path_staging,
-    mock = list(staging = meta_staging)
-  )
+  propose_snapshot(path_staging = path_staging)
   json_snapshot <- jsonlite::read_json(
     file.path(path_staging, "snapshot.json"),
     simplifyVector = TRUE
   )
-  expect_equal(json_snapshot$package, c("good1", "good2"))
+  expect_equal(json_snapshot$package, c("freeze", "removed-no-issue"))
   expect_equal(
     json_snapshot$url,
     file.path("https://github.com/owner", json_snapshot$package)
@@ -46,27 +28,20 @@ test_that("propose_snapshot()", {
   expect_equal(
     readLines(file.path(path_staging, "snapshot.url")),
     paste0(
-      "https://staging.r-multiverse.org/api/snapshot/zip",
+      "https://staging.r-multiverse.org/api/snapshot/tar",
       "?types=src,win,mac",
       "&binaries=",
-      staging_r_version()$short,
-      "&packages=good1,good2"
+      r_version_staging()$short,
+      "&skip_packages=issue,removed-has-issue"
     )
   )
-  expect_equal(
-    readLines(file.path(path_staging, "date_snapshot.txt")),
-    as.character(Sys.Date())
+  meta <- jsonlite::read_json(
+    file.path(path_staging, "meta.json"),
+    simplifyVector = TRUE
   )
-  expect_equal(
-    readLines(file.path(path_staging, "date_staging_start.txt")),
-    as.character(staging_start())
-  )
-  expect_equal(
-    readLines(file.path(path_staging, "r_version_full.txt")),
-    as.character(staging_r_version()$full)
-  )
-  expect_equal(
-    readLines(file.path(path_staging, "r_version_short.txt")),
-    as.character(staging_r_version()$short)
-  )
+  expect_equal(sort(names(meta)), sort(c("date", "r_version")))
+  expect_equal(meta$date$staging, date_staging())
+  expect_equal(meta$date$snapshot, date_snapshot())
+  expect_equal(meta$r_version$full, r_version_staging()$full)
+  expect_equal(meta$r_version$short, r_version_staging()$short)
 })
