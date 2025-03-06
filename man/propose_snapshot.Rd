@@ -7,7 +7,7 @@
 propose_snapshot(
   path_staging,
   repo_staging = "https://staging.r-multiverse.org",
-  types = "src",
+  types = c("src", "win", "mac"),
   mock = NULL
 )
 }

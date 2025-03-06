@@ -47,7 +47,7 @@ test_that("propose_snapshot()", {
     readLines(file.path(path_staging, "snapshot.url")),
     paste0(
       "https://staging.r-multiverse.org/api/snapshot/zip",
-      "?types=src",
+      "?types=src,win,mac",
       "&binaries=",
       staging_r_version()$short,
       "&skip_packages=issue,removed-has-issue"

@@ -35,7 +35,7 @@
 propose_snapshot <- function(
   path_staging,
   repo_staging = "https://staging.r-multiverse.org",
-  types = "src",
+  types = c("src", "win", "mac"),
   mock = NULL
 ) {
   path_issues <- file.path(path_staging, "issues.json")
