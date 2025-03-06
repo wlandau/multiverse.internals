@@ -32,5 +32,11 @@
     "date": ["1980-01-01"],
     "version": ["2.0.2"],
     "remote_hash": ["abcdef1234567890abcdef"]
+  },
+  "removed-no-issue": {
+    "success": [true],
+    "date": ["1980-01-01"],
+    "version": ["2.0.2"],
+    "remote_hash": ["abcdef1234567890abcdef"]
   }
 }

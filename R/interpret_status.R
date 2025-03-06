@@ -36,7 +36,7 @@ interpret_null <- function(package) {
 
 interpret_success <- function(issue, package) {
   out <- paste0(
-    "Package ",
+    "R-multiverse checks passed for package ",
     package
   )
   if (is.character(issue$version)) {
@@ -47,7 +47,7 @@ interpret_success <- function(issue, package) {
   }
   paste0(
     out,
-    " (as of ",
+    " (last changed: ",
     issue$date,
     "). ",
     "During an active Staging cycle, ",
@@ -68,7 +68,7 @@ interpret_title <- function(issue, package) {
   if (is.character(issue$remote_hash)) {
     title <- paste(title, "remote hash", issue$remote_hash)
   }
-  paste0(title, " (as of ", issue$date, ").<br><br>")
+  paste0(title, " (last changed: ", issue$date, ").<br><br>")
 }
 
 interpret_advisories <- function(issue) {

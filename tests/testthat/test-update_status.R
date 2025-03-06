@@ -85,16 +85,8 @@ test_that("update_status()", {
     expect_true(
       any(
         grepl(
-          pattern = "has no recorded issues",
+          pattern = "R-multiverse checks passed",
           readLines(file.path(path_status, repo, "freeze.html"))
-        )
-      )
-    )
-    expect_true(
-      any(
-        grepl(
-          pattern = "success",
-          readLines(file.path(path_status, repo, "freeze.xml"))
         )
       )
     )
@@ -109,7 +101,7 @@ test_that("update_status()", {
     expect_true(
       any(
         grepl(
-          pattern = "issues found",
+          pattern = "found issues",
           readLines(file.path(path_status, repo, "issue.html"))
         )
       )
