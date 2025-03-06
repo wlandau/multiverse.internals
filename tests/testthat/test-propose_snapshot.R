@@ -46,7 +46,7 @@ test_that("propose_snapshot()", {
   expect_equal(
     readLines(file.path(path_staging, "snapshot.url")),
     paste0(
-      "https://staging.r-multiverse.org/api/snapshot/zip",
+      "https://staging.r-multiverse.org/api/snapshot/tar",
       "?types=src,win,mac",
       "&binaries=",
       staging_r_version()$short,
