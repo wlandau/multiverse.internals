@@ -1,4 +1,4 @@
-# multiverse.internals 0.3.10
+# multiverse.internals 0.4.0
 
 * Organize R version and snapshot/staging date information more neatly in `meta.json`.
 * Use the new `skip_packages` parameter in the R-universe snapshot API.

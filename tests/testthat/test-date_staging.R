@@ -4,16 +4,28 @@ test_that("date_staging()", {
     last <- c("15", "16", "28")
     full <- c(first, last)
     for (day in full) {
-      expect_equal(date_staging(today = sprintf("2025-%s-%s", months[1L], day)), old)
+      expect_equal(
+        date_staging(today = sprintf("2025-%s-%s", months[1L], day)),
+        old
+      )
     }
     for (day in first) {
-      expect_equal(date_staging(today = sprintf("2025-%s-%s", months[2L], day)), old)
+      expect_equal(
+        date_staging(today = sprintf("2025-%s-%s", months[2L], day)),
+        old
+      )
     }
     for (day in last) {
-      expect_equal(date_staging(today = sprintf("2025-%s-%s", months[2L], day)), new)
+      expect_equal(
+        date_staging(today = sprintf("2025-%s-%s", months[2L], day)),
+        new
+      )
     }
     for (day in full) {
-      expect_equal(date_staging(today = sprintf("2025-%s-%s", months[3L], day)), new)
+      expect_equal(
+        date_staging(today = sprintf("2025-%s-%s", months[3L], day)),
+        new
+      )
     }
   }
   quarter(c("01", "02", "03"), "2024-11-15", "2025-02-15")
