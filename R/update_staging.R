@@ -50,11 +50,12 @@ update_staging <- function(
   if (file.exists(path_issues)) {
     json_issues <- jsonlite::read_json(path_issues, simplifyVector = TRUE)
   }
-  candidates <- if_any(
-    file.exists("frozen.json"), # If a Staging is already underway,
-    json_staging$package, # do not change the list of release candidates,
-    json_community$package # otherwise pull from Community.
-  )
+  if (file.exists("frozen.json")) { # # If a Staging is already underway,
+    # do not change the list of release candidates.
+    candidates <- json_staging$package
+  } else  {
+    candidates <- json_community$package # Otherwise,pull from Community.
+  }
   freeze <- Filter(json_issues, f = function(issue) isTRUE(issue$success))
   update <- setdiff(candidates, freeze)
   should_freeze <- json_staging$package %in% freeze
