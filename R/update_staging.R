@@ -35,28 +35,45 @@ update_staging <- function(
 ) {
   file_staging <- file.path(path_staging, "packages.json")
   file_community <- file.path(path_community, "packages.json")
-  if (file.exists(file_staging)) {
-    json_staging <- as.data.frame(
-      jsonlite::read_json(file_staging, simplifyVector = TRUE),
-      stringsAsFactors = FALSE
-    )
-  } else {
-    json_staging <- data.frame()
-  }
-  json_community <- jsonlite::read_json(file_community, simplifyVector = TRUE)
   meta_community <- mock$community %||% meta_packages(repo_community)
+  meta_community <- meta_community[!is.na(meta_community$remotesha),, drop = FALSE] # nolint
+  json_community <- merge(
+    x = jsonlite::read_json(file_community, simplifyVector = TRUE),
+    y = meta_community[, c("package", "remotesha")],
+    by = "package",
+    all.x = TRUE, # Must be in Community packages.json.
+    all.y = TRUE # Must be built on the Community universe.
+  )
+  json_community$branch <- json_community$remotesha
+  json_community$remotesha <- NULL
   path_issues <- file.path(path_staging, "issues.json")
   json_issues <- list()
   if (file.exists(path_issues)) {
     json_issues <- jsonlite::read_json(path_issues, simplifyVector = TRUE)
   }
-  if (file.exists("frozen.json")) { # # If a Staging is already underway,
-    # do not change the list of release candidates.
-    candidates <- json_staging$package
+  freeze <- names(
+    Filter(
+      x = json_issues,
+      f = function(issue) isTRUE(issue$success)
+    )
+  )
+  file_freeze <- file.path(path_staging, "freeze.json")
+  # If a Staging cycle is already underway,
+  if (file.exists(file_freeze) && file.exists(file_staging)) {
+    # then the no packages can enter or leave the Staging universe,
+    json_staging <- as.data.frame(
+      jsonlite::read_json(file_staging, simplifyVector = TRUE),
+      stringsAsFactors = FALSE
+    )
+    # and frozen packages stay frozen.
+    freeze <- base::union(
+      freeze,
+      jsonlite::read_json(file_freeze, simplifyVector = TRUE)
+    )
   } else  {
-    candidates <- json_community$package # Otherwise,pull from Community.
+    json_staging <- json_community # Otherwise, refresh Staging from Community.
   }
-  freeze <- Filter(json_issues, f = function(issue) isTRUE(issue$success))
+  candidates <- json_staging$package
   update <- setdiff(candidates, freeze)
   should_freeze <- json_staging$package %in% freeze
   json_freeze <- json_staging[should_freeze,, drop = FALSE] # nolint
@@ -65,20 +82,6 @@ update_staging <- function(
     rep(NA_character_, nrow(json_freeze))
   json_update$subdir <- json_update$subdir %||%
     rep(NA_character_, nrow(json_update))
-  branches <- meta_community[
-    meta_community$package %in% update,
-    c("package", "remotesha")
-  ]
-  json_update <- merge(
-    x = json_update,
-    y = branches,
-    by = "package",
-    all.x = TRUE,
-    all.y = FALSE
-  )
-  json_update <- json_update[!is.na(json_update$remotesha),, drop = FALSE] # nolint
-  json_update$branch <- json_update$remotesha
-  json_update$remotesha <- NULL
   json_new <- rbind(json_freeze, json_update)
   json_new <- json_new[order(json_new$package), ]
   jsonlite::write_json(json_new, file_staging, pretty = TRUE)
@@ -90,7 +93,6 @@ update_staging <- function(
     pretty = TRUE,
     auto_unbox = TRUE
   )
-  file_frozen <- file.path(path_staging, "frozen.json")
-  jsonlite::write_json(frozen, file_frozen, pretty = TRUE)
+  jsonlite::write_json(freeze, file_freeze, pretty = TRUE)
   invisible()
 }

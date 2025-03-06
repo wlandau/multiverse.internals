@@ -38,10 +38,10 @@ propose_snapshot <- function(
   types = c("src", "win", "mac"),
   mock = NULL
 ) {
-  path_frozen <- file.path(path_staging, "frozen.json")
-  frozen <- character(0L)
-  if (file.exists(path_frozen)) {
-    frozen <- jsonlite::read_json(path_frozen, simplifyVector = TRUE)
+  path_freeze <- file.path(path_staging, "freeze.json")
+  freeze <- character(0L)
+  if (file.exists(path_freeze)) {
+    freeze <- jsonlite::read_json(path_freeze, simplifyVector = TRUE)
   }
   file_staging <- file.path(path_staging, "packages.json")
   json_staging <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
@@ -55,7 +55,7 @@ propose_snapshot <- function(
     all.y = FALSE
   )
   staging <- staging[staging$branch == staging$remotesha,, drop = FALSE] # nolint
-  staging <- staging[staging$package %in% frozen,, drop = FALSE] # nolint
+  staging <- staging[staging$package %in% freeze,, drop = FALSE] # nolint
   staging$remotesha <- NULL
   file_snapshot <- file.path(path_staging, "snapshot.json")
   jsonlite::write_json(staging, file_snapshot, pretty = TRUE)
@@ -67,7 +67,7 @@ propose_snapshot <- function(
     paste(types, collapse = ","),
     binaries,
     "&skip_packages=",
-    paste(setdiff(json_staging$package, frozen), collapse = ",")
+    paste(setdiff(json_staging$package, freeze), collapse = ",")
   )
   writeLines(url, file.path(path_staging, "snapshot.url"))
   meta <- list(
