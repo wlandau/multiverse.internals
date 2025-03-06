@@ -4,7 +4,7 @@
 \alias{interpret_status}
 \title{Interpret the status of a package}
 \usage{
-interpret_status(package, issues)
+interpret_status(package, issues, is_staging)
 }
 \arguments{
 \item{package}{Character string, name of the package.}

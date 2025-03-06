@@ -8,6 +8,7 @@
       "_status": ["success"],
       "_buildurl": ["https://github.com/r-universe/r-multiverse/actions/runs/12345"]
     },
+    "success": [false],
     "date": ["1980-01-01"],
     "version": ["2.0.2"],
     "remote_hash": ["abcdef1234567890abcdef"]
@@ -21,6 +22,13 @@
       "_status": ["success"],
       "_buildurl": ["https://github.com/r-universe/r-multiverse/actions/runs/12345"]
     },
+    "success": [false],
+    "date": ["1980-01-01"],
+    "version": ["2.0.2"],
+    "remote_hash": ["abcdef1234567890abcdef"]
+  },
+  "freeze": {
+    "success": [true],
     "date": ["1980-01-01"],
     "version": ["2.0.2"],
     "remote_hash": ["abcdef1234567890abcdef"]

@@ -62,7 +62,7 @@ propose_snapshot <- function(
   r_version <- staging_r_version()
   binaries <- paste0("&binaries=", r_version$short)
   url <- paste0(
-    "https://staging.r-multiverse.org/api/snapshot/zip",
+    "https://staging.r-multiverse.org/api/snapshot/tar",
     "?types=",
     paste(types, collapse = ","),
     binaries,

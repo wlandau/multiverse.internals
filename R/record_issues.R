@@ -65,6 +65,13 @@ record_issues <- function(
       issues_dependencies(names(issues), packages, verbose = verbose),
       "dependencies"
     )
+  for (name in names(issues)) {
+    issues[[name]]$success <- FALSE
+  }
+  for (healthy in setdiff(packages$package, names(issues))) {
+    issues[[healthy]] <- list(success = TRUE)
+  }
+  issues <- issues[sort(names(issues))]
   overwrite_issues(
     issues = issues,
     output = output,

@@ -1,7 +1,29 @@
-test_that("interpret_status() with no problems", {
+test_that("interpret_status() with no data", {
   expect_equal(
     interpret_status("abc", list()),
-    "Package abc has no recorded issues."
+    "Data not found on package abc."
+  )
+})
+
+test_that("interpret_status() with a successful package", {
+  expect_equal(
+    interpret_status(
+      "abc",
+      list(
+        abc = list(
+          success = TRUE,
+          version = "v",
+          date = "d",
+          remote_hash = "h"
+        )
+      )
+    ),
+    paste(
+      "Package abc version v remote hash h (as of d).",
+      "During an active Staging cycle, the first occurrence of a",
+      "healthy result like this one in Staging guarantees entry",
+      "into the next Production snapshot."
+    )
   )
 })
 
@@ -181,6 +203,7 @@ test_that("interpret_status() with complicated dependency problems", {
         version_highest = "1.0.0",
         hash_highest = "hash_1.0.0"
       ),
+      success = FALSE,
       date = "2024-01-01",
       version = "1.1.0.9000",
       remote_hash = "85dd672a44a92c890eb40ea9ebab7a4e95335c2f"
@@ -192,6 +215,7 @@ test_that("interpret_status() with complicated dependency problems", {
       dependencies = list(
         nanonext = list()
       ),
+      success = FALSE,
       date = "2024-01-01",
       version = "1.1.0.9000",
       remote_hash = "7015695b7ef82f82ab3225ac2d226b2c8f298097"
@@ -212,6 +236,7 @@ test_that("interpret_status() with complicated dependency problems", {
         )
       ),
       dependencies = list(nanonext = "mirai"),
+      success = FALSE,
       date = "2024-01-01",
       version = "0.9.3.9002",
       remote_hash = "eafad0276c06dec2344da2f03596178c754c8b5e"

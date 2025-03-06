@@ -76,7 +76,8 @@ update_status_directory <- function(output, input, meta, directory) {
     update_status_html(package, title, status, path_directory)
     update_status_xml(package, title, path_directory, guid)
   }
-  update_issue_summary(output, directory, sort(names(issues)))
+  failures <- names(Filter(issues, f = function(issue) isFALSE(issue$success)))
+  update_issue_summary(output, directory, failures)
 }
 
 update_issue_summary <- function(output, directory, packages) {

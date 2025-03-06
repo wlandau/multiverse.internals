@@ -6,11 +6,14 @@
 #' @param package Character string, name of the package.
 #' @param issues A list with one issue per package. Obtained by
 #'   reading the results of [record_issues()].
-interpret_status <- function(package, issues) {
-  if (is.null(issues[[package]])) {
-    return(paste("Package", package, "has no recorded issues."))
-  }
+interpret_status <- function(package, issues, is_staging) {
   issue <- issues[[package]]
+  if (is.null(issue)) {
+    return(interpret_null(package))
+  }
+  if (isTRUE(issue$success)) {
+    return(interpret_success(issue, package))
+  }
   out <- paste(
     c(
       interpret_title(issue, package),
@@ -25,6 +28,33 @@ interpret_status <- function(package, issues) {
     collapse = ""
   )
   trimws(out)
+}
+
+interpret_null <- function(package) {
+  paste0("Data not found on package ", package, ".")
+}
+
+interpret_success <- function(issue, package) {
+  out <- paste0(
+    "Package ",
+    package
+  )
+  if (is.character(issue$version)) {
+    out <- paste(out, "version", issue$version)
+  }
+  if (is.character(issue$remote_hash)) {
+    out <- paste(out, "remote hash", issue$remote_hash)
+  }
+  paste0(
+    out,
+    " (as of ",
+    issue$date,
+    "). ",
+    "During an active Staging cycle, ",
+    "the first occurrence of a healthy result like this one ",
+    "in Staging guarantees entry ",
+    "into the next Production snapshot."
+  )
 }
 
 interpret_title <- function(issue, package) {

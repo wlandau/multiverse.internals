@@ -11,18 +11,24 @@ test_that("record_issues() mocked", {
     verbose = FALSE
   )
   issues <- jsonlite::read_json(output, simplifyVector = TRUE)
-  expect_equal(
-    sort(names(issues)),
-    sort(
-      c(
-        "audio.whisper", "colorout", "demographr", "geographr", "glaredb",
-        "healthyr", "igraph", "INLA", "loneliness",
-        "prqlr", "SBC", "stantargets",
-        "taxizedb", "tidytensor", "webseq", "wildfires", "targetsketch",
-        "tidypolars", "version_decremented", "version_unmodified"
-      )
-    )
+  expect_failed <- c(
+    "audio.whisper", "colorout", "demographr", "geographr", "glaredb",
+    "healthyr", "igraph", "INLA", "loneliness",
+    "prqlr", "SBC", "stantargets",
+    "taxizedb", "tidytensor", "webseq", "wildfires", "targetsketch",
+    "tidypolars", "version_decremented", "version_unmodified"
   )
+  for (package in expect_failed) {
+    expect_false(issues[[package]]$success)
+  }
+  expect_succeeded <- c(
+    "audio.vadwebrtc", "cmdstanr", "duckdb", "httpgd", "ichimoku",
+    "mirai", "multitools", "multiverse.internals", "nanonext",
+    "polars", "secretbase", "string2path", "tinytest", "zstdlite"
+  )
+  for (package in expect_succeeded) {
+    expect_true(issues[[package]]$success)
+  }
   runs <- "https://github.com/r-universe/r-multiverse/actions/runs"
   expect_equal(
     issues$INLA,
@@ -35,6 +41,7 @@ test_that("record_issues() mocked", {
           `win R-release` = "MISSING"
         )
       ),
+      success = FALSE,
       date = "2024-01-01",
       version = list(),
       remote_hash = list()
@@ -54,6 +61,7 @@ test_that("record_issues() mocked", {
       descriptions = list(
         remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")
       ),
+      success = FALSE,
       date = "2024-01-01",
       version = "0.1.1",
       remote_hash = "bbdda1b4a44a3d6a22041e03eed38f27319d8f32"
@@ -65,6 +73,7 @@ test_that("record_issues() mocked", {
       descriptions = list(
         license = "non-standard"
       ),
+      success = FALSE,
       date = "2024-01-01",
       version = "0.0.1",
       remote_hash = "a199a734b16f91726698a19e5f147f57f79cb2b6"
@@ -79,6 +88,7 @@ test_that("record_issues() mocked", {
         version_highest = "1.0.0",
         hash_highest = "hash_1.0.0"
       ),
+      success = FALSE,
       date = "2024-01-01",
       version = list(),
       remote_hash = list()
@@ -93,6 +103,7 @@ test_that("record_issues() mocked", {
         version_highest = "1.0.0",
         hash_highest = "hash_1.0.0"
       ),
+      success = FALSE,
       date = "2024-01-01",
       version = list(),
       remote_hash = list()
@@ -217,6 +228,7 @@ test_that("record_issues() with dependency problems", {
         version_highest = "1.0.0",
         hash_highest = "hash_1.0.0"
       ),
+      success = FALSE,
       date = "2024-01-01",
       version = "1.1.0.9000",
       remote_hash = "85dd672a44a92c890eb40ea9ebab7a4e95335c2f"
@@ -228,6 +240,7 @@ test_that("record_issues() with dependency problems", {
       dependencies = list(
         nanonext = list()
       ),
+      success = FALSE,
       date = "2024-01-01",
       version = "1.1.0.9000",
       remote_hash = "7015695b7ef82f82ab3225ac2d226b2c8f298097"
@@ -240,6 +253,7 @@ test_that("record_issues() with dependency problems", {
       dependencies = list(
         nanonext = "mirai"
       ),
+      success = FALSE,
       date = "2024-01-01",
       version = "0.9.3.9002",
       remote_hash = "eafad0276c06dec2344da2f03596178c754c8b5e"
@@ -252,6 +266,7 @@ test_that("record_issues() with dependency problems", {
         crew = list(),
         nanonext = "crew"
       ),
+      success = FALSE,
       date = "2024-01-01",
       version = "0.0.5.9000",
       remote_hash = "4d9e5b44e2942d119af963339c48d134e84de458"
@@ -264,6 +279,7 @@ test_that("record_issues() with dependency problems", {
         crew = list(),
         nanonext = "crew"
       ),
+      success = FALSE,
       date = "2024-01-01",
       version = "0.3.1",
       remote_hash = "d4ac61fd9a1d9539088ffebdadcd4bb713c25ee1"
