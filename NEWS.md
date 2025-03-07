@@ -1,3 +1,7 @@
+# multiverse.internals 0.4.1
+
+* Restructure `meta.json` to better maintain a snapshot archive.
+
 # multiverse.internals 0.4.0
 
 * Organize R version and snapshot/staging date information more neatly in `meta.json`.
