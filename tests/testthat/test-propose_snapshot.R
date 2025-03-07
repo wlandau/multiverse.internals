@@ -39,9 +39,10 @@ test_that("propose_snapshot()", {
     file.path(path_staging, "meta.json"),
     simplifyVector = TRUE
   )
-  expect_equal(sort(names(meta)), sort(c("date", "r_version")))
-  expect_equal(meta$date$staging, date_staging())
-  expect_equal(meta$date$snapshot, date_snapshot())
-  expect_equal(meta$r_version$full, r_version_staging()$full)
-  expect_equal(meta$r_version$short, r_version_staging()$short)
+  expect_equal(length(meta), 5L)
+  expect_equal(meta$date_staging, date_staging())
+  expect_equal(meta$date_snapshot, date_snapshot())
+  expect_equal(meta$r_version, r_version_staging()$short)
+  expect_true(is.character(meta$r_multiverse))
+  expect_true(is.character(meta$cran))
 })

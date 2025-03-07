@@ -54,12 +54,18 @@ propose_snapshot <- function(
     paste(exclude, collapse = ",")
   )
   writeLines(url, file.path(path_staging, "snapshot.url"))
-  meta <- list(
-    date = data.frame(
-      staging = date_staging(),
-      snapshot = date_snapshot()
+  meta <- data.frame(
+    date_staging = date_staging(),
+    date_snapshot = date_snapshot(),
+    r_version = r_version$short,
+    r_multiverse = file.path(
+      "https://production.r-multiverse.org",
+      date_snapshot()
     ),
-    r_version = r_version[c("full", "short")]
+    cran = file.path(
+      "https://packagemanager.posit.co/cran",
+      date_staging()
+    )
   )
   jsonlite::write_json(
     meta,
