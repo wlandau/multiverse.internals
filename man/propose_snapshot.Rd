@@ -16,10 +16,10 @@ included in the snapshot.}
 }
 \value{
 \code{NULL} (invisibly). Called for its side effects.
-\code{\link[=propose_snapshot]{propose_snapshot()}} writes \code{snapshot.json} with an R-universe-like
-manifest of the packages recommended for the snapshot, and a
+\code{\link[=propose_snapshot]{propose_snapshot()}} writes a
 \code{snapshot.url} file containing an R-universe snapshot API URL
-to download those packages. Both these files are written to the
+to download packages ready for Production.
+This file is written to the
 directory given by the \code{path_staging} argument.
 }
 \description{
@@ -30,10 +30,8 @@ Propose a Production snapshot of Staging.
 to migrate to Production. The recommended snapshot is the list of
 packages for which (1) the build and check results of the current
 release are in Staging, and (2) there are no issues.
-Writes \code{snapshot.json} with an R-universe-like manifest
-of the packages recommended for the snapshot, and a
-\code{snapshot.url} file containing an R-universe snapshot API URL
-to download those packages. Both these files are written to the
+Writes a \code{snapshot.url} file containing an R-universe snapshot API URL
+to download those packages. This files is written to the
 directory given by the \code{path_staging} argument.
 }
 \examples{

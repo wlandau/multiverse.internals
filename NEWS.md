@@ -1,6 +1,7 @@
 # multiverse.internals 0.4.2
 
 * Rearrange fields in `meta.json`.
+* Remove the superfluous `snapshot.json` file.
 
 # multiverse.internals 0.4.1
 

@@ -14,17 +14,6 @@ test_that("propose_snapshot()", {
     recursive = TRUE
   )
   propose_snapshot(path_staging = path_staging)
-  json_snapshot <- jsonlite::read_json(
-    file.path(path_staging, "snapshot.json"),
-    simplifyVector = TRUE
-  )
-  expect_equal(json_snapshot$package, c("freeze", "removed-no-issue"))
-  expect_equal(
-    json_snapshot$url,
-    file.path("https://github.com/owner", json_snapshot$package)
-  )
-  expect_equal(json_snapshot$branch, rep("original", 2L))
-  expect_equal(ncol(json_snapshot), 3L)
   expect_equal(
     readLines(file.path(path_staging, "snapshot.url")),
     paste0(
