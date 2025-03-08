@@ -6,16 +6,14 @@
 #'   to migrate to Production. The recommended snapshot is the list of
 #'   packages for which (1) the build and check results of the current
 #'   release are in Staging, and (2) there are no issues.
-#'   Writes `snapshot.json` with an R-universe-like manifest
-#'   of the packages recommended for the snapshot, and a
-#'   `snapshot.url` file containing an R-universe snapshot API URL
-#'   to download those packages. Both these files are written to the
+#'   Writes a `snapshot.url` file containing an R-universe snapshot API URL
+#'   to download those packages. This files is written to the
 #'   directory given by the `path_staging` argument.
 #' @return `NULL` (invisibly). Called for its side effects.
-#'   [propose_snapshot()] writes `snapshot.json` with an R-universe-like
-#'   manifest of the packages recommended for the snapshot, and a
+#'   [propose_snapshot()] writes a
 #'   `snapshot.url` file containing an R-universe snapshot API URL
-#'   to download those packages. Both these files are written to the
+#'   to download packages ready for Production.
+#'   This file is written to the
 #'   directory given by the `path_staging` argument.
 #' @inheritParams update_staging
 #' @param types Character vector, what to pass to the `types` field in the
@@ -40,9 +38,6 @@ propose_snapshot <- function(
   file_staging <- file.path(path_staging, "packages.json")
   json_staging <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   exclude <- setdiff(json_staging$package, freeze)
-  json_staging <- json_staging[json_staging$package %in% freeze,, drop = FALSE] # nolint
-  file_snapshot <- file.path(path_staging, "snapshot.json")
-  jsonlite::write_json(json_staging, file_snapshot, pretty = TRUE)
   r_version <- r_version_staging()
   binaries <- paste0("&binaries=", r_version$short)
   url <- paste0(
@@ -55,16 +50,16 @@ propose_snapshot <- function(
   )
   writeLines(url, file.path(path_staging, "snapshot.url"))
   meta <- data.frame(
+    r_version = r_version$short,
     date_staging = date_staging(),
     date_snapshot = date_snapshot(),
-    r_version = r_version$short,
-    r_multiverse = file.path(
-      "https://production.r-multiverse.org",
-      date_snapshot()
-    ),
     cran = file.path(
       "https://packagemanager.posit.co/cran",
       date_staging()
+    ),
+    r_multiverse = file.path(
+      "https://production.r-multiverse.org",
+      date_snapshot()
     )
   )
   jsonlite::write_json(
