@@ -3,7 +3,7 @@
 #' @family status
 #' @description Update the repository which reports the status on individual
 #'   packages.
-#' @inheritParams update_staging
+#' @inheritParams stage_candidates
 #' @param path_status Character string, directory path to the source files
 #'   of the package status repository.
 #' @param repo_staging Character string, URL of the staging universe.

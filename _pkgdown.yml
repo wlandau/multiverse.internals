@@ -20,15 +20,14 @@ reference:
   - issues_dependencies
   - issues_descriptions
   - issues_versions
-- title: Record problems
+- title: Record issues
   contents:
   - record_issues
   - record_nonstandard_licenses
   - record_versions
 - title: Staging
   contents:
-  - update_staging
-  - propose_snapshot
+  - stage_candidates
 - title: Package status
   contents:
   - interpret_status

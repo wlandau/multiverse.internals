@@ -1,4 +1,4 @@
-test_that("update_staging() for the first time in a Staging cycle", {
+test_that("stage_candidates() for the first time in a Staging cycle", {
   dir_staging <- tempfile()
   dir_community <- tempfile()
   path_staging <- file.path(dir_staging, "staging")
@@ -23,7 +23,7 @@ test_that("update_staging() for the first time in a Staging cycle", {
     recursive = TRUE
   )
   file_config <- file.path(path_staging, "config.json")
-  file_freeze <- file.path(path_staging, "freeze.json")
+  file_staged <- file.path(path_staging, "staged.json")
   file_staging <- file.path(path_staging, "packages.json")
   file_community <- file.path(path_community, "packages.json")
   json_staging <- jsonlite::read_json(file_staging)
@@ -37,8 +37,8 @@ test_that("update_staging() for the first time in a Staging cycle", {
     package = names_community,
     remotesha = paste0("sha-", names_community)
   )
-  unlink(file_freeze)
-  update_staging(
+  unlink(file_staged)
+  stage_candidates(
     path_staging = path_staging,
     path_community = path_community,
     mock = list(community = meta_community)
@@ -46,23 +46,44 @@ test_that("update_staging() for the first time in a Staging cycle", {
   config <- jsonlite::read_json(file_config, simplifyVector = TRUE)
   expect_equal(names(config), "cran_version")
   expect_true(is.character(config$cran_version))
-  freeze <- jsonlite::read_json(file_freeze, simplifyVector = TRUE)
-  expect_equal(freeze, sort(c("freeze", "removed-no-issue")))
+  staged <- jsonlite::read_json(file_staged, simplifyVector = TRUE)
+  expect_equal(sort(staged), sort(c("staged", "removed-no-issue")))
   packages <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   expect_true(is.data.frame(packages))
   expect_equal(dim(packages), c(3L, 3L))
-  names <- c("add", "freeze", "issue")
+  names <- c("add", "staged", "issue")
   expect_equal(sort(packages$package), sort(names))
   expect_equal(
     packages$url,
     file.path("https://github.com/owner", packages$package)
   )
   expect_equal(packages$branch[packages$package == "add"], "sha-add")
-  expect_equal(packages$branch[packages$package == "freeze"], "sha-freeze")
+  expect_equal(packages$branch[packages$package == "staged"], "sha-staged")
   expect_equal(packages$branch[packages$package == "issue"], "sha-issue")
+  expect_equal(
+    readLines(file.path(path_staging, "snapshot.url")),
+    paste0(
+      "https://staging.r-multiverse.org/api/snapshot/tar",
+      "?types=src,win,mac",
+      "&binaries=",
+      meta_snapshot()$r,
+      "&skip_packages=add,issue"
+    )
+  )
+  meta <- jsonlite::read_json(
+    file.path(path_staging, "meta.json"),
+    simplifyVector = TRUE
+  )
+  expect_equal(length(meta), 6L)
+  expect_equal(meta$reset, meta_snapshot()$reset)
+  expect_equal(meta$staging, meta_snapshot()$staging)
+  expect_equal(meta$snapshot, meta_snapshot()$snapshot)
+  expect_equal(meta$r, meta_snapshot()$r)
+  expect_true(is.character(meta$cran))
+  expect_true(is.character(meta$r_multiverse))
 })
 
-test_that("update_staging() in the middle of a Staging cycle", {
+test_that("stage_candidates() in the middle of a Staging cycle", {
   dir_staging <- tempfile()
   dir_community <- tempfile()
   path_staging <- file.path(dir_staging, "staging")
@@ -87,7 +108,7 @@ test_that("update_staging() in the middle of a Staging cycle", {
     recursive = TRUE
   )
   file_config <- file.path(path_staging, "config.json")
-  file_freeze <- file.path(path_staging, "freeze.json")
+  file_staged <- file.path(path_staging, "staged.json")
   file_staging <- file.path(path_staging, "packages.json")
   file_community <- file.path(path_community, "packages.json")
   json_staging <- jsonlite::read_json(file_staging)
@@ -101,7 +122,7 @@ test_that("update_staging() in the middle of a Staging cycle", {
     package = names_community,
     remotesha = paste0("sha-", names_community)
   )
-  update_staging(
+  stage_candidates(
     path_staging = path_staging,
     path_community = path_community,
     mock = list(community = meta_community)
@@ -109,26 +130,36 @@ test_that("update_staging() in the middle of a Staging cycle", {
   config <- jsonlite::read_json(file_config, simplifyVector = TRUE)
   expect_equal(names(config), "cran_version")
   expect_true(is.character(config$cran_version))
-  freeze <- jsonlite::read_json(file_freeze, simplifyVector = TRUE)
-  expect_equal(freeze, sort(c("freeze", "removed-no-issue")))
+  staged <- jsonlite::read_json(file_staged, simplifyVector = TRUE)
+  expect_equal(sort(staged), sort(c("staged", "removed-no-issue")))
   packages <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   expect_true(is.data.frame(packages))
   expect_equal(dim(packages), c(3L, 3L))
-  names <- c("freeze", "issue", "removed-no-issue")
+  names <- c("staged", "issue", "removed-no-issue")
   expect_equal(sort(packages$package), sort(names))
   expect_equal(
     packages$url,
     file.path("https://github.com/owner", packages$package)
   )
-  expect_equal(packages$branch[packages$package == "freeze"], "original")
+  expect_equal(packages$branch[packages$package == "staged"], "original")
   expect_equal(packages$branch[packages$package == "issue"], "sha-issue")
   expect_equal(
     packages$branch[packages$package == "removed-no-issue"],
     "original"
   )
+  expect_equal(
+    readLines(file.path(path_staging, "snapshot.url")),
+    paste0(
+      "https://staging.r-multiverse.org/api/snapshot/tar",
+      "?types=src,win,mac",
+      "&binaries=",
+      meta_snapshot()$r,
+      "&skip_packages=issue,removed-has-issue"
+    )
+  )
 })
 
-test_that("update_staging() when a frozen package breaks", {
+test_that("stage_candidates() when a frozen package breaks", {
   dir_staging <- tempfile()
   dir_community <- tempfile()
   path_staging <- file.path(dir_staging, "staging")
@@ -153,7 +184,7 @@ test_that("update_staging() when a frozen package breaks", {
     recursive = TRUE
   )
   file_config <- file.path(path_staging, "config.json")
-  file_freeze <- file.path(path_staging, "freeze.json")
+  file_staged <- file.path(path_staging, "staged.json")
   file_staging <- file.path(path_staging, "packages.json")
   file_community <- file.path(path_community, "packages.json")
   json_staging <- jsonlite::read_json(file_staging)
@@ -169,9 +200,9 @@ test_that("update_staging() when a frozen package breaks", {
   )
   file_issues <- file.path(path_staging, "issues.json")
   json_issues <- jsonlite::read_json(file_issues, simplifyVector = TRUE)
-  json_issues$freeze <- json_issues$issue
+  json_issues$staged <- json_issues$issue
   jsonlite::write_json(json_issues, file_issues, pretty = TRUE)
-  update_staging(
+  stage_candidates(
     path_staging = path_staging,
     path_community = path_community,
     mock = list(community = meta_community)
@@ -179,18 +210,18 @@ test_that("update_staging() when a frozen package breaks", {
   config <- jsonlite::read_json(file_config, simplifyVector = TRUE)
   expect_equal(names(config), "cran_version")
   expect_true(is.character(config$cran_version))
-  freeze <- jsonlite::read_json(file_freeze, simplifyVector = TRUE)
-  expect_equal(sort(freeze), sort(c("freeze", "removed-no-issue")))
+  staged <- jsonlite::read_json(file_staged, simplifyVector = TRUE)
+  expect_equal(sort(staged), sort(c("staged", "removed-no-issue")))
   packages <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   expect_true(is.data.frame(packages))
   expect_equal(dim(packages), c(3L, 3L))
-  names <- c("freeze", "issue", "removed-no-issue")
+  names <- c("staged", "issue", "removed-no-issue")
   expect_equal(sort(packages$package), sort(names))
   expect_equal(
     packages$url,
     file.path("https://github.com/owner", packages$package)
   )
-  expect_equal(packages$branch[packages$package == "freeze"], "original")
+  expect_equal(packages$branch[packages$package == "staged"], "original")
   expect_equal(packages$branch[packages$package == "issue"], "sha-issue")
   expect_equal(
     packages$branch[packages$package == "removed-no-issue"],
@@ -198,7 +229,7 @@ test_that("update_staging() when a frozen package breaks", {
   )
 })
 
-test_that("update_staging() when a broken package gets fixed", {
+test_that("stage_candidates() when a broken package gets fixed", {
   dir_staging <- tempfile()
   dir_community <- tempfile()
   path_staging <- file.path(dir_staging, "staging")
@@ -223,7 +254,7 @@ test_that("update_staging() when a broken package gets fixed", {
     recursive = TRUE
   )
   file_config <- file.path(path_staging, "config.json")
-  file_freeze <- file.path(path_staging, "freeze.json")
+  file_staged <- file.path(path_staging, "staged.json")
   file_staging <- file.path(path_staging, "packages.json")
   file_community <- file.path(path_community, "packages.json")
   json_staging <- jsonlite::read_json(file_staging)
@@ -239,9 +270,9 @@ test_that("update_staging() when a broken package gets fixed", {
   )
   file_issues <- file.path(path_staging, "issues.json")
   json_issues <- jsonlite::read_json(file_issues, simplifyVector = TRUE)
-  json_issues$issue <- json_issues$freeze
+  json_issues$issue <- json_issues$staged
   jsonlite::write_json(json_issues, file_issues, pretty = TRUE)
-  update_staging(
+  stage_candidates(
     path_staging = path_staging,
     path_community = path_community,
     mock = list(community = meta_community)
@@ -249,18 +280,18 @@ test_that("update_staging() when a broken package gets fixed", {
   config <- jsonlite::read_json(file_config, simplifyVector = TRUE)
   expect_equal(names(config), "cran_version")
   expect_true(is.character(config$cran_version))
-  freeze <- jsonlite::read_json(file_freeze, simplifyVector = TRUE)
-  expect_equal(sort(freeze), sort(c("freeze", "issue", "removed-no-issue")))
+  staged <- jsonlite::read_json(file_staged, simplifyVector = TRUE)
+  expect_equal(sort(staged), sort(c("staged", "issue", "removed-no-issue")))
   packages <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   expect_true(is.data.frame(packages))
   expect_equal(dim(packages), c(3L, 3L))
-  names <- c("freeze", "issue", "removed-no-issue")
+  names <- c("staged", "issue", "removed-no-issue")
   expect_equal(sort(packages$package), sort(names))
   expect_equal(
     packages$url,
     file.path("https://github.com/owner", packages$package)
   )
-  expect_equal(packages$branch[packages$package == "freeze"], "original")
+  expect_equal(packages$branch[packages$package == "staged"], "original")
   expect_equal(packages$branch[packages$package == "issue"], "original")
   expect_equal(
     packages$branch[packages$package == "removed-no-issue"],
@@ -268,7 +299,7 @@ test_that("update_staging() when a broken package gets fixed", {
   )
 })
 
-test_that("update_staging() with frozen package removed from Community", {
+test_that("stage_candidates() with frozen package removed from Community", {
   dir_staging <- tempfile()
   dir_community <- tempfile()
   path_staging <- file.path(dir_staging, "staging")
@@ -293,20 +324,20 @@ test_that("update_staging() with frozen package removed from Community", {
     recursive = TRUE
   )
   file_config <- file.path(path_staging, "config.json")
-  file_freeze <- file.path(path_staging, "freeze.json")
+  file_staged <- file.path(path_staging, "staged.json")
   file_staging <- file.path(path_staging, "packages.json")
   file_community <- file.path(path_community, "packages.json")
   json_staging <- jsonlite::read_json(file_staging)
   json_community <- jsonlite::read_json(file_community, simplifyVector = TRUE)
-  json_community <- json_community[json_community$package != "freeze", ]
+  json_community <- json_community[json_community$package != "staged", ]
   jsonlite::write_json(json_community, file_community, pretty = TRUE)
   names_community <- json_community$package
   meta_community <- data.frame(
     package = names_community,
     remotesha = paste0("sha-", names_community)
   )
-  meta_community <- meta_community[meta_community$package != "freeze", ]
-  update_staging(
+  meta_community <- meta_community[meta_community$package != "staged", ]
+  stage_candidates(
     path_staging = path_staging,
     path_community = path_community,
     mock = list(community = meta_community)
@@ -314,18 +345,18 @@ test_that("update_staging() with frozen package removed from Community", {
   config <- jsonlite::read_json(file_config, simplifyVector = TRUE)
   expect_equal(names(config), "cran_version")
   expect_true(is.character(config$cran_version))
-  freeze <- jsonlite::read_json(file_freeze, simplifyVector = TRUE)
-  expect_equal(sort(freeze), sort(c("freeze", "removed-no-issue")))
+  staged <- jsonlite::read_json(file_staged, simplifyVector = TRUE)
+  expect_equal(sort(staged), sort(c("staged", "removed-no-issue")))
   packages <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   expect_true(is.data.frame(packages))
   expect_equal(dim(packages), c(3L, 3L))
-  names <- c("freeze", "issue", "removed-no-issue")
+  names <- c("staged", "issue", "removed-no-issue")
   expect_equal(sort(packages$package), sort(names))
   expect_equal(
     packages$url,
     file.path("https://github.com/owner", packages$package)
   )
-  expect_equal(packages$branch[packages$package == "freeze"], "original")
+  expect_equal(packages$branch[packages$package == "staged"], "original")
   expect_equal(packages$branch[packages$package == "issue"], "sha-issue")
   expect_equal(
     packages$branch[packages$package == "removed-no-issue"],

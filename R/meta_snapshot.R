@@ -19,7 +19,8 @@ meta_snapshot <- function(today = Sys.Date()) {
     snapshot = snapshot,
     r = meta_snapshot_r(date = staging),
     cran = file.path(
-      "https://packagemanager.posit.co/cran",
+      "https://packagemanager.posit.co",
+      "cran",
       staging
     ),
     r_multiverse = file.path(
