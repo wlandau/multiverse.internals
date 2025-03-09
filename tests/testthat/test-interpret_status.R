@@ -20,7 +20,7 @@ test_that("interpret_status() with a successful package", {
     ),
     paste(
       "R-multiverse checks passed for package abc version v remote",
-      "hash h (last changed: d)."
+      "hash h (last updated on d)."
     )
   )
 })

@@ -40,9 +40,8 @@ meta_packages <- function(
   foss <- utils::available.packages(repos = repo, filters = "license/FOSS")
   out$foss <- FALSE
   out[as.character(foss[, "Package"]), "foss"] <- TRUE
-  freeze <- date_staging()
   p3m <- "https://packagemanager.posit.co"
-  repo_cran <- file.path(p3m, "cran", freeze)
+  repo_cran <- file.path(p3m, "cran", meta_snapshot()$staging)
   cran <- utils::available.packages(repos = repo_cran)
   cran <- data.frame(
     package = as.character(cran[, "Package"]),

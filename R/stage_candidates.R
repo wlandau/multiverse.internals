@@ -1,11 +1,12 @@
-#' @title Update staging
+#' @title Stage release candidates
 #' @export
 #' @family staging
-#' @description Update the staging universe.
-#' @details [update_staging()] controls how packages enter and leave
-#'   the staging universe. It updates the staging `packages.json`
-#'   manifest depending on the contents of the community
-#'   universe and issues with package checks.
+#' @description Stage release candidates for the targeted Production snapshot.
+#' @details [stage_candidates()] Writes `packages.json` to control
+#'   contents of the Staging universe.
+#'   It also writes `staged.json` to track packages staged for Production,
+#'   a `snapshot.json` file with metadata on the snapshot,
+#'   and `snapshot.url` with an API call to download staged packages.
 #' @return `NULL` (invisibly)
 #' @inheritParams record_issues
 #' @param path_staging Character string, directory path to the source
@@ -13,6 +14,9 @@
 #' @param path_community Character string, directory path to the source
 #'   files of the community universe.
 #' @param repo_community Character string, URL of the community universe.
+#' @param types Character vector, what to pass to the `types` field in the
+#'   snapshot API URL. Controls the types of binaries and documentation
+#'   included in the snapshot.
 #' @examples
 #' \dontrun{
 #' url_staging = "https://github.com/r-multiverse/staging"
@@ -21,16 +25,17 @@
 #' path_community <- tempfile()
 #' gert::git_clone(url = url_staging, path = path_staging)
 #' gert::git_clone(url = url_community, path = path_community)
-#' update_staging(
+#' stage_candidates(
 #'   path_staging = path_staging,
 #'   path_community = path_community,
 #'   repo_community = "https://community.r-multiverse.org"
 #' )
 #' }
-update_staging <- function(
+stage_candidates <- function(
   path_staging,
   path_community,
   repo_community = "https://community.r-multiverse.org",
+  types = c("src", "win", "mac"),
   mock = NULL
 ) {
   file_staging <- file.path(path_staging, "packages.json")
@@ -51,48 +56,63 @@ update_staging <- function(
   if (file.exists(path_issues)) {
     json_issues <- jsonlite::read_json(path_issues, simplifyVector = TRUE)
   }
-  freeze <- names(
+  staged <- names(
     Filter(
       x = json_issues,
       f = function(issue) isTRUE(issue$success)
     )
   )
-  file_freeze <- file.path(path_staging, "freeze.json")
+  file_staged <- file.path(path_staging, "staged.json")
   # If a Staging cycle is already underway,
-  if (file.exists(file_freeze) && file.exists(file_staging)) {
+  if (file.exists(file_staged) && file.exists(file_staging)) {
     # then the no packages can enter or leave the Staging universe,
     json_staging <- as.data.frame(
       jsonlite::read_json(file_staging, simplifyVector = TRUE),
       stringsAsFactors = FALSE
     )
     # and frozen packages stay frozen.
-    freeze <- base::union(
-      freeze,
-      jsonlite::read_json(file_freeze, simplifyVector = TRUE)
+    staged <- base::union(
+      staged,
+      jsonlite::read_json(file_staged, simplifyVector = TRUE)
     )
   } else  {
     json_staging <- json_community # Otherwise, refresh Staging from Community.
   }
   candidates <- json_staging$package
-  update <- setdiff(candidates, freeze)
-  should_freeze <- json_staging$package %in% freeze
-  json_freeze <- json_staging[should_freeze,, drop = FALSE] # nolint
+  update <- setdiff(candidates, staged)
+  should_stage <- json_staging$package %in% staged
+  json_staged <- json_staging[should_stage,, drop = FALSE] # nolint
   json_update <- json_community[json_community$package %in% update,, drop = FALSE] # nolint
-  json_freeze$subdir <- json_freeze$subdir %||%
-    rep(NA_character_, nrow(json_freeze))
+  json_staged$subdir <- json_staged$subdir %||%
+    rep(NA_character_, nrow(json_staged))
   json_update$subdir <- json_update$subdir %||%
     rep(NA_character_, nrow(json_update))
-  json_new <- rbind(json_freeze, json_update)
+  json_new <- rbind(json_staged, json_update)
   json_new <- json_new[order(json_new$package), ]
   jsonlite::write_json(json_new, file_staging, pretty = TRUE)
   file_config <- file.path(path_staging, "config.json")
-  json_config <- list(cran_version = date_staging())
+  snapshot <- meta_snapshot()
+  json_config <- list(cran_version = snapshot$staging)
   jsonlite::write_json(
     json_config,
     file_config,
     pretty = TRUE,
     auto_unbox = TRUE
   )
-  jsonlite::write_json(freeze, file_freeze, pretty = TRUE)
+  jsonlite::write_json(staged, file_staged, pretty = TRUE)
+  url <- paste0(
+    "https://staging.r-multiverse.org/api/snapshot/tar",
+    "?types=",
+    paste(types, collapse = ","),
+    paste0("&binaries=", snapshot$r),
+    "&skip_packages=",
+    paste(setdiff(candidates, staged), collapse = ",")
+  )
+  writeLines(url, file.path(path_staging, "snapshot.url"))
+  jsonlite::write_json(
+    snapshot,
+    file.path(path_staging, "snapshot.json"),
+    pretty = TRUE
+  )
   invisible()
 }

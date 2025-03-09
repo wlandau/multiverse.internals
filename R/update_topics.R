@@ -4,7 +4,7 @@
 #' @description Update the list of packages for each
 #'   R-multiverse topic.
 #' @return `NULL` (invisibly). Called for its side effects.
-#' @inheritParams update_staging
+#' @inheritParams stage_candidates
 #' @param path Character string,
 #'   local file path to the topics repository source code.
 #' @param repo Character string, URL of the Community universe.

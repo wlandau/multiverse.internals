@@ -1,3 +1,11 @@
+# multiverse.internals 0.4.3
+
+* Consolidate snapshot metadata management in `meta_snapshot()`.
+* Subsume `update_staging()` and `propose_snapshot()` into `stage_candidates()`.
+* Rename `freeze.json` to `staged.json`.
+* Rename `meta.json` to `snapshot.json`.
+* Write a `production.html` page in `update_status()`.
+
 # multiverse.internals 0.4.2
 
 * Rearrange fields in `meta.json`.

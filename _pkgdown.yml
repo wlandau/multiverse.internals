@@ -9,30 +9,25 @@ reference:
   contents:
   - review_pull_request
   - review_pull_requests
-- title: List metadata
+- title: Metadata
   contents:
   - meta_checks
   - meta_packages
+  - meta_snapshot
 - title: Check issues
   contents:
   - issues_checks
   - issues_dependencies
   - issues_descriptions
   - issues_versions
-- title: Record problems
+- title: Record issues
   contents:
   - record_issues
   - record_nonstandard_licenses
   - record_versions
 - title: Staging
   contents:
-  - update_staging
-  - propose_snapshot
-- title: Snapshot metadata
-  contents:
-  - date_snapshot
-  - date_staging
-  - r_version_staging
+  - stage_candidates
 - title: Package status
   contents:
   - interpret_status

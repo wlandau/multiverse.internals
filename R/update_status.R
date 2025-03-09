@@ -3,7 +3,7 @@
 #' @family status
 #' @description Update the repository which reports the status on individual
 #'   packages.
-#' @inheritParams update_staging
+#' @inheritParams stage_candidates
 #' @param path_status Character string, directory path to the source files
 #'   of the package status repository.
 #' @param repo_staging Character string, URL of the staging universe.
@@ -56,6 +56,52 @@ update_status <- function(
     meta = meta_community,
     directory = "community"
   )
+  update_status_production(
+    output = path_status,
+    input = path_staging
+  )
+}
+
+update_status_production <- function(output, input) {
+  path_issues <- file.path(input, "issues.json")
+  path_staged <- file.path(input, "staged.json")
+  path_snapshot <- file.path(input, "snapshot.json")
+  if (!all(file.exists(c(path_issues, path_staged, path_snapshot)))) {
+    return()
+  }
+  issues <- jsonlite::read_json(path_issues, simplifyVector = TRUE)
+  staged <- jsonlite::read_json(path_staged, simplifyVector = TRUE)
+  snapshot <- jsonlite::read_json(path_snapshot, simplifyVector = TRUE)
+  issues <- as.data.frame(do.call(rbind, issues[staged]))
+  url <- sprintf(
+    "<a href=\"https://r-multiverse.org/status/staging/%s\">%s</a>",
+    staged,
+    staged
+  )
+  lines_packages <- paste(
+    "<li>",
+    url,
+    issues$version,
+    sprintf("(%s)", issues$date),
+    "</li>"
+  )
+  lines_packages <- paste(lines_packages, collapse = "\n")
+  file_template <- system.file(
+    file.path("status", "production.html"),
+    package = "multiverse.internals",
+    mustWork = TRUE
+  )
+  lines_page <- gsub(
+    pattern = "SNAPSHOT",
+    replacement = snapshot$snapshot,
+    x = readLines(file_template)
+  )
+  lines_page <- gsub(
+    pattern = "PACKAGES",
+    replacement = lines_packages,
+    x = lines_page
+  )
+  writeLines(lines_page, file.path(output, "production.html"))
 }
 
 update_status_directory <- function(output, input, meta, directory) {
