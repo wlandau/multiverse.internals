@@ -46,6 +46,11 @@ test_that("update_status()", {
   )
   path_status <- tempfile()
   on.exit(unlink(path_status, recursive = TRUE), add = TRUE)
+  stage_candidates(
+    path_staging = path_staging,
+    path_community = path_community,
+    mock = list(community = meta_community)
+  )
   update_status(
     path_status = path_status,
     path_staging = path_staging,
@@ -54,9 +59,20 @@ test_that("update_status()", {
   )
   expect_true(
     all(
-      file.exists(file.path(path_status, c("community.html", "staging.html")))
+      file.exists(
+        file.path(
+          path_status,
+          c("community.html", "staging.html", "production.html")
+        )
+      )
     )
   )
+  lines_production <- readLines(file.path(path_status, "production.html"))
+  expect_true(any(grepl(meta_snapshot()$snapshot, lines_production)))
+  expect_true(any(grepl("staged", lines_production)))
+  expect_true(any(grepl("removed-no-issue", lines_production)))
+  expect_false(any(grepl(">issue<", lines_production, fixed = TRUE)))
+  expect_false(any(grepl("removed-has-issue", lines_production)))
   lines_staging <- readLines(file.path(path_status, "staging.html"))
   expect_true(any(grepl(">issue<", lines_staging, fixed = TRUE)))
   expect_true(any(grepl(">removed-has-issue<", lines_staging, fixed = TRUE)))
