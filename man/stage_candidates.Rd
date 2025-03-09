@@ -37,7 +37,8 @@ Stage release candidates for the targeted Production snapshot.
 \details{
 \code{\link[=stage_candidates]{stage_candidates()}} Writes \code{packages.json} to control
 contents of the Staging universe.
-It also writes \code{staged.json} to track packages staged for Production
+It also writes \code{staged.json} to track packages staged for Production,
+a \code{snapshot.json} file with metadata on the snapshot,
 and \code{snapshot.url} with an API call to download staged packages.
 }
 \examples{

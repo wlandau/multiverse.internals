@@ -2,7 +2,8 @@
 
 * Consolidate snapshot metadata management in `meta_snapshot()`.
 * Subsume `update_staging()` and `propose_snapshot()` into `stage_candidates()`.
-* Replace `freeze.json` with `staged.json`.
+* Rename `freeze.json` to `staged.json`.
+* Rename `meta.json` to `snapshot.json`.
 
 # multiverse.internals 0.4.2
 

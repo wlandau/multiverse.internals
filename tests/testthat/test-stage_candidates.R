@@ -71,7 +71,7 @@ test_that("stage_candidates() for the first time in a Staging cycle", {
     )
   )
   meta <- jsonlite::read_json(
-    file.path(path_staging, "meta.json"),
+    file.path(path_staging, "snapshot.json"),
     simplifyVector = TRUE
   )
   expect_equal(length(meta), 6L)

@@ -4,7 +4,8 @@
 #' @description Stage release candidates for the targeted Production snapshot.
 #' @details [stage_candidates()] Writes `packages.json` to control
 #'   contents of the Staging universe.
-#'   It also writes `staged.json` to track packages staged for Production
+#'   It also writes `staged.json` to track packages staged for Production,
+#'   a `snapshot.json` file with metadata on the snapshot,
 #'   and `snapshot.url` with an API call to download staged packages.
 #' @return `NULL` (invisibly)
 #' @inheritParams record_issues
@@ -110,7 +111,7 @@ stage_candidates <- function(
   writeLines(url, file.path(path_staging, "snapshot.url"))
   jsonlite::write_json(
     snapshot,
-    file.path(path_staging, "meta.json"),
+    file.path(path_staging, "snapshot.json"),
     pretty = TRUE
   )
   invisible()
