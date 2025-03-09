@@ -20,7 +20,7 @@ test_that("propose_snapshot()", {
       "https://staging.r-multiverse.org/api/snapshot/tar",
       "?types=src,win,mac",
       "&binaries=",
-      r_version_staging()$short,
+      meta_snapshot()$r,
       "&skip_packages=issue,removed-has-issue"
     )
   )
@@ -28,10 +28,11 @@ test_that("propose_snapshot()", {
     file.path(path_staging, "meta.json"),
     simplifyVector = TRUE
   )
-  expect_equal(length(meta), 5L)
-  expect_equal(meta$date_staging, date_staging())
-  expect_equal(meta$date_snapshot, date_snapshot())
-  expect_equal(meta$r_version, r_version_staging()$short)
-  expect_true(is.character(meta$r_multiverse))
+  expect_equal(length(meta), 6L)
+  expect_equal(meta$reset, meta_snapshot()$reset)
+  expect_equal(meta$staging, meta_snapshot()$staging)
+  expect_equal(meta$snapshot, meta_snapshot()$snapshot)
+  expect_equal(meta$r, meta_snapshot()$r)
   expect_true(is.character(meta$cran))
+  expect_true(is.character(meta$r_multiverse))
 })

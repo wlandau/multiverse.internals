@@ -47,7 +47,7 @@ interpret_success <- function(issue, package) {
   }
   paste0(
     out,
-    " (last changed: ",
+    " (last updated on ",
     issue$date,
     ")."
   )
@@ -64,7 +64,7 @@ interpret_title <- function(issue, package) {
   if (is.character(issue$remote_hash)) {
     title <- paste(title, "remote hash", issue$remote_hash)
   }
-  paste0(title, " (last changed: ", issue$date, ").<br><br>")
+  paste0(title, " (last updated on ", issue$date, ").<br><br>")
 }
 
 interpret_advisories <- function(issue) {

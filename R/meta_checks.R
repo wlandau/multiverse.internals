@@ -25,7 +25,11 @@ meta_checks_process_json <- function(json) {
   json$url <- json[["_failure"]]$buildurl %||% rep(NA_character_, nrow(json))
   success_source <- is.na(json$url)
   json$url[success_source] <- json[["_buildurl"]][success_source]
-  json$issues <- lapply(json[["_binaries"]], meta_checks_issues_binaries)
+  json$issues <- lapply(
+    json[["_binaries"]],
+    meta_checks_issues_binaries,
+    snapshot = meta_snapshot()
+  )
   for (index in which(!success_source)) {
     json$issues[[index]]$source <- "FAILURE"
   }
@@ -34,12 +38,12 @@ meta_checks_process_json <- function(json) {
   json[, c("package", "url", "issues")]
 }
 
-meta_checks_issues_binaries <- function(binaries) {
+meta_checks_issues_binaries <- function(binaries, snapshot) {
   check <- .subset2(binaries, "check")
   os <- .subset2(binaries, "os")
   arch <- .subset2(binaries, "arch")
   r <- .subset2(binaries, "r")
-  is_release <- r_version_short(r) == r_version_staging()$short
+  is_release <- r_version_short(r) == snapshot$r
   results <- c(
     target_check("linux", os, arch, r, is_release, check),
     target_check("mac", os, arch, r, is_release, check),

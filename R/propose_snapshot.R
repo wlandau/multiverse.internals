@@ -7,13 +7,16 @@
 #'   packages for which (1) the build and check results of the current
 #'   release are in Staging, and (2) there are no issues.
 #'   Writes a `snapshot.url` file containing an R-universe snapshot API URL
-#'   to download those packages. This files is written to the
+#'   to download those packages.
+#'   Also writes a `meta.json` file to describe the snapshot.
+#'   These files is written to the
 #'   directory given by the `path_staging` argument.
 #' @return `NULL` (invisibly). Called for its side effects.
 #'   [propose_snapshot()] writes a
 #'   `snapshot.url` file containing an R-universe snapshot API URL
 #'   to download packages ready for Production.
-#'   This file is written to the
+#'   Also writes a `meta.json` file to describe the snapshot.
+#'   These files is written to the
 #'   directory given by the `path_staging` argument.
 #' @inheritParams update_staging
 #' @param types Character vector, what to pass to the `types` field in the
@@ -38,8 +41,8 @@ propose_snapshot <- function(
   file_staging <- file.path(path_staging, "packages.json")
   json_staging <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   exclude <- setdiff(json_staging$package, freeze)
-  r_version <- r_version_staging()
-  binaries <- paste0("&binaries=", r_version$short)
+  snapshot <- meta_snapshot()
+  binaries <- paste0("&binaries=", snapshot$r)
   url <- paste0(
     "https://staging.r-multiverse.org/api/snapshot/tar",
     "?types=",
@@ -49,21 +52,8 @@ propose_snapshot <- function(
     paste(exclude, collapse = ",")
   )
   writeLines(url, file.path(path_staging, "snapshot.url"))
-  meta <- data.frame(
-    r_version = r_version$short,
-    date_staging = date_staging(),
-    date_snapshot = date_snapshot(),
-    cran = file.path(
-      "https://packagemanager.posit.co/cran",
-      date_staging()
-    ),
-    r_multiverse = file.path(
-      "https://production.r-multiverse.org",
-      date_snapshot()
-    )
-  )
   jsonlite::write_json(
-    meta,
+    snapshot,
     file.path(path_staging, "meta.json"),
     pretty = TRUE
   )

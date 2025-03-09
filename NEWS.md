@@ -1,3 +1,7 @@
+# multiverse.internals 0.4.3
+
+* Consolidate snapshot metadata management in `meta_snapshot()`.
+
 # multiverse.internals 0.4.2
 
 * Rearrange fields in `meta.json`.

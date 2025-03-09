@@ -40,6 +40,7 @@ meta_packages(repo = "https://wlandau.r-universe.dev")
 }
 \seealso{
 Other meta: 
-\code{\link{meta_checks}()}
+\code{\link{meta_checks}()},
+\code{\link{meta_snapshot}()}
 }
 \concept{meta}

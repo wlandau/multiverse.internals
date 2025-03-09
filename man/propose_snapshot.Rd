@@ -19,7 +19,8 @@ included in the snapshot.}
 \code{\link[=propose_snapshot]{propose_snapshot()}} writes a
 \code{snapshot.url} file containing an R-universe snapshot API URL
 to download packages ready for Production.
-This file is written to the
+Also writes a \code{meta.json} file to describe the snapshot.
+These files is written to the
 directory given by the \code{path_staging} argument.
 }
 \description{
@@ -31,7 +32,9 @@ to migrate to Production. The recommended snapshot is the list of
 packages for which (1) the build and check results of the current
 release are in Staging, and (2) there are no issues.
 Writes a \code{snapshot.url} file containing an R-universe snapshot API URL
-to download those packages. This files is written to the
+to download those packages.
+Also writes a \code{meta.json} file to describe the snapshot.
+These files is written to the
 directory given by the \code{path_staging} argument.
 }
 \examples{
