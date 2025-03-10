@@ -46,6 +46,7 @@ test_that("stage_candidates() for the first time in a Staging cycle", {
   config <- jsonlite::read_json(file_config, simplifyVector = TRUE)
   expect_equal(names(config), "cran_version")
   expect_true(is.character(config$cran_version))
+  expect_equal(config$cran_version, meta_snapshot()$dependency_freeze)
   staged <- jsonlite::read_json(file_staged, simplifyVector = TRUE)
   expect_equal(sort(staged), sort(c("staged", "removed-no-issue")))
   packages <- jsonlite::read_json(file_staging, simplifyVector = TRUE)

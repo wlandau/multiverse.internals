@@ -63,4 +63,8 @@ stage_candidates(
 )
 }
 }
+\seealso{
+Other staging: 
+\code{\link{freeze_dependencies}()}
+}
 \concept{staging}

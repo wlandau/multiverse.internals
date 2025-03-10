@@ -97,16 +97,8 @@ stage_candidates <- function(
   json_new <- rbind(json_staged, json_update)
   json_new <- json_new[order(json_new$package), ]
   jsonlite::write_json(json_new, file_staging, pretty = TRUE)
-  file_config <- file.path(path_staging, "config.json")
-  snapshot <- meta_snapshot()
-  json_config <- list(cran_version = snapshot$dependency_freeze)
-  jsonlite::write_json(
-    json_config,
-    file_config,
-    pretty = TRUE,
-    auto_unbox = TRUE
-  )
   jsonlite::write_json(staged, file_staged, pretty = TRUE)
+  snapshot <- meta_snapshot()
   url <- paste0(
     "https://staging.r-multiverse.org/api/snapshot/tar",
     "?types=",
@@ -121,5 +113,6 @@ stage_candidates <- function(
     file.path(path_staging, "snapshot.json"),
     pretty = TRUE
   )
+  write_config_json(path_staging)
   invisible()
 }
