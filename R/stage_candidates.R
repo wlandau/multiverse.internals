@@ -2,7 +2,14 @@
 #' @export
 #' @family staging
 #' @description Stage release candidates for the targeted Production snapshot.
-#' @details [stage_candidates()] Writes `packages.json` to control
+#' @details [stage_candidates()] implements the candidate freeze
+#'   during the month-long period prior to the Production snapshot.
+#'   Packages that pass R-multiverse checks are frozen
+#'   (not allowed to update further) and staged for Production.
+#'   Packages with at least one failing not staged for Production,
+#'   and maintainers can update them with new GitHub/GitLab releases.
+#'
+#'   [stage_candidates()] writes `packages.json` to control
 #'   contents of the Staging universe.
 #'   It also writes `staged.json` to track packages staged for Production,
 #'   a `snapshot.json` file with metadata on the snapshot,
@@ -70,7 +77,7 @@ stage_candidates <- function(
       jsonlite::read_json(file_staging, simplifyVector = TRUE),
       stringsAsFactors = FALSE
     )
-    # and frozen packages stay frozen.
+    # and staged packages stay staged.
     staged <- base::union(
       staged,
       jsonlite::read_json(file_staged, simplifyVector = TRUE)
@@ -92,7 +99,7 @@ stage_candidates <- function(
   jsonlite::write_json(json_new, file_staging, pretty = TRUE)
   file_config <- file.path(path_staging, "config.json")
   snapshot <- meta_snapshot()
-  json_config <- list(cran_version = snapshot$staging)
+  json_config <- list(cran_version = snapshot$dependency_freeze)
   jsonlite::write_json(
     json_config,
     file_config,

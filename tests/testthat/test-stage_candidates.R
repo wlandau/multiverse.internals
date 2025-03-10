@@ -75,8 +75,8 @@ test_that("stage_candidates() for the first time in a Staging cycle", {
     simplifyVector = TRUE
   )
   expect_equal(length(meta), 6L)
-  expect_equal(meta$reset, meta_snapshot()$reset)
-  expect_equal(meta$staging, meta_snapshot()$staging)
+  expect_equal(meta$dependency_freeze, meta_snapshot()$dependency_freeze)
+  expect_equal(meta$candidate_freeze, meta_snapshot()$candidate_freeze)
   expect_equal(meta$snapshot, meta_snapshot()$snapshot)
   expect_equal(meta$r, meta_snapshot()$r)
   expect_true(is.character(meta$cran))
