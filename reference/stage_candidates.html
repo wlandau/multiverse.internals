@@ -42,6 +42,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">stage_candidates</span><span class="op">(</span></span>
 <span>  <span class="va">path_staging</span>,</span>
 <span>  <span class="va">path_community</span>,</span>
+<span>  repo_staging <span class="op">=</span> <span class="st">"https://staging.r-multiverse.org"</span>,</span>
 <span>  repo_community <span class="op">=</span> <span class="st">"https://community.r-multiverse.org"</span>,</span>
 <span>  types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"src"</span>, <span class="st">"win"</span>, <span class="st">"mac"</span><span class="op">)</span>,</span>
 <span>  mock <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -54,16 +55,20 @@
 
 <dl><dt id="arg-path-staging">path_staging<a class="anchor" aria-label="anchor" href="#arg-path-staging"></a></dt>
 <dd><p>Character string, directory path to the source
-files of the staging universe.</p></dd>
+files of the Staging universe.</p></dd>
 
 
 <dt id="arg-path-community">path_community<a class="anchor" aria-label="anchor" href="#arg-path-community"></a></dt>
 <dd><p>Character string, directory path to the source
-files of the community universe.</p></dd>
+files of the Community universe.</p></dd>
+
+
+<dt id="arg-repo-staging">repo_staging<a class="anchor" aria-label="anchor" href="#arg-repo-staging"></a></dt>
+<dd><p>Character string, URL of the Staging universe.</p></dd>
 
 
 <dt id="arg-repo-community">repo_community<a class="anchor" aria-label="anchor" href="#arg-repo-community"></a></dt>
-<dd><p>Character string, URL of the community universe.</p></dd>
+<dd><p>Character string, URL of the Community universe.</p></dd>
 
 
 <dt id="arg-types">types<a class="anchor" aria-label="anchor" href="#arg-types"></a></dt>
@@ -93,7 +98,8 @@ and maintainers can update them with new GitHub/GitLab releases.</p>
 contents of the Staging universe.
 It also writes <code>staged.json</code> to track packages staged for Production,
 a <code>snapshot.json</code> file with metadata on the snapshot,
-and <code>snapshot.url</code> with an API call to download staged packages.</p>
+and <code>include-from.txt</code> with packages to pass to the <code>--include-from</code>
+flag of Rclone during the snapshot upload process.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -113,6 +119,7 @@ and <code>snapshot.url</code> with an API call to download staged packages.</p>
 <span class="r-in"><span><span class="fu">stage_candidates</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  path_staging <span class="op">=</span> <span class="va">path_staging</span>,</span></span>
 <span class="r-in"><span>  path_community <span class="op">=</span> <span class="va">path_community</span>,</span></span>
+<span class="r-in"><span>  repo_staging <span class="op">=</span> <span class="st">"https://staging.r-multiverse.org"</span>,</span></span>
 <span class="r-in"><span>  repo_community <span class="op">=</span> <span class="st">"https://community.r-multiverse.org"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
