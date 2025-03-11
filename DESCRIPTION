@@ -37,6 +37,7 @@ Imports:
   jsonlite,
   nanonext,
   pkgsearch,
+  R.utils,
   rversions,
   stats,
   utils,
