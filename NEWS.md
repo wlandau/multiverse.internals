@@ -1,3 +1,7 @@
+# multiverse.internals 0.4.8
+
+* Sort `staged.json`.
+
 # multiverse.internals 0.4.7
 
 * Remove the `types` argument of `stage_candidates()`.

@@ -76,9 +76,11 @@ stage_candidates <- function(
       stringsAsFactors = FALSE
     )
     # and staged packages stay staged.
-    staged <- base::union(
-      staged,
-      jsonlite::read_json(file_staged, simplifyVector = TRUE)
+    staged <- sort(
+      base::union(
+        staged,
+        jsonlite::read_json(file_staged, simplifyVector = TRUE)
+      )
     )
   } else  {
     json_staging <- json_community # Otherwise, refresh Staging from Community.
