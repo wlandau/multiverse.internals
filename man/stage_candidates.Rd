@@ -70,6 +70,7 @@ stage_candidates(
 }
 \seealso{
 Other staging: 
+\code{\link{filter_packages}()},
 \code{\link{freeze_dependencies}()}
 }
 \concept{staging}

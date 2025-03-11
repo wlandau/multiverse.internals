@@ -48,6 +48,7 @@ freeze_dependencies(
 }
 \seealso{
 Other staging: 
+\code{\link{filter_packages}()},
 \code{\link{stage_candidates}()}
 }
 \concept{staging}

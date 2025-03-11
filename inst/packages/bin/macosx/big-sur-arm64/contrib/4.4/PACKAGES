@@ -1,0 +1,38 @@
+Package: arrow
+Version: 19.0.1
+License: Apache License (>= 2.0)
+NeedsCompilation: yes
+Built: R 4.4.3; aarch64-apple-darwin20; 2025-03-03 13:14:52 UTC; unix
+MD5sum: 53528d085790ba5a90117bfff5993ab7
+Filesize: 17656900
+SHA256: 7cc40fb1b8379aeeb0882b53d07a03f0fa110597703287724b494d666a9f2eb2
+Depends: R (>= 4.0)
+LinkingTo: cpp11 (>= 0.4.2)
+Imports: assertthat, bit64 (>= 0.9-7), glue, methods, purrr, R6, rlang (>= 1.0.0), stats, tidyselect (>= 1.0.0), utils, vctrs
+Suggests: blob, curl, cli, DBI, dbplyr, decor, distro, dplyr, duckdb (>= 0.2.8), hms, jsonlite, knitr, lubridate, pillar, pkgload, reticulate, rmarkdown, stringi, stringr, sys, testthat (>= 3.1.0), tibble, tzdb, withr
+
+Package: crew
+Version: 1.0.0
+License: MIT + file LICENSE
+NeedsCompilation: no
+Built: R 4.4.3; ; 2025-03-03 13:03:32 UTC; unix
+MD5sum: 88f4f7deb35499303d1623beca040d3b
+Filesize: 1155645
+SHA256: 34dd9d0713f69e75f43d23910717903eddd8431f811a91117f06350ef8efb1e4
+Depends: R (>= 4.0.0)
+Imports: cli (>= 3.1.0), data.table, getip, later, mirai (>= 2.0.1), nanonext (>= 1.4.0), processx, promises, ps, R6, rlang, stats, tibble, tidyselect, tools, utils
+Suggests: autometric (>= 0.1.0), knitr (>= 1.30), markdown (>= 1.1), rmarkdown (>= 2.4), testthat (>= 3.0.0)
+
+Package: mirai
+Version: 2.1.0
+License: GPL (>= 3)
+NeedsCompilation: no
+Built: R 4.4.3; ; 2025-03-03 12:53:46 UTC; unix
+MD5sum: f8c40baf7318b802bedb300003684d39
+Filesize: 262406
+SHA256: d2608f64323a749afec2b342f39f26a903c1e5351960e135ac26bf77c506f9a4
+Depends: R (>= 3.6)
+Imports: nanonext (>= 1.5.0)
+Suggests: cli, litedown
+Enhances: parallel, promises
+

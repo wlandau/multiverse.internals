@@ -1,6 +1,7 @@
 # multiverse.internals 0.4.5
 
 * Replace `snapshot.url` with `include-from.txt` to facilitate Rclone uploads.
+* Add `filter_packages()`
 
 # multiverse.internals 0.4.4
 
