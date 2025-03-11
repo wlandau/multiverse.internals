@@ -46,7 +46,7 @@ stage_candidates(path_staging = path_staging)
 }
 \seealso{
 Other staging: 
-\code{\link{filter_packages}()},
+\code{\link{filter_meta}()},
 \code{\link{freeze_dependencies}()},
 \code{\link{rclone_includes}()}
 }

@@ -48,7 +48,7 @@ freeze_dependencies(
 }
 \seealso{
 Other staging: 
-\code{\link{filter_packages}()},
+\code{\link{filter_meta}()},
 \code{\link{rclone_includes}()},
 \code{\link{stage_candidates}()}
 }

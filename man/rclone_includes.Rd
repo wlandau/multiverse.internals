@@ -41,7 +41,7 @@ rclone_includes(
 }
 \seealso{
 Other staging: 
-\code{\link{filter_packages}()},
+\code{\link{filter_meta}()},
 \code{\link{freeze_dependencies}()},
 \code{\link{stage_candidates}()}
 }

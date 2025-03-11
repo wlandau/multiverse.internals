@@ -27,7 +27,7 @@ reference:
   - record_versions
 - title: Staging
   contents:
-  - filter_packages
+  - filter_meta
   - freeze_dependencies
   - rclone_includes
   - stage_candidates
