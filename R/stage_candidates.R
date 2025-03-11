@@ -13,14 +13,17 @@
 #'   contents of the Staging universe.
 #'   It also writes `staged.json` to track packages staged for Production,
 #'   a `snapshot.json` file with metadata on the snapshot,
-#'   and `snapshot.url` with an API call to download staged packages.
+#'   and files `include-packages.txt` and `include-meta.txt`
+#'   to pass to the `--include-from`
+#'   flag of Rclone during the snapshot upload process.
 #' @return `NULL` (invisibly)
 #' @inheritParams record_issues
 #' @param path_staging Character string, directory path to the source
-#'   files of the staging universe.
+#'   files of the Staging universe.
 #' @param path_community Character string, directory path to the source
-#'   files of the community universe.
-#' @param repo_community Character string, URL of the community universe.
+#'   files of the Community universe.
+#' @param repo_staging Character string, URL of the Staging universe.
+#' @param repo_community Character string, URL of the Community universe.
 #' @param types Character vector, what to pass to the `types` field in the
 #'   snapshot API URL. Controls the types of binaries and documentation
 #'   included in the snapshot.
@@ -35,18 +38,21 @@
 #' stage_candidates(
 #'   path_staging = path_staging,
 #'   path_community = path_community,
+#'   repo_staging = "https://staging.r-multiverse.org",
 #'   repo_community = "https://community.r-multiverse.org"
 #' )
 #' }
 stage_candidates <- function(
   path_staging,
   path_community,
+  repo_staging = "https://staging.r-multiverse.org",
   repo_community = "https://community.r-multiverse.org",
   types = c("src", "win", "mac"),
   mock = NULL
 ) {
   file_staging <- file.path(path_staging, "packages.json")
   file_community <- file.path(path_community, "packages.json")
+  meta_staging <- mock$staging %||% meta_packages(repo_staging)
   meta_community <- mock$community %||% meta_packages(repo_community)
   meta_community <- meta_community[!is.na(meta_community$remotesha),, drop = FALSE] # nolint
   json_community <- merge(
@@ -98,21 +104,40 @@ stage_candidates <- function(
   json_new <- json_new[order(json_new$package), ]
   jsonlite::write_json(json_new, file_staging, pretty = TRUE)
   jsonlite::write_json(staged, file_staged, pretty = TRUE)
-  snapshot <- meta_snapshot()
-  url <- paste0(
-    "https://staging.r-multiverse.org/api/snapshot/tar",
-    "?types=",
-    paste(types, collapse = ","),
-    paste0("&binaries=", snapshot$r),
-    "&skip_packages=",
-    paste(setdiff(candidates, staged), collapse = ",")
-  )
-  writeLines(url, file.path(path_staging, "snapshot.url"))
+  write_include_packages(path_staging, meta_staging, staged)
+  write_include_meta(path_staging)
+  write_snapshot_json(path_staging)
+  write_config_json(path_staging)
+  invisible()
+}
+
+write_snapshot_json <- function(path_staging) {
   jsonlite::write_json(
-    snapshot,
+    meta_snapshot(),
     file.path(path_staging, "snapshot.json"),
     pretty = TRUE
   )
-  write_config_json(path_staging)
-  invisible()
+}
+
+write_include_packages <- function(path_staging, meta_staging, staged) {
+  is_staged <- meta_staging$package %in% staged
+  package <- meta_staging$package[is_staged]
+  version <- meta_staging$version[is_staged]
+  release <- paste0(package, "_", version)
+  r <- meta_snapshot()$r
+  source <- sprintf("src/contrib/%s.tar.gz", release)
+  mac <- sprintf("bin/macosx/*/contrib/%s/%s.tgz", r, release)
+  windows <- sprintf("bin/windows/contrib/%s/%s.zip", r, release)
+  lines <- c(source, mac, windows)
+  writeLines(lines, file.path(path_staging, "include-packages.txt"))
+}
+
+write_include_meta <- function(path_staging) {
+  r <- meta_snapshot()$r
+  source <- sprintf("src/contrib/PACKAGES")
+  mac <- sprintf("bin/macosx/*/contrib/%s/PACKAGES", r)
+  windows <- sprintf("bin/windows/contrib/%s/PACKAGES", r)
+  lines <- c(source, mac, windows)
+  lines <- c(lines, paste0(lines, ".gz"))
+  writeLines(lines, file.path(path_staging, "include-meta.txt"))
 }

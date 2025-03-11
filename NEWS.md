@@ -1,3 +1,8 @@
+# multiverse.internals 0.4.5
+
+* Replace `snapshot.url` with Rclone filters.
+* Add `filter_packages()`
+
 # multiverse.internals 0.4.4
 
 * Implement separate freezes for dependencies and release candidates (#146).

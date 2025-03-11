@@ -5,6 +5,7 @@
 #' @importFrom jsonlite parse_json read_json stream_in write_json
 #' @importFrom nanonext ncurl parse_url status_code
 #' @importFrom pkgsearch cran_package
+#' @importFrom R.utils gzip
 #' @importFrom rversions r_versions
 #' @importFrom stats aggregate
 #' @importFrom utils available.packages compareVersion contrib.url tail unzip

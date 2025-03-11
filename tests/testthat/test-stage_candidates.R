@@ -28,10 +28,20 @@ test_that("stage_candidates() for the first time in a Staging cycle", {
   file_community <- file.path(path_community, "packages.json")
   json_staging <- jsonlite::read_json(file_staging)
   json_community <- jsonlite::read_json(file_community)
+  names_staging <- vapply(
+    json_staging,
+    function(x) x$package,
+    FUN.VALUE = character(1L)
+  )
   names_community <- vapply(
     json_community,
     function(x) x$package,
     FUN.VALUE = character(1L)
+  )
+  meta_staging <- data.frame(
+    package = names_staging,
+    version = "1.2.3",
+    remotesha = paste0("sha-", names_staging)
   )
   meta_community <- data.frame(
     package = names_community,
@@ -41,7 +51,7 @@ test_that("stage_candidates() for the first time in a Staging cycle", {
   stage_candidates(
     path_staging = path_staging,
     path_community = path_community,
-    mock = list(community = meta_community)
+    mock = list(staging = meta_staging, community = meta_community)
   )
   config <- jsonlite::read_json(file_config, simplifyVector = TRUE)
   expect_equal(names(config), "cran_version")
@@ -61,14 +71,34 @@ test_that("stage_candidates() for the first time in a Staging cycle", {
   expect_equal(packages$branch[packages$package == "add"], "sha-add")
   expect_equal(packages$branch[packages$package == "staged"], "sha-staged")
   expect_equal(packages$branch[packages$package == "issue"], "sha-issue")
+  file_include_packages <- file.path(path_staging, "include-packages.txt")
+  include_packages <- readLines(file_include_packages)
   expect_equal(
-    readLines(file.path(path_staging, "snapshot.url")),
-    paste0(
-      "https://staging.r-multiverse.org/api/snapshot/tar",
-      "?types=src,win,mac",
-      "&binaries=",
-      meta_snapshot()$r,
-      "&skip_packages=add,issue"
+    sort(include_packages),
+    sort(
+      c(
+        "src/contrib/staged_1.2.3.tar.gz",
+        "src/contrib/removed-no-issue_1.2.3.tar.gz",
+        "bin/macosx/*/contrib/4.4/staged_1.2.3.tgz",
+        "bin/macosx/*/contrib/4.4/removed-no-issue_1.2.3.tgz",
+        "bin/windows/contrib/4.4/staged_1.2.3.zip",
+        "bin/windows/contrib/4.4/removed-no-issue_1.2.3.zip"
+      )
+    )
+  )
+  file_include_meta <- file.path(path_staging, "include-meta.txt")
+  include_meta <- readLines(file_include_meta)
+  expect_equal(
+    sort(include_meta),
+    sort(
+      c(
+        "src/contrib/PACKAGES",
+        "src/contrib/PACKAGES.gz",
+        "bin/macosx/*/contrib/4.4/PACKAGES",
+        "bin/macosx/*/contrib/4.4/PACKAGES.gz",
+        "bin/windows/contrib/4.4/PACKAGES",
+        "bin/windows/contrib/4.4/PACKAGES.gz"
+      )
     )
   )
   meta <- jsonlite::read_json(
@@ -114,10 +144,20 @@ test_that("stage_candidates() in the middle of a Staging cycle", {
   file_community <- file.path(path_community, "packages.json")
   json_staging <- jsonlite::read_json(file_staging)
   json_community <- jsonlite::read_json(file_community)
+  names_staging <- vapply(
+    json_staging,
+    function(x) x$package,
+    FUN.VALUE = character(1L)
+  )
   names_community <- vapply(
     json_community,
     function(x) x$package,
     FUN.VALUE = character(1L)
+  )
+  meta_staging <- data.frame(
+    package = names_staging,
+    version = "1.2.3",
+    remotesha = paste0("sha-", names_staging)
   )
   meta_community <- data.frame(
     package = names_community,
@@ -126,7 +166,7 @@ test_that("stage_candidates() in the middle of a Staging cycle", {
   stage_candidates(
     path_staging = path_staging,
     path_community = path_community,
-    mock = list(community = meta_community)
+    mock = list(staging = meta_staging, community = meta_community)
   )
   config <- jsonlite::read_json(file_config, simplifyVector = TRUE)
   expect_equal(names(config), "cran_version")
@@ -147,16 +187,6 @@ test_that("stage_candidates() in the middle of a Staging cycle", {
   expect_equal(
     packages$branch[packages$package == "removed-no-issue"],
     "original"
-  )
-  expect_equal(
-    readLines(file.path(path_staging, "snapshot.url")),
-    paste0(
-      "https://staging.r-multiverse.org/api/snapshot/tar",
-      "?types=src,win,mac",
-      "&binaries=",
-      meta_snapshot()$r,
-      "&skip_packages=issue,removed-has-issue"
-    )
   )
 })
 
@@ -190,10 +220,20 @@ test_that("stage_candidates() when a frozen package breaks", {
   file_community <- file.path(path_community, "packages.json")
   json_staging <- jsonlite::read_json(file_staging)
   json_community <- jsonlite::read_json(file_community)
+  names_staging <- vapply(
+    json_staging,
+    function(x) x$package,
+    FUN.VALUE = character(1L)
+  )
   names_community <- vapply(
     json_community,
     function(x) x$package,
     FUN.VALUE = character(1L)
+  )
+  meta_staging <- data.frame(
+    package = names_staging,
+    version = "1.2.3",
+    remotesha = paste0("sha-", names_staging)
   )
   meta_community <- data.frame(
     package = names_community,
@@ -206,7 +246,7 @@ test_that("stage_candidates() when a frozen package breaks", {
   stage_candidates(
     path_staging = path_staging,
     path_community = path_community,
-    mock = list(community = meta_community)
+    mock = list(staging = meta_staging, community = meta_community)
   )
   config <- jsonlite::read_json(file_config, simplifyVector = TRUE)
   expect_equal(names(config), "cran_version")
@@ -260,10 +300,20 @@ test_that("stage_candidates() when a broken package gets fixed", {
   file_community <- file.path(path_community, "packages.json")
   json_staging <- jsonlite::read_json(file_staging)
   json_community <- jsonlite::read_json(file_community)
+  names_staging <- vapply(
+    json_staging,
+    function(x) x$package,
+    FUN.VALUE = character(1L)
+  )
   names_community <- vapply(
     json_community,
     function(x) x$package,
     FUN.VALUE = character(1L)
+  )
+  meta_staging <- data.frame(
+    package = names_staging,
+    version = "1.2.3",
+    remotesha = paste0("sha-", names_staging)
   )
   meta_community <- data.frame(
     package = names_community,
@@ -276,7 +326,7 @@ test_that("stage_candidates() when a broken package gets fixed", {
   stage_candidates(
     path_staging = path_staging,
     path_community = path_community,
-    mock = list(community = meta_community)
+    mock = list(staging = meta_staging, community = meta_community)
   )
   config <- jsonlite::read_json(file_config, simplifyVector = TRUE)
   expect_equal(names(config), "cran_version")
@@ -332,7 +382,17 @@ test_that("stage_candidates() with frozen package removed from Community", {
   json_community <- jsonlite::read_json(file_community, simplifyVector = TRUE)
   json_community <- json_community[json_community$package != "staged", ]
   jsonlite::write_json(json_community, file_community, pretty = TRUE)
+  names_staging <- vapply(
+    json_staging,
+    function(x) x$package,
+    FUN.VALUE = character(1L)
+  )
   names_community <- json_community$package
+  meta_staging <- data.frame(
+    package = names_staging,
+    version = "1.2.3",
+    remotesha = paste0("sha-", names_staging)
+  )
   meta_community <- data.frame(
     package = names_community,
     remotesha = paste0("sha-", names_community)
@@ -341,7 +401,7 @@ test_that("stage_candidates() with frozen package removed from Community", {
   stage_candidates(
     path_staging = path_staging,
     path_community = path_community,
-    mock = list(community = meta_community)
+    mock = list(staging = meta_staging, community = meta_community)
   )
   config <- jsonlite::read_json(file_config, simplifyVector = TRUE)
   expect_equal(names(config), "cran_version")

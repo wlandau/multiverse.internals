@@ -7,6 +7,7 @@
 stage_candidates(
   path_staging,
   path_community,
+  repo_staging = "https://staging.r-multiverse.org",
   repo_community = "https://community.r-multiverse.org",
   types = c("src", "win", "mac"),
   mock = NULL
@@ -14,12 +15,14 @@ stage_candidates(
 }
 \arguments{
 \item{path_staging}{Character string, directory path to the source
-files of the staging universe.}
+files of the Staging universe.}
 
 \item{path_community}{Character string, directory path to the source
-files of the community universe.}
+files of the Community universe.}
 
-\item{repo_community}{Character string, URL of the community universe.}
+\item{repo_staging}{Character string, URL of the Staging universe.}
+
+\item{repo_community}{Character string, URL of the Community universe.}
 
 \item{types}{Character vector, what to pass to the \code{types} field in the
 snapshot API URL. Controls the types of binaries and documentation
@@ -46,7 +49,9 @@ and maintainers can update them with new GitHub/GitLab releases.
 contents of the Staging universe.
 It also writes \code{staged.json} to track packages staged for Production,
 a \code{snapshot.json} file with metadata on the snapshot,
-and \code{snapshot.url} with an API call to download staged packages.
+and files \code{include-packages.txt} and \code{include-meta.txt}
+to pass to the \code{--include-from}
+flag of Rclone during the snapshot upload process.
 }
 \examples{
 \dontrun{
@@ -59,12 +64,14 @@ gert::git_clone(url = url_community, path = path_community)
 stage_candidates(
   path_staging = path_staging,
   path_community = path_community,
+  repo_staging = "https://staging.r-multiverse.org",
   repo_community = "https://community.r-multiverse.org"
 )
 }
 }
 \seealso{
 Other staging: 
+\code{\link{filter_packages}()},
 \code{\link{freeze_dependencies}()}
 }
 \concept{staging}
