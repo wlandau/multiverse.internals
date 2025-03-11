@@ -78,9 +78,9 @@ test_that("stage_candidates() for the first time in a Staging cycle", {
     sort(
       c(
         "src/contrib/staged_1.2.3.tar.gz",
-        "src/contrib/removed-no-issue_1.2.3.tar.gz", 
+        "src/contrib/removed-no-issue_1.2.3.tar.gz",
         "bin/macosx/*/contrib/4.4/staged_1.2.3.tgz",
-        "bin/macosx/*/contrib/4.4/removed-no-issue_1.2.3.tgz", 
+        "bin/macosx/*/contrib/4.4/removed-no-issue_1.2.3.tgz",
         "bin/windows/contrib/4.4/staged_1.2.3.zip",
         "bin/windows/contrib/4.4/removed-no-issue_1.2.3.zip"
       )
@@ -93,7 +93,7 @@ test_that("stage_candidates() for the first time in a Staging cycle", {
     sort(
       c(
         "src/contrib/PACKAGES",
-        "bin/macosx/*/contrib/4.4/PACKAGES", 
+        "bin/macosx/*/contrib/4.4/PACKAGES",
         "bin/windows/contrib/4.4/PACKAGES"
       )
     )
