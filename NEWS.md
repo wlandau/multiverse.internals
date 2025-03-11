@@ -1,3 +1,7 @@
+# multiverse.internals 0.4.7
+
+* Remove the `types` argument of `stage_candidates()`.
+
 # multiverse.internals 0.4.6
 
 * Add `rclone_includes()`.
