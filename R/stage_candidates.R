@@ -138,5 +138,6 @@ write_include_meta <- function(path_staging) {
   mac <- sprintf("bin/macosx/*/contrib/%s/PACKAGES", r)
   windows <- sprintf("bin/windows/contrib/%s/PACKAGES", r)
   lines <- c(source, mac, windows)
+  lines <- c(lines, paste0(lines, ".gz"))
   writeLines(lines, file.path(path_staging, "include-meta.txt"))
 }

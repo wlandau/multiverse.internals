@@ -93,8 +93,11 @@ test_that("stage_candidates() for the first time in a Staging cycle", {
     sort(
       c(
         "src/contrib/PACKAGES",
+        "src/contrib/PACKAGES.gz",
         "bin/macosx/*/contrib/4.4/PACKAGES",
-        "bin/windows/contrib/4.4/PACKAGES"
+        "bin/macosx/*/contrib/4.4/PACKAGES.gz",
+        "bin/windows/contrib/4.4/PACKAGES",
+        "bin/windows/contrib/4.4/PACKAGES.gz"
       )
     )
   )
