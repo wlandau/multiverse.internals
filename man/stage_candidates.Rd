@@ -7,7 +7,6 @@
 stage_candidates(
   path_staging,
   path_community,
-  repo_staging = "https://staging.r-multiverse.org",
   repo_community = "https://community.r-multiverse.org",
   types = c("src", "win", "mac"),
   mock = NULL
@@ -19,8 +18,6 @@ files of the Staging universe.}
 
 \item{path_community}{Character string, directory path to the source
 files of the Community universe.}
-
-\item{repo_staging}{Character string, URL of the Staging universe.}
 
 \item{repo_community}{Character string, URL of the Community universe.}
 
@@ -64,7 +61,6 @@ gert::git_clone(url = url_community, path = path_community)
 stage_candidates(
   path_staging = path_staging,
   path_community = path_community,
-  repo_staging = "https://staging.r-multiverse.org",
   repo_community = "https://community.r-multiverse.org"
 )
 }
@@ -72,6 +68,7 @@ stage_candidates(
 \seealso{
 Other staging: 
 \code{\link{filter_packages}()},
-\code{\link{freeze_dependencies}()}
+\code{\link{freeze_dependencies}()},
+\code{\link{rclone_includes}()}
 }
 \concept{staging}

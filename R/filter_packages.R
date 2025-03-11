@@ -5,7 +5,8 @@
 #'   only list certain packages.
 #' @param path Directory path where `PACKAGES` and `PACKAGES.gz` files
 #'   reside locally.
-#' @param include Character vector of names of packages to include.
+#' @param staged Path to the `"staged.json"` file which lists staged packages
+#'   in the Staging universe.
 #' @examples
 #' \dontrun{
 #'   path <- tempfile()
@@ -16,9 +17,12 @@
 #'     mustWork = TRUE
 #'   )
 #'   file.copy(mock, path, recursive = TRUE)
-#'   filter_packages(path, include = c("crew", "mirai"))
+#'   staged <- tempfile()
+#'   jsonlite::write_json(c("crew", "mirai"), staged, pretty = TRUE)
+#'   filter_packages(path, staged)
 #' }
-filter_packages <- function(path, include) {
+filter_packages <- function(path, staged) {
+  include <- jsonlite::read_json(staged, simplifyVector = TRUE)
   listings <- list.files(
     path,
     recursive = TRUE,

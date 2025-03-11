@@ -71,36 +71,6 @@ test_that("stage_candidates() for the first time in a Staging cycle", {
   expect_equal(packages$branch[packages$package == "add"], "sha-add")
   expect_equal(packages$branch[packages$package == "staged"], "sha-staged")
   expect_equal(packages$branch[packages$package == "issue"], "sha-issue")
-  file_include_packages <- file.path(path_staging, "include-packages.txt")
-  include_packages <- readLines(file_include_packages)
-  expect_equal(
-    sort(include_packages),
-    sort(
-      c(
-        "src/contrib/staged_1.2.3.tar.gz",
-        "src/contrib/removed-no-issue_1.2.3.tar.gz",
-        "bin/macosx/*/contrib/4.4/staged_1.2.3.tgz",
-        "bin/macosx/*/contrib/4.4/removed-no-issue_1.2.3.tgz",
-        "bin/windows/contrib/4.4/staged_1.2.3.zip",
-        "bin/windows/contrib/4.4/removed-no-issue_1.2.3.zip"
-      )
-    )
-  )
-  file_include_meta <- file.path(path_staging, "include-meta.txt")
-  include_meta <- readLines(file_include_meta)
-  expect_equal(
-    sort(include_meta),
-    sort(
-      c(
-        "src/contrib/PACKAGES",
-        "src/contrib/PACKAGES.gz",
-        "bin/macosx/*/contrib/4.4/PACKAGES",
-        "bin/macosx/*/contrib/4.4/PACKAGES.gz",
-        "bin/windows/contrib/4.4/PACKAGES",
-        "bin/windows/contrib/4.4/PACKAGES.gz"
-      )
-    )
-  )
   meta <- jsonlite::read_json(
     file.path(path_staging, "snapshot.json"),
     simplifyVector = TRUE

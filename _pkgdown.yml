@@ -29,6 +29,7 @@ reference:
   contents:
   - filter_packages
   - freeze_dependencies
+  - rclone_includes
   - stage_candidates
 - title: Package status
   contents:

@@ -1,3 +1,7 @@
+# multiverse.internals 0.4.6
+
+* Add `rclone_includes()`.
+
 # multiverse.internals 0.4.5
 
 * Replace `snapshot.url` with Rclone filters.
