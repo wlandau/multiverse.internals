@@ -13,7 +13,8 @@
 #'   contents of the Staging universe.
 #'   It also writes `staged.json` to track packages staged for Production,
 #'   a `snapshot.json` file with metadata on the snapshot,
-#'   and `include-from.txt` with packages to pass to the `--include-from`
+#'   and files `include-packages.txt` and `include-meta.txt`
+#'   to pass to the `--include-from`
 #'   flag of Rclone during the snapshot upload process.
 #' @return `NULL` (invisibly)
 #' @inheritParams record_issues
@@ -103,7 +104,8 @@ stage_candidates <- function(
   json_new <- json_new[order(json_new$package), ]
   jsonlite::write_json(json_new, file_staging, pretty = TRUE)
   jsonlite::write_json(staged, file_staged, pretty = TRUE)
-  write_include_from(path_staging, meta_staging, staged)
+  write_include_packages(path_staging, meta_staging, staged)
+  write_include_meta(path_staging)
   write_snapshot_json(path_staging)
   write_config_json(path_staging)
   invisible()
@@ -117,14 +119,24 @@ write_snapshot_json <- function(path_staging) {
   )
 }
 
-write_include_from <- function(path_staging, meta_staging, staged) {
+write_include_packages <- function(path_staging, meta_staging, staged) {
   is_staged <- meta_staging$package %in% staged
-  lines <- paste0(
-    "**",
-    meta_staging$package[is_staged],
-    "_",
-    meta_staging$version[is_staged],
-    ".[a-zA-Z.]*"
-  )
-  writeLines(lines, file.path(path_staging, "include-from.txt"))
+  package <- meta_staging$package[is_staged]
+  version <- meta_staging$version[is_staged]
+  release <- paste0(package, "_", version)
+  r <- meta_snapshot()$r
+  source <- sprintf("src/contrib/%s.tar.gz", release)
+  mac <- sprintf("bin/macosx/*/contrib/%s/%s.tgz", r, release)
+  windows <- sprintf("bin/windows/contrib/%s/%s.zip", r, release)
+  lines <- c(source, mac, windows)
+  writeLines(lines, file.path(path_staging, "include-packages.txt"))
+}
+
+write_include_meta <- function(path_staging) {
+  r <- meta_snapshot()$r
+  source <- sprintf("src/contrib/PACKAGES")
+  mac <- sprintf("bin/macosx/*/contrib/%s/PACKAGES", r)
+  windows <- sprintf("bin/windows/contrib/%s/PACKAGES", r)
+  lines <- c(source, mac, windows)
+  writeLines(lines, file.path(path_staging, "include-meta.txt"))
 }

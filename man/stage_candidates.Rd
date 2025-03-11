@@ -49,7 +49,8 @@ and maintainers can update them with new GitHub/GitLab releases.
 contents of the Staging universe.
 It also writes \code{staged.json} to track packages staged for Production,
 a \code{snapshot.json} file with metadata on the snapshot,
-and \code{include-from.txt} with packages to pass to the \code{--include-from}
+and files \code{include-packages.txt} and \code{include-meta.txt}
+to pass to the \code{--include-from}
 flag of Rclone during the snapshot upload process.
 }
 \examples{
