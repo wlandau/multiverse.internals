@@ -89,7 +89,8 @@ stage_candidates <- function(
   update <- setdiff(candidates, staged)
   should_stage <- json_staging$package %in% staged
   json_staged <- json_staging[should_stage,, drop = FALSE] # nolint
-  json_update <- json_community[json_community$package %in% update,, drop = FALSE] # nolint
+  json_update <- json_staging[json_staging$package %in% update,, drop = FALSE] # nolint
+  json_update$branch <- "*release"
   json_staged$subdir <- json_staged$subdir %||%
     rep(NA_character_, nrow(json_staged))
   json_update$subdir <- json_update$subdir %||%

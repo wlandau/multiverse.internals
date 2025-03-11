@@ -68,9 +68,9 @@ test_that("stage_candidates() for the first time in a Staging cycle", {
     packages$url,
     file.path("https://github.com/owner", packages$package)
   )
-  expect_equal(packages$branch[packages$package == "add"], "sha-add")
+  expect_equal(packages$branch[packages$package == "add"], "*release")
   expect_equal(packages$branch[packages$package == "staged"], "sha-staged")
-  expect_equal(packages$branch[packages$package == "issue"], "sha-issue")
+  expect_equal(packages$branch[packages$package == "issue"], "*release")
   meta <- jsonlite::read_json(
     file.path(path_staging, "snapshot.json"),
     simplifyVector = TRUE
@@ -145,18 +145,22 @@ test_that("stage_candidates() in the middle of a Staging cycle", {
   expect_equal(sort(staged), sort(c("staged", "removed-no-issue")))
   packages <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   expect_true(is.data.frame(packages))
-  expect_equal(dim(packages), c(3L, 3L))
-  names <- c("staged", "issue", "removed-no-issue")
+  expect_equal(dim(packages), c(4L, 3L))
+  names <- c("staged", "issue", "removed-no-issue", "removed-has-issue")
   expect_equal(sort(packages$package), sort(names))
   expect_equal(
     packages$url,
     file.path("https://github.com/owner", packages$package)
   )
   expect_equal(packages$branch[packages$package == "staged"], "original")
-  expect_equal(packages$branch[packages$package == "issue"], "sha-issue")
+  expect_equal(packages$branch[packages$package == "issue"], "*release")
   expect_equal(
     packages$branch[packages$package == "removed-no-issue"],
     "original"
+  )
+  expect_equal(
+    packages$branch[packages$package == "removed-has-issue"],
+    "*release"
   )
 })
 
@@ -225,18 +229,22 @@ test_that("stage_candidates() when a frozen package breaks", {
   expect_equal(sort(staged), sort(c("staged", "removed-no-issue")))
   packages <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   expect_true(is.data.frame(packages))
-  expect_equal(dim(packages), c(3L, 3L))
-  names <- c("staged", "issue", "removed-no-issue")
+  expect_equal(dim(packages), c(4L, 3L))
+  names <- c("staged", "issue", "removed-no-issue", "removed-has-issue")
   expect_equal(sort(packages$package), sort(names))
   expect_equal(
     packages$url,
     file.path("https://github.com/owner", packages$package)
   )
   expect_equal(packages$branch[packages$package == "staged"], "original")
-  expect_equal(packages$branch[packages$package == "issue"], "sha-issue")
+  expect_equal(packages$branch[packages$package == "issue"], "*release")
   expect_equal(
     packages$branch[packages$package == "removed-no-issue"],
     "original"
+  )
+  expect_equal(
+    packages$branch[packages$package == "removed-has-issue"],
+    "*release"
   )
 })
 
@@ -305,8 +313,8 @@ test_that("stage_candidates() when a broken package gets fixed", {
   expect_equal(sort(staged), sort(c("staged", "issue", "removed-no-issue")))
   packages <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   expect_true(is.data.frame(packages))
-  expect_equal(dim(packages), c(3L, 3L))
-  names <- c("staged", "issue", "removed-no-issue")
+  expect_equal(dim(packages), c(4L, 3L))
+  names <- c("staged", "issue", "removed-no-issue", "removed-has-issue")
   expect_equal(sort(packages$package), sort(names))
   expect_equal(
     packages$url,
@@ -317,6 +325,10 @@ test_that("stage_candidates() when a broken package gets fixed", {
   expect_equal(
     packages$branch[packages$package == "removed-no-issue"],
     "original"
+  )
+  expect_equal(
+    packages$branch[packages$package == "removed-has-issue"],
+    "*release"
   )
 })
 
@@ -380,17 +392,21 @@ test_that("stage_candidates() with frozen package removed from Community", {
   expect_equal(sort(staged), sort(c("staged", "removed-no-issue")))
   packages <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   expect_true(is.data.frame(packages))
-  expect_equal(dim(packages), c(3L, 3L))
-  names <- c("staged", "issue", "removed-no-issue")
+  expect_equal(dim(packages), c(4L, 3L))
+  names <- c("staged", "issue", "removed-no-issue", "removed-has-issue")
   expect_equal(sort(packages$package), sort(names))
   expect_equal(
     packages$url,
     file.path("https://github.com/owner", packages$package)
   )
   expect_equal(packages$branch[packages$package == "staged"], "original")
-  expect_equal(packages$branch[packages$package == "issue"], "sha-issue")
+  expect_equal(packages$branch[packages$package == "issue"], "*release")
   expect_equal(
     packages$branch[packages$package == "removed-no-issue"],
     "original"
+  )
+  expect_equal(
+    packages$branch[packages$package == "removed-has-issue"],
+    "*release"
   )
 })

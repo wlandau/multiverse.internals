@@ -1,3 +1,8 @@
+# multiverse.internals 0.4.9
+
+* In `stage_candidates()`, set `"branch": "*release"` in Staging to allow broken packages to update faster.
+* In `stage_candidates()`, ensure that removing a package from Community does not remove it from Staging during the candidate freeze.
+
 # multiverse.internals 0.4.8
 
 * Sort `staged.json`.
