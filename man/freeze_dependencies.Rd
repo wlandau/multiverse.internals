@@ -49,6 +49,7 @@ freeze_dependencies(
 \seealso{
 Other staging: 
 \code{\link{filter_packages}()},
+\code{\link{rclone_includes}()},
 \code{\link{stage_candidates}()}
 }
 \concept{staging}

@@ -8,7 +8,9 @@ test_that("filter_packages", {
     mustWork = TRUE
   )
   file.copy(mock, path, recursive = TRUE)
-  filter_packages(path, include = c("crew", "mirai"))
+  staged <- tempfile()
+  jsonlite::write_json(c("crew", "mirai"), staged, pretty = TRUE)
+  filter_packages(path, staged)
   listings <- list.files(
     path,
     recursive = TRUE,

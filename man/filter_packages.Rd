@@ -4,13 +4,14 @@
 \alias{filter_packages}
 \title{Filter \code{PACKAGES} and \code{PACKAGES.gz} files.}
 \usage{
-filter_packages(path, include)
+filter_packages(path, staged)
 }
 \arguments{
 \item{path}{Directory path where \code{PACKAGES} and \code{PACKAGES.gz} files
 reside locally.}
 
-\item{include}{Character vector of names of packages to include.}
+\item{staged}{Path to the \code{"staged.json"} file which lists staged packages
+in the Staging universe.}
 }
 \description{
 Filter the \code{PACKAGES} and \code{PACKAGES.gz} files to
@@ -26,12 +27,15 @@ only list certain packages.
     mustWork = TRUE
   )
   file.copy(mock, path, recursive = TRUE)
-  filter_packages(path, include = c("crew", "mirai"))
+  staged <- tempfile()
+  jsonlite::write_json(c("crew", "mirai"), staged, pretty = TRUE)
+  filter_packages(path, staged)
 }
 }
 \seealso{
 Other staging: 
 \code{\link{freeze_dependencies}()},
+\code{\link{rclone_includes}()},
 \code{\link{stage_candidates}()}
 }
 \concept{staging}
