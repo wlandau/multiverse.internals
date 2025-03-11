@@ -2,21 +2,21 @@
   {
     "package": "staged",
     "url": "https://github.com/owner/staged",
-    "branch": "original"
+    "branch": "*release"
   },
   {
     "package": "issue",
     "url": "https://github.com/owner/issue",
-    "branch": "original"
+    "branch": "*release"
   },
   {
     "package": "removed-has-issue",
     "url": "https://github.com/owner/removed-has-issue",
-    "branch": "original"
+    "branch": "*release"
   },
   {
     "package": "removed-no-issue",
     "url": "https://github.com/owner/removed-no-issue",
-    "branch": "original"
+    "branch": "*release"
   }
 ]

@@ -6,7 +6,12 @@
 #' @inheritParams stage_candidates
 #' @param path_status Character string, directory path to the source files
 #'   of the package status repository.
+#' @param path_staging Character string, local directory path
+#'   to the clone of the Staging universe GitHub repository.
+#' @param path_community Character string, local directory path
+#'   to the clone of the Community universe GitHub repository.
 #' @param repo_staging Character string, URL of the staging universe.
+#' @param repo_community Character string, URL of the Community universe.
 #' @examples
 #' \dontrun{
 #' url_staging = "https://github.com/r-multiverse/staging"
@@ -64,13 +69,9 @@ update_status <- function(
 
 update_status_production <- function(output, input) {
   path_issues <- file.path(input, "issues.json")
-  path_staged <- file.path(input, "staged.json")
   path_snapshot <- file.path(input, "snapshot.json")
-  if (!all(file.exists(c(path_issues, path_staged, path_snapshot)))) {
-    return()
-  }
   issues <- jsonlite::read_json(path_issues, simplifyVector = TRUE)
-  staged <- jsonlite::read_json(path_staged, simplifyVector = TRUE)
+  staged <- staged_packages(input)
   snapshot <- jsonlite::read_json(path_snapshot, simplifyVector = TRUE)
   issues <- as.data.frame(do.call(rbind, issues[staged]))
   url <- sprintf(

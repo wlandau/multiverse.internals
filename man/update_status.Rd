@@ -17,11 +17,11 @@ update_status(
 \item{path_status}{Character string, directory path to the source files
 of the package status repository.}
 
-\item{path_staging}{Character string, directory path to the source
-files of the Staging universe.}
+\item{path_staging}{Character string, local directory path
+to the clone of the Staging universe GitHub repository.}
 
-\item{path_community}{Character string, directory path to the source
-files of the Community universe.}
+\item{path_community}{Character string, local directory path
+to the clone of the Community universe GitHub repository.}
 
 \item{repo_staging}{Character string, URL of the staging universe.}
 

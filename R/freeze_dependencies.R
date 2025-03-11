@@ -9,12 +9,14 @@
 #'   using the exact set of dependencies that will be used in the
 #'   candidate freeze (see [stage_candidates()]).
 #'
-#'   [freeze_dependencies()] writes a `config.json` file with the date
-#'   of the targeted CRAN snapshot. It also empties `staged.json`
-#'   to allow a completely new set of packages to staged in the subsequent
-#'   candidate freeze.
+#'   [freeze_dependencies()] copies the Community repository `packages.json`
+#'   into the Staging repository to reset the Staging process.
+#'   It also writes a `config.json` file with the date
+#'   of the targeted CRAN snapshot.
 #' @return `NULL` (invisibly)
 #' @inheritParams stage_candidates
+#' @param path_community Character string, local directory path
+#'   to the clone of the Community universe GitHub repository.
 #' @examples
 #' \dontrun{
 #' url_staging = "https://github.com/r-multiverse/staging"
@@ -30,7 +32,6 @@
 #' }
 freeze_dependencies <- function(path_staging, path_community) {
   write_config_json(path_staging)
-  unlink(file.path(path_staging, "staged.json"), force = TRUE)
   file.copy(
     file.path(path_community, "packages.json"),
     file.path(path_staging, "packages.json"),

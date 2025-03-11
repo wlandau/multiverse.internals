@@ -6,8 +6,7 @@
 \usage{
 stage_candidates(
   path_staging,
-  path_community,
-  repo_community = "https://community.r-multiverse.org",
+  repo_staging = "https://staging.r-multiverse.org",
   mock = NULL
 )
 }
@@ -15,10 +14,7 @@ stage_candidates(
 \item{path_staging}{Character string, directory path to the source
 files of the Staging universe.}
 
-\item{path_community}{Character string, directory path to the source
-files of the Community universe.}
-
-\item{repo_community}{Character string, URL of the Community universe.}
+\item{repo_staging}{Character string, URL of the Staging universe.}
 
 \item{mock}{For testing purposes only, a named list of data frames
 for inputs to various intermediate functions.}
@@ -39,30 +35,18 @@ and maintainers can update them with new GitHub/GitLab releases.
 
 \code{\link[=stage_candidates]{stage_candidates()}} writes \code{packages.json} to control
 contents of the Staging universe.
-It also writes \code{staged.json} to track packages staged for Production,
-a \code{snapshot.json} file with metadata on the snapshot,
-and files \code{include-packages.txt} and \code{include-meta.txt}
-to pass to the \code{--include-from}
-flag of Rclone during the snapshot upload process.
 }
 \examples{
 \dontrun{
-url_staging = "https://github.com/r-multiverse/staging"
-url_community = "https://github.com/r-multiverse/community"
+url_staging <- "https://github.com/r-multiverse/staging"
 path_staging <- tempfile()
-path_community <- tempfile()
 gert::git_clone(url = url_staging, path = path_staging)
-gert::git_clone(url = url_community, path = path_community)
-stage_candidates(
-  path_staging = path_staging,
-  path_community = path_community,
-  repo_community = "https://community.r-multiverse.org"
-)
+stage_candidates(path_staging = path_staging)
 }
 }
 \seealso{
 Other staging: 
-\code{\link{filter_packages}()},
+\code{\link{filter_meta}()},
 \code{\link{freeze_dependencies}()},
 \code{\link{rclone_includes}()}
 }
