@@ -23,9 +23,6 @@
 #' @param path_community Character string, directory path to the source
 #'   files of the Community universe.
 #' @param repo_community Character string, URL of the Community universe.
-#' @param types Character vector, what to pass to the `types` field in the
-#'   snapshot API URL. Controls the types of binaries and documentation
-#'   included in the snapshot.
 #' @examples
 #' \dontrun{
 #' url_staging = "https://github.com/r-multiverse/staging"
@@ -44,7 +41,6 @@ stage_candidates <- function(
   path_staging,
   path_community,
   repo_community = "https://community.r-multiverse.org",
-  types = c("src", "win", "mac"),
   mock = NULL
 ) {
   file_staging <- file.path(path_staging, "packages.json")

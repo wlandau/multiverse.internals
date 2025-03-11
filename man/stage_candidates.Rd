@@ -8,7 +8,6 @@ stage_candidates(
   path_staging,
   path_community,
   repo_community = "https://community.r-multiverse.org",
-  types = c("src", "win", "mac"),
   mock = NULL
 )
 }
@@ -20,10 +19,6 @@ files of the Staging universe.}
 files of the Community universe.}
 
 \item{repo_community}{Character string, URL of the Community universe.}
-
-\item{types}{Character vector, what to pass to the \code{types} field in the
-snapshot API URL. Controls the types of binaries and documentation
-included in the snapshot.}
 
 \item{mock}{For testing purposes only, a named list of data frames
 for inputs to various intermediate functions.}
