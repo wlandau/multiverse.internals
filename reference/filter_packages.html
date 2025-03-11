@@ -42,21 +42,20 @@ only list certain packages.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">filter_packages</span><span class="op">(</span><span class="va">path</span>, <span class="va">staged</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">filter_packages</span><span class="op">(</span><span class="va">path_packages</span>, <span class="va">path_staging</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
+<dl><dt id="arg-path-packages">path_packages<a class="anchor" aria-label="anchor" href="#arg-path-packages"></a></dt>
 <dd><p>Directory path where <code>PACKAGES</code> and <code>PACKAGES.gz</code> files
 reside locally.</p></dd>
 
 
-<dt id="arg-staged">staged<a class="anchor" aria-label="anchor" href="#arg-staged"></a></dt>
-<dd><p>Path to the <code>"staged.json"</code> file which lists staged packages
-in the Staging universe.</p></dd>
+<dt id="arg-path-staging">path_staging<a class="anchor" aria-label="anchor" href="#arg-path-staging"></a></dt>
+<dd><p>Path to a GitHub clone of the Staging universe.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -70,17 +69,18 @@ in the Staging universe.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span>  <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">mock</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">"packages"</span>,</span></span>
-<span class="r-in"><span>    package <span class="op">=</span> <span class="st">"multiverse.internals"</span>,</span></span>
-<span class="r-in"><span>    mustWork <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span><span class="va">mock</span>, <span class="va">path</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">staged</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://jeroen.r-universe.dev/jsonlite/reference/read_json.html" class="external-link">write_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"crew"</span>, <span class="st">"mirai"</span><span class="op">)</span>, <span class="va">staged</span>, pretty <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">filter_packages</span><span class="op">(</span><span class="va">path</span>, <span class="va">staged</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">path_packages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">path_packages</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mock</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"packages"</span>,</span></span>
+<span class="r-in"><span>  package <span class="op">=</span> <span class="st">"multiverse.internals"</span>,</span></span>
+<span class="r-in"><span>  mustWork <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span><span class="va">mock</span>, <span class="va">path_packages</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">path_staging</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">url_staging</span> <span class="op">&lt;-</span> <span class="st">"https://github.com/r-multiverse/staging"</span></span></span>
+<span class="r-in"><span><span class="fu">gert</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/gert/reference/git_fetch.html" class="external-link">git_clone</a></span><span class="op">(</span>url <span class="op">=</span> <span class="va">url_staging</span>, path <span class="op">=</span> <span class="va">path_staging</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">filter_packages</span><span class="op">(</span><span class="va">path_packages</span>, <span class="va">path_staging</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
