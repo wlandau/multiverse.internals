@@ -1,3 +1,7 @@
+# multiverse.internals 0.4.5
+
+* Replace `snapshot.url` with `include-from.txt` to facilitate Rclone uploads.
+
 # multiverse.internals 0.4.4
 
 * Implement separate freezes for dependencies and release candidates (#146).

@@ -8,10 +8,10 @@ freeze_dependencies(path_staging, path_community)
 }
 \arguments{
 \item{path_staging}{Character string, directory path to the source
-files of the staging universe.}
+files of the Staging universe.}
 
 \item{path_community}{Character string, directory path to the source
-files of the community universe.}
+files of the Community universe.}
 }
 \value{
 \code{NULL} (invisibly)
