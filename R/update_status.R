@@ -6,7 +6,12 @@
 #' @inheritParams stage_candidates
 #' @param path_status Character string, directory path to the source files
 #'   of the package status repository.
+#' @param path_staging Character string, local directory path
+#'   to the clone of the Staging universe GitHub repository.
+#' @param path_community Character string, local directory path
+#'   to the clone of the Community universe GitHub repository.
 #' @param repo_staging Character string, URL of the staging universe.
+#' @param repo_community Character string, URL of the Community universe.
 #' @examples
 #' \dontrun{
 #' url_staging = "https://github.com/r-multiverse/staging"

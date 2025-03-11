@@ -8,15 +8,12 @@
 #' @examples
 #' \dontrun{
 #' url_staging = "https://github.com/r-multiverse/staging"
-#' url_community = "https://github.com/r-multiverse/community"
 #' path_staging <- tempfile()
 #' path_community <- tempfile()
 #' gert::git_clone(url = url_staging, path = path_staging)
-#' gert::git_clone(url = url_community, path = path_community)
 #' stage_candidates(
 #'   path_staging = path_staging,
-#'   path_community = path_community,
-#'   repo_community = "https://community.r-multiverse.org"
+#'   repo_staging = "https://staging.r-multiverse.org"
 #' )
 #' rclone_includes(
 #'   path_staging,
@@ -28,7 +25,7 @@ rclone_includes <- function(
   repo_staging = "https://staging.r-multiverse.org",
   mock = NULL
 ) {
-  write_include_packages(path_staging, meta_staging, mock)
+  write_include_packages(path_staging, repo_staging, mock)
   write_include_meta(path_staging)
 }
 

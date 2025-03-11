@@ -15,6 +15,8 @@
 #'   of the targeted CRAN snapshot.
 #' @return `NULL` (invisibly)
 #' @inheritParams stage_candidates
+#' @param path_community Character string, local directory path
+#'   to the clone of the Community universe GitHub repository.
 #' @examples
 #' \dontrun{
 #' url_staging = "https://github.com/r-multiverse/staging"

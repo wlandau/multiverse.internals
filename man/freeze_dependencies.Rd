@@ -9,6 +9,9 @@ freeze_dependencies(path_staging, path_community)
 \arguments{
 \item{path_staging}{Character string, directory path to the source
 files of the Staging universe.}
+
+\item{path_community}{Character string, local directory path
+to the clone of the Community universe GitHub repository.}
 }
 \value{
 \code{NULL} (invisibly)
