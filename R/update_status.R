@@ -64,13 +64,9 @@ update_status <- function(
 
 update_status_production <- function(output, input) {
   path_issues <- file.path(input, "issues.json")
-  path_staged <- file.path(input, "staged.json")
   path_snapshot <- file.path(input, "snapshot.json")
-  if (!all(file.exists(c(path_issues, path_staged, path_snapshot)))) {
-    return()
-  }
   issues <- jsonlite::read_json(path_issues, simplifyVector = TRUE)
-  staged <- jsonlite::read_json(path_staged, simplifyVector = TRUE)
+  staged <- staged_packages(input)
   snapshot <- jsonlite::read_json(path_snapshot, simplifyVector = TRUE)
   issues <- as.data.frame(do.call(rbind, issues[staged]))
   url <- sprintf(

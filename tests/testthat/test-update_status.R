@@ -48,8 +48,7 @@ test_that("update_status()", {
   on.exit(unlink(path_status, recursive = TRUE), add = TRUE)
   stage_candidates(
     path_staging = path_staging,
-    path_community = path_community,
-    mock = list(community = meta_community)
+    mock = list(staging = meta_staging)
   )
   update_status(
     path_status = path_status,

@@ -3,39 +3,42 @@
 #' @family staging
 #' @description Filter the `PACKAGES` and `PACKAGES.gz` files to
 #'   only list certain packages.
-#' @param path Directory path where `PACKAGES` and `PACKAGES.gz` files
+#' @param path_packages Directory path where `PACKAGES` and `PACKAGES.gz` files
 #'   reside locally.
-#' @param staged Path to the `"staged.json"` file which lists staged packages
-#'   in the Staging universe.
+#' @param path_staging Path to a GitHub clone of the Staging universe.
 #' @examples
 #' \dontrun{
-#'   path <- tempfile()
-#'   dir.create(path)
-#'   mock <- system.file(
-#'     "packages",
-#'     package = "multiverse.internals",
-#'     mustWork = TRUE
-#'   )
-#'   file.copy(mock, path, recursive = TRUE)
-#'   staged <- tempfile()
-#'   jsonlite::write_json(c("crew", "mirai"), staged, pretty = TRUE)
-#'   filter_packages(path, staged)
+#' path_packages <- tempfile()
+#' dir.create(path_packages)
+#' mock <- system.file(
+#'   "packages",
+#'   package = "multiverse.internals",
+#'   mustWork = TRUE
+#' )
+#' file.copy(mock, path_packages, recursive = TRUE)
+#' path_staging <- tempfile()
+#' url_staging <- "https://github.com/r-multiverse/staging"
+#' gert::git_clone(url = url_staging, path = path_staging)
+#' filter_packages(path_packages, path_staging)
 #' }
-filter_packages <- function(path, staged) {
-  include <- jsonlite::read_json(staged, simplifyVector = TRUE)
+filter_packages <- function(path_packages, path_staging) {
   listings <- list.files(
-    path,
+    path_packages,
     recursive = TRUE,
     pattern = "PACKAGES$",
     full.names = TRUE
   )
-  lapply(listings, filter_packages_file, include = include)
+  lapply(
+    listings,
+    filter_packages_file,
+    staged = staged_packages(path_staging)
+  )
   invisible()
 }
 
-filter_packages_file <- function(path, include) {
+filter_packages_file <- function(path, staged) {
   data <- read.dcf(file = path)
-  data <- data[data[, "Package"] %in% include,, drop = FALSE] # nolint
+  data <- data[data[, "Package"] %in% staged,, drop = FALSE] # nolint
   write.dcf(x = data, file = path)
   R.utils::gzip(
     filename = path,
@@ -43,4 +46,10 @@ filter_packages_file <- function(path, include) {
     overwrite = TRUE,
     remove = FALSE
   )
+}
+
+staged_packages <- function(path_staging) {
+  file_staging <- file.path(path_staging, "packages.json")
+  json_staging <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
+  json_staging$package[json_staging$branch != "*release"]
 }

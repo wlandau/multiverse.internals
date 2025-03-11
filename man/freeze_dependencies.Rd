@@ -9,9 +9,6 @@ freeze_dependencies(path_staging, path_community)
 \arguments{
 \item{path_staging}{Character string, directory path to the source
 files of the Staging universe.}
-
-\item{path_community}{Character string, directory path to the source
-files of the Community universe.}
 }
 \value{
 \code{NULL} (invisibly)
@@ -27,10 +24,10 @@ snapshot. This establishes checks in the Staging universe
 using the exact set of dependencies that will be used in the
 candidate freeze (see \code{\link[=stage_candidates]{stage_candidates()}}).
 
-\code{\link[=freeze_dependencies]{freeze_dependencies()}} writes a \code{config.json} file with the date
-of the targeted CRAN snapshot. It also empties \code{staged.json}
-to allow a completely new set of packages to staged in the subsequent
-candidate freeze.
+\code{\link[=freeze_dependencies]{freeze_dependencies()}} copies the Community repository \code{packages.json}
+into the Staging repository to reset the Staging process.
+It also writes a \code{config.json} file with the date
+of the targeted CRAN snapshot.
 }
 \examples{
 \dontrun{

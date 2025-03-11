@@ -11,97 +11,51 @@
 #'
 #'   [stage_candidates()] writes `packages.json` to control
 #'   contents of the Staging universe.
-#'   It also writes `staged.json` to track packages staged for Production,
-#'   a `snapshot.json` file with metadata on the snapshot,
-#'   and files `include-packages.txt` and `include-meta.txt`
-#'   to pass to the `--include-from`
-#'   flag of Rclone during the snapshot upload process.
 #' @return `NULL` (invisibly)
 #' @inheritParams record_issues
 #' @param path_staging Character string, directory path to the source
 #'   files of the Staging universe.
-#' @param path_community Character string, directory path to the source
-#'   files of the Community universe.
-#' @param repo_community Character string, URL of the Community universe.
+#' @param repo_staging Character string, URL of the Staging universe.
 #' @examples
 #' \dontrun{
-#' url_staging = "https://github.com/r-multiverse/staging"
-#' url_community = "https://github.com/r-multiverse/community"
+#' url_staging <- "https://github.com/r-multiverse/staging"
 #' path_staging <- tempfile()
-#' path_community <- tempfile()
 #' gert::git_clone(url = url_staging, path = path_staging)
-#' gert::git_clone(url = url_community, path = path_community)
-#' stage_candidates(
-#'   path_staging = path_staging,
-#'   path_community = path_community,
-#'   repo_community = "https://community.r-multiverse.org"
-#' )
+#' stage_candidates(path_staging = path_staging)
 #' }
 stage_candidates <- function(
   path_staging,
-  path_community,
-  repo_community = "https://community.r-multiverse.org",
+  repo_staging = "https://staging.r-multiverse.org",
   mock = NULL
 ) {
-  file_staging <- file.path(path_staging, "packages.json")
-  file_community <- file.path(path_community, "packages.json")
-  meta_community <- mock$community %||% meta_packages(repo_community)
-  meta_community <- meta_community[!is.na(meta_community$remotesha),, drop = FALSE] # nolint
-  json_community <- merge(
-    x = jsonlite::read_json(file_community, simplifyVector = TRUE),
-    y = meta_community[, c("package", "remotesha"), drop = FALSE],
-    by = "package",
-    all.x = TRUE, # Must be in Community packages.json.
-    all.y = TRUE # Must be built on the Community universe.
-  )
-  json_community$branch <- json_community$remotesha
-  json_community$remotesha <- NULL
-  path_issues <- file.path(path_staging, "issues.json")
-  json_issues <- list()
-  if (file.exists(path_issues)) {
-    json_issues <- jsonlite::read_json(path_issues, simplifyVector = TRUE)
-  }
-  staged <- names(
-    Filter(
-      x = json_issues,
-      f = function(issue) isTRUE(issue$success)
-    )
-  )
-  file_staged <- file.path(path_staging, "staged.json")
-  # If a Staging cycle is already underway,
-  if (file.exists(file_staged) && file.exists(file_staging)) {
-    # then the no packages can enter or leave the Staging universe,
-    json_staging <- as.data.frame(
-      jsonlite::read_json(file_staging, simplifyVector = TRUE),
-      stringsAsFactors = FALSE
-    )
-    # and staged packages stay staged.
-    staged <- sort(
-      base::union(
-        staged,
-        jsonlite::read_json(file_staged, simplifyVector = TRUE)
-      )
-    )
-  } else  {
-    json_staging <- json_community # Otherwise, refresh Staging from Community.
-  }
-  candidates <- json_staging$package
-  update <- setdiff(candidates, staged)
-  should_stage <- json_staging$package %in% staged
-  json_staged <- json_staging[should_stage,, drop = FALSE] # nolint
-  json_update <- json_staging[json_staging$package %in% update,, drop = FALSE] # nolint
-  json_update$branch <- "*release"
-  json_staged$subdir <- json_staged$subdir %||%
-    rep(NA_character_, nrow(json_staged))
-  json_update$subdir <- json_update$subdir %||%
-    rep(NA_character_, nrow(json_update))
-  json_new <- rbind(json_staged, json_update)
-  json_new <- json_new[order(json_new$package), ]
-  jsonlite::write_json(json_new, file_staging, pretty = TRUE)
-  jsonlite::write_json(staged, file_staged, pretty = TRUE)
+  write_packages_json(path_staging, repo_staging, mock)
   write_snapshot_json(path_staging)
   write_config_json(path_staging)
   invisible()
+}
+
+write_packages_json <- function(path_staging, repo_staging, mock) {
+  file_staging <- file.path(path_staging, "packages.json")
+  meta_staging <- mock$staging %||% meta_packages(repo_staging)
+  json_staging <- merge(
+    x = jsonlite::read_json(file_staging, simplifyVector = TRUE),
+    y = meta_staging[, c("package", "remotesha"), drop = FALSE],
+    by = "package",
+    all.x = TRUE,
+    all.y = FALSE
+  )
+  json_staging$remotesha[is.na(json_staging$remotesha)] <- "*release"
+  path_issues <- file.path(path_staging, "issues.json")
+  json_issues <- jsonlite::read_json(path_issues, simplifyVector = TRUE)
+  new_staged <- names(Filter(json_issues, f = \(issue) isTRUE(issue$success)))
+  old_staged <- json_staging$package[json_staging$branch != "*release"]
+  staged <- sort(base::union(new_staged, old_staged))
+  is_staged <- json_staging$package %in% staged
+  json_staging$branch[is_staged] <- json_staging$remotesha[is_staged]
+  json_staging$branch[!is_staged] <- "*release"
+  json_staging$remotesha <- NULL
+  json_staging <- json_staging[order(json_staging$package),, drop = FALSE] # nolint
+  jsonlite::write_json(json_staging, file_staging, pretty = TRUE)
 }
 
 write_snapshot_json <- function(path_staging) {

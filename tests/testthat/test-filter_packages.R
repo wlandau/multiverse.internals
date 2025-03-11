@@ -1,18 +1,25 @@
 test_that("filter_packages", {
-  path <- tempfile()
-  dir.create(path)
-  on.exit(unlink(path, recursive = TRUE))
+  path_packages <- tempfile()
+  dir.create(path_packages)
+  on.exit(unlink(path_packages, recursive = TRUE))
   mock <- system.file(
-    "packages",
+    file.path("mock", "packages"),
     package = "multiverse.internals",
     mustWork = TRUE
   )
-  file.copy(mock, path, recursive = TRUE)
-  staged <- tempfile()
-  jsonlite::write_json(c("crew", "mirai"), staged, pretty = TRUE)
-  filter_packages(path, staged)
+  file.copy(mock, path_packages, recursive = TRUE)
+  path_staging <- tempfile()
+  dir.create(path_staging)
+  json_staging <- data.frame(
+    package = c("arrow", "crew", "mirai"),
+    repo = rep("", 3L),
+    branch = c("*release", "sha-crew", "sha-mirai")
+  )
+  file_staging <- file.path(path_staging, "packages.json")
+  jsonlite::write_json(json_staging, file_staging, pretty = TRUE)
+  filter_packages(path_packages, path_staging)
   listings <- list.files(
-    path,
+    path_packages,
     recursive = TRUE,
     pattern = "PACKAGES$",
     full.names = TRUE

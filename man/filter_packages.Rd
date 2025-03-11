@@ -4,14 +4,13 @@
 \alias{filter_packages}
 \title{Filter \code{PACKAGES} and \code{PACKAGES.gz} files.}
 \usage{
-filter_packages(path, staged)
+filter_packages(path_packages, path_staging)
 }
 \arguments{
-\item{path}{Directory path where \code{PACKAGES} and \code{PACKAGES.gz} files
+\item{path_packages}{Directory path where \code{PACKAGES} and \code{PACKAGES.gz} files
 reside locally.}
 
-\item{staged}{Path to the \code{"staged.json"} file which lists staged packages
-in the Staging universe.}
+\item{path_staging}{Path to a GitHub clone of the Staging universe.}
 }
 \description{
 Filter the \code{PACKAGES} and \code{PACKAGES.gz} files to
@@ -19,17 +18,18 @@ only list certain packages.
 }
 \examples{
 \dontrun{
-  path <- tempfile()
-  dir.create(path)
-  mock <- system.file(
-    "packages",
-    package = "multiverse.internals",
-    mustWork = TRUE
-  )
-  file.copy(mock, path, recursive = TRUE)
-  staged <- tempfile()
-  jsonlite::write_json(c("crew", "mirai"), staged, pretty = TRUE)
-  filter_packages(path, staged)
+path_packages <- tempfile()
+dir.create(path_packages)
+mock <- system.file(
+  "packages",
+  package = "multiverse.internals",
+  mustWork = TRUE
+)
+file.copy(mock, path_packages, recursive = TRUE)
+path_staging <- tempfile()
+url_staging <- "https://github.com/r-multiverse/staging"
+gert::git_clone(url = url_staging, path = path_staging)
+filter_packages(path_packages, path_staging)
 }
 }
 \seealso{

@@ -28,14 +28,13 @@ rclone_includes <- function(
   repo_staging = "https://staging.r-multiverse.org",
   mock = NULL
 ) {
-  meta_staging <- mock$staging %||% meta_packages(repo_staging)
-  file_staged <- file.path(path_staging, "staged.json")
-  staged <- jsonlite::read_json(file_staged, simplifyVector = TRUE)
-  write_include_packages(path_staging, meta_staging, staged)
+  write_include_packages(path_staging, meta_staging, mock)
   write_include_meta(path_staging)
 }
 
-write_include_packages <- function(path_staging, meta_staging, staged) {
+write_include_packages <- function(path_staging, repo_staging, mock) {
+  meta_staging <- mock$staging %||% meta_packages(repo_staging)
+  staged <- staged_packages(path_staging)
   is_staged <- meta_staging$package %in% staged
   package <- meta_staging$package[is_staged]
   version <- meta_staging$version[is_staged]

@@ -1,12 +1,8 @@
 test_that("rclone_includes()", {
   dir_staging <- tempfile()
-  dir_community <- tempfile()
   path_staging <- file.path(dir_staging, "staging")
-  path_community <- file.path(dir_community, "community")
   dir.create(dir_staging)
-  dir.create(dir_community)
   on.exit(unlink(path_staging, recursive = TRUE))
-  on.exit(unlink(path_community, recursive = TRUE), add = TRUE)
   mock <- system.file(
     "mock",
     package = "multiverse.internals",
@@ -17,24 +13,11 @@ test_that("rclone_includes()", {
     to = dir_staging,
     recursive = TRUE
   )
-  file.copy(
-    from = file.path(mock, "community"),
-    to = dir_community,
-    recursive = TRUE
-  )
   file_config <- file.path(path_staging, "config.json")
-  file_staged <- file.path(path_staging, "staged.json")
   file_staging <- file.path(path_staging, "packages.json")
-  file_community <- file.path(path_community, "packages.json")
   json_staging <- jsonlite::read_json(file_staging)
-  json_community <- jsonlite::read_json(file_community)
   names_staging <- vapply(
     json_staging,
-    function(x) x$package,
-    FUN.VALUE = character(1L)
-  )
-  names_community <- vapply(
-    json_community,
     function(x) x$package,
     FUN.VALUE = character(1L)
   )
@@ -43,15 +26,9 @@ test_that("rclone_includes()", {
     version = "1.2.3",
     remotesha = paste0("sha-", names_staging)
   )
-  meta_community <- data.frame(
-    package = names_community,
-    remotesha = paste0("sha-", names_community)
-  )
-  unlink(file_staged)
   stage_candidates(
     path_staging = path_staging,
-    path_community = path_community,
-    mock = list(community = meta_community)
+    mock = list(staging = meta_staging)
   )
   file_packages <- file.path(path_staging, "include-packages.txt")
   file_meta <- file.path(path_staging, "include-meta.txt")
