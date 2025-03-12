@@ -138,7 +138,7 @@ test_that("update_status()", {
       )
     )
   )
-   expect_equal(
+  expect_equal(
     sort(list.files(out_community)),
     sort(
       c(
