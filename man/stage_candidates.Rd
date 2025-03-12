@@ -4,20 +4,11 @@
 \alias{stage_candidates}
 \title{Stage release candidates}
 \usage{
-stage_candidates(
-  path_staging,
-  repo_staging = "https://staging.r-multiverse.org",
-  mock = NULL
-)
+stage_candidates(path_staging)
 }
 \arguments{
 \item{path_staging}{Character string, directory path to the source
 files of the Staging universe.}
-
-\item{repo_staging}{Character string, URL of the Staging universe.}
-
-\item{mock}{For testing purposes only, a named list of data frames
-for inputs to various intermediate functions.}
 }
 \value{
 \code{NULL} (invisibly)

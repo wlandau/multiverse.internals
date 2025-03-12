@@ -26,9 +26,6 @@ to the clone of the Community universe GitHub repository.}
 \item{repo_staging}{Character string, URL of the staging universe.}
 
 \item{repo_community}{Character string, URL of the Community universe.}
-
-\item{mock}{For testing purposes only, a named list of data frames
-for inputs to various intermediate functions.}
 }
 \description{
 Update the repository which reports the status on individual

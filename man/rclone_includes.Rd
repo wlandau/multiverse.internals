@@ -15,9 +15,6 @@ rclone_includes(
 files of the Staging universe.}
 
 \item{repo_staging}{Character string, URL of the Staging universe.}
-
-\item{mock}{For testing purposes only, a named list of data frames
-for inputs to various intermediate functions.}
 }
 \description{
 Write text files to pass to the \code{--include-from} flag
