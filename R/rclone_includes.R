@@ -4,7 +4,6 @@
 #' @description Write text files to pass to the `--include-from` flag
 #'   in Rclone when uploading snapshots.
 #' @inheritParams stage_candidates
-#' @param repo_staging Character string, URL of the Staging universe.
 #' @examples
 #' \dontrun{
 #' url_staging = "https://github.com/r-multiverse/staging"

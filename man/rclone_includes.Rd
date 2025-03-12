@@ -9,8 +9,6 @@ rclone_includes(path_staging)
 \arguments{
 \item{path_staging}{Character string, directory path to the source
 files of the Staging universe.}
-
-\item{repo_staging}{Character string, URL of the Staging universe.}
 }
 \description{
 Write text files to pass to the \code{--include-from} flag

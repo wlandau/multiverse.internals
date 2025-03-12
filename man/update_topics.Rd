@@ -11,6 +11,8 @@ update_topics(path, repo = "https://community.r-multiverse.org", mock = NULL)
 local file path to the topics repository source code.}
 
 \item{repo}{Character string, URL of the Community universe.}
+
+\item{mock}{List of named objects for testing purposes only.}
 }
 \value{
 \code{NULL} (invisibly). Called for its side effects.
