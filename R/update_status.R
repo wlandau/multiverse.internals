@@ -3,15 +3,12 @@
 #' @family status
 #' @description Update the repository which reports the status on individual
 #'   packages.
-#' @inheritParams stage_candidates
 #' @param path_status Character string, directory path to the source files
 #'   of the package status repository.
 #' @param path_staging Character string, local directory path
 #'   to the clone of the Staging universe GitHub repository.
 #' @param path_community Character string, local directory path
 #'   to the clone of the Community universe GitHub repository.
-#' @param repo_staging Character string, URL of the staging universe.
-#' @param repo_community Character string, URL of the Community universe.
 #' @examples
 #' \dontrun{
 #' url_staging = "https://github.com/r-multiverse/staging"
@@ -24,9 +21,7 @@
 #' update_status(
 #'   path_status = path_status,
 #'   path_staging = path_staging,
-#'   path_community = path_community,
-#'   repo_staging = "https://staging.r-multiverse.org",
-#'   repo_community = "https://community.r-multiverse.org"
+#'   path_community = path_community
 #' )
 #' writeLines(
 #'   readLines(
@@ -42,23 +37,16 @@
 update_status <- function(
   path_status,
   path_staging,
-  path_community,
-  repo_staging = "https://staging.r-multiverse.org",
-  repo_community = "https://community.r-multiverse.org",
-  mock = NULL
+  path_community
 ) {
-  meta_staging <- mock$staging %||% meta_packages(repo_staging)
-  meta_community <- mock$community %||% meta_packages(repo_community)
   update_status_directory(
     output = path_status,
     input = path_staging,
-    meta = meta_staging,
     directory = "staging"
   )
   update_status_directory(
     output = path_status,
     input = path_community,
-    meta = meta_community,
     directory = "community"
   )
   update_status_production(
@@ -105,19 +93,28 @@ update_status_production <- function(output, input) {
   writeLines(lines_page, file.path(output, "production.html"))
 }
 
-update_status_directory <- function(output, input, meta, directory) {
+update_status_directory <- function(output, input, directory) {
   path_directory <- file.path(output, directory)
   unlink(path_directory, recursive = TRUE, force = TRUE)
   dir.create(path_directory, recursive = TRUE)
   path_issues <- file.path(input, "issues.json")
-  issues <- list()
-  if (file.exists(path_issues)) {
-    issues <- jsonlite::read_json(path_issues, simplifyVector = TRUE)
-  }
-  for (index in seq_len(nrow(meta))) {
-    package <- meta$package[index]
-    guid <- meta$remotesha[index]
-    success <- issues[[package]]$success
+  json_issues <- jsonlite::read_json(path_issues, simplifyVector = TRUE)
+  packages <- names(json_issues)
+  remote_hashes <- vapply(
+    json_issues,
+    \(x) {
+      if (length(x$remote_hash)) {
+        x$remote_hash
+      } else {
+        x$date
+      }
+    },
+    character(1L)
+  )
+  for (index in seq_along(packages)) {
+    package <- packages[index]
+    guid <- remote_hashes[index]
+    success <- json_issues[[package]]$success
     if (isTRUE(success)) {
       suffix <- "success"
     } else if (isFALSE(success)) {
@@ -126,11 +123,11 @@ update_status_directory <- function(output, input, meta, directory) {
       suffix <- "status unknown"
     }
     title <- paste0(package, ": ", suffix)
-    status <- interpret_status(package, issues)
+    status <- interpret_status(package, json_issues)
     update_status_html(package, title, status, path_directory)
     update_status_xml(package, title, path_directory, guid)
   }
-  failures <- names(Filter(issues, f = function(issue) isFALSE(issue$success)))
+  failures <- names(Filter(json_issues, f = \(issue) isFALSE(issue$success)))
   update_issue_summary(output, directory, failures)
 }
 

@@ -12,8 +12,7 @@ local file path to the topics repository source code.}
 
 \item{repo}{Character string, URL of the Community universe.}
 
-\item{mock}{For testing purposes only, a named list of data frames
-for inputs to various intermediate functions.}
+\item{mock}{List of named objects for testing purposes only.}
 }
 \value{
 \code{NULL} (invisibly). Called for its side effects.

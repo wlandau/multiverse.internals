@@ -17,15 +17,7 @@ test_that("stage_candidates()", {
   file_config <- file.path(path_staging, "config.json")
   file_staging <- file.path(path_staging, "packages.json")
   json_staging <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
-  meta_staging <- data.frame(
-    package = json_staging$package,
-    version = "1.2.3",
-    remotesha = paste0("sha-", json_staging$package)
-  )
-  stage_candidates(
-    path_staging = path_staging,
-    mock = list(staging = meta_staging)
-  )
+  stage_candidates(path_staging = path_staging)
   config <- jsonlite::read_json(file_config, simplifyVector = TRUE)
   expect_equal(names(config), "cran_version")
   expect_true(is.character(config$cran_version))
@@ -56,10 +48,7 @@ test_that("stage_candidates()", {
   json_issues <- jsonlite::read_json(file_issues, simplifyVector = TRUE)
   json_issues$staged <- json_issues$issue
   jsonlite::write_json(json_issues, file_issues, pretty = TRUE)
-  stage_candidates(
-    path_staging = path_staging,
-    mock = list(staging = meta_staging)
-  )
+  stage_candidates(path_staging = path_staging)
   packages <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   package <- c("issue", "removed-has-issue", "removed-no-issue", "staged")
   expect_equal(
@@ -73,12 +62,11 @@ test_that("stage_candidates()", {
   # Broken package gets fixed.
   file_issues <- file.path(path_staging, "issues.json")
   json_issues <- jsonlite::read_json(file_issues, simplifyVector = TRUE)
+  hash <- json_issues$issue$remote_hash
   json_issues$issue <- json_issues[["removed-no-issue"]]
+  json_issues$issue$remote_hash <- hash
   jsonlite::write_json(json_issues, file_issues, pretty = TRUE)
-  stage_candidates(
-    path_staging = path_staging,
-    mock = list(staging = meta_staging)
-  )
+  stage_candidates(path_staging = path_staging)
   packages <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   package <- c("issue", "removed-has-issue", "removed-no-issue", "staged")
   expect_equal(

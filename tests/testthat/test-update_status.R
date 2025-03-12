@@ -24,37 +24,15 @@ test_that("update_status()", {
   )
   file_staging <- file.path(path_staging, "packages.json")
   file_community <- file.path(path_community, "packages.json")
-  json_staging <- jsonlite::read_json(file_staging)
-  json_community <- jsonlite::read_json(file_community)
-  names_staging <- vapply(
-    json_staging,
-    function(x) x$package,
-    FUN.VALUE = character(1L)
-  )
-  names_community <- vapply(
-    json_community,
-    function(x) x$package,
-    FUN.VALUE = character(1L)
-  )
-  meta_staging <- data.frame(
-    package = names_staging,
-    remotesha = paste0("sha-", names_staging)
-  )
-  meta_community <- data.frame(
-    package = names_community,
-    remotesha = paste0("sha-", names_community)
-  )
+  json_staging <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
+  json_community <- jsonlite::read_json(file_community, simplifyVector = TRUE)
   path_status <- tempfile()
   on.exit(unlink(path_status, recursive = TRUE), add = TRUE)
-  stage_candidates(
-    path_staging = path_staging,
-    mock = list(staging = meta_staging)
-  )
+  stage_candidates(path_staging = path_staging)
   update_status(
     path_status = path_status,
     path_staging = path_staging,
-    path_community = path_community,
-    mock = list(staging = meta_staging, community = meta_community)
+    path_community = path_community
   )
   expect_true(
     all(
@@ -82,8 +60,8 @@ test_that("update_status()", {
     sort(list.files(out_staging)),
     sort(
       c(
-        paste0(names_staging, ".html"),
-        paste0(names_staging, ".xml")
+        paste0(json_staging$package, ".html"),
+        paste0(json_staging$package, ".xml")
       )
     )
   )
@@ -91,8 +69,8 @@ test_that("update_status()", {
     sort(list.files(out_community)),
     sort(
       c(
-        paste0(names_community, ".html"),
-        paste0(names_community, ".xml")
+        paste0(json_community$package, ".html"),
+        paste0(json_community$package, ".xml")
       )
     )
   )
@@ -149,15 +127,24 @@ test_that("update_status()", {
   update_status(
     path_status = path_status,
     path_staging = path_staging,
-    path_community = path_community,
-    mock = list(staging = meta_staging[1L, ], community = meta_community[1L, ])
+    path_community = path_community
   )
   expect_equal(
     sort(list.files(out_staging)),
-    sort(paste0(meta_staging[1L, "package"], c(".html", ".xml")))
+    sort(
+      c(
+        paste0(json_staging$package, ".html"),
+        paste0(json_staging$package, ".xml")
+      )
+    )
   )
   expect_equal(
     sort(list.files(out_community)),
-    sort(sort(paste0(meta_community[1L, "package"], c(".html", ".xml"))))
+    sort(
+      c(
+        paste0(json_community$package, ".html"),
+        paste0(json_community$package, ".xml")
+      )
+    )
   )
 })

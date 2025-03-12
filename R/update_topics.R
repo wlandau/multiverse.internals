@@ -4,10 +4,10 @@
 #' @description Update the list of packages for each
 #'   R-multiverse topic.
 #' @return `NULL` (invisibly). Called for its side effects.
-#' @inheritParams stage_candidates
 #' @param path Character string,
 #'   local file path to the topics repository source code.
 #' @param repo Character string, URL of the Community universe.
+#' @param mock List of named objects for testing purposes only.
 update_topics <- function(
   path,
   repo = "https://community.r-multiverse.org",
