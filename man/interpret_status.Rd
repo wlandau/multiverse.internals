@@ -4,19 +4,19 @@
 \alias{interpret_status}
 \title{Interpret the status of a package}
 \usage{
-interpret_status(package, issues)
+interpret_status(package, status)
 }
 \arguments{
 \item{package}{Character string, name of the package.}
 
-\item{issues}{A list with one issue per package. Obtained by
-reading the results of \code{\link[=record_issues]{record_issues()}}.}
+\item{status}{A list with one status entry per package. Obtained by
+reading the results of \code{\link[=record_status]{record_status()}}.}
 }
 \value{
-A character string summarizing the issues of a package in prose.
+A character string summarizing the status of a package in prose.
 }
 \description{
-Summarize the issues of a package in human-readable text.
+Summarize the status of a package in human-readable text.
 }
 \seealso{
 Other status: 
