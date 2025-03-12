@@ -4,11 +4,7 @@
 \alias{rclone_includes}
 \title{Write Rclone includes.}
 \usage{
-rclone_includes(
-  path_staging,
-  repo_staging = "https://staging.r-multiverse.org",
-  mock = NULL
-)
+rclone_includes(path_staging)
 }
 \arguments{
 \item{path_staging}{Character string, directory path to the source
@@ -26,14 +22,8 @@ url_staging = "https://github.com/r-multiverse/staging"
 path_staging <- tempfile()
 path_community <- tempfile()
 gert::git_clone(url = url_staging, path = path_staging)
-stage_candidates(
-  path_staging = path_staging,
-  repo_staging = "https://staging.r-multiverse.org"
-)
-rclone_includes(
-  path_staging,
-  repo_staging = "https://staging.r-multiverse.org"
-)
+stage_candidates(path_staging = path_staging)
+rclone_includes(path_staging)
 }
 }
 \seealso{

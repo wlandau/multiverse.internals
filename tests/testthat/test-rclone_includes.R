@@ -21,23 +21,12 @@ test_that("rclone_includes()", {
     function(x) x$package,
     FUN.VALUE = character(1L)
   )
-  meta_staging <- data.frame(
-    package = names_staging,
-    version = "1.2.3",
-    remotesha = paste0("sha-", names_staging)
-  )
-  stage_candidates(
-    path_staging = path_staging,
-    mock = list(staging = meta_staging)
-  )
+  stage_candidates(path_staging = path_staging)
   file_packages <- file.path(path_staging, "include-packages.txt")
   file_meta <- file.path(path_staging, "include-meta.txt")
   expect_false(file.exists(file_packages))
   expect_false(file.exists(file_meta))
-  rclone_includes(
-    path_staging,
-    mock = list(staging = meta_staging)
-  )
+  rclone_includes(path_staging)
   expect_true(file.exists(file_packages))
   expect_true(file.exists(file_meta))
   include_packages <- readLines(file_packages)
@@ -45,12 +34,12 @@ test_that("rclone_includes()", {
     sort(include_packages),
     sort(
       c(
-        "src/contrib/staged_1.2.3.tar.gz",
-        "src/contrib/removed-no-issue_1.2.3.tar.gz",
-        "bin/macosx/*/contrib/4.4/staged_1.2.3.tgz",
-        "bin/macosx/*/contrib/4.4/removed-no-issue_1.2.3.tgz",
-        "bin/windows/contrib/4.4/staged_1.2.3.zip",
-        "bin/windows/contrib/4.4/removed-no-issue_1.2.3.zip"
+        "src/contrib/staged_2.0.5.tar.gz",
+        "src/contrib/removed-no-issue_2.0.6.tar.gz",
+        "bin/macosx/*/contrib/4.4/staged_2.0.5.tgz",
+        "bin/macosx/*/contrib/4.4/removed-no-issue_2.0.6.tgz",
+        "bin/windows/contrib/4.4/staged_2.0.5.zip",
+        "bin/windows/contrib/4.4/removed-no-issue_2.0.6.zip"
       )
     )
   )

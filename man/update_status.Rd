@@ -4,14 +4,7 @@
 \alias{update_status}
 \title{Update the package status repository}
 \usage{
-update_status(
-  path_status,
-  path_staging,
-  path_community,
-  repo_staging = "https://staging.r-multiverse.org",
-  repo_community = "https://community.r-multiverse.org",
-  mock = NULL
-)
+update_status(path_status, path_staging, path_community)
 }
 \arguments{
 \item{path_status}{Character string, directory path to the source files
@@ -22,10 +15,6 @@ to the clone of the Staging universe GitHub repository.}
 
 \item{path_community}{Character string, local directory path
 to the clone of the Community universe GitHub repository.}
-
-\item{repo_staging}{Character string, URL of the staging universe.}
-
-\item{repo_community}{Character string, URL of the Community universe.}
 }
 \description{
 Update the repository which reports the status on individual
@@ -43,9 +32,7 @@ gert::git_clone(url = url_community, path = path_community)
 update_status(
   path_status = path_status,
   path_staging = path_staging,
-  path_community = path_community,
-  repo_staging = "https://staging.r-multiverse.org",
-  repo_community = "https://community.r-multiverse.org"
+  path_community = path_community
 )
 writeLines(
   readLines(

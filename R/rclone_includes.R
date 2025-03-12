@@ -11,30 +11,21 @@
 #' path_staging <- tempfile()
 #' path_community <- tempfile()
 #' gert::git_clone(url = url_staging, path = path_staging)
-#' stage_candidates(
-#'   path_staging = path_staging,
-#'   repo_staging = "https://staging.r-multiverse.org"
-#' )
-#' rclone_includes(
-#'   path_staging,
-#'   repo_staging = "https://staging.r-multiverse.org"
-#' )
+#' stage_candidates(path_staging = path_staging)
+#' rclone_includes(path_staging)
 #' }
-rclone_includes <- function(
-  path_staging,
-  repo_staging = "https://staging.r-multiverse.org",
-  mock = NULL
-) {
-  write_include_packages(path_staging, repo_staging, mock)
+rclone_includes <- function(path_staging) {
+  write_include_packages(path_staging)
   write_include_meta(path_staging)
 }
 
-write_include_packages <- function(path_staging, repo_staging, mock) {
-  meta_staging <- mock$staging %||% meta_packages(repo_staging)
+write_include_packages <- function(path_staging) {
+  file_issues <- file.path(path_staging, "issues.json")
+  json_issues <- jsonlite::read_json(file_issues, simplifyVector = TRUE)
   staged <- staged_packages(path_staging)
-  is_staged <- meta_staging$package %in% staged
-  package <- meta_staging$package[is_staged]
-  version <- meta_staging$version[is_staged]
+  json_staged <- json_issues[staged]
+  package <- names(json_staged)
+  version <- vapply(json_staged, \(x) x$version, character(1L))
   release <- paste0(package, "_", version)
   r <- meta_snapshot()$r
   source <- sprintf("src/contrib/%s.tar.gz", release)

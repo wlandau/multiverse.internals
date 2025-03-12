@@ -10,7 +10,7 @@
     },
     "success": [false],
     "date": ["1980-01-01"],
-    "version": ["2.0.2"],
+    "version": ["2.0.3"],
     "remote_hash": ["sha-issue"]
   },
   "removed-has-issue": {
@@ -24,19 +24,19 @@
     },
     "success": [false],
     "date": ["1980-01-01"],
-    "version": ["2.0.2"],
+    "version": ["2.0.4"],
     "remote_hash": ["sha-removed-has-issue"]
   },
   "staged": {
     "success": [true],
     "date": ["1980-01-01"],
-    "version": ["2.0.2"],
+    "version": ["2.0.5"],
     "remote_hash": ["sha-staged"]
   },
   "removed-no-issue": {
     "success": [true],
     "date": ["1980-01-01"],
-    "version": ["2.0.2"],
+    "version": ["2.0.6"],
     "remote_hash": ["sha-removed-no-issue"]
   }
 }

@@ -10,19 +10,19 @@
     },
     "success": [false],
     "date": ["1980-01-01"],
-    "version": ["2.0.2"],
-    "remote_hash": ["abcdef1234567890abcdef"]
+    "version": ["2.0.1"],
+    "remote_hash": ["sha-issue"]
   },
   "add": {
     "success": [true],
     "date": ["1980-01-01"],
     "version": ["2.0.2"],
-    "remote_hash": ["abcdef1234567890abcdef"]
+    "remote_hash": ["sha-add"]
   },
   "staged": {
     "success": [true],
     "date": ["1980-01-01"],
-    "version": ["2.0.2"],
-    "remote_hash": ["abcdef1234567890abcdef"]
+    "version": ["2.0.3"],
+    "remote_hash": ["sha-staged"]
   }
 }
