@@ -1,3 +1,7 @@
+# multiverse.internals 1.0.3
+
+* Fix empty entries in status website.
+
 # multiverse.internals 1.0.2
 
 * Fix bugs in handling missing version and remote hash.

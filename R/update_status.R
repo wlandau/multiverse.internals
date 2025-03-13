@@ -59,20 +59,9 @@ update_status_production <- function(output, input) {
   path_status <- file.path(input, "status.json")
   path_snapshot <- file.path(input, "snapshot.json")
   status <- jsonlite::read_json(path_status, simplifyVector = TRUE)
-  staged <- staged_packages(input)
   snapshot <- jsonlite::read_json(path_snapshot, simplifyVector = TRUE)
-  status <- as.data.frame(do.call(rbind, status[staged]))
-  url <- sprintf(
-    "[`%s`](https://r-multiverse.org/status/staging/%s)",
-    staged,
-    staged
-  )
-  lines_packages <- paste0(
-    "|",
-    paste(url, status$version, status$date, sep = "|"),
-    "|"
-  )
-  lines_packages <- paste(lines_packages, collapse = "\n")
+  staged <- staged_packages(input)
+  rows <- status_rows(status[staged])
   file_template <- system.file(
     file.path("status", "production.md"),
     package = "multiverse.internals",
@@ -85,7 +74,7 @@ update_status_production <- function(output, input) {
   )
   lines_page <- gsub(
     pattern = "PACKAGES",
-    replacement = lines_packages,
+    replacement = rows,
     x = lines_page
   )
   writeLines(lines_page, file.path(output, "production.md"))
@@ -100,13 +89,7 @@ update_status_directory <- function(output, input, directory) {
   packages <- names(json_status)
   remote_hashes <- vapply(
     json_status,
-    \(x) {
-      if (length(x$remote_hash)) {
-        as.character(x$remote_hash)
-      } else {
-        as.character(x$date)
-      }
-    },
+    \(x) as.character(x$remote_hash),
     character(1L)
   )
   for (index in seq_along(packages)) {
@@ -130,31 +113,7 @@ update_status_directory <- function(output, input, directory) {
 }
 
 update_status_summary <- function(output, directory, status) {
-  lines_packages <- ""
-  if (length(status)) {
-    package <- names(status)
-    version <- vapply(
-      status,
-      \(x) as.character(x$version),
-      FUN.VALUE = character(1L)
-    )
-    date <- vapply(
-      status,
-      \(x) as.character(x$date),
-      FUN.VALUE = character(1L)
-    )
-    url <- sprintf(
-      "[`%s`](https://r-multiverse.org/status/staging/%s)",
-      package,
-      package
-    )
-    lines_packages <- paste0(
-      "|",
-      paste(url, status$version, status$date, sep = "|"),
-      "|"
-    )
-    lines_packages <- paste(lines_packages, collapse = "\n")
-  }
+  rows <- status_rows(status)
   template <- system.file(
     file.path("status", "repository.md"),
     package = "multiverse.internals",
@@ -166,7 +125,7 @@ update_status_summary <- function(output, directory, status) {
     replacement = tools::toTitleCase(directory),
     x = lines
   )
-  lines <- gsub(pattern = "PACKAGES", replacement = lines_packages, x = lines)
+  lines <- gsub(pattern = "PACKAGES", replacement = rows, x = lines)
   writeLines(lines, file.path(output, paste0(directory, ".md")))
 }
 
@@ -205,4 +164,32 @@ update_status_xml <- function(package, title, path_directory, guid) {
   text <- gsub(pattern = "DIRECTORY", replacement = directory, x = text)
   path <- file.path(path_directory, paste0(package, ".xml"))
   writeLines(text, path)
+}
+
+status_rows <- function(status) {
+  if (!length(status)) {
+    return("")
+  }
+  package <- names(status)
+  version <- vapply(
+    status,
+    \(x) as.character(x$version),
+    FUN.VALUE = character(1L)
+  )
+  date <- vapply(
+    status,
+    \(x) as.character(x$date),
+    FUN.VALUE = character(1L)
+  )
+  url <- sprintf(
+    "[`%s`](https://r-multiverse.org/status/staging/%s)",
+    package,
+    package
+  )
+  out <- paste0(
+    "|",
+    paste(url, version, date, sep = "|"),
+    "|"
+  )
+  paste(out, collapse = "\n")
 }
