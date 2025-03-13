@@ -4,7 +4,7 @@ test_that("status_checks() mocked", {
   expected <- list(
     audio.whisper = list(
       url = file.path(url, "12103194809"),
-      status = list(
+      issues = list(
         "linux x86_64 R-4.5.0" = "WARNING",
         "mac aarch64 R-4.4.2" = "WARNING",
         "mac x86_64 R-4.4.2" = "WARNING",
@@ -13,7 +13,7 @@ test_that("status_checks() mocked", {
     ),
     colorout = list(
       url = file.path(url, "12063016496"),
-      status = list(
+      issues = list(
         "mac aarch64 R-4.4.2" = "WARNING",
         "mac x86_64 R-4.4.2" = "WARNING",
         "win R-release" = "MISSING"
@@ -21,7 +21,7 @@ test_that("status_checks() mocked", {
     ),
     demographr = list(
       url = file.path(url, "11898760503"),
-      status = list(
+      issues = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -29,7 +29,7 @@ test_that("status_checks() mocked", {
     ),
     geographr = list(
       url = file.path(url, "11898762523"),
-      status = list(
+      issues = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -37,11 +37,11 @@ test_that("status_checks() mocked", {
     ),
     glaredb = list(
       url = file.path(url, "11876493507"),
-      status = list("win R-release" = "MISSING")
+      issues = list("win R-release" = "MISSING")
     ),
     healthyr = list(
       url = file.path(url, "11898763290"),
-      status = list(
+      issues = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -49,11 +49,11 @@ test_that("status_checks() mocked", {
     ),
     igraph = list(
       url = file.path(url, "12133807748"),
-      status = list("win x86_64 R-4.4.2" = "WARNING")
+      issues = list("win x86_64 R-4.4.2" = "WARNING")
     ),
     INLA = list(
       url = file.path(url, "11566311732"),
-      status = list(
+      issues = list(
         "linux R-devel" = "MISSING",
         "mac R-release" = "MISSING",
         "win R-release" = "MISSING"
@@ -61,7 +61,7 @@ test_that("status_checks() mocked", {
     ),
     loneliness = list(
       url = file.path(url, "11898763908"),
-      status = list(
+      issues = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -69,14 +69,14 @@ test_that("status_checks() mocked", {
     ),
     prqlr = list(
       url = file.path(url, "11620617366"),
-      status = list(
+      issues = list(
         "mac R-release" = "MISSING",
         "win R-release" = "MISSING"
       )
     ),
     SBC = list(
       url = file.path(url, "11947266936"),
-      status = list(
+      issues = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -84,7 +84,7 @@ test_that("status_checks() mocked", {
     ),
     stantargets = list(
       url = file.path(url, "12139784185"),
-      status = list(
+      issues = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -92,14 +92,14 @@ test_that("status_checks() mocked", {
     ),
     taxizedb = list(
       url = file.path(url, "11825909535"),
-      status = list(
+      issues = list(
         "mac R-4.4.2" = "ERROR",
         "win R-4.4.2" = "ERROR"
       )
     ),
     tidytensor = list(
       url = file.path(url, "12133663821"),
-      status = list(
+      issues = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -107,7 +107,7 @@ test_that("status_checks() mocked", {
     ),
     webseq = list(
       url = file.path(url, "11825909757"),
-      status = list(
+      issues = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -115,7 +115,7 @@ test_that("status_checks() mocked", {
     ),
     wildfires = list(
       url = file.path(url, "11898765070"),
-      status = list(
+      issues = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"

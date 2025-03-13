@@ -35,7 +35,7 @@ test_that("record_status() mocked", {
     list(
       checks = list(
         url = file.path(runs, "11566311732"),
-        status = list(
+        issues = list(
           `linux R-devel` = "MISSING",
           `mac R-release` = "MISSING",
           `win R-release` = "MISSING"
@@ -52,7 +52,7 @@ test_that("record_status() mocked", {
     list(
       checks = list(
         url = file.path(runs, "12139784185"),
-        status = list(
+        issues = list(
           `linux R-4.5.0` = "WARNING",
           `mac R-4.4.2` = "WARNING",
           `win R-4.4.2` = "WARNING"
@@ -249,7 +249,7 @@ test_that("record_status() with dependency problems", {
   expect_equal(
     status$crew,
     list(
-      checks = list(url = meta_checks$url, status = meta_checks$status[[1L]]),
+      checks = list(url = meta_checks$url, issues = meta_checks$issues[[1L]]),
       dependencies = list(
         nanonext = "mirai"
       ),

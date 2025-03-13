@@ -18,6 +18,6 @@
 #'   status <- status_checks(meta = meta)
 #'   str(status)
 status_checks <- function(meta = meta_checks()) {
-  meta <- meta[lengths(meta$status) > 0L,, drop = FALSE] # nolint
-  status_list(meta[, c("package", "url", "status")])
+  meta <- meta[lengths(meta$issues) > 0L,, drop = FALSE] # nolint
+  status_list(meta[, c("package", "url", "issues")])
 }

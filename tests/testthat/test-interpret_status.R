@@ -227,7 +227,7 @@ test_that("interpret_status() with complicated dependency problems", {
           "https://github.com/r-universe/r-multiverse/actions",
           "runs/11898760503"
         ),
-        status = list(
+        issues = list(
           `linux R-4.5.0` = "WARNING",
           `mac R-4.4.2` = "WARNING",
           `win R-4.4.2` = "WARNING"

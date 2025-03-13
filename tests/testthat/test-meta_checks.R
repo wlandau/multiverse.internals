@@ -2,7 +2,7 @@ test_that("meta_checks()", {
   out <- meta_checks(repo = "https://wlandau.r-universe.dev")
   expect_true(is.data.frame(out))
   expect_gt(nrow(out), 1L)
-  fields <- c("package", "url", "status")
+  fields <- c("package", "url", "issues")
   expect_true(all(fields %in% colnames(out)))
 })
 
@@ -149,9 +149,9 @@ test_that("meta_checks_process_json() with a source failure", {
     out$url[out$package == "crew"],
     "https://github.com/r-universe/r-multiverse-staging/failure"
   )
-  expect_equal(out$status[[which(out$package == "mirai")]], list())
+  expect_equal(out$issues[[which(out$package == "mirai")]], list())
   expect_equal(
-    out$status[[which(out$package == "crew")]],
+    out$issues[[which(out$package == "crew")]],
     list(source = "FAILURE")
   )
 })
