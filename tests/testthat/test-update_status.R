@@ -26,7 +26,12 @@ test_that("update_status()", {
   file_community <- file.path(path_community, "packages.json")
   json_staging <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   json_community <- jsonlite::read_json(file_community, simplifyVector = TRUE)
+  skip_if_not_installed("gert")
   path_status <- tempfile()
+  gert::git_clone(
+    url = "https://github.com/r-multiverse/status",
+    path = path_status
+  )
   on.exit(unlink(path_status, recursive = TRUE), add = TRUE)
   stage_candidates(path_staging = path_staging)
   update_status(

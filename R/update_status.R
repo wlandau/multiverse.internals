@@ -62,11 +62,7 @@ update_status_production <- function(output, input) {
   snapshot <- jsonlite::read_json(path_snapshot, simplifyVector = TRUE)
   staged <- staged_packages(input)
   rows <- status_rows(status[staged])
-  file_template <- system.file(
-    file.path("status", "production.md"),
-    package = "multiverse.internals",
-    mustWork = TRUE
-  )
+  file_template <- file.path(output, "staged.md")
   lines_page <- gsub(
     pattern = "SNAPSHOT",
     replacement = snapshot$snapshot,
@@ -105,8 +101,8 @@ update_status_directory <- function(output, input, directory) {
     }
     title <- paste0(package, ": ", suffix)
     status <- interpret_status(package, json_status)
-    update_status_html(package, title, status, path_directory)
-    update_status_xml(package, title, path_directory, guid)
+    update_status_html(output, path_directory, package, title, status)
+    update_status_xml(output, path_directory, package, title, guid)
   }
   failures <- Filter(json_status, f = \(x) isFALSE(x$success))
   update_status_summary(output, directory, failures)
@@ -114,11 +110,7 @@ update_status_directory <- function(output, input, directory) {
 
 update_status_summary <- function(output, directory, status) {
   rows <- status_rows(status)
-  template <- system.file(
-    file.path("status", "repository.md"),
-    package = "multiverse.internals",
-    mustWork = TRUE
-  )
+  template <- file.path(output, "repository.md")
   lines <- readLines(template)
   lines <- gsub(
     pattern = "DIRECTORY",
@@ -129,12 +121,14 @@ update_status_summary <- function(output, directory, status) {
   writeLines(lines, file.path(output, paste0(directory, ".md")))
 }
 
-update_status_html <- function(package, title, status, path_directory) {
-  path_template <- system.file(
-    file.path("status", "status.html"),
-    package = "multiverse.internals",
-    mustWork = TRUE
-  )
+update_status_html <- function(
+  output,
+  path_directory,
+  package,
+  title,
+  status
+) {
+  path_template <- file.path(output, "status.html")
   directory <- basename(path_directory)
   rss <- file.path(
     "https://r-multiverse.org/status",
@@ -150,12 +144,14 @@ update_status_html <- function(package, title, status, path_directory) {
   writeLines(text, path)
 }
 
-update_status_xml <- function(package, title, path_directory, guid) {
-  path_template <- system.file(
-    file.path("status", "status.xml"),
-    package = "multiverse.internals",
-    mustWork = TRUE
-  )
+update_status_xml <- function(
+  output,
+  path_directory,
+  package,
+  title,
+  guid
+) {
+  path_template <- file.path(output, "status.xml")
   directory <- basename(path_directory)
   text <- readLines(path_template)
   text <- gsub(pattern = "TITLE", replacement = title, x = text)
