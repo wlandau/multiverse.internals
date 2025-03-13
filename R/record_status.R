@@ -100,8 +100,8 @@ overwrite_status <- function(status, output, today, packages) {
       status[[package]]$version <- packages$version[index]
       status[[package]]$remote_hash <- packages$remotesha[index]
     } else {
-      status[[package]]$version <- NA_character_
-      status[[package]]$remote_hash <- NA_character_
+      status[[package]]$version <- "NA"
+      status[[package]]$remote_hash <- "NA"
     }
   }
   jsonlite::write_json(x = status, path = output, pretty = TRUE)

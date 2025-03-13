@@ -1,3 +1,7 @@
+# multiverse.internals 1.0.2
+
+* Fix bugs in handling missing version and remote hash.
+
 # multiverse.internals 1.0.1
 
 * Handle source failures in `record_status()`.
