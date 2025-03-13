@@ -39,17 +39,17 @@ test_that("update_status()", {
       file.exists(
         file.path(
           path_status,
-          c("community.html", "staging.html", "production.html")
+          c("community.html", "staging.html", "production.md")
         )
       )
     )
   )
-  lines_production <- readLines(file.path(path_status, "production.html"))
+  lines_production <- readLines(file.path(path_status, "production.md"))
   expect_true(any(grepl(meta_snapshot()$snapshot, lines_production)))
-  expect_true(any(grepl("staged", lines_production)))
-  expect_true(any(grepl("removed-no-issue", lines_production)))
-  expect_false(any(grepl(">issue<", lines_production, fixed = TRUE)))
-  expect_false(any(grepl("removed-has-issue", lines_production)))
+  expect_true(any(grepl("`staged`", lines_production)))
+  expect_true(any(grepl("`removed-no-issue`", lines_production)))
+  expect_false(any(grepl("`issue`", lines_production, fixed = TRUE)))
+  expect_false(any(grepl("`removed-has-issue`", lines_production)))
   lines_staging <- readLines(file.path(path_status, "staging.html"))
   expect_true(any(grepl(">issue<", lines_staging, fixed = TRUE)))
   expect_true(any(grepl(">removed-has-issue<", lines_staging, fixed = TRUE)))

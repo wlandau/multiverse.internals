@@ -63,20 +63,18 @@ update_status_production <- function(output, input) {
   snapshot <- jsonlite::read_json(path_snapshot, simplifyVector = TRUE)
   status <- as.data.frame(do.call(rbind, status[staged]))
   url <- sprintf(
-    "<a href=\"https://r-multiverse.org/status/staging/%s\">%s</a>",
+    "[`%s`](https://r-multiverse.org/status/staging/%s)",
     staged,
     staged
   )
-  lines_packages <- paste(
-    "<li>",
-    url,
-    status$version,
-    sprintf("(%s)", status$date),
-    "</li>"
+  lines_packages <- paste0(
+    "|",
+    paste(url,status$version, status$date, sep = "|"),
+    "|"
   )
   lines_packages <- paste(lines_packages, collapse = "\n")
   file_template <- system.file(
-    file.path("status", "production.html"),
+    file.path("status", "production.md"),
     package = "multiverse.internals",
     mustWork = TRUE
   )
@@ -90,7 +88,7 @@ update_status_production <- function(output, input) {
     replacement = lines_packages,
     x = lines_page
   )
-  writeLines(lines_page, file.path(output, "production.html"))
+  writeLines(lines_page, file.path(output, "production.md"))
 }
 
 update_status_directory <- function(output, input, directory) {
