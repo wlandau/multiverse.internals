@@ -27,6 +27,7 @@ test_that("update_status()", {
   json_staging <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   json_community <- jsonlite::read_json(file_community, simplifyVector = TRUE)
   skip_if_not_installed("gert")
+  skip_if_offline()
   path_status <- tempfile()
   gert::git_clone(
     url = "https://github.com/r-multiverse/status",
