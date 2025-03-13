@@ -1,3 +1,7 @@
+# multiverse.internals 1.0.4
+
+* Move status markdown template files outside `multiverse.internals`.
+
 # multiverse.internals 1.0.3
 
 * Fix empty entries in status website.
