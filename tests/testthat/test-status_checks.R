@@ -1,5 +1,5 @@
-test_that("issues_checks() mocked", {
-  issues <- issues_checks(meta = mock_meta_checks)
+test_that("status_checks() mocked", {
+  status <- status_checks(meta = mock_meta_checks)
   url <- "https://github.com/r-universe/r-multiverse/actions/runs"
   expected <- list(
     audio.whisper = list(
@@ -122,11 +122,11 @@ test_that("issues_checks() mocked", {
       )
     )
   )
-  expect_equal(issues[order(names(issues))], expected[order(names(expected))])
+  expect_equal(status[order(names(status))], expected[order(names(expected))])
 })
 
-test_that("issues_checks() on a small repo", {
+test_that("status_checks() on a small repo", {
   meta <- meta_checks(repo = "https://wlandau.r-universe.dev")
-  issues <- issues_checks(meta = meta)
-  expect_true(is.list(issues))
+  status <- status_checks(meta = meta)
+  expect_true(is.list(status))
 })

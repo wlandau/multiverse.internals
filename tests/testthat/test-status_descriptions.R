@@ -1,5 +1,5 @@
-test_that("issues_descriptions() mocked", {
-  issues <- issues_descriptions(meta = mock_meta_packages)
+test_that("status_descriptions() mocked", {
+  status <- status_descriptions(meta = mock_meta_packages)
   expected <- list(
     audio.whisper = list(remotes = "bnosac/audio.vadwebrtc"),
     stantargets = list(
@@ -9,18 +9,18 @@ test_that("issues_descriptions() mocked", {
     targetsketch = list(license = "non-standard"),
     tidypolars = list(remotes = "markvanderloo/tinytest/pkg")
   )
-  names <- sort(names(issues))
+  names <- sort(names(status))
   expect_equal(names, sort(names(expected)))
-  expect_equal(issues[names], expected[names])
+  expect_equal(status[names], expected[names])
 })
 
-test_that("issues_descriptions() on a small repo", {
+test_that("status_descriptions() on a small repo", {
   meta <- meta_packages(repo = "https://wlandau.r-universe.dev")
-  issues <- issues_descriptions(meta = meta)
-  expect_true(is.list(issues))
+  status <- status_descriptions(meta = meta)
+  expect_true(is.list(status))
 })
 
-test_that("issues_descriptions() with security advisories", {
+test_that("status_descriptions() with security advisories", {
   example <- mock_meta_packages$package == "nanonext"
   commonmark <- mock_meta_packages[example,, drop = FALSE] # nolint
   commonmark$package <- "commonmark"
@@ -33,7 +33,7 @@ test_that("issues_descriptions() with security advisories", {
     commonmark,
     readxl
   )
-  out <- issues_descriptions(meta)
+  out <- status_descriptions(meta)
   exp <- list(
     audio.whisper = list(remotes = "bnosac/audio.vadwebrtc"),
     commonmark = list(

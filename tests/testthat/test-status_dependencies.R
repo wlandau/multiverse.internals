@@ -1,5 +1,5 @@
 test_that("dependency graph is correct", {
-  graph <- issues_dependencies_graph(meta = mock_meta_packages_graph)
+  graph <- status_dependencies_graph(meta = mock_meta_packages_graph)
   out <- igraph::as_data_frame(graph, what = "edges")
   out <- out[order(out$from), ]
   expect_equal(out$from[out$to == "crew.aws.batch"], "crew")
@@ -11,9 +11,9 @@ test_that("dependency graph is correct", {
   )
 })
 
-test_that("issues_dependencies() no issues", {
+test_that("status_dependencies() no problems", {
   expect_equal(
-    issues_dependencies(
+    status_dependencies(
       packages = character(0L),
       meta = mock_meta_packages_graph,
       verbose = FALSE
@@ -22,9 +22,9 @@ test_that("issues_dependencies() no issues", {
   )
 })
 
-test_that("issues_dependencies() no revdeps", {
+test_that("status_dependencies() no revdeps", {
   expect_equal(
-    issues_dependencies(
+    status_dependencies(
       packages = "crew.aws.batch",
       meta = mock_meta_packages_graph,
       verbose = FALSE
@@ -33,10 +33,10 @@ test_that("issues_dependencies() no revdeps", {
   )
 })
 
-test_that("issues_dependencies() nanonext", {
+test_that("status_dependencies() nanonext", {
   expect_equal(
     suppressMessages(
-      issues_dependencies(
+      status_dependencies(
         packages = "nanonext",
         meta = mock_meta_packages_graph
       )
@@ -50,9 +50,9 @@ test_that("issues_dependencies() nanonext", {
   )
 })
 
-test_that("issues_dependencies() mirai", {
+test_that("status_dependencies() mirai", {
   expect_equal(
-    issues_dependencies(
+    status_dependencies(
       packages = "mirai",
       meta = mock_meta_packages_graph,
       verbose = FALSE
@@ -65,9 +65,9 @@ test_that("issues_dependencies() mirai", {
   )
 })
 
-test_that("issues_dependencies() crew", {
+test_that("status_dependencies() crew", {
   expect_equal(
-    issues_dependencies(
+    status_dependencies(
       packages = "crew",
       meta = mock_meta_packages_graph,
       verbose = FALSE
@@ -79,9 +79,9 @@ test_that("issues_dependencies() crew", {
   )
 })
 
-test_that("issues_dependencies() nanonext and mirai", {
+test_that("status_dependencies() nanonext and mirai", {
   expect_equal(
-    issues_dependencies(
+    status_dependencies(
       packages = c("nanonext", "mirai"),
       meta = mock_meta_packages_graph,
       verbose = FALSE
@@ -95,9 +95,9 @@ test_that("issues_dependencies() nanonext and mirai", {
   )
 })
 
-test_that("issues_dependencies() nanonext and mirai", {
+test_that("status_dependencies() nanonext and mirai", {
   expect_equal(
-    issues_dependencies(
+    status_dependencies(
       packages = c("crew", "mirai"),
       meta = mock_meta_packages_graph,
       verbose = FALSE
@@ -110,7 +110,7 @@ test_that("issues_dependencies() nanonext and mirai", {
   )
 })
 
-test_that("issues_dependencies() with more than one direct dependency", {
+test_that("status_dependencies() with more than one direct dependency", {
   meta <- mock_meta_packages_graph
   row <- meta[meta$package == "crew", ]
   row$package <- "x"
@@ -120,7 +120,7 @@ test_that("issues_dependencies() with more than one direct dependency", {
     data.frame(package = "x", version = NA_character_, role = "Imports")
   )
   expect_equal(
-    issues_dependencies(packages = "mirai", meta = meta, verbose = FALSE),
+    status_dependencies(packages = "mirai", meta = meta, verbose = FALSE),
     list(
       crew = list(mirai = character(0L)),
       x = list(mirai = character(0L)),
@@ -130,7 +130,7 @@ test_that("issues_dependencies() with more than one direct dependency", {
   )
 })
 
-test_that("issues_dependencies() with more than one direct dependency (2)", {
+test_that("status_dependencies() with more than one direct dependency (2)", {
   meta <- mock_meta_packages_graph
   row <- meta[meta$package == "crew", ]
   row$package <- "x"
@@ -140,7 +140,7 @@ test_that("issues_dependencies() with more than one direct dependency (2)", {
     data.frame(package = "x", version = NA_character_, role = "Imports")
   )
   expect_equal(
-    issues_dependencies(
+    status_dependencies(
       packages = c("mirai", "nanonext"),
       meta = meta,
       verbose = FALSE

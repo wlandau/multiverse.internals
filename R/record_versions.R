@@ -6,12 +6,11 @@
 #' @details This function tracks a manifest containing the current version,
 #'   the current hash, the highest version ever released, and
 #'   the hash of the highest version ever released.
-#'   [issues_versions()] uses this information
+#'   [status_versions()] uses this information
 #'   to determine whether the package complies with best
 #'   practices for version numbers.
-#' @inheritSection record_issues Package issues
-#' @return `NULL` (invisibly). Writes a package version manifest
-#'   and a manifest of version issues as JSON files.
+#' @inheritSection record_status Package status
+#' @return `NULL` (invisibly). Writes version information to a JSON file.
 #' @inheritParams meta_checks
 #' @param versions Character of length 1, file path to a JSON manifest
 #'   tracking the history of released versions of packages.

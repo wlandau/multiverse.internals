@@ -1,4 +1,4 @@
-issues_list <- function(x) {
+status_list <- function(x) {
   colnames(x) <- tolower(colnames(x))
   out <- list()
   for (index in seq_len(nrow(x))) {

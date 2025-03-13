@@ -1,12 +1,12 @@
-#' @title Report issues from R-universe package check results.
+#' @title Report status from R-universe package check results.
 #' @export
-#' @family issues
+#' @family status
 #' @description Check R-universe package check results.
-#' @details [issues_checks()] reads output from
+#' @details [status_checks()] reads output from
 #'   the R-universe check API
-#'   to scan all R-multiverse packages for issues that may have
+#'   to scan all R-multiverse packages for status that may have
 #'   happened during building and testing.
-#' @inheritSection record_issues Package issues
+#' @inheritSection record_status Package status
 #' @return A named list of information about packages which do not comply
 #'   with `DESCRPTION` checks. Each name is a package name,
 #'   and each element contains specific information about
@@ -15,9 +15,9 @@
 #'   returned by [meta_checks()].
 #' @examples
 #'   meta <- meta_checks(repo = "https://wlandau.r-universe.dev")
-#'   issues <- issues_checks(meta = meta)
-#'   str(issues)
-issues_checks <- function(meta = meta_checks()) {
+#'   status <- status_checks(meta = meta)
+#'   str(status)
+status_checks <- function(meta = meta_checks()) {
   meta <- meta[lengths(meta$issues) > 0L,, drop = FALSE] # nolint
-  issues_list(meta[, c("package", "url", "issues")])
+  status_list(meta[, c("package", "url", "issues")])
 }

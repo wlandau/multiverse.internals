@@ -1,29 +1,29 @@
 #' @title Interpret the status of a package
 #' @export
 #' @family status
-#' @description Summarize the issues of a package in human-readable text.
-#' @return A character string summarizing the issues of a package in prose.
+#' @description Summarize the status of a package in human-readable text.
+#' @return A character string summarizing the status of a package in prose.
 #' @param package Character string, name of the package.
-#' @param issues A list with one issue per package. Obtained by
-#'   reading the results of [record_issues()].
-interpret_status <- function(package, issues) {
-  issue <- issues[[package]]
-  if (is.null(issue)) {
+#' @param status A list with one status entry per package. Obtained by
+#'   reading the results of [record_status()].
+interpret_status <- function(package, status) {
+  status <- status[[package]]
+  if (is.null(status)) {
     return(interpret_null(package))
   }
-  if (isTRUE(issue$success)) {
-    return(interpret_success(issue, package))
+  if (isTRUE(status$success)) {
+    return(interpret_success(status, package))
   }
   out <- paste(
     c(
-      interpret_title(issue, package),
-      interpret_advisories(issue),
-      interpret_licenses(issue, package),
-      interpret_checks(issue),
-      interpret_dependencies(issue, package),
-      interpret_remotes(issue),
-      interpert_version_conflicts(issue),
-      interpret_versions(issue)
+      interpret_title(status, package),
+      interpret_advisories(status),
+      interpret_licenses(status, package),
+      interpret_checks(status),
+      interpret_dependencies(status, package),
+      interpret_remotes(status),
+      interpert_version_conflicts(status),
+      interpret_versions(status)
     ),
     collapse = ""
   )
@@ -34,41 +34,41 @@ interpret_null <- function(package) {
   paste0("Data not found on package ", package, ".")
 }
 
-interpret_success <- function(issue, package) {
+interpret_success <- function(status, package) {
   out <- paste0(
     "R-multiverse checks passed for package ",
     package
   )
-  if (is.character(issue$version)) {
-    out <- paste(out, "version", issue$version)
+  if (is.character(status$version)) {
+    out <- paste(out, "version", status$version)
   }
-  if (is.character(issue$remote_hash)) {
-    out <- paste(out, "remote hash", issue$remote_hash)
+  if (is.character(status$remote_hash)) {
+    out <- paste(out, "remote hash", status$remote_hash)
   }
   paste0(
     out,
     " (last updated on ",
-    issue$date,
+    status$date,
     ")."
   )
 }
 
-interpret_title <- function(issue, package) {
+interpret_title <- function(status, package) {
   title <- paste0(
     "R-multiverse found issues with package ",
     package
   )
-  if (is.character(issue$version)) {
-    title <- paste(title, "version", issue$version)
+  if (is.character(status$version)) {
+    title <- paste(title, "version", status$version)
   }
-  if (is.character(issue$remote_hash)) {
-    title <- paste(title, "remote hash", issue$remote_hash)
+  if (is.character(status$remote_hash)) {
+    title <- paste(title, "remote hash", status$remote_hash)
   }
-  paste0(title, " (last updated on ", issue$date, ").<br><br>")
+  paste0(title, " (last updated on ", status$date, ").<br><br>")
 }
 
-interpret_advisories <- function(issue) {
-  advisories <- issue$descriptions$advisories
+interpret_advisories <- function(status) {
+  advisories <- status$descriptions$advisories
   if (is.null(advisories)) {
     return(character(0L))
   }
@@ -79,8 +79,8 @@ interpret_advisories <- function(issue) {
   )
 }
 
-interpret_checks <- function(issue) {
-  checks <- issue$checks
+interpret_checks <- function(status) {
+  checks <- status$checks
   if (is.null(checks)) {
     return(character(0L))
   }
@@ -96,8 +96,8 @@ interpret_checks <- function(issue) {
   )
 }
 
-interpret_dependencies <- function(issue, package) {
-  dependencies <- issue$dependencies
+interpret_dependencies <- function(status, package) {
+  dependencies <- status$dependencies
   if (is.null(dependencies)) {
     return(character(0L))
   }
@@ -140,8 +140,8 @@ interpret_dependencies <- function(issue, package) {
   text
 }
 
-interpret_licenses <- function(issue, package) {
-  license <- issue$descriptions$license
+interpret_licenses <- function(status, package) {
+  license <- status$descriptions$license
   if (is.null(license)) {
     return(character(0L))
   }
@@ -159,8 +159,8 @@ interpret_licenses <- function(issue, package) {
   )
 }
 
-interpret_remotes <- function(issue) {
-  remotes <- issue$descriptions$remotes
+interpret_remotes <- function(status) {
+  remotes <- status$descriptions$remotes
   if (is.null(remotes)) {
     return(character(0L))
   }
@@ -170,8 +170,8 @@ interpret_remotes <- function(issue) {
   )
 }
 
-interpret_versions <- function(issue) {
-  versions <- issue$versions
+interpret_versions <- function(status) {
+  versions <- status$versions
   if (is.null(versions)) {
     return(character(0L))
   }
@@ -185,13 +185,13 @@ interpret_versions <- function(issue) {
   )
 }
 
-interpert_version_conflicts <- function(issues) {
+interpert_version_conflicts <- function(status) {
   out <- character(0L)
-  if (!is.null(issues$descriptions$cran)) {
+  if (!is.null(status$descriptions$cran)) {
     out <- paste(
       out,
       "On CRAN, this package had version",
-      issues$descriptions$cran,
+      status$descriptions$cran,
       "during the first day of the most recent R-multiverse Staging period.",
       "The version on R-multiverse is lower,",
       "which causes install.packages() to prefer CRAN.",

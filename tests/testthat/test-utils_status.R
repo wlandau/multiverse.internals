@@ -1,4 +1,4 @@
-test_that("issues_list() handles missing and empty values correctly", {
+test_that("status_list() handles missing and empty values correctly", {
   meta <- data.frame(
     package = c("audio.whisper", "readxl", "stantargets", "tidypolars"),
     advisory = c(
@@ -14,7 +14,7 @@ test_that("issues_list() handles missing and empty values correctly", {
     c("hyunjimoon/SBC", "stan-dev/cmdstanr"),
     "markvanderloo/tinytest/pkg"
   )
-  out <- issues_list(meta)
+  out <- status_list(meta)
   exp <- list(
     audio.whisper = list(remotes = "bnosac/audio.vadwebrtc"),
     readxl = list(advisory = "url"),

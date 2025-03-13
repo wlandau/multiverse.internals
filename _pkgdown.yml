@@ -5,36 +5,32 @@ template:
     primary: "#152640"
 
 reference:
-- title: Package contribution reviews
+- title: Package contributions
   contents:
   - review_pull_request
   - review_pull_requests
-- title: Metadata
+- title: Package metadata
   contents:
   - meta_checks
   - meta_packages
   - meta_snapshot
-- title: Check issues
+- title: Package status
   contents:
-  - issues_checks
-  - issues_dependencies
-  - issues_descriptions
-  - issues_versions
-- title: Record issues
-  contents:
-  - record_issues
+  - record_status
   - record_nonstandard_licenses
   - record_versions
+  - status_checks
+  - status_dependencies
+  - status_descriptions
+  - status_versions
 - title: Staging
   contents:
   - filter_meta
   - freeze_dependencies
   - rclone_includes
   - stage_candidates
-- title: Package status
+- title: Websites
   contents:
   - interpret_status
   - update_status
-- title: Topics
-  contents:
   - update_topics
