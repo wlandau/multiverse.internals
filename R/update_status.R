@@ -102,9 +102,9 @@ update_status_directory <- function(output, input, directory) {
     json_status,
     \(x) {
       if (length(x$remote_hash)) {
-        x$remote_hash
+        as.character(x$remote_hash)
       } else {
-        x$date
+        as.character(x$date)
       }
     },
     character(1L)
@@ -133,8 +133,16 @@ update_status_summary <- function(output, directory, status) {
   lines_packages <- ""
   if (length(status)) {
     package <- names(status)
-    version <- vapply(status, \(x) x$version, FUN.VALUE = character(1L))
-    date <- vapply(status, \(x) x$date, FUN.VALUE = character(1L))
+    version <- vapply(
+      status,
+      \(x) as.character(x$version),
+      FUN.VALUE = character(1L)
+    )
+    date <- vapply(
+      status,
+      \(x) as.character(x$date),
+      FUN.VALUE = character(1L)
+    )
     url <- sprintf(
       "[`%s`](https://r-multiverse.org/status/staging/%s)",
       package,
