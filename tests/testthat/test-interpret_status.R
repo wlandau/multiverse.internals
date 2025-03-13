@@ -50,13 +50,13 @@ test_that("interpret_status() with advisories", {
     repo = "https://wlandau.r-universe.dev"
   )
   on.exit(unlink(c(output, versions), recursive = TRUE))
-  record_issues(
+  record_status(
     mock = list(packages = meta, checks = mock_meta_checks),
     output = output,
     versions = versions
   )
-  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
-  out <- interpret_status("commonmark", issues)
+  status <- jsonlite::read_json(output, simplifyVector = TRUE)
+  out <- interpret_status("commonmark", status)
   expect_true(
     grepl(
       "Found the following advisories in the R Consortium Advisory Database",
@@ -75,13 +75,13 @@ test_that("interpret_status() with bad licenses", {
     repo = "https://wlandau.r-universe.dev"
   )
   on.exit(unlink(c(output, versions), recursive = TRUE))
-  record_issues(
+  record_status(
     mock = list(packages = mock, checks = mock_meta_checks),
     output = output,
     versions = versions
   )
-  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
-  out <- interpret_status("targetsketch", issues)
+  status <- jsonlite::read_json(output, simplifyVector = TRUE)
+  out <- interpret_status("targetsketch", status)
   expect_true(
     grepl(
       "targetsketch declares license",
@@ -107,55 +107,55 @@ test_that("interpret_status() checks etc.", {
   versions <- tempfile()
   writeLines(lines, versions)
   on.exit(unlink(c(output, versions), recursive = TRUE))
-  record_issues(
+  record_status(
     mock = list(packages = mock_meta_packages, checks = mock_meta_checks),
     output = output,
     versions = versions
   )
-  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
+  status <- jsonlite::read_json(output, simplifyVector = TRUE)
   expect_true(
     grepl(
       "Not all checks succeeded on R-universe",
-      interpret_status("INLA", issues)
+      interpret_status("INLA", status)
     )
   )
   expect_true(
     grepl(
       "Not all checks succeeded on R-universe",
-      interpret_status("colorout", issues)
+      interpret_status("colorout", status)
     )
   )
   expect_true(
     grepl(
       "Package releases should not use the 'Remotes:' field",
-      interpret_status("audio.whisper", issues),
+      interpret_status("audio.whisper", status),
       fixed = TRUE
     )
   )
   expect_true(
     grepl(
       "bnosac/audio.vadwebrtc",
-      interpret_status("audio.whisper", issues),
+      interpret_status("audio.whisper", status),
       fixed = TRUE
     )
   )
   expect_true(
     grepl(
       "On CRAN",
-      interpret_status("SBC", issues)
+      interpret_status("SBC", status)
     )
   )
-  issues$tidypolars$dependencies <- list(x = "y")
+  status$tidypolars$dependencies <- list(x = "y")
   expect_true(
     grepl(
       "One or more strong R package dependencies have issues",
-      interpret_status("tidypolars", issues)
+      interpret_status("tidypolars", status)
     )
   )
   expect_true(
     grepl(
       "The version number of the current release should be highest version",
-      interpret_status("constantversion", issues)
+      interpret_status("constantversion", status)
     )
   )
 })
@@ -179,7 +179,7 @@ test_that("interpret_status() with complicated dependency problems", {
   meta_checks <- mock_meta_checks[1L, ]
   meta_checks$package <- "crew"
   suppressMessages(
-    record_issues(
+    record_status(
       versions = versions,
       mock = list(
         checks = meta_checks,
@@ -191,9 +191,9 @@ test_that("interpret_status() with complicated dependency problems", {
     )
   )
   expect_true(file.exists(output))
-  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
+  status <- jsonlite::read_json(output, simplifyVector = TRUE)
   expect_equal(
-    issues$nanonext,
+    status$nanonext,
     list(
       versions = list(
         version_current = "1.0.0",
@@ -208,7 +208,7 @@ test_that("interpret_status() with complicated dependency problems", {
     )
   )
   expect_equal(
-    issues$mirai,
+    status$mirai,
     list(
       dependencies = list(
         nanonext = list()
@@ -220,14 +220,14 @@ test_that("interpret_status() with complicated dependency problems", {
     )
   )
   expect_equal(
-    issues$crew,
+    status$crew,
     list(
       checks = list(
         url = file.path(
           "https://github.com/r-universe/r-multiverse/actions",
           "runs/11898760503"
         ),
-        issues = list(
+        status = list(
           `linux R-4.5.0` = "WARNING",
           `mac R-4.4.2` = "WARNING",
           `win R-4.4.2` = "WARNING"
@@ -243,30 +243,30 @@ test_that("interpret_status() with complicated dependency problems", {
   expect_true(
     grepl(
       "nanonext: mirai",
-      interpret_status("crew", issues)
+      interpret_status("crew", status)
     )
   )
   expect_true(
     grepl(
       "nanonext: crew",
-      interpret_status("crew.aws.batch", issues)
+      interpret_status("crew.aws.batch", status)
     )
   )
   expect_true(
     grepl(
       "Dependency nanonext is explicitly mentioned in",
-      interpret_status("mirai", issues)
+      interpret_status("mirai", status)
     )
   )
 })
 
 test_that("interpret_status(): check these interactively", {
   skip_if_offline()
-  issues <- list(
+  status <- list(
     bad = list(
       checks = list(
         url = "https://github.com/12103194809",
-        issues = list(
+        status = list(
           `linux x86_64 R-4.5.0` = "WARNING",
           `mac aarch64 R-4.4.2` = "WARNING",
           `mac x86_64 R-4.4.2` = "WARNING",
@@ -292,28 +292,28 @@ test_that("interpret_status(): check these interactively", {
       )
     )
   )
-  issues$bad2 <- issues$bad
-  issues$bad2$dependencies <- list(
+  status$bad2 <- status$bad
+  status$bad2$dependencies <- list(
     nanonext = "mirai",
     b = c("x", "yasdf", "z")
   )
-  issues$bad3 <- issues$bad
-  issues$bad3$dependencies <- list(
+  status$bad3 <- status$bad
+  status$bad3$dependencies <- list(
     nanonext = list(),
     b = list()
   )
-  issues$bad4 <- issues$bad
-  issues$bad4$dependencies <- list(
+  status$bad4 <- status$bad
+  status$bad4$dependencies <- list(
     nanonext = "mirai"
   )
-  issues$bad5 <- issues$bad
-  issues$bad5$dependencies <- list(
+  status$bad5 <- status$bad
+  status$bad5$dependencies <- list(
     nanonext = list()
   )
   temp <- tempfile(fileext = ".html")
   on.exit(unlink(temp))
-  for (package in names(issues)) {
-    text <- interpret_status(package, issues)
+  for (package in names(status)) {
+    text <- interpret_status(package, status)
     expect_true(grepl("found issues", text))
     writeLines(text, temp)
     # browseURL(temp) # nolint

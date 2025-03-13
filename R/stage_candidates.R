@@ -32,10 +32,10 @@ write_packages_json <- function(path_staging) {
   file_staging <- file.path(path_staging, "packages.json")
   json_staging <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
   json_staging[is.na(json_staging$branch)] <- "*release"
-  file_issues <- file.path(path_staging, "issues.json")
-  json_issues <- jsonlite::read_json(file_issues, simplifyVector = TRUE)
-  json_successes <- Filter(\(issue) isTRUE(issue$success), json_issues)
-  hashes <- vapply(json_successes, \(issue) issue$remote_hash, character(1L))
+  file_status <- file.path(path_staging, "status.json")
+  json_status <- jsonlite::read_json(file_status, simplifyVector = TRUE)
+  json_successes <- Filter(\(status) isTRUE(status$success), json_status)
+  hashes <- vapply(json_successes, \(status) status$remote_hash, character(1L))
   branches <- json_staging$branch
   names(branches) <- json_staging$package
   branches[names(hashes)] <- unname(hashes)

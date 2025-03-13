@@ -1,6 +1,6 @@
-test_that("record_issues() mocked", {
+test_that("record_status() mocked", {
   output <- tempfile()
-  record_issues(
+  record_status(
     versions = mock_versions(),
     mock = list(
       checks = mock_meta_checks,
@@ -10,7 +10,7 @@ test_that("record_issues() mocked", {
     output = output,
     verbose = FALSE
   )
-  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
+  status <- jsonlite::read_json(output, simplifyVector = TRUE)
   expect_failed <- c(
     "audio.whisper", "colorout", "demographr", "geographr", "glaredb",
     "healthyr", "igraph", "INLA", "loneliness",
@@ -19,7 +19,7 @@ test_that("record_issues() mocked", {
     "tidypolars", "version_decremented", "version_unmodified"
   )
   for (package in expect_failed) {
-    expect_false(issues[[package]]$success)
+    expect_false(status[[package]]$success)
   }
   expect_succeeded <- c(
     "audio.vadwebrtc", "cmdstanr", "duckdb", "httpgd", "ichimoku",
@@ -27,15 +27,15 @@ test_that("record_issues() mocked", {
     "polars", "secretbase", "string2path", "tinytest", "zstdlite"
   )
   for (package in expect_succeeded) {
-    expect_true(issues[[package]]$success)
+    expect_true(status[[package]]$success)
   }
   runs <- "https://github.com/r-universe/r-multiverse/actions/runs"
   expect_equal(
-    issues$INLA,
+    status$INLA,
     list(
       checks = list(
         url = file.path(runs, "11566311732"),
-        issues = list(
+        status = list(
           `linux R-devel` = "MISSING",
           `mac R-release` = "MISSING",
           `win R-release` = "MISSING"
@@ -48,11 +48,11 @@ test_that("record_issues() mocked", {
     )
   )
   expect_equal(
-    issues$stantargets,
+    status$stantargets,
     list(
       checks = list(
         url = file.path(runs, "12139784185"),
-        issues = list(
+        status = list(
           `linux R-4.5.0` = "WARNING",
           `mac R-4.4.2` = "WARNING",
           `win R-4.4.2` = "WARNING"
@@ -68,7 +68,7 @@ test_that("record_issues() mocked", {
     )
   )
   expect_equal(
-    issues$targetsketch,
+    status$targetsketch,
     list(
       descriptions = list(
         license = "non-standard"
@@ -80,7 +80,7 @@ test_that("record_issues() mocked", {
     )
   )
   expect_equal(
-    issues$version_decremented,
+    status$version_decremented,
     list(
       versions = list(
         version_current = "0.0.1",
@@ -95,7 +95,7 @@ test_that("record_issues() mocked", {
     )
   )
   expect_equal(
-    issues$version_unmodified,
+    status$version_unmodified,
     list(
       versions = list(
         version_current = "1.0.0",
@@ -111,9 +111,9 @@ test_that("record_issues() mocked", {
   )
 })
 
-test_that("record_issues() date works", {
+test_that("record_status() date works", {
   output <- tempfile()
-  record_issues(
+  record_status(
     versions = mock_versions(),
     mock = list(
       checks = mock_meta_checks,
@@ -123,7 +123,7 @@ test_that("record_issues() date works", {
     output = output,
     verbose = FALSE
   )
-  record_issues(
+  record_status(
     versions = mock_versions(),
     mock = list(
       checks = mock_meta_checks,
@@ -132,9 +132,9 @@ test_that("record_issues() date works", {
     output = output,
     verbose = FALSE
   )
-  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
-  for (package in names(issues)) {
-    expect_equal(issues[[package]]$date, "2024-01-01")
+  status <- jsonlite::read_json(output, simplifyVector = TRUE)
+  for (package in names(status)) {
+    expect_equal(status[[package]]$date, "2024-01-01")
   }
   never_fixed <- c(
     "INLA",
@@ -149,10 +149,10 @@ test_that("record_issues() date works", {
     "version_unmodified"
   )
   for (package in once_fixed) {
-    issues[[package]] <- NULL
+    status[[package]] <- NULL
   }
-  jsonlite::write_json(x = issues, path = output, pretty = TRUE)
-  record_issues(
+  jsonlite::write_json(x = status, path = output, pretty = TRUE)
+  record_status(
     versions = mock_versions(),
     mock = list(
       checks = mock_meta_checks,
@@ -161,24 +161,24 @@ test_that("record_issues() date works", {
     output = output,
     verbose = FALSE
   )
-  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
+  status <- jsonlite::read_json(output, simplifyVector = TRUE)
   for (package in never_fixed) {
-    expect_equal(issues[[package]]$date, "2024-01-01")
+    expect_equal(status[[package]]$date, "2024-01-01")
   }
   today <- format(Sys.Date(), fmt = "yyyy-mm-dd")
   for (package in once_fixed) {
-    expect_equal(issues[[package]]$date, today)
+    expect_equal(status[[package]]$date, today)
   }
 })
 
-test_that("record_issues() on a small repo", {
+test_that("record_status() on a small repo", {
   output <- tempfile()
   versions <- tempfile()
   record_versions(
     versions = versions,
     repo = "https://wlandau.r-universe.dev"
   )
-  record_issues(
+  record_status(
     repo = "https://wlandau.r-universe.dev",
     versions = versions,
     output = output,
@@ -187,7 +187,7 @@ test_that("record_issues() on a small repo", {
   expect_true(file.exists(output))
 })
 
-test_that("record_issues() with dependency problems", {
+test_that("record_status() with dependency problems", {
   output <- tempfile()
   lines <- c(
     "[",
@@ -206,7 +206,7 @@ test_that("record_issues() with dependency problems", {
   meta_checks <- mock_meta_checks[1L, ]
   meta_checks$package <- "crew"
   suppressMessages(
-    record_issues(
+    record_status(
       versions = versions,
       mock = list(
         checks = meta_checks,
@@ -218,9 +218,9 @@ test_that("record_issues() with dependency problems", {
     )
   )
   expect_true(file.exists(output))
-  issues <- jsonlite::read_json(output, simplifyVector = TRUE)
+  status <- jsonlite::read_json(output, simplifyVector = TRUE)
   expect_equal(
-    issues$nanonext,
+    status$nanonext,
     list(
       versions = list(
         version_current = "1.0.0",
@@ -235,7 +235,7 @@ test_that("record_issues() with dependency problems", {
     )
   )
   expect_equal(
-    issues$mirai,
+    status$mirai,
     list(
       dependencies = list(
         nanonext = list()
@@ -247,9 +247,9 @@ test_that("record_issues() with dependency problems", {
     )
   )
   expect_equal(
-    issues$crew,
+    status$crew,
     list(
-      checks = list(url = meta_checks$url, issues = meta_checks$issues[[1L]]),
+      checks = list(url = meta_checks$url, status = meta_checks$status[[1L]]),
       dependencies = list(
         nanonext = "mirai"
       ),
@@ -260,7 +260,7 @@ test_that("record_issues() with dependency problems", {
     )
   )
   expect_equal(
-    issues$crew.aws.batch,
+    status$crew.aws.batch,
     list(
       dependencies = list(
         crew = list(),
@@ -273,7 +273,7 @@ test_that("record_issues() with dependency problems", {
     )
   )
   expect_equal(
-    issues$crew.cluster,
+    status$crew.cluster,
     list(
       dependencies = list(
         crew = list(),

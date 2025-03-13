@@ -1,3 +1,8 @@
+# multiverse.internals 1.0.0
+
+* Rename "issues" to "status" throughout the package, including in function names.
+* Notably, rename `issue.json` to `status.json`.
+
 # multiverse.internals 0.4.10
 
 * Simplify `stage_candidates()`, `rclone_includes()`, and `update_status()`: get remote hashes from pre-recorded `issues.json`, as opposed to a separate call to `meta_packages()`. This ensures those remote hashes are more contemporaneous with the corresponding reported check results.

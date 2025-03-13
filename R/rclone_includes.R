@@ -19,10 +19,10 @@ rclone_includes <- function(path_staging) {
 }
 
 write_include_packages <- function(path_staging) {
-  file_issues <- file.path(path_staging, "issues.json")
-  json_issues <- jsonlite::read_json(file_issues, simplifyVector = TRUE)
+  file_status <- file.path(path_staging, "status.json")
+  json_status <- jsonlite::read_json(file_status, simplifyVector = TRUE)
   staged <- staged_packages(path_staging)
-  json_staged <- json_issues[staged]
+  json_staged <- json_status[staged]
   package <- names(json_staged)
   version <- vapply(json_staged, \(x) x$version, character(1L))
   release <- paste0(package, "_", version)

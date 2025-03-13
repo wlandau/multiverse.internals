@@ -1,10 +1,10 @@
-test_that("issues_checks() mocked", {
-  issues <- issues_checks(meta = mock_meta_checks)
+test_that("status_checks() mocked", {
+  status <- status_checks(meta = mock_meta_checks)
   url <- "https://github.com/r-universe/r-multiverse/actions/runs"
   expected <- list(
     audio.whisper = list(
       url = file.path(url, "12103194809"),
-      issues = list(
+      status = list(
         "linux x86_64 R-4.5.0" = "WARNING",
         "mac aarch64 R-4.4.2" = "WARNING",
         "mac x86_64 R-4.4.2" = "WARNING",
@@ -13,7 +13,7 @@ test_that("issues_checks() mocked", {
     ),
     colorout = list(
       url = file.path(url, "12063016496"),
-      issues = list(
+      status = list(
         "mac aarch64 R-4.4.2" = "WARNING",
         "mac x86_64 R-4.4.2" = "WARNING",
         "win R-release" = "MISSING"
@@ -21,7 +21,7 @@ test_that("issues_checks() mocked", {
     ),
     demographr = list(
       url = file.path(url, "11898760503"),
-      issues = list(
+      status = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -29,7 +29,7 @@ test_that("issues_checks() mocked", {
     ),
     geographr = list(
       url = file.path(url, "11898762523"),
-      issues = list(
+      status = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -37,11 +37,11 @@ test_that("issues_checks() mocked", {
     ),
     glaredb = list(
       url = file.path(url, "11876493507"),
-      issues = list("win R-release" = "MISSING")
+      status = list("win R-release" = "MISSING")
     ),
     healthyr = list(
       url = file.path(url, "11898763290"),
-      issues = list(
+      status = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -49,11 +49,11 @@ test_that("issues_checks() mocked", {
     ),
     igraph = list(
       url = file.path(url, "12133807748"),
-      issues = list("win x86_64 R-4.4.2" = "WARNING")
+      status = list("win x86_64 R-4.4.2" = "WARNING")
     ),
     INLA = list(
       url = file.path(url, "11566311732"),
-      issues = list(
+      status = list(
         "linux R-devel" = "MISSING",
         "mac R-release" = "MISSING",
         "win R-release" = "MISSING"
@@ -61,7 +61,7 @@ test_that("issues_checks() mocked", {
     ),
     loneliness = list(
       url = file.path(url, "11898763908"),
-      issues = list(
+      status = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -69,14 +69,14 @@ test_that("issues_checks() mocked", {
     ),
     prqlr = list(
       url = file.path(url, "11620617366"),
-      issues = list(
+      status = list(
         "mac R-release" = "MISSING",
         "win R-release" = "MISSING"
       )
     ),
     SBC = list(
       url = file.path(url, "11947266936"),
-      issues = list(
+      status = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -84,7 +84,7 @@ test_that("issues_checks() mocked", {
     ),
     stantargets = list(
       url = file.path(url, "12139784185"),
-      issues = list(
+      status = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -92,14 +92,14 @@ test_that("issues_checks() mocked", {
     ),
     taxizedb = list(
       url = file.path(url, "11825909535"),
-      issues = list(
+      status = list(
         "mac R-4.4.2" = "ERROR",
         "win R-4.4.2" = "ERROR"
       )
     ),
     tidytensor = list(
       url = file.path(url, "12133663821"),
-      issues = list(
+      status = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -107,7 +107,7 @@ test_that("issues_checks() mocked", {
     ),
     webseq = list(
       url = file.path(url, "11825909757"),
-      issues = list(
+      status = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
@@ -115,18 +115,18 @@ test_that("issues_checks() mocked", {
     ),
     wildfires = list(
       url = file.path(url, "11898765070"),
-      issues = list(
+      status = list(
         "linux R-4.5.0" = "WARNING",
         "mac R-4.4.2" = "WARNING",
         "win R-4.4.2" = "WARNING"
       )
     )
   )
-  expect_equal(issues[order(names(issues))], expected[order(names(expected))])
+  expect_equal(status[order(names(status))], expected[order(names(expected))])
 })
 
-test_that("issues_checks() on a small repo", {
+test_that("status_checks() on a small repo", {
   meta <- meta_checks(repo = "https://wlandau.r-universe.dev")
-  issues <- issues_checks(meta = meta)
-  expect_true(is.list(issues))
+  status <- status_checks(meta = meta)
+  expect_true(is.list(status))
 })

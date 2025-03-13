@@ -64,7 +64,7 @@ mock_meta_checks <- structure(
       "https://github.com/r-universe/r-multiverse/actions/runs/12194073268",
       "https://github.com/r-universe/r-multiverse/actions/runs/11927536639"
     ),
-    issues = list(
+    status = list(
       list(
         `linux R-4.5.0` = "WARNING",
         `mac R-4.4.2` = "WARNING",

@@ -1,11 +1,11 @@
-#' @title Report package dependency issues
+#' @title Report package dependency status
 #' @export
-#' @family issues
+#' @family status
 #' @description Flag packages which have issues in their strong dependencies
 #'   (`Imports:`, `Depends:`, and `LinkingTo:` in the `DESCRIPTION`.)
 #'   These include indirect/upstream dependencies, as well, not just
 #'   the explicit mentions in the `DESCRIPTION` file.
-#' @inheritSection record_issues Package issues
+#' @inheritSection record_status Package status
 #' @return A nested list of problems triggered by dependencies.
 #'   The names of top-level elements are packages affected downstream.
 #'   The value of each top-level element is a list whose names are
@@ -17,34 +17,35 @@
 #'   depends on `crew`, `crew` depends on `mirai`, and
 #'   `mirai` depends on `nanonext`. We represent the graph like this:
 #'      `nanonext -> mirai -> crew -> crew.cluster`.
-#'   If `nanonext` has an issue, then [issues_dependencies()] returns
+#'   If `nanonext` has an issue, then [status_dependencies()] returns
 #'   `list(crew.cluster = list(nanonext = "crew"), ...)`, where `...`
 #'   stands for additional named list entries. From this list, we deduce
 #'   that `nanonext` is causing an issue affecting `crew.cluster` through
 #'   the direct dependency on `crew`.
 #'
-#'   The choice in output format from [issues_dependencies()] allows package
+#'   The choice in output format from [status_dependencies()] allows package
 #'   maintainers to more easily figure out which direct dependencies
-#'   are contributing issues and drop those direct dependencies if necessary.
+#'   are contributing have issues and drop those direct dependencies
+#'   if necessary.
 #' @param packages Character vector of names of packages with other issues.
 #' @param meta A data frame with R-universe package check results
 #'   returned by [meta_checks()].
-#' @param verbose `TRUE` to print progress while checking issues with
-#'   dependencies, `FALSE` otherwise.
+#' @param verbose `TRUE` to print progress while checking
+#'   dependency status, `FALSE` otherwise.
 #' @examples
 #'   meta <- meta_packages(repo = "https://wlandau.r-universe.dev")
-#'   issues_dependencies(packages = character(0L), meta = meta)
-#'   issues_dependencies(packages = "crew.aws.batch", meta = meta)
-#'   issues_dependencies(packages = "nanonext", meta = meta)
-#'   issues_dependencies(packages = "crew", meta = meta)
-#'   issues_dependencies(packages = c("crew", "mirai"), meta = meta)
-issues_dependencies <- function(
+#'   status_dependencies(packages = character(0L), meta = meta)
+#'   status_dependencies(packages = "crew.aws.batch", meta = meta)
+#'   status_dependencies(packages = "nanonext", meta = meta)
+#'   status_dependencies(packages = "crew", meta = meta)
+#'   status_dependencies(packages = c("crew", "mirai"), meta = meta)
+status_dependencies <- function(
   packages,
   meta = meta_packages(),
   verbose = FALSE
 ) {
   if (verbose) message("Constructing the package dependency graph")
-  graph <- issues_dependencies_graph(meta)
+  graph <- status_dependencies_graph(meta)
   vertices <- names(igraph::V(graph))
   edges <- igraph::as_long_data_frame(graph)
   from <- tapply(
@@ -53,7 +54,7 @@ issues_dependencies <- function(
     FUN = identity,
     simplify = FALSE
   )
-  issues <- list()
+  status <- list()
   for (package in intersect(packages, vertices)) {
     if (verbose) message("Flagging reverse dependencies of ", package)
     revdeps <- names(igraph::subcomponent(graph, v = package, mode = "out"))
@@ -61,13 +62,13 @@ issues_dependencies <- function(
     for (revdep in revdeps) {
       neighbors <- from[[revdep]]
       keep <- match(neighbors, revdeps, nomatch = 0L) > 0L
-      issues[[revdep]][[package]] <- neighbors[keep]
+      status[[revdep]][[package]] <- neighbors[keep]
     }
   }
-  issues
+  status
 }
 
-issues_dependencies_graph <- function(meta) {
+status_dependencies_graph <- function(meta) {
   repo_packages <- meta$package
   repo_dependencies <- meta[["_dependencies"]]
   from <- list()

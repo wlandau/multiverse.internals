@@ -56,12 +56,12 @@ update_status <- function(
 }
 
 update_status_production <- function(output, input) {
-  path_issues <- file.path(input, "issues.json")
+  path_status <- file.path(input, "status.json")
   path_snapshot <- file.path(input, "snapshot.json")
-  issues <- jsonlite::read_json(path_issues, simplifyVector = TRUE)
+  status <- jsonlite::read_json(path_status, simplifyVector = TRUE)
   staged <- staged_packages(input)
   snapshot <- jsonlite::read_json(path_snapshot, simplifyVector = TRUE)
-  issues <- as.data.frame(do.call(rbind, issues[staged]))
+  status <- as.data.frame(do.call(rbind, status[staged]))
   url <- sprintf(
     "<a href=\"https://r-multiverse.org/status/staging/%s\">%s</a>",
     staged,
@@ -70,8 +70,8 @@ update_status_production <- function(output, input) {
   lines_packages <- paste(
     "<li>",
     url,
-    issues$version,
-    sprintf("(%s)", issues$date),
+    status$version,
+    sprintf("(%s)", status$date),
     "</li>"
   )
   lines_packages <- paste(lines_packages, collapse = "\n")
@@ -97,11 +97,11 @@ update_status_directory <- function(output, input, directory) {
   path_directory <- file.path(output, directory)
   unlink(path_directory, recursive = TRUE, force = TRUE)
   dir.create(path_directory, recursive = TRUE)
-  path_issues <- file.path(input, "issues.json")
-  json_issues <- jsonlite::read_json(path_issues, simplifyVector = TRUE)
-  packages <- names(json_issues)
+  path_status <- file.path(input, "status.json")
+  json_status <- jsonlite::read_json(path_status, simplifyVector = TRUE)
+  packages <- names(json_status)
   remote_hashes <- vapply(
-    json_issues,
+    json_status,
     \(x) {
       if (length(x$remote_hash)) {
         x$remote_hash
@@ -114,7 +114,7 @@ update_status_directory <- function(output, input, directory) {
   for (index in seq_along(packages)) {
     package <- packages[index]
     guid <- remote_hashes[index]
-    success <- json_issues[[package]]$success
+    success <- json_status[[package]]$success
     if (isTRUE(success)) {
       suffix <- "success"
     } else if (isFALSE(success)) {
@@ -123,15 +123,15 @@ update_status_directory <- function(output, input, directory) {
       suffix <- "status unknown"
     }
     title <- paste0(package, ": ", suffix)
-    status <- interpret_status(package, json_issues)
+    status <- interpret_status(package, json_status)
     update_status_html(package, title, status, path_directory)
     update_status_xml(package, title, path_directory, guid)
   }
-  failures <- names(Filter(json_issues, f = \(issue) isFALSE(issue$success)))
-  update_issue_summary(output, directory, failures)
+  failures <- names(Filter(json_status, f = \(x) isFALSE(x$success)))
+  update_status_summary(output, directory, failures)
 }
 
-update_issue_summary <- function(output, directory, packages) {
+update_status_summary <- function(output, directory, packages) {
   package_list <- ""
   if (length(packages)) {
     package_list <- sprintf(

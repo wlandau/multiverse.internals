@@ -25,20 +25,20 @@ meta_checks_process_json <- function(json) {
   json$url <- json[["_failure"]]$buildurl %||% rep(NA_character_, nrow(json))
   success_source <- is.na(json$url)
   json$url[success_source] <- json[["_buildurl"]][success_source]
-  json$issues <- lapply(
+  json$status <- lapply(
     json[["_binaries"]],
-    meta_checks_issues_binaries,
+    meta_checks_status_binaries,
     snapshot = meta_snapshot()
   )
   for (index in which(!success_source)) {
-    json$issues[[index]]$source <- "FAILURE"
+    json$status[[index]]$source <- "FAILURE"
   }
   colnames(json) <- tolower(colnames(json))
   rownames(json) <- json$package
-  json[, c("package", "url", "issues")]
+  json[, c("package", "url", "status")]
 }
 
-meta_checks_issues_binaries <- function(binaries, snapshot) {
+meta_checks_status_binaries <- function(binaries, snapshot) {
   check <- .subset2(binaries, "check")
   os <- .subset2(binaries, "os")
   arch <- .subset2(binaries, "arch")
