@@ -1,3 +1,8 @@
+# multiverse.internals 1.0.1
+
+* Handle source failures in `record_status()`.
+* Use markdown for `update_status()`.
+
 # multiverse.internals 1.0.0
 
 * Rename "issues" to "status" throughout the package, including in function names.

@@ -43,8 +43,8 @@ test_that("record_status() mocked", {
       ),
       success = FALSE,
       date = "2024-01-01",
-      version = list(),
-      remote_hash = list()
+      version = NA,
+      remote_hash = NA
     )
   )
   expect_equal(
@@ -90,8 +90,8 @@ test_that("record_status() mocked", {
       ),
       success = FALSE,
       date = "2024-01-01",
-      version = list(),
-      remote_hash = list()
+      version = NA,
+      remote_hash = NA
     )
   )
   expect_equal(
@@ -105,8 +105,8 @@ test_that("record_status() mocked", {
       ),
       success = FALSE,
       date = "2024-01-01",
-      version = list(),
-      remote_hash = list()
+      version = NA,
+      remote_hash = NA
     )
   )
 })

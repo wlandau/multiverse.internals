@@ -39,7 +39,7 @@ test_that("update_status()", {
       file.exists(
         file.path(
           path_status,
-          c("community.html", "staging.html", "production.md")
+          c("community.md", "staging.md", "production.md")
         )
       )
     )
@@ -50,10 +50,16 @@ test_that("update_status()", {
   expect_true(any(grepl("`removed-no-issue`", lines_production)))
   expect_false(any(grepl("`issue`", lines_production, fixed = TRUE)))
   expect_false(any(grepl("`removed-has-issue`", lines_production)))
-  lines_staging <- readLines(file.path(path_status, "staging.html"))
-  expect_true(any(grepl(">issue<", lines_staging, fixed = TRUE)))
-  expect_true(any(grepl(">removed-has-issue<", lines_staging, fixed = TRUE)))
-  expect_false(any(grepl(">staged<", lines_staging, fixed = TRUE)))
+  lines_staging <- readLines(file.path(path_status, "staging.md"))
+  expect_true(any(grepl("`issue`", lines_staging, fixed = TRUE)))
+  expect_true(any(grepl("`removed-has-issue`", lines_staging, fixed = TRUE)))
+  expect_false(any(grepl("`staged`", lines_staging, fixed = TRUE)))
+  lines_community <- readLines(file.path(path_status, "community.md"))
+  expect_true(any(grepl("`issue`", lines_community, fixed = TRUE)))
+  expect_false(
+    any(grepl("`removed-has-issue`", lines_community, fixed = TRUE))
+  )
+  expect_false(any(grepl("`staged`", lines_community, fixed = TRUE)))
   out_staging <- file.path(path_status, "staging")
   out_community <- file.path(path_status, "community")
   expect_equal(

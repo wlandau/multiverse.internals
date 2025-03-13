@@ -69,7 +69,7 @@ update_status_production <- function(output, input) {
   )
   lines_packages <- paste0(
     "|",
-    paste(url,status$version, status$date, sep = "|"),
+    paste(url, status$version, status$date, sep = "|"),
     "|"
   )
   lines_packages <- paste(lines_packages, collapse = "\n")
@@ -125,23 +125,30 @@ update_status_directory <- function(output, input, directory) {
     update_status_html(package, title, status, path_directory)
     update_status_xml(package, title, path_directory, guid)
   }
-  failures <- names(Filter(json_status, f = \(x) isFALSE(x$success)))
+  failures <- Filter(json_status, f = \(x) isFALSE(x$success))
   update_status_summary(output, directory, failures)
 }
 
-update_status_summary <- function(output, directory, packages) {
-  package_list <- ""
-  if (length(packages)) {
-    package_list <- sprintf(
-      "<li><a href=\"https://r-multiverse.org/status/%s/%s.html\">%s</a>",
-      directory,
-      packages,
-      packages
+update_status_summary <- function(output, directory, status) {
+  lines_packages <- ""
+  if (length(status)) {
+    package <- names(status)
+    version <- vapply(status, \(x) x$version, FUN.VALUE = character(1L))
+    date <- vapply(status, \(x) x$date, FUN.VALUE = character(1L))
+    url <- sprintf(
+      "[`%s`](https://r-multiverse.org/status/staging/%s)",
+      package,
+      package
     )
-    package_list <- paste(package_list, collapse = "\n")
+    lines_packages <- paste0(
+      "|",
+      paste(url, status$version, status$date, sep = "|"),
+      "|"
+    )
+    lines_packages <- paste(lines_packages, collapse = "\n")
   }
   template <- system.file(
-    file.path("status", "repository.html"),
+    file.path("status", "repository.md"),
     package = "multiverse.internals",
     mustWork = TRUE
   )
@@ -151,8 +158,8 @@ update_status_summary <- function(output, directory, packages) {
     replacement = tools::toTitleCase(directory),
     x = lines
   )
-  lines <- gsub(pattern = "PACKAGES", replacement = package_list, x = lines)
-  writeLines(lines, file.path(output, paste0(directory, ".html")))
+  lines <- gsub(pattern = "PACKAGES", replacement = lines_packages, x = lines)
+  writeLines(lines, file.path(output, paste0(directory, ".md")))
 }
 
 update_status_html <- function(package, title, status, path_directory) {
