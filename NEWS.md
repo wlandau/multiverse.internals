@@ -1,3 +1,7 @@
+# multiverse.internals 1.0.5
+
+* Revamp topics website.
+
 # multiverse.internals 1.0.4
 
 * Move status markdown template files outside `multiverse.internals`.

@@ -21,4 +21,11 @@ local file path to the topics repository source code.}
 Update the list of packages for each
 R-multiverse topic.
 }
+\examples{
+\dontrun{
+path <- tempfile()
+gert::git_clone("https://github.com/r-multiverse/topics", path = path)
+update_topics(path = path, repo = "https://community.r-multiverse.org")
+}
+}
 \concept{topics}
