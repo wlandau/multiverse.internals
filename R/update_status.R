@@ -178,7 +178,7 @@ status_rows <- function(status) {
     FUN.VALUE = character(1L)
   )
   url <- sprintf(
-    "[`%s`](https://r-multiverse.org/status/staging/%s)",
+    "[%s](https://r-multiverse.org/status/staging/%s)",
     package,
     package
   )
