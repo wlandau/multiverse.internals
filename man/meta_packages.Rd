@@ -6,7 +6,7 @@
 \usage{
 meta_packages(
   repo = "https://community.r-multiverse.org",
-  fields = c("Version", "License", "Remotes", "RemoteSha")
+  fields = c("Version", "License", "Remotes", "RemoteSha", "_published")
 )
 }
 \arguments{

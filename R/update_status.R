@@ -172,9 +172,9 @@ status_rows <- function(status) {
     \(x) as.character(x$version),
     FUN.VALUE = character(1L)
   )
-  date <- vapply(
+  published <- vapply(
     status,
-    \(x) as.character(x$date),
+    \(x) as.character(x$published),
     FUN.VALUE = character(1L)
   )
   url <- sprintf(
@@ -184,7 +184,7 @@ status_rows <- function(status) {
   )
   out <- paste0(
     "|",
-    paste(url, version, date, sep = "|"),
+    paste(url, version, published, sep = "|"),
     "|"
   )
   paste(out, collapse = "\n")

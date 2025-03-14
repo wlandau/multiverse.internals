@@ -53,7 +53,6 @@ record_status <- function(
   mock = NULL,
   verbose = FALSE
 ) {
-  today <- mock$today %||% format(Sys.Date(), fmt = "yyyy-mm-dd")
   checks <- mock$checks %||% meta_checks(repo = repo)
   packages <- mock$packages %||% meta_packages(repo = repo)
   status <- list() |>
@@ -75,7 +74,6 @@ record_status <- function(
   overwrite_status(
     status = status,
     output = output,
-    today = today,
     packages = packages
   )
   invisible()
@@ -88,21 +86,17 @@ add_status <- function(total, subset, category) {
   total
 }
 
-overwrite_status <- function(status, output, today, packages) {
-  previous <- list()
-  if (file.exists(output)) {
-    previous <- jsonlite::read_json(output, simplifyVector = TRUE)
+overwrite_status <- function(status, output, packages) {
+  for (index in seq_len(nrow(packages))) {
+    package <- packages$package[index]
+    status[[package]]$published <- packages$published[index]
+    status[[package]]$version <- packages$version[index]
+    status[[package]]$remote_hash <- packages$remotesha[index]
   }
-  for (package in names(status)) {
-    status[[package]]$date <- previous[[package]]$date %||% today
-    index <- packages$package == package
-    if (any(index)) {
-      status[[package]]$version <- packages$version[index]
-      status[[package]]$remote_hash <- packages$remotesha[index]
-    } else {
-      status[[package]]$version <- "NA"
-      status[[package]]$remote_hash <- "NA"
-    }
+  for (package in setdiff(names(status), packages$package)) {
+    status[[package]]$published <- "NA"
+    status[[package]]$version <- "NA"
+    status[[package]]$remote_hash <- "NA"
   }
   jsonlite::write_json(x = status, path = output, pretty = TRUE)
 }

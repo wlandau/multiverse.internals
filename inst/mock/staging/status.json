@@ -9,7 +9,7 @@
       "_buildurl": ["https://github.com/r-universe/r-multiverse/actions/runs/12345"]
     },
     "success": [false],
-    "date": ["1980-01-01"],
+    "published": ["1980-01-01"],
     "version": ["2.0.3"],
     "remote_hash": ["sha-issue"]
   },
@@ -23,19 +23,19 @@
       "_buildurl": ["https://github.com/r-universe/r-multiverse/actions/runs/12345"]
     },
     "success": [false],
-    "date": ["1980-01-01"],
+    "published": ["1980-01-01"],
     "version": ["2.0.4"],
     "remote_hash": ["sha-removed-has-issue"]
   },
   "staged": {
     "success": [true],
-    "date": ["1980-01-01"],
+    "published": ["1980-01-01"],
     "version": ["2.0.5"],
     "remote_hash": ["sha-staged"]
   },
   "removed-no-issue": {
     "success": [true],
-    "date": ["1980-01-01"],
+    "published": ["1980-01-01"],
     "version": ["2.0.6"],
     "remote_hash": ["sha-removed-no-issue"]
   }

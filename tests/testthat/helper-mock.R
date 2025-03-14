@@ -165,7 +165,8 @@ mock_meta_checks <- structure(
 # dput(meta_packages(repo = "https://community.r-multiverse.org")) # nolint
 mock_meta_packages <- structure(
   list(
-    "_id" = c(
+    "published" = paste0("published_", seq_len(20L)),
+    "id" = c(
       "6662a46b4e86770016655c87", "6662991c4e867700166503e4",
       "66629ac44e86770016650d77", "66622a203f30cb0016a5dc6d",
       "6662a8364e86770016656250",
@@ -241,12 +242,12 @@ mock_meta_packages <- structure(
       "3f18e78dffa3e45863e95aeb683aa08b", "7e8e297f00058b895d75201f31e65812",
       "31c8eed8564835a1d83b8115c71dfdf4"
     ),
-    "_type" = c(
+    "type" = c(
       "src", "src",
       "src", "src", "src", "src", "src", "src", "src", "src", "src",
       "src", "src", "src", "src", "src", "src", "src", "src", "src"
     ),
-    "_dependencies" = list(
+    "dependencies" = list(
       structure(
         list(
           package = c(
@@ -653,6 +654,7 @@ mock_meta_packages <- structure(
 # dput(meta_packages(repo = "https://wlandau.r-universe.dev")) # nolint
 mock_meta_packages_graph <- structure(
   list(
+    published = paste0("published_", seq_len(5L)),
     "_id" = c(
       "666319a14e86770016661a28", "66580c6dd014ca0014e5afc2",
       "665179088d83a20014a4037a", "6666d6575e691000165322b1",
@@ -684,8 +686,8 @@ mock_meta_packages_graph <- structure(
       "3c92053c75031ec0b976b0a15185e3a0",
       "1507b3a27da7dff5d9acbf8ef181ad78"
     ),
-    "_type" = c("src", "src", "src", "src", "src"),
-    "_dependencies" = list(
+    "type" = c("src", "src", "src", "src", "src"),
+    "dependencies" = list(
       structure(
         list(
           package = c(
