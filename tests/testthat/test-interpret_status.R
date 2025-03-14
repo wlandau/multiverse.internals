@@ -13,14 +13,14 @@ test_that("interpret_status() with a successful package", {
         abc = list(
           success = TRUE,
           version = "v",
-          date = "d",
+          published = "d",
           remote_hash = "h"
         )
       )
     ),
     paste(
       "R-multiverse checks passed for package abc version v remote",
-      "hash h (last updated on d)."
+      "hash h (last published at d)."
     )
   )
 })

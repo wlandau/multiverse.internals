@@ -38,6 +38,7 @@ meta_packages <- function(
   colnames(out) <- tolower(colnames(out))
   colnames(out) <- gsub("^_", "", colnames(out))
   rownames(out) <- out$package
+  out$published <- format_time_stamp(out$published)
   foss <- utils::available.packages(repos = repo, filters = "license/FOSS")
   out$foss <- FALSE
   out[as.character(foss[, "Package"]), "foss"] <- TRUE
@@ -48,4 +49,9 @@ meta_packages <- function(
   )
   out <- merge(x = out, y = cran, all.x = TRUE, all.y = FALSE)
   out
+}
+
+format_time_stamp <- function(time) {
+  time <- as.POSIXct(time, format = "%Y-%m-%dT%H:%M:%OSZ", tz = "UTC")
+  format(time, format = "%Y-%m-%d %H:%M:%OS3 %Z")
 }
