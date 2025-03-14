@@ -11,7 +11,7 @@ test_that("meta_checks_process_json() with a source failure", {
     list(
       Package = c("mirai", "crew"),
       "_user" = c("r-multiverse-staging", "r-multiverse-staging"),
-      "_type" = c("src", "src"),
+      "_type" = c("src", "failure"),
       "_commit" = structure(
         list(
           id = c(
@@ -27,6 +27,9 @@ test_that("meta_checks_process_json() with a source failure", {
         "https://github.com/r-universe/r-multiverse-staging/buildurl",
         "https://github.com/r-universe/r-multiverse-staging/buildurl"
       ),
+      "_published" = c("date1", "date2"),
+      "RemoteSha" = c("sha1", "sha2"),
+      "Version" = c("version1", "version2"),
       "_indexed" = c(FALSE, FALSE),
       "_binaries" = list(
         structure(
@@ -129,7 +132,8 @@ test_that("meta_checks_process_json() with a source failure", {
           buildurl = c(
             NA,
             "https://github.com/r-universe/r-multiverse-staging/failure"
-          )
+          ),
+          version = c(NA, "version_failed")
         ),
         row.names = c(6L, 13L),
         class = "data.frame"

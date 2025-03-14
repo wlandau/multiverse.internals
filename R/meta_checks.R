@@ -11,8 +11,9 @@
 #' meta_checks(repo = "https://wlandau.r-universe.dev")
 meta_checks <- function(repo = "https://community.r-multiverse.org") {
   base <- file.path(trim_url(repo), "api", "packages?stream=true&fields=")
+  fields <- "_buildurl,_binaries,_failure,_published,Version,RemoteSha"
   json <- jsonlite::stream_in(
-    con = gzcon(url(paste0(base, "_buildurl,_binaries,_failure"))),
+    con = gzcon(url(paste0(base, fields))),
     verbose = FALSE,
     simplifyVector = TRUE,
     simplifyDataFrame = TRUE,
@@ -22,20 +23,26 @@ meta_checks <- function(repo = "https://community.r-multiverse.org") {
 }
 
 meta_checks_process_json <- function(json) {
-  json$url <- json[["_failure"]]$buildurl %||% rep(NA_character_, nrow(json))
-  success_source <- is.na(json$url)
-  json$url[success_source] <- json[["_buildurl"]][success_source]
+  is_failure <- json$`_type` == "failure"
+  json$url <- json[["_buildurl"]]
+  failure <- json[["_failure"]]
+  if (!is.null(failure)) {
+    json$url[is_failure] <- failure$buildurl[is_failure]
+    json$Version[is_failure] <- failure$version[is_failure]
+    json$RemoteSha[is_failure] <- failure$commit$id[is_failure]
+  }
   json$issues <- lapply(
     json[["_binaries"]],
     meta_checks_issues_binaries,
     snapshot = meta_snapshot()
   )
-  for (index in which(!success_source)) {
+  for (index in which(is_failure)) {
     json$issues[[index]]$source <- "FAILURE"
   }
   colnames(json) <- tolower(colnames(json))
+  colnames(json) <- gsub("^_", "", colnames(json))
   rownames(json) <- json$package
-  json[, c("package", "url", "issues")]
+  json[, c("package", "url", "issues", "published", "version", "remotesha")]
 }
 
 meta_checks_issues_binaries <- function(binaries, snapshot) {
