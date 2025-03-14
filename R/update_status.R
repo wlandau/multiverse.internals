@@ -61,7 +61,7 @@ update_status_production <- function(output, input) {
   status <- jsonlite::read_json(path_status, simplifyVector = TRUE)
   snapshot <- jsonlite::read_json(path_snapshot, simplifyVector = TRUE)
   staged <- staged_packages(input)
-  rows <- status_rows(status[staged])
+  rows <- status_rows(status[staged], "staging")
   file_template <- file.path(output, "staged.md")
   lines_page <- gsub(
     pattern = "SNAPSHOT",
@@ -109,7 +109,7 @@ update_status_directory <- function(output, input, directory) {
 }
 
 update_status_summary <- function(output, directory, status) {
-  rows <- status_rows(status)
+  rows <- status_rows(status, directory)
   template <- file.path(output, "repository.md")
   lines <- readLines(template)
   lines <- gsub(
@@ -162,7 +162,7 @@ update_status_xml <- function(
   writeLines(text, path)
 }
 
-status_rows <- function(status) {
+status_rows <- function(status, directory) {
   if (!length(status)) {
     return("")
   }
@@ -178,8 +178,9 @@ status_rows <- function(status) {
     FUN.VALUE = character(1L)
   )
   url <- sprintf(
-    "[%s](https://r-multiverse.org/status/staging/%s)",
+    "[%s](https://r-multiverse.org/status/%s/%s.html)",
     package,
+    directory,
     package
   )
   out <- paste0(
