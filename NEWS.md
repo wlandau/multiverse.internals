@@ -1,3 +1,7 @@
+# multiverse.internals 1.0.6
+
+* Report the date last published on R-universe.
+
 # multiverse.internals 1.0.5
 
 * Revamp topics website.
