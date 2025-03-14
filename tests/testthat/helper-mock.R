@@ -165,6 +165,7 @@ mock_meta_checks <- structure(
 # dput(meta_packages(repo = "https://community.r-multiverse.org")) # nolint
 mock_meta_packages <- structure(
   list(
+    "published" = paste0("published_", seq_len(20L)),
     "_id" = c(
       "6662a46b4e86770016655c87", "6662991c4e867700166503e4",
       "66629ac44e86770016650d77", "66622a203f30cb0016a5dc6d",
@@ -653,6 +654,7 @@ mock_meta_packages <- structure(
 # dput(meta_packages(repo = "https://wlandau.r-universe.dev")) # nolint
 mock_meta_packages_graph <- structure(
   list(
+    published = paste0("published_", seq_len(5L)),
     "_id" = c(
       "666319a14e86770016661a28", "66580c6dd014ca0014e5afc2",
       "665179088d83a20014a4037a", "6666d6575e691000165322b1",

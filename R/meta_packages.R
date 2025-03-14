@@ -21,7 +21,7 @@
 #' meta_packages(repo = "https://wlandau.r-universe.dev")
 meta_packages <- function(
   repo = "https://community.r-multiverse.org",
-  fields = c("Version", "License", "Remotes", "RemoteSha")
+  fields = c("Version", "License", "Remotes", "RemoteSha", "_published")
 ) {
   repo <- trim_url(repo)
   listing <- file.path(
@@ -36,6 +36,7 @@ meta_packages <- function(
     simplifyMatrix = TRUE
   )
   colnames(out) <- tolower(colnames(out))
+  colnames(out) <- gsub("^_", "", colnames(out))
   rownames(out) <- out$package
   foss <- utils::available.packages(repos = repo, filters = "license/FOSS")
   out$foss <- FALSE
