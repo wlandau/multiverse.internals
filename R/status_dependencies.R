@@ -70,7 +70,7 @@ status_dependencies <- function(
 
 status_dependencies_graph <- function(meta) {
   repo_packages <- meta$package
-  repo_dependencies <- meta[["_dependencies"]]
+  repo_dependencies <- meta$dependencies
   from <- list()
   to <- list()
   for (index in seq_len(nrow(meta))) {

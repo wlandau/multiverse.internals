@@ -115,8 +115,8 @@ test_that("status_dependencies() with more than one direct dependency", {
   row <- meta[meta$package == "crew", ]
   row$package <- "x"
   meta <- rbind(meta, row)
-  meta[["_dependencies"]][meta$package == "crew.aws.batch"][[1L]] <- rbind(
-    meta[["_dependencies"]][meta$package == "crew.aws.batch"][[1L]],
+  meta[["dependencies"]][meta$package == "crew.aws.batch"][[1L]] <- rbind(
+    meta[["dependencies"]][meta$package == "crew.aws.batch"][[1L]],
     data.frame(package = "x", version = NA_character_, role = "Imports")
   )
   expect_equal(
@@ -135,8 +135,8 @@ test_that("status_dependencies() with more than one direct dependency (2)", {
   row <- meta[meta$package == "crew", ]
   row$package <- "x"
   meta <- rbind(meta, row)
-  meta[["_dependencies"]][meta$package == "crew.aws.batch"][[1L]] <- rbind(
-    meta[["_dependencies"]][meta$package == "crew.aws.batch"][[1L]],
+  meta[["dependencies"]][meta$package == "crew.aws.batch"][[1L]] <- rbind(
+    meta[["dependencies"]][meta$package == "crew.aws.batch"][[1L]],
     data.frame(package = "x", version = NA_character_, role = "Imports")
   )
   expect_equal(
