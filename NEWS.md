@@ -1,3 +1,7 @@
+# multiverse.internals 1.0.7
+
+* Fix status links.
+
 # multiverse.internals 1.0.6
 
 * Report the date last published on R-universe.
