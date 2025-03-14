@@ -9,19 +9,19 @@
       "_buildurl": ["https://github.com/r-universe/r-multiverse/actions/runs/12345"]
     },
     "success": [false],
-    "date": ["1980-01-01"],
+    "published": ["1980-01-01"],
     "version": ["2.0.1"],
     "remote_hash": ["sha-issue"]
   },
   "add": {
     "success": [true],
-    "date": ["1980-01-01"],
+    "published": ["1980-01-01"],
     "version": ["2.0.2"],
     "remote_hash": ["sha-add"]
   },
   "staged": {
     "success": [true],
-    "date": ["1980-01-01"],
+    "published": ["1980-01-01"],
     "version": ["2.0.3"],
     "remote_hash": ["sha-staged"]
   }
