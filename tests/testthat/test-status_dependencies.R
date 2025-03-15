@@ -1,5 +1,8 @@
 test_that("dependency graph is correct", {
-  graph <- status_dependencies_graph(meta = mock_meta_packages_graph)
+  mock <- mock_meta_packages
+  packages <- c("nanonext", "mirai", "crew", "crew.cluster", "crew.aws.batch")
+  mock <- mock[mock$package %in% packages, ]
+  graph <- status_dependencies_graph(meta = mock)
   out <- igraph::as_data_frame(graph, what = "edges")
   out <- out[order(out$from), ]
   expect_equal(out$from[out$to == "crew.aws.batch"], "crew")
@@ -15,7 +18,7 @@ test_that("status_dependencies() no problems", {
   expect_equal(
     status_dependencies(
       packages = character(0L),
-      meta = mock_meta_packages_graph,
+      meta = mock_meta_packages,
       verbose = FALSE
     ),
     list()
@@ -26,7 +29,7 @@ test_that("status_dependencies() no revdeps", {
   expect_equal(
     status_dependencies(
       packages = "crew.aws.batch",
-      meta = mock_meta_packages_graph,
+      meta = mock_meta_packages,
       verbose = FALSE
     ),
     list()
@@ -34,11 +37,14 @@ test_that("status_dependencies() no revdeps", {
 })
 
 test_that("status_dependencies() nanonext", {
+  mock <- mock_meta_packages
+  packages <- c("nanonext", "mirai", "crew", "crew.cluster", "crew.aws.batch")
+  mock <- mock[mock$package %in% packages, ]
   expect_equal(
     suppressMessages(
       status_dependencies(
         packages = "nanonext",
-        meta = mock_meta_packages_graph
+        meta = mock
       )
     ),
     list(
@@ -51,10 +57,13 @@ test_that("status_dependencies() nanonext", {
 })
 
 test_that("status_dependencies() mirai", {
+  mock <- mock_meta_packages
+  packages <- c("nanonext", "mirai", "crew", "crew.cluster", "crew.aws.batch")
+  mock <- mock[mock$package %in% packages, ]
   expect_equal(
     status_dependencies(
       packages = "mirai",
-      meta = mock_meta_packages_graph,
+      meta = mock,
       verbose = FALSE
     ),
     list(
@@ -66,10 +75,13 @@ test_that("status_dependencies() mirai", {
 })
 
 test_that("status_dependencies() crew", {
+  mock <- mock_meta_packages
+  packages <- c("nanonext", "mirai", "crew", "crew.cluster", "crew.aws.batch")
+  mock <- mock[mock$package %in% packages, ]
   expect_equal(
     status_dependencies(
       packages = "crew",
-      meta = mock_meta_packages_graph,
+      meta = mock,
       verbose = FALSE
     ),
     list(
@@ -80,10 +92,13 @@ test_that("status_dependencies() crew", {
 })
 
 test_that("status_dependencies() nanonext and mirai", {
+  mock <- mock_meta_packages
+  packages <- c("nanonext", "mirai", "crew", "crew.cluster", "crew.aws.batch")
+  mock <- mock[mock$package %in% packages, ]
   expect_equal(
     status_dependencies(
       packages = c("nanonext", "mirai"),
-      meta = mock_meta_packages_graph,
+      meta = mock,
       verbose = FALSE
     ),
     list(
@@ -96,10 +111,13 @@ test_that("status_dependencies() nanonext and mirai", {
 })
 
 test_that("status_dependencies() nanonext and mirai", {
+  mock <- mock_meta_packages
+  packages <- c("nanonext", "mirai", "crew", "crew.cluster", "crew.aws.batch")
+  mock <- mock[mock$package %in% packages, ]
   expect_equal(
     status_dependencies(
       packages = c("crew", "mirai"),
-      meta = mock_meta_packages_graph,
+      meta = mock,
       verbose = FALSE
     ),
     list(
@@ -111,7 +129,9 @@ test_that("status_dependencies() nanonext and mirai", {
 })
 
 test_that("status_dependencies() with more than one direct dependency", {
-  meta <- mock_meta_packages_graph
+  meta <- mock_meta_packages
+  packages <- c("nanonext", "mirai", "crew", "crew.cluster", "crew.aws.batch")
+  meta <- meta[meta$package %in% packages, ]
   row <- meta[meta$package == "crew", ]
   row$package <- "x"
   meta <- rbind(meta, row)
@@ -131,7 +151,9 @@ test_that("status_dependencies() with more than one direct dependency", {
 })
 
 test_that("status_dependencies() with more than one direct dependency (2)", {
-  meta <- mock_meta_packages_graph
+  meta <- mock_meta_packages
+  packages <- c("nanonext", "mirai", "crew", "crew.cluster", "crew.aws.batch")
+  meta <- meta[meta$package %in% packages, ]
   row <- meta[meta$package == "crew", ]
   row$package <- "x"
   meta <- rbind(meta, row)
