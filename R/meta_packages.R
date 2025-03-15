@@ -18,24 +18,6 @@ meta_packages <- function(repo = "https://community.r-multiverse.org") {
   data
 }
 
-get_meta_api <- function(repo) {
-  base <- file.path(trim_url(repo), "api", "packages?stream=true&fields=")
-  fields <- paste0(
-    "_buildurl,_binaries,_failure,_published,",
-    "_dependencies,Version,License,RemoteSha"
-  )
-  data <- jsonlite::stream_in(
-    con = gzcon(url(paste0(base, fields))),
-    verbose = FALSE,
-    simplifyVector = TRUE,
-    simplifyDataFrame = TRUE,
-    simplifyMatrix = TRUE
-  )
-  data <- meta_api_postprocess(data)
-  data$published <- format_time_stamp(data$published)
-  data
-}
-
 get_meta_json <- function(repo) {
   fields <- "Remotes"
   listing <- file.path(
@@ -73,13 +55,28 @@ get_meta_cran <- function() {
   )
 }
 
-format_time_stamp <- function(time) {
-  time <- as.POSIXct(time, format = "%Y-%m-%dT%H:%M:%OSZ", tz = "UTC")
-  format(time, format = "%Y-%m-%d %H:%M:%OS3 %Z")
+get_meta_api <- function(repo) {
+  base <- file.path(trim_url(repo), "api", "packages?stream=true&fields=")
+  fields <- paste0(
+    "_buildurl,_binaries,_failure,_published,",
+    "_dependencies,Version,License,RemoteSha,Title,URL"
+  )
+  data <- jsonlite::stream_in(
+    con = gzcon(url(paste0(base, fields))),
+    verbose = FALSE,
+    simplifyVector = TRUE,
+    simplifyDataFrame = TRUE,
+    simplifyMatrix = TRUE
+  )
+  data <- meta_api_postprocess(data)
+  data$published <- format_time_stamp(data$published)
+  data
 }
 
 meta_api_postprocess <- function(data) {
   is_failure <- data$`_type` == "failure"
+  data$description_url <- data$URL
+  data$URL <- NULL
   data$url <- data[["_buildurl"]]
   failure <- data[["_failure"]]
   if (!is.null(failure)) {
@@ -97,8 +94,8 @@ meta_api_postprocess <- function(data) {
   }
   data <- clean_meta(data)
   fields <- c(
-    "package", "url", "issues", "published",
-    "dependencies", "version", "remotesha"
+    "package", "url", "issues", "published", "dependencies",
+    "version", "remotesha", "title", "description_url"
   )
   data[, fields]
 }
@@ -144,6 +141,11 @@ target_check <- function(
   }
   names(check) <- paste(os, r, sep = " ")
   check
+}
+
+format_time_stamp <- function(time) {
+  time <- as.POSIXct(time, format = "%Y-%m-%dT%H:%M:%OSZ", tz = "UTC")
+  format(time, format = "%Y-%m-%d %H:%M:%OS3 %Z")
 }
 
 clean_meta <- function(data) {
