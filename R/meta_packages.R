@@ -20,7 +20,10 @@ meta_packages <- function(repo = "https://community.r-multiverse.org") {
 
 get_meta_api <- function(repo) {
   base <- file.path(trim_url(repo), "api", "packages?stream=true&fields=")
-  fields <- "_buildurl,_binaries,_failure,_published,Version,License,RemoteSha"
+  fields <- paste0(
+    "_buildurl,_binaries,_failure,_published,",
+    "_dependencies,Version,License,RemoteSha"
+  )
   data <- jsonlite::stream_in(
     con = gzcon(url(paste0(base, fields))),
     verbose = FALSE,
@@ -28,7 +31,7 @@ get_meta_api <- function(repo) {
     simplifyDataFrame = TRUE,
     simplifyMatrix = TRUE
   )
-  data <- meta_checks_process_json(data)
+  data <- meta_api_postprocess(data)
   data$published <- format_time_stamp(data$published)
   data
 }
@@ -75,7 +78,7 @@ format_time_stamp <- function(time) {
   format(time, format = "%Y-%m-%d %H:%M:%OS3 %Z")
 }
 
-meta_checks_process_json <- function(data) {
+meta_api_postprocess <- function(data) {
   is_failure <- data$`_type` == "failure"
   data$url <- data[["_buildurl"]]
   failure <- data[["_failure"]]
@@ -86,17 +89,21 @@ meta_checks_process_json <- function(data) {
   }
   data$issues <- lapply(
     data[["_binaries"]],
-    meta_checks_issues_binaries,
+    meta_api_issues_binaries,
     snapshot = meta_snapshot()
   )
   for (index in which(is_failure)) {
     data$issues[[index]]$source <- "FAILURE"
   }
   data <- clean_meta(data)
-  data[, c("package", "url", "issues", "published", "version", "remotesha")]
+  fields <- c(
+    "package", "url", "issues", "published",
+    "dependencies", "version", "remotesha"
+  )
+  data[, fields]
 }
 
-meta_checks_issues_binaries <- function(binaries, snapshot) {
+meta_api_issues_binaries <- function(binaries, snapshot) {
   check <- .subset2(binaries, "check")
   os <- .subset2(binaries, "os")
   arch <- .subset2(binaries, "arch")

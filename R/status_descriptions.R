@@ -16,7 +16,7 @@
 #'   and each element contains specific information about
 #'   non-compliance.
 #' @param meta A data frame with R-universe package check results
-#'   returned by [meta_checks()].
+#'   returned by [meta_packages()].
 #' @examples
 #'   meta <- meta_packages(repo = "https://wlandau.r-universe.dev")
 #'   status <- status_descriptions(meta = meta)

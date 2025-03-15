@@ -13,8 +13,7 @@ record_status(
 )
 }
 \arguments{
-\item{repo}{Character of length 1, URL of the package repository.
-R-multiverse uses \code{"https://community.r-multiverse.org"}.}
+\item{repo}{URL of the repository to query.}
 
 \item{versions}{Character of length 1, file path to a JSON manifest
 tracking the history of released versions of packages.}

@@ -8,7 +8,7 @@ status_descriptions(meta = meta_packages())
 }
 \arguments{
 \item{meta}{A data frame with R-universe package check results
-returned by \code{\link[=meta_checks]{meta_checks()}}.}
+returned by \code{\link[=meta_packages]{meta_packages()}}.}
 }
 \value{
 A named list of information about packages which do not comply

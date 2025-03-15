@@ -4,43 +4,23 @@
 \alias{meta_packages}
 \title{List package metadata}
 \usage{
-meta_packages(
-  repo = "https://community.r-multiverse.org",
-  fields = c("Version", "License", "Remotes", "RemoteSha", "_published")
-)
+meta_packages(repo = "https://community.r-multiverse.org")
 }
 \arguments{
-\item{repo}{Character of length 1, URL of the package repository.
-R-multiverse uses \code{"https://community.r-multiverse.org"}.}
-
-\item{fields}{Character string of fields to query.}
+\item{repo}{URL of the repository to query.}
 }
 \value{
 A data frame with one row per package and columns with package
-metadata. The most important columns are:
-\itemize{
-\item \code{package}: character vector of package names.
-\item \code{version}: character vector of package versions in the repo.
-\item \code{license}: character vector of license names.
-\item \code{remotesha}: character vector of GitHub/GitLab commit hashes.
-\item \code{remotes}: list of character vectors with dependencies in the
-\verb{Remotes:} field of the \code{DESCRIPTION} files.
-\item \code{foss}: \code{TRUE} if the package has a valid free open-source license,
-\code{FALSE} otherwise.
-\item \code{cran}: character vector of versions. Each version is the version of
-the package that was on CRAN during the first day of the most recent
-R-multiverse staging period.
-}
+metadata.
 }
 \description{
 List package metadata in an R universe.
 }
 \examples{
-meta_packages(repo = "https://wlandau.r-universe.dev")
+  meta_packages(repo = "https://wlandau.r-universe.dev")
 }
 \seealso{
 Other meta: 
-\code{\link{meta_checks}()},
 \code{\link{meta_snapshot}()}
 }
 \concept{meta}

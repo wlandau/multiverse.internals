@@ -22,7 +22,6 @@ snapshot.
 }
 \seealso{
 Other meta: 
-\code{\link{meta_checks}()},
 \code{\link{meta_packages}()}
 }
 \concept{meta}

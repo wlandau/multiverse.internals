@@ -10,32 +10,42 @@ status_dependencies(packages, meta = meta_packages(), verbose = FALSE)
 \item{packages}{Character vector of names of packages with other issues.}
 
 \item{meta}{A data frame with R-universe package check results
-returned by \code{\link[=meta_checks]{meta_checks()}}.}
+returned by \code{\link[=meta_packages]{meta_packages()}}.}
 
 \item{verbose}{\code{TRUE} to print progress while checking
 dependency status, \code{FALSE} otherwise.}
 }
 \value{
 A nested list of problems triggered by dependencies.
-The names of top-level elements are packages affected downstream.
-The value of each top-level element is a list whose names are
-Each element of this inner list is a character
-vector of relevant dependencies of the downstream package.
 
-For example, consider a linear dependency graph where \code{crew.cluster}
-depends on \code{crew}, \code{crew} depends on \code{mirai}, and
-\code{mirai} depends on \code{nanonext}. We represent the graph like this:
-\code{nanonext -> mirai -> crew -> crew.cluster}.
-If \code{nanonext} has an issue, then \code{\link[=status_dependencies]{status_dependencies()}} returns
-\code{list(crew.cluster = list(nanonext = "crew"), ...)}, where \code{...}
-stands for additional named list entries. From this list, we deduce
-that \code{nanonext} is causing an issue affecting \code{crew.cluster} through
-the direct dependency on \code{crew}.
+To illustrate the structure of this list, suppose
+Package \code{tarchetypes} depends on package \code{targets}, and packages
+\code{jagstargets} and \code{stantargets} depend on \code{tarchetypes}.
+In addition, package \code{targets} has a problem in \verb{R CMD check}
+which might cause problems in \code{tarchetypes} and packages downstream.
 
-The choice in output format from \code{\link[=status_dependencies]{status_dependencies()}} allows package
-maintainers to more easily figure out which direct dependencies
-are contributing have issues and drop those direct dependencies
-if necessary.
+\code{status_dependencies()} represents this information in the
+following list:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{list(
+  jagstargets = list(targets = "tarchetypes"),
+  tarchetypes = list(targets = character(0)), 
+  stantargets = list(targets = "tarchetypes")
+)
+}\if{html}{\out{</div>}}
+
+In general, the returned list is of the form:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{list(
+  impacted_reverse_dependency = list(
+    upstream_culprit = c("direct_dependency_1", "direct_dependency_2")
+  )
+)
+}\if{html}{\out{</div>}}
+
+where \code{upstream_culprit} causes problems in \code{impacted_reverse_dependency}
+through direct dependencies \code{direct_dependency_1} and
+\code{direct_dependency_2}.
 }
 \description{
 Flag packages which have issues in their strong dependencies

@@ -53,10 +53,9 @@ record_status <- function(
   mock = NULL,
   verbose = FALSE
 ) {
-  checks <- mock$checks %||% meta_checks(repo = repo)
   packages <- mock$packages %||% meta_packages(repo = repo)
   status <- list() |>
-    add_status(status_checks(meta = checks), "checks") |>
+    add_status(status_checks(meta = packages), "checks") |>
     add_status(status_descriptions(meta = packages), "descriptions") |>
     add_status(status_versions(versions = versions), "versions")
   status <- status |>
@@ -92,11 +91,6 @@ overwrite_status <- function(status, output, packages) {
     status[[package]]$published <- packages$published[index]
     status[[package]]$version <- packages$version[index]
     status[[package]]$remote_hash <- packages$remotesha[index]
-  }
-  for (package in setdiff(names(status), packages$package)) {
-    status[[package]]$published <- "NA"
-    status[[package]]$version <- "NA"
-    status[[package]]$remote_hash <- "NA"
   }
   jsonlite::write_json(x = status, path = output, pretty = TRUE)
 }

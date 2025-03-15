@@ -7,29 +7,40 @@
 #'   the explicit mentions in the `DESCRIPTION` file.
 #' @inheritSection record_status Package status
 #' @return A nested list of problems triggered by dependencies.
-#'   The names of top-level elements are packages affected downstream.
-#'   The value of each top-level element is a list whose names are
-#    packages at the source of a problem upstream.
-#'   Each element of this inner list is a character
-#'   vector of relevant dependencies of the downstream package.
 #'
-#'   For example, consider a linear dependency graph where `crew.cluster`
-#'   depends on `crew`, `crew` depends on `mirai`, and
-#'   `mirai` depends on `nanonext`. We represent the graph like this:
-#'      `nanonext -> mirai -> crew -> crew.cluster`.
-#'   If `nanonext` has an issue, then [status_dependencies()] returns
-#'   `list(crew.cluster = list(nanonext = "crew"), ...)`, where `...`
-#'   stands for additional named list entries. From this list, we deduce
-#'   that `nanonext` is causing an issue affecting `crew.cluster` through
-#'   the direct dependency on `crew`.
+#'   To illustrate the structure of this list, suppose
+#'   Package `tarchetypes` depends on package `targets`, and packages
+#'   `jagstargets` and `stantargets` depend on `tarchetypes`.
+#'   In addition, package `targets` has a problem in `R CMD check`
+#'   which might cause problems in `tarchetypes` and packages downstream.
 #'
-#'   The choice in output format from [status_dependencies()] allows package
-#'   maintainers to more easily figure out which direct dependencies
-#'   are contributing have issues and drop those direct dependencies
-#'   if necessary.
+#'   `status_dependencies()` represents this information in the
+#'   following list:
+#'
+#'   ```
+#'   list(
+#'     jagstargets = list(targets = "tarchetypes"),
+#'     tarchetypes = list(targets = character(0)), 
+#'     stantargets = list(targets = "tarchetypes")
+#'   )
+#'   ```
+#'
+#'   In general, the returned list is of the form:
+#'
+#'   ```
+#'   list(
+#'     impacted_reverse_dependency = list(
+#'       upstream_culprit = c("direct_dependency_1", "direct_dependency_2")
+#'     )
+#'   )
+#'   ```
+#'
+#'   where `upstream_culprit` causes problems in `impacted_reverse_dependency`
+#'   through direct dependencies `direct_dependency_1` and
+#'   `direct_dependency_2`.
 #' @param packages Character vector of names of packages with other issues.
 #' @param meta A data frame with R-universe package check results
-#'   returned by [meta_checks()].
+#'   returned by [meta_packages()].
 #' @param verbose `TRUE` to print progress while checking
 #'   dependency status, `FALSE` otherwise.
 #' @examples

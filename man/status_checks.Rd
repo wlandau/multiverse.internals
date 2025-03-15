@@ -4,11 +4,11 @@
 \alias{status_checks}
 \title{Report status from R-universe package check results.}
 \usage{
-status_checks(meta = meta_checks())
+status_checks(meta = meta_packages())
 }
 \arguments{
 \item{meta}{A data frame with R-universe package check results
-returned by \code{\link[=meta_checks]{meta_checks()}}.}
+returned by \code{\link[=meta_packages]{meta_packages()}}.}
 }
 \value{
 A named list of information about packages which do not comply
@@ -38,7 +38,7 @@ together all the status about R-multiverse packages.
 }
 
 \examples{
-  meta <- meta_checks(repo = "https://wlandau.r-universe.dev")
+  meta <- meta_packages(repo = "https://wlandau.r-universe.dev")
   status <- status_checks(meta = meta)
   str(status)
 }

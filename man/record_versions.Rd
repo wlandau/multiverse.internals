@@ -14,8 +14,7 @@ record_versions(
 \item{versions}{Character of length 1, file path to a JSON manifest
 tracking the history of released versions of packages.}
 
-\item{repo}{Character of length 1, URL of the package repository.
-R-multiverse uses \code{"https://community.r-multiverse.org"}.}
+\item{repo}{URL of the repository to query.}
 
 \item{current}{A data frame of current versions and hashes of packages
 in \code{repo}. This argument is exposed for testing only.}

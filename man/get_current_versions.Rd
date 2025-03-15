@@ -7,8 +7,7 @@
 get_current_versions(repo = "https://community.r-multiverse.org")
 }
 \arguments{
-\item{repo}{Character of length 1, URL of the package repository.
-R-multiverse uses \code{"https://community.r-multiverse.org"}.}
+\item{repo}{URL of the repository to query.}
 }
 \value{
 A data frame of packages with their current versions and hashes.
