@@ -75,27 +75,27 @@ get_meta_api <- function(repo) {
 
 meta_api_postprocess <- function(data) {
   is_failure <- data$`_type` == "failure"
-  data$description_url <- data$URL
+  data$url_description <- data$URL
   data$URL <- NULL
-  data$url <- data[["_buildurl"]]
+  data$url_checks <- data[["_buildurl"]]
   failure <- data[["_failure"]]
   if (!is.null(failure)) {
-    data$url[is_failure] <- failure$buildurl[is_failure]
+    data$url_checks[is_failure] <- failure$buildurl[is_failure]
     data$Version[is_failure] <- failure$version[is_failure]
     data$RemoteSha[is_failure] <- failure$commit$id[is_failure]
   }
-  data$issues <- lapply(
+  data$issues_checks <- lapply(
     data[["_binaries"]],
     meta_api_issues_binaries,
     snapshot = meta_snapshot()
   )
   for (index in which(is_failure)) {
-    data$issues[[index]]$source <- "FAILURE"
+    data$issues_checks[[index]]$source <- "FAILURE"
   }
   data <- clean_meta(data)
   fields <- c(
-    "package", "url", "issues", "published", "dependencies",
-    "version", "remotesha", "title", "description_url"
+    "package", "url_checks", "issues_checks", "published", "dependencies",
+    "version", "remotesha", "title", "url_description"
   )
   data[, fields]
 }

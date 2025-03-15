@@ -20,7 +20,7 @@ update_topics <- function(
   mock = NULL
 ) {
   meta <- mock$meta %||% meta_packages(repo)
-  meta <- meta[, c("package", "title", "description_url")]
+  meta <- meta[, c("package", "title", "url_description")]
   unlink(file.path(path, "*.html"))
   topics <- list.files(file.path(path, "topics"))
   for (topic in topics) {
@@ -38,7 +38,7 @@ update_topics <- function(
 
 update_topic <- function(topic, path, meta) {
   url <- file.path("https://r-multiverse.org/topics", paste0(topic, ".html"))
-  which <- grepl(pattern = url, x = meta$description_url, fixed = TRUE)
+  which <- grepl(pattern = url, x = meta$url_description, fixed = TRUE)
   meta <- meta[which,, drop = FALSE] # nolint
   about <- readLines(file.path(path, "topics", topic))
   urls <- file.path("https://community.r-multiverse.org", meta$package)

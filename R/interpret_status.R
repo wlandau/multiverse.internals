@@ -84,7 +84,11 @@ interpret_checks <- function(status) {
   if (is.null(checks)) {
     return(character(0L))
   }
-  checks$url <- sprintf("<a href=\"%s\">%s</a>", checks$url, checks$url)
+  checks$url_checks <- sprintf(
+    "<a href=\"%s\">%s</a>",
+    checks$url_checks,
+    checks$url_checks
+  )
   paste0(
     "Not all checks succeeded on R-universe. ",
     "The following output shows the check status on each enforced platform ",
