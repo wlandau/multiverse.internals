@@ -54,10 +54,16 @@ record_status <- function(
   verbose = FALSE
 ) {
   meta <- mock$packages %||% meta_packages(repo = repo)
+  
+  browser()
+  
   status <- list() |>
-    add_status(status_checks(meta = meta), "checks") |>
-    add_status(status_descriptions(meta = meta), "descriptions") |>
-    add_status(status_versions(versions = versions), "versions")
+    add_status(status_advisories(meta), "advisories") |>
+    add_status(status_checks(meta), "checks") |>
+    add_status(status_licenses(meta), "descriptions") |>
+    add_status(status_remotes(meta), "descriptions") |>
+    add_status(status_versions(versions), "descriptions") |>
+    add_status(status_version_conflicts(meta, "cran"), "cran")
   status <- status |>
     add_status(
       status_dependencies(names(status), meta, verbose = verbose),

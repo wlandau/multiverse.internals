@@ -22,11 +22,11 @@
 #'   status <- status_descriptions(meta = meta)
 #'   str(status)
 status_descriptions <- function(meta = meta_packages()) {
-  meta$issue <- FALSE
-  meta <- status_descriptions_advisories(meta)
-  meta <- status_descriptions_licenses(meta)
-  meta <- status_descriptions_remotes(meta)
-  meta <- status_descriptions_version_conflict(meta, repo = "cran")
+  meta$issue <- F
+  meta <- status_advisories(meta)
+  meta <- status_licenses(meta)
+  meta <- status_remotes(meta)
+  meta <- status_version_conflict(meta, repo = "cran")
   meta <- meta[meta$issue,, drop = FALSE] # nolint
   fields <- c(
     "package",
@@ -38,33 +38,20 @@ status_descriptions <- function(meta = meta_packages()) {
   status_list(meta[, fields])
 }
 
-status_descriptions_advisories <- function(meta) {
-  advisories <- read_advisories(timeout = 600000, retries = 3L)
-  meta <- merge(
-    x = meta,
-    y = advisories,
-    by = c("package", "version"),
-    all.x = TRUE,
-    all.y = FALSE
-  )
-  meta$issue <- meta$issue | !vapply(meta$advisories, anyNA, logical(1L))
-  meta
+
+status_licenses <- function(meta) {
+  meta$license[is.na(meta$license)] <- "unknown"
+  status_list(meta[!meta$foss, c("package", "license")])
 }
 
-status_descriptions_licenses <- function(meta) {
-  meta$license[meta$foss] <- NA_character_
-  meta$issue <- meta$issue | !meta$foss
-  meta
-}
-
-status_descriptions_remotes <- function(meta) {
+status_remotes <- function(meta) {
   meta[["remotes"]] <- meta[["remotes"]] %||% replicate(nrow(meta), NULL)
   meta$remotes <- lapply(meta$remotes, function(x) x[nzchar(x)])
-  meta$issue <- meta$issue | vapply(meta$remotes, length, integer(1L)) > 0L
-  meta
+  which <- vapply(meta$remotes, length, integer(1L)) > 0L
+  status_list(meta[which, c("package", "remotes"), drop = FALSE])
 }
 
-status_descriptions_version_conflict <- function(meta, repo) {
+status_version_conflicts <- function(meta, repo) {
   # NA is always lower than any version number.
   conflict <- vapply(
     X = seq_len(nrow(meta)),
@@ -76,7 +63,5 @@ status_descriptions_version_conflict <- function(meta, repo) {
     },
     FUN.VALUE = logical(1L)
   )
-  meta[[repo]][!conflict] <- NA_character_
-  meta$issue <- meta$issue | conflict
-  meta
+  status_list(meta[conflict, c("package", repo)])
 }

@@ -15,13 +15,15 @@ reference:
   - meta_snapshot
 - title: Package status
   contents:
+  - status_advisories
+  - status_checks
+  - status_dependencies
+  - status_versions
+- title: Record status
+  contents:
   - record_status
   - record_nonstandard_licenses
   - record_versions
-  - status_checks
-  - status_dependencies
-  - status_descriptions
-  - status_versions
 - title: Staging
   contents:
   - filter_meta

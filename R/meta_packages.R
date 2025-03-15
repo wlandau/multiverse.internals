@@ -77,24 +77,25 @@ meta_api_postprocess <- function(data) {
   is_failure <- data$`_type` == "failure"
   data$url_description <- data$URL
   data$URL <- NULL
-  data$url_checks <- data[["_buildurl"]]
+  data$url_r_cmd_check <- data[["_buildurl"]]
   failure <- data[["_failure"]]
   if (!is.null(failure)) {
-    data$url_checks[is_failure] <- failure$buildurl[is_failure]
+    data$url_r_cmd_check[is_failure] <- failure$buildurl[is_failure]
     data$Version[is_failure] <- failure$version[is_failure]
     data$RemoteSha[is_failure] <- failure$commit$id[is_failure]
   }
-  data$issues_checks <- lapply(
+  data$issues_r_cmd_check <- lapply(
     data[["_binaries"]],
     meta_api_issues_binaries,
     snapshot = meta_snapshot()
   )
   for (index in which(is_failure)) {
-    data$issues_checks[[index]]$source <- "FAILURE"
+    data$issues_r_cmd_check[[index]]$source <- "FAILURE"
   }
   data <- clean_meta(data)
   fields <- c(
-    "package", "url_checks", "issues_checks", "published", "dependencies",
+    "package", "url_r_cmd_check", "issues_r_cmd_check", "published",
+    "dependencies",
     "license", "version", "remotesha", "title", "url_description"
   )
   data[, fields]
