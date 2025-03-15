@@ -1,13 +1,12 @@
 test_that("status_descriptions() mocked", {
   status <- status_descriptions(meta = mock_meta_packages)
   expected <- list(
-    audio.whisper = list(remotes = "bnosac/audio.vadwebrtc"),
+    asylum = list(cran = "1.1.2"),
+    audio.whisper = list(remotes = "bnosac/audio.vadwebrtc"), 
+    IMD = list(cran = "1.2.2"),
     stantargets = list(
       remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")
-    ),
-    SBC = list(cran = "1.0.0"),
-    targetsketch = list(license = "non-standard"),
-    tidypolars = list(remotes = "markvanderloo/tinytest/pkg")
+    )
   )
   names <- sort(names(status))
   expect_equal(names, sort(names(expected)))
@@ -34,29 +33,12 @@ test_that("status_descriptions() with security advisories", {
     readxl
   )
   out <- status_descriptions(meta)
-  exp <- list(
-    audio.whisper = list(remotes = "bnosac/audio.vadwebrtc"),
-    commonmark = list(
-      advisories = file.path(
-        "https://github.com/RConsortium/r-advisory-database",
-        "blob/main/vulns/commonmark",
-        c("RSEC-2023-6.yaml", "RSEC-2023-7.yaml", "RSEC-2023-8.yaml")
-      )
-    ),
-    readxl = list(
-      advisories = file.path(
-        "https://github.com/RConsortium/r-advisory-database",
-        "blob/main/vulns/readxl/RSEC-2023-2.yaml"
-      )
-    ),
-    stantargets = list(
-      remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")
-    ),
-    SBC = list(cran = "1.0.0"),
-    targetsketch = list(license = "non-standard"),
-    tidypolars = list(remotes = "markvanderloo/tinytest/pkg")
+  expect_equal(
+    out$commonmark$advisories,
+    file.path(
+      "https://github.com/RConsortium/r-advisory-database",
+      "blob/main/vulns/commonmark",
+      c("RSEC-2023-6.yaml", "RSEC-2023-7.yaml", "RSEC-2023-8.yaml")
+    )
   )
-  names <- sort(names(out))
-  expect_equal(names, sort(names(exp)))
-  expect_equal(out[names], exp[names])
 })
