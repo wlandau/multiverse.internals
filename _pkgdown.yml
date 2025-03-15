@@ -11,7 +11,6 @@ reference:
   - review_pull_requests
 - title: Package metadata
   contents:
-  - meta_checks
   - meta_packages
   - meta_snapshot
 - title: Package status

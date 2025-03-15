@@ -1,3 +1,7 @@
+# multiverse.internals 1.0.8
+
+* Subsume `meta_checks()` into `meta_packages()`.
+
 # multiverse.internals 1.0.7
 
 * Fix status links.
