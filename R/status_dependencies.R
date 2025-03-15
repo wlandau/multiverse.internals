@@ -20,7 +20,7 @@
 #'   ```
 #'   list(
 #'     jagstargets = list(targets = "tarchetypes"),
-#'     tarchetypes = list(targets = character(0)), 
+#'     tarchetypes = list(targets = character(0)),
 #'     stantargets = list(targets = "tarchetypes")
 #'   )
 #'   ```

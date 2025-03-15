@@ -29,7 +29,7 @@ following list:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{list(
   jagstargets = list(targets = "tarchetypes"),
-  tarchetypes = list(targets = character(0)), 
+  tarchetypes = list(targets = character(0)),
   stantargets = list(targets = "tarchetypes")
 )
 }\if{html}{\out{</div>}}

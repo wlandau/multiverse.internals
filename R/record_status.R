@@ -53,27 +53,27 @@ record_status <- function(
   mock = NULL,
   verbose = FALSE
 ) {
-  packages <- mock$packages %||% meta_packages(repo = repo)
+  meta <- mock$packages %||% meta_packages(repo = repo)
   status <- list() |>
-    add_status(status_checks(meta = packages), "checks") |>
-    add_status(status_descriptions(meta = packages), "descriptions") |>
+    add_status(status_checks(meta = meta), "checks") |>
+    add_status(status_descriptions(meta = meta), "descriptions") |>
     add_status(status_versions(versions = versions), "versions")
   status <- status |>
     add_status(
-      status_dependencies(names(status), packages, verbose = verbose),
+      status_dependencies(names(status), meta, verbose = verbose),
       "dependencies"
     )
   for (name in names(status)) {
     status[[name]]$success <- FALSE
   }
-  for (healthy in setdiff(packages$package, names(status))) {
+  for (healthy in setdiff(meta$package, names(status))) {
     status[[healthy]] <- list(success = TRUE)
   }
   status <- status[sort(names(status))]
   overwrite_status(
     status = status,
     output = output,
-    packages = packages
+    meta = meta
   )
   invisible()
 }
@@ -85,12 +85,12 @@ add_status <- function(total, subset, category) {
   total
 }
 
-overwrite_status <- function(status, output, packages) {
-  for (index in seq_len(nrow(packages))) {
-    package <- packages$package[index]
-    status[[package]]$published <- packages$published[index]
-    status[[package]]$version <- packages$version[index]
-    status[[package]]$remote_hash <- packages$remotesha[index]
+overwrite_status <- function(status, output, meta) {
+  for (index in seq_len(nrow(meta))) {
+    package <- meta$package[index]
+    status[[package]]$published <- meta$published[index]
+    status[[package]]$version <- meta$version[index]
+    status[[package]]$remote_hash <- meta$remotesha[index]
   }
   jsonlite::write_json(x = status, path = output, pretty = TRUE)
 }

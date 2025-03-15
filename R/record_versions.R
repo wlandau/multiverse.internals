@@ -60,7 +60,6 @@ get_current_versions <- function(
   meta <- meta_packages(repo = repo)
   meta <- meta[, c("package", "version", "remotesha")]
   colnames(meta) <- c("package", "version_current", "hash_current")
-  rownames(meta) <- NULL
   meta
 }
 

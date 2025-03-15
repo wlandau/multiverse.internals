@@ -151,6 +151,5 @@ format_time_stamp <- function(time) {
 clean_meta <- function(data) {
   colnames(data) <- tolower(colnames(data))
   colnames(data) <- gsub("^_", "", colnames(data))
-  rownames(data) <- data$package
   data
 }
