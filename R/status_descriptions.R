@@ -65,6 +65,7 @@ status_descriptions_remotes <- function(meta) {
 }
 
 status_descriptions_version_conflict <- function(meta, repo) {
+  # NA is always lower than any version number.
   conflict <- vapply(
     X = seq_len(nrow(meta)),
     FUN = function(index) {

@@ -97,8 +97,10 @@ test_that("interpret_status() checks etc.", {
   versions <- tempfile()
   writeLines(lines, versions)
   on.exit(unlink(c(output, versions), recursive = TRUE))
+  mock <- mock_meta_packages
+  mock$cran[mock$package == "SBC"] <- "999.999.999"
   record_status(
-    mock = list(packages = mock_meta_packages, checks = mock_meta_checks),
+    mock = list(packages = mock),
     output = output,
     versions = versions
   )
