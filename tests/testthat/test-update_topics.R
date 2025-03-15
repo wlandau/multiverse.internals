@@ -21,7 +21,7 @@ test_that("update_topics()", {
   meta <- data.frame(
     package = c("nope", "crew", "stantargets", "jagstargets"),
     title = c("x", "crew-title", "stantargets-title", "jagstargets-title"),
-    url = c(
+    url_description = c(
       "https://asdf",
       "https://r-multiverse.org/topics/hpc.html, https://crew",
       "https://url, https://r-multiverse.org/topics/bayesian.html",
