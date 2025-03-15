@@ -1,7 +1,41 @@
 test_that("record_status() mocked", {
+  lines <- c(
+    "[",
+    " {",
+    " \"package\": \"package_unmodified\",",
+    " \"version_current\": \"1.0.0\",",
+    " \"hash_current\": \"hash_1.0.0\",",
+    " \"version_highest\": \"1.0.0\",",
+    " \"hash_highest\": \"hash_1.0.0\"",
+    " },",
+    " {",
+    " \"package\": \"version_decremented\",",
+    " \"version_current\": \"0.0.1\",",
+    " \"hash_current\": \"hash_0.0.1\",",
+    " \"version_highest\": \"1.0.0\",",
+    " \"hash_highest\": \"hash_1.0.0\"",
+    " },",
+    " {",
+    " \"package\": \"version_incremented\",",
+    " \"version_current\": \"2.0.0\",",
+    " \"hash_current\": \"hash_2.0.0\",",
+    " \"version_highest\": \"2.0.0\",",
+    " \"hash_highest\": \"hash_2.0.0\"",
+    " },",
+    " {",
+    " \"package\": \"version_unmodified\",",
+    " \"version_current\": \"1.0.0\",",
+    " \"hash_current\": \"hash_1.0.0-modified\",",
+    " \"version_highest\": \"1.0.0\",",
+    " \"hash_highest\": \"hash_1.0.0\"",
+    " }",
+    "]"
+  )
+  versions <- tempfile()
+  writeLines(lines, versions)
   output <- tempfile()
   record_status(
-    versions = mock_versions(),
+    versions = versions,
     mock = list(
       checks = mock_meta_checks,
       packages = mock_meta_packages,
