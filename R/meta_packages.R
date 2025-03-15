@@ -58,8 +58,8 @@ get_meta_cran <- function() {
 get_meta_api <- function(repo) {
   base <- file.path(trim_url(repo), "api", "packages?stream=true&fields=")
   fields <- paste0(
-    "_buildurl,_binaries,_failure,_published,",
-    "_dependencies,Version,License,RemoteSha,Title,URL"
+    "_buildurl,_binaries,_failure,_published,_dependencies,",
+    "Version,License,RemoteSha,Title,URL"
   )
   data <- jsonlite::stream_in(
     con = gzcon(url(paste0(base, fields))),
@@ -95,7 +95,7 @@ meta_api_postprocess <- function(data) {
   data <- clean_meta(data)
   fields <- c(
     "package", "url_checks", "issues_checks", "published", "dependencies",
-    "version", "remotesha", "title", "url_description"
+    "license", "version", "remotesha", "title", "url_description"
   )
   data[, fields]
 }

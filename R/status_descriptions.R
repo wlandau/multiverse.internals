@@ -75,6 +75,7 @@ status_descriptions_version_conflict <- function(meta, repo) {
     },
     FUN.VALUE = logical(1L)
   )
+  meta[[repo]][!conflict] <- NA_character_
   meta$issue <- meta$issue | conflict
   meta
 }

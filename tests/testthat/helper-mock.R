@@ -920,16 +920,35 @@ mock_meta_packages <- structure(list(
       NA,
       5L
     ))
+  ), license = c(
+    "Apache License (>= 2)", "Apache License (>= 2)",
+    "Apache License (>= 2)", "Apache License (>= 2)", "Apache License (>= 2.0)",
+    "MIT + file LICENSE", "MPL-2.0", "MIT + file LICENSE", "MIT + file LICENSE",
+    "BSD_3_clause", "BSD_3_clause + file LICENSE", "GPL (>= 2)",
+    "MIT + file LICENSE", "MIT + file LICENSE", "MIT + file LICENSE",
+    "MIT + file LICENSE", "MIT + file LICENSE", "MIT + file LICENSE",
+    "AGPL-3", "MIT + file LICENSE", "GPL (>= 2)", "GPL (>= 3)",
+    "GPL (>= 2)", "MIT + file LICENSE", NA, "MIT + file LICENSE",
+    "MIT + file LICENSE", "MIT + file LICENSE", "MIT + file LICENSE",
+    "MIT + file LICENSE", "GPL (>= 3)", "MIT + file LICENSE",
+    "MIT + file LICENSE", "Apache License (>= 2)", "GPL (>= 3)",
+    "MIT + file LICENSE", "MIT + file LICENSE", "MIT + file LICENSE",
+    "MIT + file LICENSE", "MIT + file LICENSE", "MIT + file LICENSE",
+    "MIT + file LICENSE", "MIT + file LICENSE", "MIT + file LICENSE",
+    "MIT + file LICENSE", "MIT + file LICENSE", "MIT + file LICENSE",
+    "MIT + file LICENSE", "MIT + file LICENSE", "GPL (>= 2)",
+    "MIT + file LICENSE", "MIT + file LICENSE", "GPL (>= 3)",
+    "MIT + file LICENSE"
   ), version = c(
-    "0.17.0", "0.17.0", "0.17.0", "0.17.0",
-    "19.0.1", "1.1.1", "0.2", "0.4.1", "0.1.2", "2.6.1", "0.8.1",
-    "1.3-2", "1.0.0", "0.0.8", "0.3.4", "0.0.1", "1.2.0", "1.0.1",
-    "0.0.4", "0.0.0.9000", "2.0.2", "1.5.6", "2.1.4", "1.2.1",
-    "19.09.03", "1.2.3", "1.4.1", "0.6", "0.0.0.9000", "1.1.0",
-    "2.1.0", "0.1.1", "1.0.7", "0.6.0", "1.5.1", "0.22.2", "1.1.6",
-    "0.10.0", "0.2.2", "1.1.5", "0.3.0.9000", "0.1.2", "0.2.0",
-    "0.12.0", "1.10.1", "0.0.1", "0.3.1", "0.13.0", "1.0.0",
-    "0.1.2", "1.3.0", "0.1", "0.9.0", "0.2.6"
+    "0.17.0", "0.17.0", "0.17.0",
+    "0.17.0", "19.0.1", "1.1.1", "0.2", "0.4.1", "0.1.2", "2.6.1",
+    "0.8.1", "1.3-2", "1.0.0", "0.0.8", "0.3.4", "0.0.1", "1.2.0",
+    "1.0.1", "0.0.4", "0.0.0.9000", "2.0.2", "1.5.6", "2.1.4",
+    "1.2.1", "19.09.03", "1.2.3", "1.4.1", "0.6", "0.0.0.9000",
+    "1.1.0", "2.1.0", "0.1.1", "1.0.7", "0.6.0", "1.5.1", "0.22.2",
+    "1.1.6", "0.10.0", "0.2.2", "1.1.5", "0.3.0.9000", "0.1.2",
+    "0.2.0", "0.12.0", "1.10.1", "0.0.1", "0.3.1", "0.13.0",
+    "1.0.0", "0.1.2", "1.3.0", "0.1", "0.9.0", "0.2.6"
   ), remotesha = c(
     "8b4ba558d1e9db9afbea6ef2d50acd979f647799",
     "8b4ba558d1e9db9afbea6ef2d50acd979f647799", "8b4ba558d1e9db9afbea6ef2d50acd979f647799",
@@ -1057,3 +1076,41 @@ mock_meta_packages <- structure(list(
     NA, NA
   )
 ), row.names = c(NA, -54L), class = "data.frame")
+
+mock_versions <- function() {
+  lines <- c(
+    "[",
+    " {",
+    " \"package\": \"package_unmodified\",",
+    " \"version_current\": \"1.0.0\",",
+    " \"hash_current\": \"hash_1.0.0\",",
+    " \"version_highest\": \"1.0.0\",",
+    " \"hash_highest\": \"hash_1.0.0\"",
+    " },",
+    " {",
+    " \"package\": \"version_decremented\",",
+    " \"version_current\": \"0.0.1\",",
+    " \"hash_current\": \"hash_0.0.1\",",
+    " \"version_highest\": \"1.0.0\",",
+    " \"hash_highest\": \"hash_1.0.0\"",
+    " },",
+    " {",
+    " \"package\": \"version_incremented\",",
+    " \"version_current\": \"2.0.0\",",
+    " \"hash_current\": \"hash_2.0.0\",",
+    " \"version_highest\": \"2.0.0\",",
+    " \"hash_highest\": \"hash_2.0.0\"",
+    " },",
+    " {",
+    " \"package\": \"version_unmodified\",",
+    " \"version_current\": \"1.0.0\",",
+    " \"hash_current\": \"hash_1.0.0-modified\",",
+    " \"version_highest\": \"1.0.0\",",
+    " \"hash_highest\": \"hash_1.0.0\"",
+    " }",
+    "]"
+  )
+  versions <- tempfile()
+  writeLines(lines, versions)
+  versions
+}

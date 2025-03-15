@@ -28,9 +28,6 @@ test_that("interpret_status() with a successful package", {
 test_that("interpret_status() with advisories", {
   skip_if_offline()
   mock <- mock_meta_packages
-  for (field in c("_id", "_dependencies", "distro", "remotes")) {
-    mock[[field]] <- NULL
-  }
   example <- mock$package == "nanonext"
   commonmark <- mock[example,, drop = FALSE] # nolint
   commonmark$package <- "commonmark"
@@ -44,14 +41,10 @@ test_that("interpret_status() with advisories", {
     readxl
   )
   output <- tempfile()
-  versions <- tempfile()
-  record_versions(
-    versions = versions,
-    repo = "https://wlandau.r-universe.dev"
-  )
+  versions <- mock_versions()
   on.exit(unlink(c(output, versions), recursive = TRUE))
   record_status(
-    mock = list(packages = meta, checks = mock_meta_checks),
+    mock = list(packages = meta),
     output = output,
     versions = versions
   )
@@ -68,15 +61,12 @@ test_that("interpret_status() with advisories", {
 test_that("interpret_status() with bad licenses", {
   skip_if_offline()
   mock <- mock_meta_packages[mock_meta_packages$package == "targetsketch", ]
+  mock$foss <- FALSE
   output <- tempfile()
-  versions <- tempfile()
-  record_versions(
-    versions = versions,
-    repo = "https://wlandau.r-universe.dev"
-  )
+  versions <- mock_versions()
   on.exit(unlink(c(output, versions), recursive = TRUE))
   record_status(
-    mock = list(packages = mock, checks = mock_meta_checks),
+    mock = list(packages = mock),
     output = output,
     versions = versions
   )
