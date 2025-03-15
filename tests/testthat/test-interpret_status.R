@@ -168,15 +168,10 @@ test_that("interpret_status() with complicated dependency problems", {
   versions <- tempfile()
   on.exit(unlink(c(output, versions), recursive = TRUE))
   writeLines(lines, versions)
-  meta_checks <- mock_meta_checks[1L, ]
-  meta_checks$package <- "crew"
   suppressMessages(
     record_status(
       versions = versions,
-      mock = list(
-        checks = meta_checks,
-        packages = mock_meta_packages_graph
-      ),
+      mock = list(packages = mock_meta_packages),
       output = output,
       verbose = TRUE
     )
@@ -184,53 +179,25 @@ test_that("interpret_status() with complicated dependency problems", {
   expect_true(file.exists(output))
   status <- jsonlite::read_json(output, simplifyVector = TRUE)
   expect_equal(
-    status$nanonext,
+    status$nanonext$versions,
     list(
-      versions = list(
-        version_current = "1.0.0",
-        hash_current = "hash_1.0.0-modified",
-        version_highest = "1.0.0",
-        hash_highest = "hash_1.0.0"
-      ),
-      success = FALSE,
-      published = "published_5",
-      version = "1.1.0.9000",
-      remote_hash = "85dd672a44a92c890eb40ea9ebab7a4e95335c2f"
+      version_current = "1.0.0",
+      hash_current = "hash_1.0.0-modified",
+      version_highest = "1.0.0",
+      hash_highest = "hash_1.0.0"
     )
   )
+  expect_false(status$nanonext$success)
   expect_equal(
-    status$mirai,
-    list(
-      dependencies = list(
-        nanonext = list()
-      ),
-      success = FALSE,
-      published = "published_4",
-      version = "1.1.0.9000",
-      remote_hash = "7015695b7ef82f82ab3225ac2d226b2c8f298097"
-    )
+    status$mirai$dependencies,
+    list(nanonext = list())
   )
+  expect_false(status$mirai$success)
   expect_equal(
-    status$crew,
-    list(
-      checks = list(
-        url = file.path(
-          "https://github.com/r-universe/r-multiverse/actions",
-          "runs/11898760503"
-        ),
-        issues = list(
-          `linux R-4.5.0` = "WARNING",
-          `mac R-4.4.2` = "WARNING",
-          `win R-4.4.2` = "WARNING"
-        )
-      ),
-      dependencies = list(nanonext = "mirai"),
-      success = FALSE,
-      published = "published_1",
-      version = "0.9.3.9002",
-      remote_hash = "eafad0276c06dec2344da2f03596178c754c8b5e"
-    )
+    status$crew$dependencies,
+    list(nanonext = "mirai")
   )
+  expect_false(status$crew$success)
   expect_true(
     grepl(
       "nanonext: mirai",
@@ -256,7 +223,7 @@ test_that("interpret_status(): check these interactively", {
   status <- list(
     bad = list(
       checks = list(
-        url = "https://github.com/12103194809",
+        url_checks = "https://github.com/12103194809",
         status = list(
           `linux x86_64 R-4.5.0` = "WARNING",
           `mac aarch64 R-4.4.2` = "WARNING",

@@ -93,7 +93,7 @@ interpret_checks <- function(status) {
     "Not all checks succeeded on R-universe. ",
     "The following output shows the check status on each enforced platform ",
     "and version of R. The GitHub Actions URL links to the check logs ",
-    "on all platforms that R-universe runs.",
+    "on all platforms that R-universe runs. ",
     "Visit that URL to see specific details ",
     "on the check failures.<br>",
     as.character(yaml_html(checks))
