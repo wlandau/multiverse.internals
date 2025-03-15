@@ -11,7 +11,7 @@
 #'   practices for version numbers.
 #' @inheritSection record_status Package status
 #' @return `NULL` (invisibly). Writes version information to a JSON file.
-#' @inheritParams meta_checks
+#' @inheritParams meta_packages
 #' @param versions Character of length 1, file path to a JSON manifest
 #'   tracking the history of released versions of packages.
 #' @param current A data frame of current versions and hashes of packages

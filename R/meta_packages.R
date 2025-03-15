@@ -48,6 +48,9 @@ get_meta_json <- function(repo) {
   )
   data <- clean_meta(data)
   data$foss <- FALSE
+  if (is.null(data$remote)) {
+    data$remotes <- replicate(nrow(data), NULL, simplify = FALSE)
+  }
   data[, c("package", "remotes", "foss")]
 }
 

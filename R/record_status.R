@@ -26,7 +26,7 @@
 #' @inheritParams status_checks
 #' @inheritParams status_dependencies
 #' @inheritParams status_versions
-#' @inheritParams meta_checks
+#' @inheritParams meta_packages
 #' @param output Character of length 1, file path to the JSON file to record
 #'   new package status. Each call to `record_status()` overwrites the
 #'   contents of the file.
