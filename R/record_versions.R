@@ -6,7 +6,7 @@
 #' @details This function tracks a manifest containing the current version,
 #'   the current hash, the highest version ever released, and
 #'   the hash of the highest version ever released.
-#'   [status_versions()] uses this information
+#'   [issues_versions()] uses this information
 #'   to determine whether the package complies with best
 #'   practices for version numbers.
 #' @inheritSection record_status Package status

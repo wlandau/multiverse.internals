@@ -18,17 +18,17 @@ names and \verb{R CMD check} issues.
 Report issues from \verb{R CMD check} on R-universe.
 }
 \details{
-\code{\link[=status_r_cmd_check]{status_r_cmd_check()}} reads output from
+\code{\link[=issues_r_cmd_check]{issues_r_cmd_check()}} reads output from
 the R-universe \verb{R CMD check} results API
 to scan all R-multiverse packages for status that may have
 happened during building and testing.
 }
 \section{Package status}{
 
-Functions like \code{\link[=status_versions]{status_versions()}} and \code{\link[=status_descriptions]{status_descriptions()}}
+Functions like \code{\link[=issues_versions]{issues_versions()}} and \code{\link[=issues_r_cmd_check]{issues_r_cmd_check()}}
 perform health checks for all packages in R-multiverse.
 For a complete list of checks, see
-the \verb{status_*()} functions listed at
+the \verb{issues_*()} functions listed at
 \url{https://r-multiverse.org/multiverse.internals/reference/index.html}.
 \code{\link[=record_versions]{record_versions()}} updates the version number history
 of releases in R-multiverse, and \code{\link[=record_status]{record_status()}} gathers

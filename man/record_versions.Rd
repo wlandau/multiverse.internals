@@ -30,16 +30,16 @@ and their hashes.
 This function tracks a manifest containing the current version,
 the current hash, the highest version ever released, and
 the hash of the highest version ever released.
-\code{\link[=status_versions]{status_versions()}} uses this information
+\code{\link[=issues_versions]{issues_versions()}} uses this information
 to determine whether the package complies with best
 practices for version numbers.
 }
 \section{Package status}{
 
-Functions like \code{\link[=status_versions]{status_versions()}} and \code{\link[=status_descriptions]{status_descriptions()}}
+Functions like \code{\link[=issues_versions]{issues_versions()}} and \code{\link[=issues_r_cmd_check]{issues_r_cmd_check()}}
 perform health checks for all packages in R-multiverse.
 For a complete list of checks, see
-the \verb{status_*()} functions listed at
+the \verb{issues_*()} functions listed at
 \url{https://r-multiverse.org/multiverse.internals/reference/index.html}.
 \code{\link[=record_versions]{record_versions()}} updates the version number history
 of releases in R-multiverse, and \code{\link[=record_status]{record_status()}} gathers

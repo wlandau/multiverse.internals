@@ -4,24 +4,14 @@
 #' @description Record R-multiverse package status in
 #'   package-specific JSON files.
 #' @section Package status:
-#'   Functions like [status_versions()] and [status_descriptions()]
+#'   Functions like [issues_versions()] and [issues_r_cmd_check()]
 #'   perform health checks for all packages in R-multiverse.
 #'   For a complete list of checks, see
-#'   the `status_*()` functions listed at
+#'   the `issues_*()` functions listed at
 #'   <https://r-multiverse.org/multiverse.internals/reference/index.html>.
 #'   [record_versions()] updates the version number history
 #'   of releases in R-multiverse, and [record_status()] gathers
 #'   together all the status about R-multiverse packages.
-#' @section Status data:
-#'   For each package with observed problems, [record_status()] writes
-#'   a JSON list entry in the output JSON file
-#'   with one element for each type of failing check.
-#'   Each check-specific element has an informative name
-#'   (for example, `checks`, `descriptions`, or `versions`)
-#'   and a list of diagnostic information. In addition, there is a `date`
-#'   field to indicate when an issue was first detected. The `date`
-#'   automatically resets the next time all the status in the package
-#'   are resolved.
 #' @return `NULL` (invisibly).
 #' @inheritParams issues_r_cmd_check
 #' @inheritParams issues_dependencies

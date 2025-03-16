@@ -2,7 +2,7 @@
 #' @export
 #' @family issues
 #' @description Report issues from `R CMD check` on R-universe.
-#' @details [status_r_cmd_check()] reads output from
+#' @details [issues_r_cmd_check()] reads output from
 #'   the R-universe `R CMD check` results API
 #'   to scan all R-multiverse packages for status that may have
 #'   happened during building and testing.
