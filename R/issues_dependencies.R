@@ -54,7 +54,7 @@ issues_dependencies <- function(
   verbose = FALSE
 ) {
   if (verbose) message("Constructing the package dependency graph")
-  graph <- status_dependencies_graph(meta)
+  graph <- issues_dependencies_graph(meta)
   vertices <- names(igraph::V(graph))
   edges <- igraph::as_long_data_frame(graph)
   from <- tapply(
@@ -74,12 +74,12 @@ issues_dependencies <- function(
       status[[revdep]][[package]] <- neighbors[keep]
     }
   }
-  out <- data.frame(package = names(status))
+  out <- data.frame(package = names(status) %||% character(0L))
   out$dependencies <- unname(status)
-  out
+  out[order(out$package),, drop = FALSE] # nolint
 }
 
-status_dependencies_graph <- function(meta) {
+issues_dependencies_graph <- function(meta) {
   repo_packages <- meta$package
   repo_dependencies <- meta$dependencies
   from <- list()

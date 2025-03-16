@@ -78,6 +78,7 @@ record_status <- function(
     add_issues(issues_version_conflicts(meta, "cran"))
   issues <- names(Filter(\(x) !x$success, status))
   status <- add_issues(status, issues_dependencies(issues, meta, verbose))
+  status <- status[order(names(status))]
   jsonlite::write_json(x = status, path = output, pretty = TRUE) 
   invisible()
 }
