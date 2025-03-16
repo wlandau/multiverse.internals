@@ -46,20 +46,19 @@ record_status <- function(
 ) {
   meta <- mock$packages %||% meta_packages(repo = repo)
   status <- Map(
-    function(packages, published, version, remotesha) {
+    function(published, version, remotesha) {
       list(
-        packages = packages,
         success = TRUE,
         published = published,
         version = version,
         remote_hash = remotesha
       )
     },
-    packages = meta$package,
     published = meta$published,
     version = meta$version,
     remotesha = meta$remotesha
   ) |>
+    stats::setNames(nm = meta$package) |>
     add_issues(issues_advisories(meta)) |>
     add_issues(issues_licenses(meta)) |>
     add_issues(issues_r_cmd_check(meta)) |>
