@@ -20,10 +20,10 @@ Summarize the status of a package in human-readable text.
 }
 \seealso{
 Other status: 
-\code{\link{status_dependencies}()},
+\code{\link{issues_dependencies}()},
+\code{\link{issues_r_cmd_check}()},
+\code{\link{issues_versions}()},
 \code{\link{status_descriptions}()},
-\code{\link{status_r_cmd_check}()},
-\code{\link{status_versions}()},
 \code{\link{update_status}()}
 }
 \concept{status}

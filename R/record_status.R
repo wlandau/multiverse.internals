@@ -54,43 +54,40 @@ record_status <- function(
   verbose = FALSE
 ) {
   meta <- mock$packages %||% meta_packages(repo = repo)
-  status <- list() |>
-    add_status(status_r_cmd_check(meta = meta), "r_cmd_check") |>
-    add_status(status_descriptions(meta = meta), "descriptions") |>
-    add_status(status_versions(versions = versions), "versions")
-  status <- status |>
-    add_status(
-      status_dependencies(names(status), meta, verbose = verbose),
-      "dependencies"
-    )
-  for (name in names(status)) {
-    status[[name]]$success <- FALSE
-  }
-  for (healthy in setdiff(meta$package, names(status))) {
-    status[[healthy]] <- list(success = TRUE)
-  }
-  status <- status[sort(names(status))]
-  overwrite_status(
-    status = status,
-    output = output,
-    meta = meta
-  )
+  status <- Map(
+    function(packages, published, version, remotesha) {
+      list(
+        packages = packages,
+        success = TRUE,
+        published = published,
+        version = version,
+        remote_hash = remotesha
+      )
+    },
+    packages = meta$package,
+    published = meta$published,
+    version = meta$version,
+    remotesha = meta$remotesha
+  ) |>
+    add_issues(issues_advisories(meta)) |>
+    add_issues(issues_licenses(meta)) |>
+    add_issues(issues_r_cmd_check(meta)) |>
+    add_issues(issues_remotes(meta)) |>
+    add_issues(issues_versions(versions)) |>
+    add_issues(issues_version_conflicts(meta, "cran"))
+  issues <- names(Filter(\(x) !x$success, status))
+  status <- add_issues(status, issues_dependencies(issues, meta, verbose))
+  jsonlite::write_json(x = status, path = output, pretty = TRUE) 
   invisible()
 }
 
-add_status <- function(total, subset, category) {
-  for (package in names(subset)) {
-    total[[package]][[category]] <- subset[[package]]
+add_issues <- function(status, issues) {
+  for (field in setdiff(colnames(issues), "package")) {
+    for (index in seq_len(nrow(issues))) {
+      package <- issues$package[index]
+      status[[package]]$success <- FALSE
+      status[[package]][[field]] <- issues[[field]][[index]]
+    }
   }
-  total
-}
-
-overwrite_status <- function(status, output, meta) {
-  for (index in seq_len(nrow(meta))) {
-    package <- meta$package[index]
-    status[[package]]$published <- meta$published[index]
-    status[[package]]$version <- meta$version[index]
-    status[[package]]$remote_hash <- meta$remotesha[index]
-  }
-  jsonlite::write_json(x = status, path = output, pretty = TRUE)
+  status
 }

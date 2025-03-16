@@ -15,7 +15,7 @@ meta_packages <- function(repo = "https://community.r-multiverse.org") {
   data <- merge(x = meta_api, y = meta_json, all.x = TRUE, all.y = FALSE)
   data <- merge(x = data, y = meta_cran, all.x = TRUE, all.y = FALSE)
   data$foss[data$package %in% foss] <- TRUE
-  data
+  data[order(data$package),, drop = FALSE] # nolint
 }
 
 get_meta_json <- function(repo) {
@@ -31,7 +31,7 @@ get_meta_json <- function(repo) {
     simplifyDataFrame = TRUE,
     simplifyMatrix = TRUE
   )
-  data <- clean_meta(data)
+  data <- clean_meta_attributes(data)
   data$foss <- FALSE
   if (is.null(data$remote)) {
     data$remotes <- replicate(nrow(data), NULL, simplify = FALSE)
@@ -68,12 +68,6 @@ get_meta_api <- function(repo) {
     simplifyDataFrame = TRUE,
     simplifyMatrix = TRUE
   )
-  data <- meta_api_postprocess(data)
-  data$published <- format_time_stamp(data$published)
-  data
-}
-
-meta_api_postprocess <- function(data) {
   is_failure <- data$`_type` == "failure"
   data$url_description <- data$URL
   data$URL <- NULL
@@ -92,7 +86,9 @@ meta_api_postprocess <- function(data) {
   for (index in which(is_failure)) {
     data$issues_r_cmd_check[[index]]$source <- "FAILURE"
   }
-  data <- clean_meta(data)
+  data <- clean_meta_attributes(data)
+  data$published <- format_time_stamp(data$published)
+  data$license[is.na(data$license)] <- "unknown"
   fields <- c(
     "package", "url_r_cmd_check", "issues_r_cmd_check", "published",
     "dependencies",
@@ -149,7 +145,7 @@ format_time_stamp <- function(time) {
   format(time, format = "%Y-%m-%d %H:%M:%OS3 %Z")
 }
 
-clean_meta <- function(data) {
+clean_meta_attributes <- function(data) {
   colnames(data) <- tolower(colnames(data))
   colnames(data) <- gsub("^_", "", colnames(data))
   data

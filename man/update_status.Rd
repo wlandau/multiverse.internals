@@ -49,9 +49,9 @@ writeLines(
 \seealso{
 Other status: 
 \code{\link{interpret_status}()},
-\code{\link{status_dependencies}()},
-\code{\link{status_descriptions}()},
-\code{\link{status_r_cmd_check}()},
-\code{\link{status_versions}()}
+\code{\link{issues_dependencies}()},
+\code{\link{issues_r_cmd_check}()},
+\code{\link{issues_versions}()},
+\code{\link{status_descriptions}()}
 }
 \concept{status}

@@ -15,18 +15,12 @@ record_status(
 \arguments{
 \item{repo}{URL of the repository to query.}
 
-\item{versions}{Character of length 1, file path to a JSON manifest
-tracking the history of released versions of packages.}
-
 \item{output}{Character of length 1, file path to the JSON file to record
 new package status. Each call to \code{record_status()} overwrites the
 contents of the file.}
 
 \item{mock}{For testing purposes only, a named list of data frames
 for inputs to various intermediate functions.}
-
-\item{verbose}{\code{TRUE} to print progress while checking
-dependency status, \code{FALSE} otherwise.}
 }
 \value{
 \code{NULL} (invisibly).
