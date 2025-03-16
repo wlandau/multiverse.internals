@@ -79,7 +79,7 @@ test_that("record_status() with dependency problems", {
     list(nanonext = "mirai")
   )
   expect_equal(
-    status$crew$r_cmd_check$issues_r_cmd_check,
+    status$crew$r_cmd_check$issues,
     mock$issues_r_cmd_check[mock$package == "targets"][[1L]]
   )
   expect_equal(

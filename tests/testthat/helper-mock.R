@@ -1079,338 +1079,352 @@ mock_meta_packages <- structure(list(
 
 mock_status <- list(
   adbcbigquery = list(
-    success = TRUE, published = "2025-03-07 01:28:58.703 UTC",
-    version = "0.17.0", remote_hash = "8b4ba558d1e9db9afbea6ef2d50acd979f647799"
+    packages = "adbcbigquery", success = TRUE,
+    published = "2025-03-07 01:28:58.703 UTC", version = "0.17.0",
+    remote_hash = "8b4ba558d1e9db9afbea6ef2d50acd979f647799"
   ),
   adbcdrivermanager = list(
+    packages = "adbcdrivermanager",
     success = TRUE, published = "2025-03-07 01:24:22.265 UTC",
     version = "0.17.0", remote_hash = "8b4ba558d1e9db9afbea6ef2d50acd979f647799"
   ),
   adbcflightsql = list(
-    success = TRUE, published = "2025-03-07 01:27:23.588 UTC",
-    version = "0.17.0", remote_hash = "8b4ba558d1e9db9afbea6ef2d50acd979f647799"
+    packages = "adbcflightsql", success = TRUE,
+    published = "2025-03-07 01:27:23.588 UTC", version = "0.17.0",
+    remote_hash = "8b4ba558d1e9db9afbea6ef2d50acd979f647799"
   ),
   adbcsnowflake = list(
-    success = TRUE, published = "2025-03-07 01:29:04.203 UTC",
-    version = "0.17.0", remote_hash = "8b4ba558d1e9db9afbea6ef2d50acd979f647799"
+    packages = "adbcsnowflake", success = TRUE,
+    published = "2025-03-07 01:29:04.203 UTC", version = "0.17.0",
+    remote_hash = "8b4ba558d1e9db9afbea6ef2d50acd979f647799"
   ),
   arrow = list(
-    success = TRUE, published = "2025-03-03 13:25:16.427 UTC",
+    packages = "arrow", success = TRUE, published = "2025-03-03 13:25:16.427 UTC",
     version = "19.0.1", remote_hash = "272715f6df2a042d69881ffa03d5078c58e4b345"
   ),
   asylum = list(
-    descriptions = list(cran = "1.1.2"), success = FALSE,
-    published = "2025-03-03 12:55:57.141 UTC", version = "1.1.1",
-    remote_hash = "22064dd0822e007ef78cd29e9a118beb09e76da4"
-  ),
-  audio.vadwebrtc = list(
+    packages = "asylum", success = FALSE, published = "2025-03-03 12:55:57.141 UTC",
+    version = "1.1.1", remote_hash = "22064dd0822e007ef78cd29e9a118beb09e76da4",
+    cran = "1.1.2"
+  ), audio.vadwebrtc = list(
+    packages = "audio.vadwebrtc",
     success = TRUE, published = "2025-03-03 12:58:42.700 UTC",
     version = "0.2", remote_hash = "c3de76ddc738dbb4a80ac7ec67ac9da3cba093ba"
   ),
   audio.whisper = list(
-    r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631287847",
-      issues_r_cmd_check = list(
-        "linux x86_64 R-4.4.3" = "WARNING",
-        "mac aarch64 R-4.4.3" = "WARNING", "mac x86_64 R-4.4.3" = "WARNING",
-        "win x86_64 R-4.4.3" = "WARNING"
-      )
-    ), descriptions = list(
-      remotes = "bnosac/audio.vadwebrtc"
-    ), success = FALSE,
+    packages = "audio.whisper", success = FALSE,
     published = "2025-03-03 13:07:32.661 UTC", version = "0.4.1",
-    remote_hash = "4b5c6a288c0f46a4cdc47f50d2d35395d3e32194"
-  ),
-  autometric = list(
-    success = TRUE, published = "2025-03-13 22:19:19.674 UTC",
+    remote_hash = "4b5c6a288c0f46a4cdc47f50d2d35395d3e32194",
+    r_cmd_check = list(issues = list(
+      "linux x86_64 R-4.4.3" = "WARNING",
+      "mac aarch64 R-4.4.3" = "WARNING", "mac x86_64 R-4.4.3" = "WARNING",
+      "win x86_64 R-4.4.3" = "WARNING"
+    ), url = "https://github.com/r-universe/r-multiverse/actions/runs/13631287847"),
+    remotes = "bnosac/audio.vadwebrtc"
+  ), autometric = list(
+    packages = "autometric", success = TRUE, published = "2025-03-13 22:19:19.674 UTC",
     version = "0.1.2", remote_hash = "36e98ae76feb34de0783d6505f7f2a17e972fe23"
   ),
   bridgestan = list(
+    packages = "bridgestan", success = FALSE,
+    published = "2025-03-03 13:00:48.279 UTC", version = "2.6.1",
+    remote_hash = "b161ca7a1d417213b084c4a8c2d53fa44f7e8284",
     r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631289190",
-      issues_r_cmd_check = list(
-        "linux R-4.4.3" = "ERROR", "mac R-4.4.3" = "ERROR",
-        "win R-4.4.3" = "ERROR"
-      )
-    ), success = FALSE, published = "2025-03-03 13:00:48.279 UTC",
-    version = "2.6.1", remote_hash = "b161ca7a1d417213b084c4a8c2d53fa44f7e8284"
+      issues = list(
+        "linux R-4.4.3" = "ERROR",
+        "mac R-4.4.3" = "ERROR", "win R-4.4.3" = "ERROR"
+      ),
+      url = "https://github.com/r-universe/r-multiverse/actions/runs/13631289190"
+    )
   ),
   cmdstanr = list(
-    success = TRUE, published = "2025-03-03 13:04:06.683 UTC",
+    packages = "cmdstanr", success = TRUE, published = "2025-03-03 13:04:06.683 UTC",
     version = "0.8.1", remote_hash = "02259ef7aa2a8b1c8de2fa3fc42a9feafd789288"
   ),
   colorout = list(
+    packages = "colorout", success = FALSE, published = "2025-03-05 02:44:58.881 UTC",
+    version = "1.3-2", remote_hash = "6eca95213c6cb2fae1c2c4eaccf43de4c93a65b5",
     r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631286813",
-      issues_r_cmd_check = list(
+      issues = list(
         "mac aarch64 R-4.4.3" = "WARNING",
         "mac x86_64 R-4.4.3" = "WARNING", win = "MISSING"
-      )
-    ),
-    success = FALSE, published = "2025-03-05 02:44:58.881 UTC",
-    version = "1.3-2", remote_hash = "6eca95213c6cb2fae1c2c4eaccf43de4c93a65b5"
+      ),
+      url = "https://github.com/r-universe/r-multiverse/actions/runs/13631286813"
+    )
   ),
   crew = list(
-    success = TRUE, published = "2025-03-03 13:04:10.398 UTC",
+    packages = "crew", success = TRUE, published = "2025-03-03 13:04:10.398 UTC",
     version = "1.0.0", remote_hash = "e28d0c782fbc22b3cd4129e5f30825a8a44c0f75"
   ),
   crew.aws.batch = list(
-    success = TRUE, published = "2025-03-13 22:19:22.507 UTC",
-    version = "0.0.8", remote_hash = "136fedb9df30123b7c216ac75a66f29e8e94f2c1"
+    packages = "crew.aws.batch", success = TRUE,
+    published = "2025-03-13 22:19:22.507 UTC", version = "0.0.8",
+    remote_hash = "136fedb9df30123b7c216ac75a66f29e8e94f2c1"
   ),
   crew.cluster = list(
-    success = TRUE, published = "2025-03-13 22:20:11.579 UTC",
-    version = "0.3.4", remote_hash = "9c448b046f6cc1eb1af4a86ca5310e34271477fe"
+    packages = "crew.cluster", success = TRUE,
+    published = "2025-03-13 22:20:11.579 UTC", version = "0.3.4",
+    remote_hash = "9c448b046f6cc1eb1af4a86ca5310e34271477fe"
   ),
   demographr = list(
+    packages = "demographr", success = FALSE,
+    published = "2025-03-03 13:01:43.545 UTC", version = "0.0.1",
+    remote_hash = "5d73b83f4bd70048d39b6b9c4bffaf02c8aab321",
     r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631287991",
-      issues_r_cmd_check = list(
-        "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
-        "win R-4.4.3" = "WARNING"
-      )
-    ), success = FALSE, published = "2025-03-03 13:01:43.545 UTC",
-    version = "0.0.1", remote_hash = "5d73b83f4bd70048d39b6b9c4bffaf02c8aab321"
+      issues = list(
+        "linux R-4.4.3" = "WARNING",
+        "mac R-4.4.3" = "WARNING", "win R-4.4.3" = "WARNING"
+      ),
+      url = "https://github.com/r-universe/r-multiverse/actions/runs/13631287991"
+    )
   ),
   duckdb = list(
-    success = TRUE, published = "2025-03-03 14:14:11.085 UTC",
+    packages = "duckdb", success = TRUE, published = "2025-03-03 14:14:11.085 UTC",
     version = "1.2.0", remote_hash = "d7b7108c2e526fa125669439cabc179021585d43"
   ),
   geographr = list(
+    packages = "geographr", success = FALSE,
+    published = "2025-03-03 13:13:55.775 UTC", version = "1.0.1",
+    remote_hash = "ed416a6735f7c4d8da0b866260369e84c27319a2",
     r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631287654",
-      issues_r_cmd_check = list(
-        "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
-        "win R-4.4.3" = "WARNING"
-      )
-    ), success = FALSE, published = "2025-03-03 13:13:55.775 UTC",
-    version = "1.0.1", remote_hash = "ed416a6735f7c4d8da0b866260369e84c27319a2"
+      issues = list(
+        "linux R-4.4.3" = "WARNING",
+        "mac R-4.4.3" = "WARNING", "win R-4.4.3" = "WARNING"
+      ),
+      url = "https://github.com/r-universe/r-multiverse/actions/runs/13631287654"
+    )
   ),
   glaredb = list(
-    r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631287270",
-      issues_r_cmd_check = list(win = "MISSING")
-    ), success = FALSE,
-    published = "2025-03-03 13:13:12.313 UTC", version = "0.0.4",
-    remote_hash = "349c5bb3a1fca6a8cefae381094b046c8ce028b2"
+    packages = "glaredb", success = FALSE, published = "2025-03-03 13:13:12.313 UTC",
+    version = "0.0.4", remote_hash = "349c5bb3a1fca6a8cefae381094b046c8ce028b2",
+    r_cmd_check = list(issues = list(win = "MISSING"), url = "https://github.com/r-universe/r-multiverse/actions/runs/13631287270")
   ),
   healthyr = list(
+    packages = "healthyr", success = FALSE, published = "2025-03-03 12:56:59.476 UTC",
+    version = "0.0.0.9000", remote_hash = "37a8c7844582bf6dbbc80bf960aa176e2c3e9435",
     r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631288201",
-      issues_r_cmd_check = list(
-        "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
-        "win R-4.4.3" = "WARNING"
-      )
-    ), success = FALSE, published = "2025-03-03 12:56:59.476 UTC",
-    version = "0.0.0.9000", remote_hash = "37a8c7844582bf6dbbc80bf960aa176e2c3e9435"
+      issues = list(
+        "linux R-4.4.3" = "WARNING",
+        "mac R-4.4.3" = "WARNING", "win R-4.4.3" = "WARNING"
+      ),
+      url = "https://github.com/r-universe/r-multiverse/actions/runs/13631288201"
+    )
   ),
   httpgd = list(
-    success = TRUE, published = "2025-03-03 13:03:40.049 UTC",
+    packages = "httpgd", success = TRUE, published = "2025-03-03 13:03:40.049 UTC",
     version = "2.0.2", remote_hash = "b0a5ec38638ca69e3adbc7b24d815757e5f74817"
   ),
   ichimoku = list(
-    success = TRUE, published = "2025-03-14 19:22:18.319 UTC",
+    packages = "ichimoku", success = TRUE, published = "2025-03-14 19:22:18.319 UTC",
     version = "1.5.6", remote_hash = "43f02878819ca3a868cfa74513117b9dfc141755"
   ),
   igraph = list(
-    success = TRUE, published = "2025-03-03 13:23:00.838 UTC",
+    packages = "igraph", success = TRUE, published = "2025-03-03 13:23:00.838 UTC",
     version = "2.1.4", remote_hash = "affdf8c714ace2e3b66dbcaee24ca2211633f964"
   ),
   IMD = list(
-    descriptions = list(cran = "1.2.2"), success = FALSE,
-    published = "2025-03-03 12:59:09.464 UTC", version = "1.2.1",
-    remote_hash = "8cc26c4f70bf6e07c47bab089c7bad18c864223c"
-  ),
-  INLA = list(
-    r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631286185",
-      issues_r_cmd_check = list(
-        linux = "MISSING", mac = "MISSING",
-        win = "MISSING", source = "FAILURE"
-      )
-    ), success = FALSE,
+    packages = "IMD", success = FALSE, published = "2025-03-03 12:59:09.464 UTC",
+    version = "1.2.1", remote_hash = "8cc26c4f70bf6e07c47bab089c7bad18c864223c",
+    cran = "1.2.2"
+  ), INLA = list(
+    packages = "INLA", success = FALSE,
     published = "2025-03-06 02:51:02.348 UTC", version = "19.09.03",
-    remote_hash = "0fa332471d2e19548cc0f63e36873e31dbd685be"
+    remote_hash = "0fa332471d2e19548cc0f63e36873e31dbd685be",
+    r_cmd_check = list(issues = list(
+      linux = "MISSING", mac = "MISSING",
+      win = "MISSING", source = "FAILURE"
+    ), url = "https://github.com/r-universe/r-multiverse/actions/runs/13631286185")
   ),
   jagstargets = list(
-    dependencies = list(targets = "tarchetypes"),
-    success = FALSE, published = "2025-03-03 13:09:12.035 UTC",
-    version = "1.2.3", remote_hash = "fef92d0d74f6e9832459ce4bee69396bca21fd3f"
-  ),
-  later = list(
-    success = TRUE, published = "2025-03-03 13:02:43.433 UTC",
+    packages = "jagstargets", success = FALSE,
+    published = "2025-03-03 13:09:12.035 UTC", version = "1.2.3",
+    remote_hash = "fef92d0d74f6e9832459ce4bee69396bca21fd3f",
+    dependencies = list(targets = "tarchetypes")
+  ), later = list(
+    packages = "later", success = TRUE, published = "2025-03-03 13:02:43.433 UTC",
     version = "1.4.1", remote_hash = "d83e4118e0909618f416008dad4f3b3b89eead64"
   ),
   litedown = list(
-    success = TRUE, published = "2025-03-03 12:55:56.819 UTC",
+    packages = "litedown", success = TRUE, published = "2025-03-03 12:55:56.819 UTC",
     version = "0.6", remote_hash = "203e35dadc695b03c975160fd8d9c1d36152efc6"
   ),
   loneliness = list(
+    packages = "loneliness", success = FALSE,
+    published = "2025-03-03 12:54:44.732 UTC", version = "0.0.0.9000",
+    remote_hash = "330d200bf9de4a76ca1e82e3d84a3c5aba946707",
     r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631286586",
-      issues_r_cmd_check = list(
-        "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
-        "win R-4.4.3" = "WARNING"
-      )
-    ), success = FALSE, published = "2025-03-03 12:54:44.732 UTC",
-    version = "0.0.0.9000", remote_hash = "330d200bf9de4a76ca1e82e3d84a3c5aba946707"
+      issues = list(
+        "linux R-4.4.3" = "WARNING",
+        "mac R-4.4.3" = "WARNING", "win R-4.4.3" = "WARNING"
+      ),
+      url = "https://github.com/r-universe/r-multiverse/actions/runs/13631286586"
+    )
   ),
   milRex = list(
-    success = TRUE, published = "2025-03-03 13:04:47.124 UTC",
+    packages = "milRex", success = TRUE, published = "2025-03-03 13:04:47.124 UTC",
     version = "1.1.0", remote_hash = "3a8c6096b0e162445f119fc2dfc46ff41d0089ba"
   ),
   mirai = list(
-    success = TRUE, published = "2025-03-03 12:55:33.839 UTC",
+    packages = "mirai", success = TRUE, published = "2025-03-03 12:55:33.839 UTC",
     version = "2.1.0", remote_hash = "892c17106eab9411c720b50aaa56750cf8463dfc"
   ),
   multitools = list(
-    success = TRUE, published = "2025-03-03 12:56:48.219 UTC",
-    version = "0.1.1", remote_hash = "c73b933868d8c6884df4220c25779cd0874ec7de"
+    packages = "multitools", success = TRUE,
+    published = "2025-03-03 12:56:48.219 UTC", version = "0.1.1",
+    remote_hash = "c73b933868d8c6884df4220c25779cd0874ec7de"
   ),
   multiverse.internals = list(
+    packages = "multiverse.internals",
+    success = FALSE, published = "2025-03-14 16:24:21.193 UTC",
+    version = "1.0.7", remote_hash = "8e16e74613285852f0f9934318636e2ec31efc3a",
     r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13860842188",
-      issues_r_cmd_check = list("linux R-4.4.3" = "ERROR")
-    ), success = FALSE,
-    published = "2025-03-14 16:24:21.193 UTC", version = "1.0.7",
-    remote_hash = "8e16e74613285852f0f9934318636e2ec31efc3a"
+      issues = list("linux R-4.4.3" = "ERROR"),
+      url = "https://github.com/r-universe/r-multiverse/actions/runs/13860842188"
+    )
   ),
   nanoarrow = list(
-    success = TRUE, published = "2025-03-03 12:58:28.020 UTC",
-    version = "0.6.0", remote_hash = "33d2c8b973d8f8f424e02ac92ddeaace2a92f8dd"
+    packages = "nanoarrow", success = TRUE,
+    published = "2025-03-03 12:58:28.020 UTC", version = "0.6.0",
+    remote_hash = "33d2c8b973d8f8f424e02ac92ddeaace2a92f8dd"
   ),
   nanonext = list(
-    success = TRUE, published = "2025-03-03 12:57:14.448 UTC",
+    packages = "nanonext", success = TRUE, published = "2025-03-03 12:57:14.448 UTC",
     version = "1.5.1", remote_hash = "71b26067dd5c73faac32168d5eacb0dc4979362e"
   ),
   polars = list(
-    success = TRUE, published = "2025-03-13 12:43:11.484 UTC",
+    packages = "polars", success = TRUE, published = "2025-03-13 12:43:11.484 UTC",
     version = "0.22.2", remote_hash = "eb931c234e305b762ebf82b61157ad64d1bd1eac"
   ),
   prophet = list(
-    success = TRUE, published = "2025-03-03 13:17:24.132 UTC",
+    packages = "prophet", success = TRUE, published = "2025-03-03 13:17:24.132 UTC",
     version = "1.1.6", remote_hash = "2a57e9d342fd1c28ed1fba32d8f0dfb199c4fa02"
   ),
   prqlr = list(
-    success = TRUE, published = "2025-03-03 13:06:33.938 UTC",
+    packages = "prqlr", success = TRUE, published = "2025-03-03 13:06:33.938 UTC",
     version = "0.10.0", remote_hash = "09c7b87e0eabd77e0b7f2c74995fa79e27f2a176"
   ),
   rJavaEnv = list(
-    success = TRUE, published = "2025-03-03 13:03:10.069 UTC",
+    packages = "rJavaEnv", success = TRUE, published = "2025-03-03 13:03:10.069 UTC",
     version = "0.2.2", remote_hash = "bae1c6dea15b2f7750ae78d87ab0012a7772081f"
   ),
   rlang = list(
-    success = TRUE, published = "2025-03-03 13:04:02.253 UTC",
+    packages = "rlang", success = TRUE, published = "2025-03-03 13:04:02.253 UTC",
     version = "1.1.5", remote_hash = "119ce823eabd4ce3e834af0e7de4601703fdc214"
   ),
   SBC = list(
+    packages = "SBC", success = FALSE, published = "2025-03-03 13:40:44.319 UTC",
+    version = "0.3.0.9000", remote_hash = "9ddc803105f5350dae6efb4ae2657e89d2a54aa8",
     r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631288318",
-      issues_r_cmd_check = list(
-        "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
-        "win R-4.4.3" = "WARNING"
-      )
-    ), success = FALSE, published = "2025-03-03 13:40:44.319 UTC",
-    version = "0.3.0.9000", remote_hash = "9ddc803105f5350dae6efb4ae2657e89d2a54aa8"
+      issues = list(
+        "linux R-4.4.3" = "WARNING",
+        "mac R-4.4.3" = "WARNING", "win R-4.4.3" = "WARNING"
+      ),
+      url = "https://github.com/r-universe/r-multiverse/actions/runs/13631288318"
+    )
   ),
   stantargets = list(
-    r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631287435",
-      issues_r_cmd_check = list(
-        "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
-        "win R-4.4.3" = "WARNING"
-      )
-    ), descriptions = list(
-      remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr")
-    ),
-    dependencies = list(targets = "tarchetypes"), success = FALSE,
+    packages = "stantargets", success = FALSE,
     published = "2025-03-03 13:13:16.874 UTC", version = "0.1.2",
-    remote_hash = "638326106594be70c5f851c767349e4192740771"
-  ),
-  string2path = list(
+    remote_hash = "638326106594be70c5f851c767349e4192740771",
+    r_cmd_check = list(
+      issues = list(
+        "linux R-4.4.3" = "WARNING",
+        "mac R-4.4.3" = "WARNING", "win R-4.4.3" = "WARNING"
+      ),
+      url = "https://github.com/r-universe/r-multiverse/actions/runs/13631287435"
+    ),
+    remotes = c("hyunjimoon/SBC", "stan-dev/cmdstanr"), dependencies = list(
+      targets = "tarchetypes"
+    )
+  ), string2path = list(
+    packages = "string2path",
     success = TRUE, published = "2025-03-03 13:02:33.173 UTC",
     version = "0.2.0", remote_hash = "0187aba7afebd016d4d90a0f76c7032e74694e2c"
   ),
   tarchetypes = list(
-    dependencies = list(targets = list()),
-    success = FALSE, published = "2025-03-13 22:21:24.424 UTC",
-    version = "0.12.0", remote_hash = "08e4de5f2042155145f80d390c75350a2f2ef8d7"
-  ),
-  targets = list(
+    packages = "tarchetypes", success = FALSE,
+    published = "2025-03-13 22:21:24.424 UTC", version = "0.12.0",
+    remote_hash = "08e4de5f2042155145f80d390c75350a2f2ef8d7",
+    dependencies = list(targets = list())
+  ), targets = list(
+    packages = "targets", success = FALSE, published = "2025-03-13 22:24:22.430 UTC",
+    version = "1.10.1", remote_hash = "fbedea37525c5e60c0ce8bee693d2f3aba378036",
     r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13845626109",
-      issues_r_cmd_check = list("mac R-4.4.3" = "ERROR")
-    ), success = FALSE,
-    published = "2025-03-13 22:24:22.430 UTC", version = "1.10.1",
-    remote_hash = "fbedea37525c5e60c0ce8bee693d2f3aba378036"
+      issues = list("mac R-4.4.3" = "ERROR"),
+      url = "https://github.com/r-universe/r-multiverse/actions/runs/13845626109"
+    )
   ),
   targetsketch = list(
-    dependencies = list(targets = "tarchetypes"),
-    success = FALSE, published = "2025-03-03 13:02:47.803 UTC",
-    version = "0.0.1", remote_hash = "a199a734b16f91726698a19e5f147f57f79cb2b6"
-  ),
-  taxizedb = list(
-    success = TRUE, published = "2025-03-03 13:07:36.753 UTC",
+    packages = "targetsketch", success = FALSE,
+    published = "2025-03-03 13:02:47.803 UTC", version = "0.0.1",
+    remote_hash = "a199a734b16f91726698a19e5f147f57f79cb2b6",
+    dependencies = list(targets = "tarchetypes")
+  ), taxizedb = list(
+    packages = "taxizedb", success = TRUE, published = "2025-03-03 13:07:36.753 UTC",
     version = "0.3.1", remote_hash = "5732f9777142cd0034b64d5ae8b9aea0605cfaab"
   ),
   tidypolars = list(
-    r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13771935997",
-      issues_r_cmd_check = list("win R-4.4.3" = "ERROR")
-    ), success = FALSE,
+    packages = "tidypolars", success = FALSE,
     published = "2025-03-10 18:29:27.036 UTC", version = "0.13.0",
-    remote_hash = "4e08e45d2ef7deb254caf0a2bce945cc445b1d88"
+    remote_hash = "4e08e45d2ef7deb254caf0a2bce945cc445b1d88",
+    r_cmd_check = list(
+      issues = list("win R-4.4.3" = "ERROR"),
+      url = "https://github.com/r-universe/r-multiverse/actions/runs/13771935997"
+    )
   ),
   tidytensor = list(
+    packages = "tidytensor", success = FALSE,
+    published = "2025-03-03 13:06:42.019 UTC", version = "1.0.0",
+    remote_hash = "14f5b87d2dfae20eb35cfd974adf660a4fd89980",
     r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631289402",
-      issues_r_cmd_check = list(
-        "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
-        "win R-4.4.3" = "WARNING"
-      )
-    ), success = FALSE, published = "2025-03-03 13:06:42.019 UTC",
-    version = "1.0.0", remote_hash = "14f5b87d2dfae20eb35cfd974adf660a4fd89980"
+      issues = list(
+        "linux R-4.4.3" = "WARNING",
+        "mac R-4.4.3" = "WARNING", "win R-4.4.3" = "WARNING"
+      ),
+      url = "https://github.com/r-universe/r-multiverse/actions/runs/13631289402"
+    )
   ),
   unigd = list(
-    success = TRUE, published = "2025-03-03 13:13:31.994 UTC",
+    packages = "unigd", success = TRUE, published = "2025-03-03 13:13:31.994 UTC",
     version = "0.1.2", remote_hash = "c7d55c984624bdf89e385a2d86fcb93c692b400c"
   ),
-  version_decremented = list(versions = list(
-    version_current = "0.0.1",
-    hash_current = "hash_0.0.1", version_highest = "1.0.0",
-    hash_highest = "hash_1.0.0"
-  ), success = FALSE), version_unmodified = list(
-    versions = list(
-      version_current = "1.0.0", hash_current = "hash_1.0.0-modified",
-      version_highest = "1.0.0", hash_highest = "hash_1.0.0"
-    ),
-    success = FALSE
-  ), webchem = list(
-    success = TRUE, published = "2025-03-03 13:07:21.430 UTC",
+  version_decremented = list(success = FALSE, versions = list(
+    version_current = "0.0.1", hash_current = "hash_0.0.1",
+    version_highest = "1.0.0", hash_highest = "hash_1.0.0"
+  )),
+  version_unmodified = list(success = FALSE, versions = list(
+    version_current = "1.0.0", hash_current = "hash_1.0.0-modified",
+    version_highest = "1.0.0", hash_highest = "hash_1.0.0"
+  )),
+  webchem = list(
+    packages = "webchem", success = TRUE, published = "2025-03-03 13:07:21.430 UTC",
     version = "1.3.0", remote_hash = "5c177df9bd91d969e10da94a9c468933f899d140"
   ),
   webseq = list(
+    packages = "webseq", success = FALSE, published = "2025-03-03 12:59:45.851 UTC",
+    version = "0.1", remote_hash = "b710f93da5b8dd8a30fa170cdf3da8da943fbae1",
     r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631287034",
-      issues_r_cmd_check = list(
-        "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
-        "win R-4.4.3" = "WARNING"
-      )
-    ), success = FALSE, published = "2025-03-03 12:59:45.851 UTC",
-    version = "0.1", remote_hash = "b710f93da5b8dd8a30fa170cdf3da8da943fbae1"
+      issues = list(
+        "linux R-4.4.3" = "WARNING",
+        "mac R-4.4.3" = "WARNING", "win R-4.4.3" = "WARNING"
+      ),
+      url = "https://github.com/r-universe/r-multiverse/actions/runs/13631287034"
+    )
   ),
   wildfires = list(
+    packages = "wildfires", success = FALSE,
+    published = "2025-03-03 13:00:58.713 UTC", version = "0.9.0",
+    remote_hash = "228c24be602b16073ff2bc8096d5df9d42dc6ea1",
     r_cmd_check = list(
-      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631287153",
-      issues_r_cmd_check = list(
-        "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
-        "win R-4.4.3" = "WARNING"
-      )
-    ), success = FALSE, published = "2025-03-03 13:00:58.713 UTC",
-    version = "0.9.0", remote_hash = "228c24be602b16073ff2bc8096d5df9d42dc6ea1"
+      issues = list(
+        "linux R-4.4.3" = "WARNING",
+        "mac R-4.4.3" = "WARNING", "win R-4.4.3" = "WARNING"
+      ),
+      url = "https://github.com/r-universe/r-multiverse/actions/runs/13631287153"
+    )
   ),
   zstdlite = list(
-    success = TRUE, published = "2025-03-03 13:05:05.707 UTC",
+    packages = "zstdlite", success = TRUE, published = "2025-03-03 13:05:05.707 UTC",
     version = "0.2.6", remote_hash = "585458ccbe36eaa179d8b30f04f1e3a91dc6b993"
   )
 )
