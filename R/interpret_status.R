@@ -74,7 +74,8 @@ interpret_advisories <- function(status) {
   }
   paste0(
     "Found the following advisories in the ",
-    "R Consortium Advisory Database:<br>",
+    "<a href=\"https://github.com/RConsortium/r-advisory-database\">",
+    "R Consortium Advisory Database:</a><br>",
     as.character(yaml_html(advisories))
   )
 }
@@ -84,10 +85,10 @@ interpret_r_cmd_check <- function(status) {
   if (is.null(r_cmd_check)) {
     return(character(0L))
   }
-  r_cmd_check$url_r_cmd_check <- sprintf(
+  r_cmd_check$url <- sprintf(
     "<a href=\"%s\">%s</a>",
-    r_cmd_check$url_r_cmd_check,
-    r_cmd_check$url_r_cmd_check
+    r_cmd_check$url,
+    r_cmd_check$url
   )
   paste0(
     "Not all `R CMD check` runs succeeded on R-universe. ",

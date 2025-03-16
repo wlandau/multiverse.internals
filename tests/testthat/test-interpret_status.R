@@ -52,7 +52,7 @@ test_that("interpret_status() with advisories", {
   out <- interpret_status("commonmark", status)
   expect_true(
     grepl(
-      "Found the following advisories in the R Consortium Advisory Database",
+      "R Consortium Advisory Database",
       out
     )
   )
@@ -224,20 +224,21 @@ test_that("interpret_status(): check these interactively", {
   skip_if_offline()
   status <- list(
     bad = list(
-      checks = list(
-        url_checks = "https://github.com/12103194809",
-        status = list(
+      published = "date",
+      version = "1.2.3",
+      remote_hash = "hash",
+      r_cmd_check = list(
+        url = "https://github.com/12103194809",
+        issues = list(
           `linux x86_64 R-4.5.0` = "WARNING",
           `mac aarch64 R-4.4.2` = "WARNING",
           `mac x86_64 R-4.4.2` = "WARNING",
           `win x86_64 R-4.4.2` = "WARNING"
         )
       ),
-      descriptions = list(
-        license = "non-standard",
-        advisories <- c("link1", "link2", "link3"),
-        remotes = "markvanderloo/tinytest/pkg"
-      ),
+      license = "non-standard",
+      advisories = c("link1", "link2", "link3"),
+      remotes = "markvanderloo/tinytest/pkg",
       dependencies = list(
         nanonext = "mirai",
         mirai = list(),
