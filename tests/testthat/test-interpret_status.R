@@ -107,14 +107,16 @@ test_that("interpret_status() checks etc.", {
   status <- jsonlite::read_json(output, simplifyVector = TRUE)
   expect_true(
     grepl(
-      "Not all checks succeeded on R-universe",
-      interpret_status("INLA", status)
+      "Not all `R CMD check` runs succeeded on R-universe",
+      interpret_status("INLA", status),
+      fixed = TRUE
     )
   )
   expect_true(
     grepl(
-      "Not all checks succeeded on R-universe",
-      interpret_status("colorout", status)
+      "Not all `R CMD check` runs succeeded on R-universe",
+      interpret_status("colorout", status),
+      fixed = TRUE
     )
   )
   expect_true(

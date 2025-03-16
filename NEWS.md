@@ -1,6 +1,7 @@
 # multiverse.internals 1.0.8
 
 * Subsume `meta_checks()` into `meta_packages()`.
+* Rename `status_checks()` to `status_r_cmd_check()`. In general, refer to "R CMD check" instead of the more ambiguous "checks" where appropriate.
 
 # multiverse.internals 1.0.7
 

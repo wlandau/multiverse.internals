@@ -19,7 +19,7 @@ interpret_status <- function(package, status) {
       interpret_title(status, package),
       interpret_advisories(status),
       interpret_licenses(status, package),
-      interpret_checks(status),
+      interpret_r_cmd_check(status),
       interpret_dependencies(status, package),
       interpret_remotes(status),
       interpert_version_conflicts(status),
@@ -79,24 +79,24 @@ interpret_advisories <- function(status) {
   )
 }
 
-interpret_checks <- function(status) {
-  checks <- status$checks
-  if (is.null(checks)) {
+interpret_r_cmd_check <- function(status) {
+  r_cmd_check <- status$r_cmd_check
+  if (is.null(r_cmd_check)) {
     return(character(0L))
   }
-  checks$url_checks <- sprintf(
+  r_cmd_check$url_r_cmd_check <- sprintf(
     "<a href=\"%s\">%s</a>",
-    checks$url_checks,
-    checks$url_checks
+    r_cmd_check$url_r_cmd_check,
+    r_cmd_check$url_r_cmd_check
   )
   paste0(
-    "Not all checks succeeded on R-universe. ",
+    "Not all `R CMD check` runs succeeded on R-universe. ",
     "The following output shows the check status on each enforced platform ",
     "and version of R. The GitHub Actions URL links to the check logs ",
     "on all platforms that R-universe runs. ",
     "Visit that URL to see specific details ",
     "on the check failures.<br>",
-    as.character(yaml_html(checks))
+    as.character(yaml_html(r_cmd_check))
   )
 }
 

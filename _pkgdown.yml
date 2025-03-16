@@ -18,7 +18,7 @@ reference:
   - record_status
   - record_nonstandard_licenses
   - record_versions
-  - status_checks
+  - status_r_cmd_check
   - status_dependencies
   - status_descriptions
   - status_versions

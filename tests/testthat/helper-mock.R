@@ -12,7 +12,7 @@ mock_meta_packages <- structure(list(
     "SBC", "stantargets", "string2path", "tarchetypes", "targets",
     "targetsketch", "taxizedb", "tidypolars", "tidytensor", "unigd",
     "webchem", "webseq", "wildfires", "zstdlite"
-  ), url_checks = c(
+  ), url_r_cmd_check = c(
     "https://github.com/r-universe/r-multiverse/actions/runs/13711632077",
     "https://github.com/r-universe/r-multiverse/actions/runs/13711634226",
     "https://github.com/r-universe/r-multiverse/actions/runs/13711636082",
@@ -67,7 +67,7 @@ mock_meta_packages <- structure(list(
     "https://github.com/r-universe/r-multiverse/actions/runs/13631287034",
     "https://github.com/r-universe/r-multiverse/actions/runs/13631287153",
     "https://github.com/r-universe/r-multiverse/actions/runs/13631288161"
-  ), issues_checks = list(
+  ), issues_r_cmd_check = list(
     list(), list(), list(), list(), list(),
     list(), list(), list(
       "linux x86_64 R-4.4.3" = "WARNING",
@@ -1108,9 +1108,9 @@ mock_status <- list(
     version = "0.2", remote_hash = "c3de76ddc738dbb4a80ac7ec67ac9da3cba093ba"
   ),
   audio.whisper = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13631287847",
-      issues_checks = list(
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631287847",
+      issues_r_cmd_check = list(
         "linux x86_64 R-4.4.3" = "WARNING",
         "mac aarch64 R-4.4.3" = "WARNING", "mac x86_64 R-4.4.3" = "WARNING",
         "win x86_64 R-4.4.3" = "WARNING"
@@ -1126,9 +1126,9 @@ mock_status <- list(
     version = "0.1.2", remote_hash = "36e98ae76feb34de0783d6505f7f2a17e972fe23"
   ),
   bridgestan = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13631289190",
-      issues_checks = list(
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631289190",
+      issues_r_cmd_check = list(
         "linux R-4.4.3" = "ERROR", "mac R-4.4.3" = "ERROR",
         "win R-4.4.3" = "ERROR"
       )
@@ -1140,9 +1140,9 @@ mock_status <- list(
     version = "0.8.1", remote_hash = "02259ef7aa2a8b1c8de2fa3fc42a9feafd789288"
   ),
   colorout = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13631286813",
-      issues_checks = list(
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631286813",
+      issues_r_cmd_check = list(
         "mac aarch64 R-4.4.3" = "WARNING",
         "mac x86_64 R-4.4.3" = "WARNING", win = "MISSING"
       )
@@ -1163,9 +1163,9 @@ mock_status <- list(
     version = "0.3.4", remote_hash = "9c448b046f6cc1eb1af4a86ca5310e34271477fe"
   ),
   demographr = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13631287991",
-      issues_checks = list(
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631287991",
+      issues_r_cmd_check = list(
         "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
         "win R-4.4.3" = "WARNING"
       )
@@ -1177,9 +1177,9 @@ mock_status <- list(
     version = "1.2.0", remote_hash = "d7b7108c2e526fa125669439cabc179021585d43"
   ),
   geographr = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13631287654",
-      issues_checks = list(
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631287654",
+      issues_r_cmd_check = list(
         "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
         "win R-4.4.3" = "WARNING"
       )
@@ -1187,17 +1187,17 @@ mock_status <- list(
     version = "1.0.1", remote_hash = "ed416a6735f7c4d8da0b866260369e84c27319a2"
   ),
   glaredb = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13631287270",
-      issues_checks = list(win = "MISSING")
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631287270",
+      issues_r_cmd_check = list(win = "MISSING")
     ), success = FALSE,
     published = "2025-03-03 13:13:12.313 UTC", version = "0.0.4",
     remote_hash = "349c5bb3a1fca6a8cefae381094b046c8ce028b2"
   ),
   healthyr = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13631288201",
-      issues_checks = list(
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631288201",
+      issues_r_cmd_check = list(
         "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
         "win R-4.4.3" = "WARNING"
       )
@@ -1222,9 +1222,9 @@ mock_status <- list(
     remote_hash = "8cc26c4f70bf6e07c47bab089c7bad18c864223c"
   ),
   INLA = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13631286185",
-      issues_checks = list(
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631286185",
+      issues_r_cmd_check = list(
         linux = "MISSING", mac = "MISSING",
         win = "MISSING", source = "FAILURE"
       )
@@ -1246,9 +1246,9 @@ mock_status <- list(
     version = "0.6", remote_hash = "203e35dadc695b03c975160fd8d9c1d36152efc6"
   ),
   loneliness = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13631286586",
-      issues_checks = list(
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631286586",
+      issues_r_cmd_check = list(
         "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
         "win R-4.4.3" = "WARNING"
       )
@@ -1268,9 +1268,9 @@ mock_status <- list(
     version = "0.1.1", remote_hash = "c73b933868d8c6884df4220c25779cd0874ec7de"
   ),
   multiverse.internals = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13860842188",
-      issues_checks = list("linux R-4.4.3" = "ERROR")
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13860842188",
+      issues_r_cmd_check = list("linux R-4.4.3" = "ERROR")
     ), success = FALSE,
     published = "2025-03-14 16:24:21.193 UTC", version = "1.0.7",
     remote_hash = "8e16e74613285852f0f9934318636e2ec31efc3a"
@@ -1304,9 +1304,9 @@ mock_status <- list(
     version = "1.1.5", remote_hash = "119ce823eabd4ce3e834af0e7de4601703fdc214"
   ),
   SBC = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13631288318",
-      issues_checks = list(
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631288318",
+      issues_r_cmd_check = list(
         "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
         "win R-4.4.3" = "WARNING"
       )
@@ -1314,9 +1314,9 @@ mock_status <- list(
     version = "0.3.0.9000", remote_hash = "9ddc803105f5350dae6efb4ae2657e89d2a54aa8"
   ),
   stantargets = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13631287435",
-      issues_checks = list(
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631287435",
+      issues_r_cmd_check = list(
         "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
         "win R-4.4.3" = "WARNING"
       )
@@ -1337,9 +1337,9 @@ mock_status <- list(
     version = "0.12.0", remote_hash = "08e4de5f2042155145f80d390c75350a2f2ef8d7"
   ),
   targets = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13845626109",
-      issues_checks = list("mac R-4.4.3" = "ERROR")
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13845626109",
+      issues_r_cmd_check = list("mac R-4.4.3" = "ERROR")
     ), success = FALSE,
     published = "2025-03-13 22:24:22.430 UTC", version = "1.10.1",
     remote_hash = "fbedea37525c5e60c0ce8bee693d2f3aba378036"
@@ -1354,17 +1354,17 @@ mock_status <- list(
     version = "0.3.1", remote_hash = "5732f9777142cd0034b64d5ae8b9aea0605cfaab"
   ),
   tidypolars = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13771935997",
-      issues_checks = list("win R-4.4.3" = "ERROR")
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13771935997",
+      issues_r_cmd_check = list("win R-4.4.3" = "ERROR")
     ), success = FALSE,
     published = "2025-03-10 18:29:27.036 UTC", version = "0.13.0",
     remote_hash = "4e08e45d2ef7deb254caf0a2bce945cc445b1d88"
   ),
   tidytensor = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13631289402",
-      issues_checks = list(
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631289402",
+      issues_r_cmd_check = list(
         "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
         "win R-4.4.3" = "WARNING"
       )
@@ -1390,9 +1390,9 @@ mock_status <- list(
     version = "1.3.0", remote_hash = "5c177df9bd91d969e10da94a9c468933f899d140"
   ),
   webseq = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13631287034",
-      issues_checks = list(
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631287034",
+      issues_r_cmd_check = list(
         "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
         "win R-4.4.3" = "WARNING"
       )
@@ -1400,9 +1400,9 @@ mock_status <- list(
     version = "0.1", remote_hash = "b710f93da5b8dd8a30fa170cdf3da8da943fbae1"
   ),
   wildfires = list(
-    checks = list(
-      url_checks = "https://github.com/r-universe/r-multiverse/actions/runs/13631287153",
-      issues_checks = list(
+    r_cmd_check = list(
+      url_r_cmd_check = "https://github.com/r-universe/r-multiverse/actions/runs/13631287153",
+      issues_r_cmd_check = list(
         "linux R-4.4.3" = "WARNING", "mac R-4.4.3" = "WARNING",
         "win R-4.4.3" = "WARNING"
       )

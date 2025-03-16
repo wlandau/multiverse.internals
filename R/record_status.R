@@ -23,7 +23,7 @@
 #'   automatically resets the next time all the status in the package
 #'   are resolved.
 #' @return `NULL` (invisibly).
-#' @inheritParams status_checks
+#' @inheritParams status_r_cmd_check
 #' @inheritParams status_dependencies
 #' @inheritParams status_versions
 #' @inheritParams meta_packages
@@ -55,7 +55,7 @@ record_status <- function(
 ) {
   meta <- mock$packages %||% meta_packages(repo = repo)
   status <- list() |>
-    add_status(status_checks(meta = meta), "checks") |>
+    add_status(status_r_cmd_check(meta = meta), "r_cmd_check") |>
     add_status(status_descriptions(meta = meta), "descriptions") |>
     add_status(status_versions(versions = versions), "versions")
   status <- status |>
