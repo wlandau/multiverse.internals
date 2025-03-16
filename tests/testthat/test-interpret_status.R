@@ -250,7 +250,8 @@ test_that("interpret_status(): check these interactively", {
         hash_current = "hash_1.0.0-modified",
         version_highest = "1.0.0",
         hash_highest = "hash_1.0.0"
-      )
+      ),
+      cran = "9.9.9"
     )
   )
   status$bad2 <- status$bad

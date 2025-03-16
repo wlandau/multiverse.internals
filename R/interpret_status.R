@@ -156,8 +156,12 @@ interpret_licenses <- function(status, package) {
     "declares license",
     shQuote(license),
     "in its DESCRIPTION file. R-multiverse cannot verify that",
-    "this license is a valid free and open-source license",
-    "(c.f. https://en.wikipedia.org/wiki/Free_and_open-source_software).",
+    "this license is a",
+    paste0(
+      "<a href=\"https://en.wikipedia.org/wiki/",
+      "Free_and_open-source_software\">",
+      "valid free and open-source license</a>."
+    ),
     "Each package contributed to R-multiverse must have a valid",
     "open-source license to protect the intellectual property",
     "rights of the package owners.<br><br>"
@@ -197,8 +201,8 @@ interpert_version_conflicts <- function(status) {
       out,
       "On CRAN, this package had version",
       status$cran,
-      "during the first day of the most recent R-multiverse Staging period.",
-      "The version on R-multiverse is lower,",
+      "during the first day of the most recent R-multiverse",
+      "dependency freeze. The version on R-multiverse is lower,",
       "which causes install.packages() to prefer CRAN.",
       "If you have not already done so, please ensure the latest",
       "GitHub/GitLab release has a suitably recent version",
