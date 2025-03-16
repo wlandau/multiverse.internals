@@ -17,22 +17,22 @@
 #' @param current A data frame of current versions and hashes of packages
 #'   in `repo`. This argument is exposed for testing only.
 #' @examples
-#'   # R-multiverse uses https://community.r-multiverse.org as the repo.
-#'   repo <- "https://wlandau.r-universe.dev" # just for testing and examples
-#'   output <- tempfile()
-#'   versions <- tempfile()
-#'   # First snapshot:
-#'   record_versions(
-#'     versions = versions,
-#'     repo = repo
-#'   )
-#'   readLines(versions)
-#'   # In subsequent snapshots, we have historical information about versions.
-#'   record_versions(
-#'     versions = versions,
-#'     repo = repo
-#'   )
-#'   readLines(versions)
+#' \dontrun{
+#' output <- tempfile()
+#' versions <- tempfile()
+#' # First snapshot:
+#' record_versions(
+#'   versions = versions,
+#'   repo = repo
+#' )
+#' readLines(versions)
+#' # In subsequent snapshots, we have historical information about versions.
+#' record_versions(
+#'   versions = versions,
+#'   repo = repo
+#' )
+#' readLines(versions)
+#' }
 record_versions <- function(
   versions = "versions.json",
   repo = "https://community.r-multiverse.org",

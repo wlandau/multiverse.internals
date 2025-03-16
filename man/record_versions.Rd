@@ -47,21 +47,21 @@ together all the status about R-multiverse packages.
 }
 
 \examples{
-  # R-multiverse uses https://community.r-multiverse.org as the repo.
-  repo <- "https://wlandau.r-universe.dev" # just for testing and examples
-  output <- tempfile()
-  versions <- tempfile()
-  # First snapshot:
-  record_versions(
-    versions = versions,
-    repo = repo
-  )
-  readLines(versions)
-  # In subsequent snapshots, we have historical information about versions.
-  record_versions(
-    versions = versions,
-    repo = repo
-  )
-  readLines(versions)
+\dontrun{
+output <- tempfile()
+versions <- tempfile()
+# First snapshot:
+record_versions(
+  versions = versions,
+  repo = repo
+)
+readLines(versions)
+# In subsequent snapshots, we have historical information about versions.
+record_versions(
+  versions = versions,
+  repo = repo
+)
+readLines(versions)
+}
 }
 \concept{package check data management}

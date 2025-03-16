@@ -45,12 +45,9 @@
 #' @param verbose `TRUE` to print progress while checking
 #'   dependency status, `FALSE` otherwise.
 #' @examples
-#'   meta <- meta_packages(repo = "https://wlandau.r-universe.dev")
-#'   issues_dependencies(packages = character(0L), meta = meta)
-#'   issues_dependencies(packages = "crew.aws.batch", meta = meta)
-#'   issues_dependencies(packages = "nanonext", meta = meta)
-#'   issues_dependencies(packages = "crew", meta = meta)
-#'   issues_dependencies(packages = c("crew", "mirai"), meta = meta)
+#' \dontrun{
+#' issues_dependencies(packages = "targets")
+#' }
 issues_dependencies <- function(
   packages,
   meta = meta_packages(),

@@ -56,12 +56,9 @@ These include indirect/upstream dependencies, as well, not just
 the explicit mentions in the \code{DESCRIPTION} file.
 }
 \examples{
-  meta <- meta_packages(repo = "https://wlandau.r-universe.dev")
-  issues_dependencies(packages = character(0L), meta = meta)
-  issues_dependencies(packages = "crew.aws.batch", meta = meta)
-  issues_dependencies(packages = "nanonext", meta = meta)
-  issues_dependencies(packages = "crew", meta = meta)
-  issues_dependencies(packages = c("crew", "mirai"), meta = meta)
+\dontrun{
+issues_dependencies(packages = "targets")
+}
 }
 \seealso{
 Other issues: 

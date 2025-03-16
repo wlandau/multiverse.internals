@@ -17,7 +17,9 @@ metadata.
 List package metadata in an R universe.
 }
 \examples{
-  meta_packages(repo = "https://wlandau.r-universe.dev")
+\dontrun{
+meta_packages()
+}
 }
 \seealso{
 Other meta: 

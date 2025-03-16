@@ -23,6 +23,7 @@
 #'   automatically resets the next time all the status in the package
 #'   are resolved.
 #' @return `NULL` (invisibly).
+#' @inheritParams issues_r_cmd_check
 #' @inheritParams issues_dependencies
 #' @inheritParams issues_versions
 #' @inheritParams meta_packages
