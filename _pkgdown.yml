@@ -22,7 +22,7 @@ reference:
   - issues_remotes
   - issues_versions
   - issues_version_conflicts
-- title: Record package information
+- title: Recording package information
   contents:
   - record_status
   - record_nonstandard_licenses
