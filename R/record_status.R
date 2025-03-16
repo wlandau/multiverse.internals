@@ -33,19 +33,20 @@
 #' @param mock For testing purposes only, a named list of data frames
 #'   for inputs to various intermediate functions.
 #' @examples
-#'   repo <- "https://wlandau.r-universe.dev"
-#'   output <- tempfile()
-#'   versions <- tempfile()
-#'   record_versions(
-#'     versions = versions,
-#'     repo = repo
-#'   )
-#'   record_status(
-#'     repo = repo,
-#'     versions = versions,
-#'     output = output
-#'   )
-#'   writeLines(readLines(output))
+#' \dontrun{
+#' output <- tempfile()
+#' versions <- tempfile()
+#' record_versions(
+#'   versions = versions,
+#'   repo = repo
+#' )
+#' record_status(
+#'   repo = repo,
+#'   versions = versions,
+#'   output = output
+#' )
+#' writeLines(readLines(output))
+#' }
 record_status <- function(
   repo = "https://community.r-multiverse.org",
   versions = "versions.json",

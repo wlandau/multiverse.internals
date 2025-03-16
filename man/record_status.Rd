@@ -61,19 +61,20 @@ are resolved.
 }
 
 \examples{
-  repo <- "https://wlandau.r-universe.dev"
-  output <- tempfile()
-  versions <- tempfile()
-  record_versions(
-    versions = versions,
-    repo = repo
-  )
-  record_status(
-    repo = repo,
-    versions = versions,
-    output = output
-  )
-  writeLines(readLines(output))
+\dontrun{
+output <- tempfile()
+versions <- tempfile()
+record_versions(
+  versions = versions,
+  repo = repo
+)
+record_status(
+  repo = repo,
+  versions = versions,
+  output = output
+)
+writeLines(readLines(output))
+}
 }
 \keyword{check}
 \keyword{data}
