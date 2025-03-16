@@ -1,6 +1,6 @@
 #' @title R-universe package `R CMD check` issues.
 #' @export
-#' @family status
+#' @family issues
 #' @description Report issues from `R CMD check` on R-universe.
 #' @details [status_r_cmd_check()] reads output from
 #'   the R-universe `R CMD check` results API
@@ -10,12 +10,11 @@
 #' @return A data frame with one row for each problematic
 #'   package and columns for the package
 #'   names and `R CMD check` issues.
-#' @param meta A data frame with R-universe package `R CMD check` results
-#'   returned by [meta_packages()].
+#' @inheritParams issues_advisories
 #' @examples
-#'   meta <- meta_packages(repo = "https://wlandau.r-universe.dev")
-#'   status <- issues_r_cmd_check(meta = meta)
-#'   str(status)
+#' \dontrun{
+#' issues_r_cmd_check()
+#' }
 issues_r_cmd_check <- function(meta = meta_packages()) {
   meta <- meta[lengths(meta$issues_r_cmd_check) > 0L,, drop = FALSE] # nolint
   out <- data.frame(package = meta$package)

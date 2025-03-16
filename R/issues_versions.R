@@ -1,12 +1,11 @@
 #' @title Package version issues.
 #' @export
-#' @family status
+#' @family issues
 #' @description Check package version number history for compliance.
 #' @details This function checks the version number history of packages
 #'   in R-multiverse and reports any packages with issues. The current
 #'   released version of a given package must be unique, and it must be
 #'   greater than all the versions of all the previous package releases.
-#' @inheritSection record_status Package status
 #' @return A data frame with one row for each problematic
 #'   package and columns with
 #'   the package names and version issues.

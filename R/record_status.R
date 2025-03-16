@@ -23,9 +23,8 @@
 #'   automatically resets the next time all the status in the package
 #'   are resolved.
 #' @return `NULL` (invisibly).
-#' @inheritParams status_r_cmd_check
-#' @inheritParams status_dependencies
-#' @inheritParams status_versions
+#' @inheritParams issues_dependencies
+#' @inheritParams issues_versions
 #' @inheritParams meta_packages
 #' @param output Character of length 1, file path to the JSON file to record
 #'   new package status. Each call to `record_status()` overwrites the

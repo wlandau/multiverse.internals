@@ -9,14 +9,16 @@ issues_dependencies(packages, meta = meta_packages(), verbose = FALSE)
 \arguments{
 \item{packages}{Character vector of names of packages with other issues.}
 
-\item{meta}{A data frame with R-universe package check results
-returned by \code{\link[=meta_packages]{meta_packages()}}.}
+\item{meta}{Package metadata from \code{\link[=meta_packages]{meta_packages()}}.}
 
 \item{verbose}{\code{TRUE} to print progress while checking
 dependency status, \code{FALSE} otherwise.}
 }
 \value{
-A nested list of problems triggered by dependencies.
+A data frame with one row for each package impacted by
+upstream dependencies.
+Each element of the \code{dependencies} column is a
+nested list describing the problems upstream.
 
 To illustrate the structure of this list, suppose
 Package \code{tarchetypes} depends on package \code{targets}, and packages
@@ -53,18 +55,6 @@ Flag packages which have issues in their strong dependencies
 These include indirect/upstream dependencies, as well, not just
 the explicit mentions in the \code{DESCRIPTION} file.
 }
-\section{Package status}{
-
-Functions like \code{\link[=status_versions]{status_versions()}} and \code{\link[=status_descriptions]{status_descriptions()}}
-perform health checks for all packages in R-multiverse.
-For a complete list of checks, see
-the \verb{status_*()} functions listed at
-\url{https://r-multiverse.org/multiverse.internals/reference/index.html}.
-\code{\link[=record_versions]{record_versions()}} updates the version number history
-of releases in R-multiverse, and \code{\link[=record_status]{record_status()}} gathers
-together all the status about R-multiverse packages.
-}
-
 \examples{
   meta <- meta_packages(repo = "https://wlandau.r-universe.dev")
   issues_dependencies(packages = character(0L), meta = meta)
@@ -74,11 +64,12 @@ together all the status about R-multiverse packages.
   issues_dependencies(packages = c("crew", "mirai"), meta = meta)
 }
 \seealso{
-Other status: 
-\code{\link{interpret_status}()},
+Other issues: 
+\code{\link{issues_advisories}()},
+\code{\link{issues_licenses}()},
 \code{\link{issues_r_cmd_check}()},
-\code{\link{issues_versions}()},
-\code{\link{status_descriptions}()},
-\code{\link{update_status}()}
+\code{\link{issues_remotes}()},
+\code{\link{issues_version_conflicts}()},
+\code{\link{issues_versions}()}
 }
-\concept{status}
+\concept{issues}

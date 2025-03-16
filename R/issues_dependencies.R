@@ -1,12 +1,14 @@
 #' @title Report package dependency issues
 #' @export
-#' @family status
+#' @family issues
 #' @description Flag packages which have issues in their strong dependencies
 #'   (`Imports:`, `Depends:`, and `LinkingTo:` in the `DESCRIPTION`.)
 #'   These include indirect/upstream dependencies, as well, not just
 #'   the explicit mentions in the `DESCRIPTION` file.
-#' @inheritSection record_status Package status
-#' @return A nested list of problems triggered by dependencies.
+#' @return A data frame with one row for each package impacted by
+#'   upstream dependencies.
+#'   Each element of the `dependencies` column is a
+#'   nested list describing the problems upstream.
 #'
 #'   To illustrate the structure of this list, suppose
 #'   Package `tarchetypes` depends on package `targets`, and packages
@@ -38,9 +40,8 @@
 #'   where `upstream_culprit` causes problems in `impacted_reverse_dependency`
 #'   through direct dependencies `direct_dependency_1` and
 #'   `direct_dependency_2`.
+#' @inheritParams issues_advisories
 #' @param packages Character vector of names of packages with other issues.
-#' @param meta A data frame with R-universe package check results
-#'   returned by [meta_packages()].
 #' @param verbose `TRUE` to print progress while checking
 #'   dependency status, `FALSE` otherwise.
 #' @examples

@@ -7,8 +7,7 @@
 issues_r_cmd_check(meta = meta_packages())
 }
 \arguments{
-\item{meta}{A data frame with R-universe package \verb{R CMD check} results
-returned by \code{\link[=meta_packages]{meta_packages()}}.}
+\item{meta}{Package metadata from \code{\link[=meta_packages]{meta_packages()}}.}
 }
 \value{
 A data frame with one row for each problematic
@@ -37,16 +36,17 @@ together all the status about R-multiverse packages.
 }
 
 \examples{
-  meta <- meta_packages(repo = "https://wlandau.r-universe.dev")
-  status <- issues_r_cmd_check(meta = meta)
-  str(status)
+\dontrun{
+issues_r_cmd_check()
+}
 }
 \seealso{
-Other status: 
-\code{\link{interpret_status}()},
+Other issues: 
+\code{\link{issues_advisories}()},
 \code{\link{issues_dependencies}()},
-\code{\link{issues_versions}()},
-\code{\link{status_descriptions}()},
-\code{\link{update_status}()}
+\code{\link{issues_licenses}()},
+\code{\link{issues_remotes}()},
+\code{\link{issues_version_conflicts}()},
+\code{\link{issues_versions}()}
 }
-\concept{status}
+\concept{issues}

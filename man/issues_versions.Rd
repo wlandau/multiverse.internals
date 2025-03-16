@@ -24,18 +24,6 @@ in R-multiverse and reports any packages with issues. The current
 released version of a given package must be unique, and it must be
 greater than all the versions of all the previous package releases.
 }
-\section{Package status}{
-
-Functions like \code{\link[=status_versions]{status_versions()}} and \code{\link[=status_descriptions]{status_descriptions()}}
-perform health checks for all packages in R-multiverse.
-For a complete list of checks, see
-the \verb{status_*()} functions listed at
-\url{https://r-multiverse.org/multiverse.internals/reference/index.html}.
-\code{\link[=record_versions]{record_versions()}} updates the version number history
-of releases in R-multiverse, and \code{\link[=record_status]{record_status()}} gathers
-together all the status about R-multiverse packages.
-}
-
 \examples{
   lines <- c(
     "[",
@@ -75,11 +63,12 @@ together all the status about R-multiverse packages.
   str(out)
 }
 \seealso{
-Other status: 
-\code{\link{interpret_status}()},
+Other issues: 
+\code{\link{issues_advisories}()},
 \code{\link{issues_dependencies}()},
+\code{\link{issues_licenses}()},
 \code{\link{issues_r_cmd_check}()},
-\code{\link{status_descriptions}()},
-\code{\link{update_status}()}
+\code{\link{issues_remotes}()},
+\code{\link{issues_version_conflicts}()}
 }
-\concept{status}
+\concept{issues}

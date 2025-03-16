@@ -48,10 +48,6 @@ writeLines(
 }
 \seealso{
 Other status: 
-\code{\link{interpret_status}()},
-\code{\link{issues_dependencies}()},
-\code{\link{issues_r_cmd_check}()},
-\code{\link{issues_versions}()},
-\code{\link{status_descriptions}()}
+\code{\link{interpret_status}()}
 }
 \concept{status}
