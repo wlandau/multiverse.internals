@@ -2,6 +2,7 @@
 
 * Subsume `meta_checks()` into `meta_packages()`.
 * Rename `status_checks()` to `status_r_cmd_check()`. In general, refer to "R CMD check" instead of the more ambiguous "checks" where appropriate.
+* Factor out the R-multiverse checks into their own functions with prefix "issues_". Simplify the management and aggregation of this issue data.
 
 # multiverse.internals 1.0.7
 

@@ -68,7 +68,7 @@ interpret_title <- function(status, package) {
 }
 
 interpret_advisories <- function(status) {
-  advisories <- status$descriptions$advisories
+  advisories <- status$advisories
   if (is.null(advisories)) {
     return(character(0L))
   }
@@ -145,7 +145,7 @@ interpret_dependencies <- function(status, package) {
 }
 
 interpret_licenses <- function(status, package) {
-  license <- status$descriptions$license
+  license <- status$license
   if (is.null(license)) {
     return(character(0L))
   }
@@ -164,7 +164,7 @@ interpret_licenses <- function(status, package) {
 }
 
 interpret_remotes <- function(status) {
-  remotes <- status$descriptions$remotes
+  remotes <- status$remotes
   if (is.null(remotes)) {
     return(character(0L))
   }
@@ -191,11 +191,11 @@ interpret_versions <- function(status) {
 
 interpert_version_conflicts <- function(status) {
   out <- character(0L)
-  if (!is.null(status$descriptions$cran)) {
+  if (!is.null(status$cran)) {
     out <- paste(
       out,
       "On CRAN, this package had version",
-      status$descriptions$cran,
+      status$cran,
       "during the first day of the most recent R-multiverse Staging period.",
       "The version on R-multiverse is lower,",
       "which causes install.packages() to prefer CRAN.",
