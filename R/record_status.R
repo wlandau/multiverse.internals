@@ -4,48 +4,39 @@
 #' @description Record R-multiverse package status in
 #'   package-specific JSON files.
 #' @section Package status:
-#'   Functions like [status_versions()] and [status_descriptions()]
+#'   Functions like [issues_versions()] and [issues_r_cmd_check()]
 #'   perform health checks for all packages in R-multiverse.
 #'   For a complete list of checks, see
-#'   the `status_*()` functions listed at
+#'   the `issues_*()` functions listed at
 #'   <https://r-multiverse.org/multiverse.internals/reference/index.html>.
 #'   [record_versions()] updates the version number history
 #'   of releases in R-multiverse, and [record_status()] gathers
 #'   together all the status about R-multiverse packages.
-#' @section Status data:
-#'   For each package with observed problems, [record_status()] writes
-#'   a JSON list entry in the output JSON file
-#'   with one element for each type of failing check.
-#'   Each check-specific element has an informative name
-#'   (for example, `checks`, `descriptions`, or `versions`)
-#'   and a list of diagnostic information. In addition, there is a `date`
-#'   field to indicate when an issue was first detected. The `date`
-#'   automatically resets the next time all the status in the package
-#'   are resolved.
 #' @return `NULL` (invisibly).
-#' @inheritParams status_checks
-#' @inheritParams status_dependencies
-#' @inheritParams status_versions
-#' @inheritParams meta_checks
+#' @inheritParams issues_r_cmd_check
+#' @inheritParams issues_dependencies
+#' @inheritParams issues_versions
+#' @inheritParams meta_packages
 #' @param output Character of length 1, file path to the JSON file to record
 #'   new package status. Each call to `record_status()` overwrites the
 #'   contents of the file.
 #' @param mock For testing purposes only, a named list of data frames
 #'   for inputs to various intermediate functions.
 #' @examples
-#'   repo <- "https://wlandau.r-universe.dev"
-#'   output <- tempfile()
-#'   versions <- tempfile()
-#'   record_versions(
-#'     versions = versions,
-#'     repo = repo
-#'   )
-#'   record_status(
-#'     repo = repo,
-#'     versions = versions,
-#'     output = output
-#'   )
-#'   writeLines(readLines(output))
+#' \dontrun{
+#' output <- tempfile()
+#' versions <- tempfile()
+#' record_versions(
+#'   versions = versions,
+#'   repo = repo
+#' )
+#' record_status(
+#'   repo = repo,
+#'   versions = versions,
+#'   output = output
+#' )
+#' writeLines(readLines(output))
+#' }
 record_status <- function(
   repo = "https://community.r-multiverse.org",
   versions = "versions.json",
@@ -53,50 +44,41 @@ record_status <- function(
   mock = NULL,
   verbose = FALSE
 ) {
-  checks <- mock$checks %||% meta_checks(repo = repo)
-  packages <- mock$packages %||% meta_packages(repo = repo)
-  status <- list() |>
-    add_status(status_checks(meta = checks), "checks") |>
-    add_status(status_descriptions(meta = packages), "descriptions") |>
-    add_status(status_versions(versions = versions), "versions")
-  status <- status |>
-    add_status(
-      status_dependencies(names(status), packages, verbose = verbose),
-      "dependencies"
-    )
-  for (name in names(status)) {
-    status[[name]]$success <- FALSE
-  }
-  for (healthy in setdiff(packages$package, names(status))) {
-    status[[healthy]] <- list(success = TRUE)
-  }
-  status <- status[sort(names(status))]
-  overwrite_status(
-    status = status,
-    output = output,
-    packages = packages
-  )
+  meta <- mock$packages %||% meta_packages(repo = repo)
+  status <- Map(
+    function(published, version, remotesha) {
+      list(
+        success = TRUE,
+        published = published,
+        version = version,
+        remote_hash = remotesha
+      )
+    },
+    published = meta$published,
+    version = meta$version,
+    remotesha = meta$remotesha
+  ) |>
+    stats::setNames(nm = meta$package) |>
+    add_issues(issues_advisories(meta)) |>
+    add_issues(issues_licenses(meta)) |>
+    add_issues(issues_r_cmd_check(meta)) |>
+    add_issues(issues_remotes(meta)) |>
+    add_issues(issues_version_conflicts(meta, "cran")) |>
+    add_issues(issues_versions(versions))
+  issues <- names(Filter(\(x) !x$success, status))
+  status <- add_issues(status, issues_dependencies(issues, meta, verbose))
+  status <- status[order(names(status))]
+  jsonlite::write_json(x = status, path = output, pretty = TRUE)
   invisible()
 }
 
-add_status <- function(total, subset, category) {
-  for (package in names(subset)) {
-    total[[package]][[category]] <- subset[[package]]
+add_issues <- function(status, issues) {
+  for (field in setdiff(colnames(issues), "package")) {
+    for (index in seq_len(nrow(issues))) {
+      package <- issues$package[index]
+      status[[package]]$success <- FALSE
+      status[[package]][[field]] <- issues[[field]][[index]]
+    }
   }
-  total
-}
-
-overwrite_status <- function(status, output, packages) {
-  for (index in seq_len(nrow(packages))) {
-    package <- packages$package[index]
-    status[[package]]$published <- packages$published[index]
-    status[[package]]$version <- packages$version[index]
-    status[[package]]$remote_hash <- packages$remotesha[index]
-  }
-  for (package in setdiff(names(status), packages$package)) {
-    status[[package]]$published <- "NA"
-    status[[package]]$version <- "NA"
-    status[[package]]$remote_hash <- "NA"
-  }
-  jsonlite::write_json(x = status, path = output, pretty = TRUE)
+  status
 }

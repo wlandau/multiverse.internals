@@ -6,33 +6,33 @@
 #' @details This function tracks a manifest containing the current version,
 #'   the current hash, the highest version ever released, and
 #'   the hash of the highest version ever released.
-#'   [status_versions()] uses this information
+#'   [issues_versions()] uses this information
 #'   to determine whether the package complies with best
 #'   practices for version numbers.
 #' @inheritSection record_status Package status
 #' @return `NULL` (invisibly). Writes version information to a JSON file.
-#' @inheritParams meta_checks
+#' @inheritParams meta_packages
 #' @param versions Character of length 1, file path to a JSON manifest
 #'   tracking the history of released versions of packages.
 #' @param current A data frame of current versions and hashes of packages
 #'   in `repo`. This argument is exposed for testing only.
 #' @examples
-#'   # R-multiverse uses https://community.r-multiverse.org as the repo.
-#'   repo <- "https://wlandau.r-universe.dev" # just for testing and examples
-#'   output <- tempfile()
-#'   versions <- tempfile()
-#'   # First snapshot:
-#'   record_versions(
-#'     versions = versions,
-#'     repo = repo
-#'   )
-#'   readLines(versions)
-#'   # In subsequent snapshots, we have historical information about versions.
-#'   record_versions(
-#'     versions = versions,
-#'     repo = repo
-#'   )
-#'   readLines(versions)
+#' \dontrun{
+#' output <- tempfile()
+#' versions <- tempfile()
+#' # First snapshot:
+#' record_versions(
+#'   versions = versions,
+#'   repo = repo
+#' )
+#' readLines(versions)
+#' # In subsequent snapshots, we have historical information about versions.
+#' record_versions(
+#'   versions = versions,
+#'   repo = repo
+#' )
+#' readLines(versions)
+#' }
 record_versions <- function(
   versions = "versions.json",
   repo = "https://community.r-multiverse.org",
@@ -60,7 +60,6 @@ get_current_versions <- function(
   meta <- meta_packages(repo = repo)
   meta <- meta[, c("package", "version", "remotesha")]
   colnames(meta) <- c("package", "version_current", "hash_current")
-  rownames(meta) <- NULL
   meta
 }
 

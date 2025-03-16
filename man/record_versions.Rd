@@ -14,8 +14,7 @@ record_versions(
 \item{versions}{Character of length 1, file path to a JSON manifest
 tracking the history of released versions of packages.}
 
-\item{repo}{Character of length 1, URL of the package repository.
-R-multiverse uses \code{"https://community.r-multiverse.org"}.}
+\item{repo}{URL of the repository to query.}
 
 \item{current}{A data frame of current versions and hashes of packages
 in \code{repo}. This argument is exposed for testing only.}
@@ -31,16 +30,16 @@ and their hashes.
 This function tracks a manifest containing the current version,
 the current hash, the highest version ever released, and
 the hash of the highest version ever released.
-\code{\link[=status_versions]{status_versions()}} uses this information
+\code{\link[=issues_versions]{issues_versions()}} uses this information
 to determine whether the package complies with best
 practices for version numbers.
 }
 \section{Package status}{
 
-Functions like \code{\link[=status_versions]{status_versions()}} and \code{\link[=status_descriptions]{status_descriptions()}}
+Functions like \code{\link[=issues_versions]{issues_versions()}} and \code{\link[=issues_r_cmd_check]{issues_r_cmd_check()}}
 perform health checks for all packages in R-multiverse.
 For a complete list of checks, see
-the \verb{status_*()} functions listed at
+the \verb{issues_*()} functions listed at
 \url{https://r-multiverse.org/multiverse.internals/reference/index.html}.
 \code{\link[=record_versions]{record_versions()}} updates the version number history
 of releases in R-multiverse, and \code{\link[=record_status]{record_status()}} gathers
@@ -48,21 +47,21 @@ together all the status about R-multiverse packages.
 }
 
 \examples{
-  # R-multiverse uses https://community.r-multiverse.org as the repo.
-  repo <- "https://wlandau.r-universe.dev" # just for testing and examples
-  output <- tempfile()
-  versions <- tempfile()
-  # First snapshot:
-  record_versions(
-    versions = versions,
-    repo = repo
-  )
-  readLines(versions)
-  # In subsequent snapshots, we have historical information about versions.
-  record_versions(
-    versions = versions,
-    repo = repo
-  )
-  readLines(versions)
+\dontrun{
+output <- tempfile()
+versions <- tempfile()
+# First snapshot:
+record_versions(
+  versions = versions,
+  repo = repo
+)
+readLines(versions)
+# In subsequent snapshots, we have historical information about versions.
+record_versions(
+  versions = versions,
+  repo = repo
+)
+readLines(versions)
+}
 }
 \concept{package check data management}

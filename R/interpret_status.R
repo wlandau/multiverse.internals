@@ -19,7 +19,7 @@ interpret_status <- function(package, status) {
       interpret_title(status, package),
       interpret_advisories(status),
       interpret_licenses(status, package),
-      interpret_checks(status),
+      interpret_r_cmd_check(status),
       interpret_dependencies(status, package),
       interpret_remotes(status),
       interpert_version_conflicts(status),
@@ -68,31 +68,36 @@ interpret_title <- function(status, package) {
 }
 
 interpret_advisories <- function(status) {
-  advisories <- status$descriptions$advisories
+  advisories <- status$advisories
   if (is.null(advisories)) {
     return(character(0L))
   }
   paste0(
     "Found the following advisories in the ",
-    "R Consortium Advisory Database:<br>",
+    "<a href=\"https://github.com/RConsortium/r-advisory-database\">",
+    "R Consortium Advisory Database:</a><br>",
     as.character(yaml_html(advisories))
   )
 }
 
-interpret_checks <- function(status) {
-  checks <- status$checks
-  if (is.null(checks)) {
+interpret_r_cmd_check <- function(status) {
+  r_cmd_check <- status$r_cmd_check
+  if (is.null(r_cmd_check)) {
     return(character(0L))
   }
-  checks$url <- sprintf("<a href=\"%s\">%s</a>", checks$url, checks$url)
+  r_cmd_check$url <- sprintf(
+    "<a href=\"%s\">%s</a>",
+    r_cmd_check$url,
+    r_cmd_check$url
+  )
   paste0(
-    "Not all checks succeeded on R-universe. ",
+    "Not all `R CMD check` runs succeeded on R-universe. ",
     "The following output shows the check status on each enforced platform ",
     "and version of R. The GitHub Actions URL links to the check logs ",
-    "on all platforms that R-universe runs.",
+    "on all platforms that R-universe runs. ",
     "Visit that URL to see specific details ",
     "on the check failures.<br>",
-    as.character(yaml_html(checks))
+    as.character(yaml_html(r_cmd_check))
   )
 }
 
@@ -141,7 +146,7 @@ interpret_dependencies <- function(status, package) {
 }
 
 interpret_licenses <- function(status, package) {
-  license <- status$descriptions$license
+  license <- status$license
   if (is.null(license)) {
     return(character(0L))
   }
@@ -151,8 +156,12 @@ interpret_licenses <- function(status, package) {
     "declares license",
     shQuote(license),
     "in its DESCRIPTION file. R-multiverse cannot verify that",
-    "this license is a valid free and open-source license",
-    "(c.f. https://en.wikipedia.org/wiki/Free_and_open-source_software).",
+    "this license is a",
+    paste0(
+      "<a href=\"https://en.wikipedia.org/wiki/",
+      "Free_and_open-source_software\">",
+      "valid free and open-source license</a>."
+    ),
     "Each package contributed to R-multiverse must have a valid",
     "open-source license to protect the intellectual property",
     "rights of the package owners.<br><br>"
@@ -160,7 +169,7 @@ interpret_licenses <- function(status, package) {
 }
 
 interpret_remotes <- function(status) {
-  remotes <- status$descriptions$remotes
+  remotes <- status$remotes
   if (is.null(remotes)) {
     return(character(0L))
   }
@@ -187,13 +196,13 @@ interpret_versions <- function(status) {
 
 interpert_version_conflicts <- function(status) {
   out <- character(0L)
-  if (!is.null(status$descriptions$cran)) {
+  if (!is.null(status$cran)) {
     out <- paste(
       out,
       "On CRAN, this package had version",
-      status$descriptions$cran,
-      "during the first day of the most recent R-multiverse Staging period.",
-      "The version on R-multiverse is lower,",
+      status$cran,
+      "during the first day of the most recent R-multiverse",
+      "dependency freeze. The version on R-multiverse is lower,",
       "which causes install.packages() to prefer CRAN.",
       "If you have not already done so, please ensure the latest",
       "GitHub/GitLab release has a suitably recent version",

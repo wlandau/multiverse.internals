@@ -1,18 +1,14 @@
-#' @title Check package versions.
+#' @title Package version issues.
 #' @export
-#' @family status
+#' @family issues
 #' @description Check package version number history for compliance.
 #' @details This function checks the version number history of packages
 #'   in R-multiverse and reports any packages with issues. The current
 #'   released version of a given package must be unique, and it must be
 #'   greater than all the versions of all the previous package releases.
-#' @inheritSection record_status Package status
-#' @return A named list of information about packages which do not comply
-#'   with version number history checks. Each name is a package name,
-#'   and each element contains specific information about version
-#'   non-compliance: the current version number, the current version hash,
-#'   and the analogous versions and hashes of the highest-versioned
-#'   release recorded.
+#' @return A data frame with one row for each problematic
+#'   package and columns with
+#'   the package names and version issues.
 #' @inheritParams record_versions
 #' @examples
 #'   lines <- c(
@@ -49,13 +45,29 @@
 #'   )
 #'   versions <- tempfile()
 #'   writeLines(lines, versions)
-#'   out <- status_versions(versions)
+#'   out <- issues_versions(versions)
 #'   str(out)
-status_versions <- function(versions) {
+issues_versions <- function(versions) {
   history <- jsonlite::read_json(path = versions, simplifyVector = TRUE)
   aligned <- (history$version_current == history$version_highest) &
     (history$hash_current == history$hash_highest)
   aligned[is.na(aligned)] <- TRUE
-  out <- history[!aligned,, drop = FALSE] # nolint
-  status_list(out)
+  misaligned <- history[!aligned,, drop = FALSE] # nolint
+  out <- data.frame(package = misaligned$package)
+  out$versions <- Map(
+    function(version_current, hash_current, version_highest, hash_highest) {
+      list(
+        version_current = version_current,
+        hash_current = hash_current,
+        version_highest = version_highest,
+        hash_highest = hash_highest
+      )
+    },
+    version_current = misaligned$version_current,
+    hash_current = misaligned$hash_current,
+    version_highest = misaligned$version_highest,
+    hash_highest = misaligned$hash_highest
+  ) |>
+    unname()
+  out
 }

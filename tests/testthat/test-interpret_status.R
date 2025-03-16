@@ -28,9 +28,6 @@ test_that("interpret_status() with a successful package", {
 test_that("interpret_status() with advisories", {
   skip_if_offline()
   mock <- mock_meta_packages
-  for (field in c("_id", "_dependencies", "distro", "remotes")) {
-    mock[[field]] <- NULL
-  }
   example <- mock$package == "nanonext"
   commonmark <- mock[example,, drop = FALSE] # nolint
   commonmark$package <- "commonmark"
@@ -44,14 +41,10 @@ test_that("interpret_status() with advisories", {
     readxl
   )
   output <- tempfile()
-  versions <- tempfile()
-  record_versions(
-    versions = versions,
-    repo = "https://wlandau.r-universe.dev"
-  )
+  versions <- mock_versions()
   on.exit(unlink(c(output, versions), recursive = TRUE))
   record_status(
-    mock = list(packages = meta, checks = mock_meta_checks),
+    mock = list(packages = meta),
     output = output,
     versions = versions
   )
@@ -59,7 +52,7 @@ test_that("interpret_status() with advisories", {
   out <- interpret_status("commonmark", status)
   expect_true(
     grepl(
-      "Found the following advisories in the R Consortium Advisory Database",
+      "R Consortium Advisory Database",
       out
     )
   )
@@ -68,15 +61,12 @@ test_that("interpret_status() with advisories", {
 test_that("interpret_status() with bad licenses", {
   skip_if_offline()
   mock <- mock_meta_packages[mock_meta_packages$package == "targetsketch", ]
+  mock$foss <- FALSE
   output <- tempfile()
-  versions <- tempfile()
-  record_versions(
-    versions = versions,
-    repo = "https://wlandau.r-universe.dev"
-  )
+  versions <- mock_versions()
   on.exit(unlink(c(output, versions), recursive = TRUE))
   record_status(
-    mock = list(packages = mock, checks = mock_meta_checks),
+    mock = list(packages = mock),
     output = output,
     versions = versions
   )
@@ -107,22 +97,26 @@ test_that("interpret_status() checks etc.", {
   versions <- tempfile()
   writeLines(lines, versions)
   on.exit(unlink(c(output, versions), recursive = TRUE))
+  mock <- mock_meta_packages
+  mock$cran[mock$package == "SBC"] <- "999.999.999"
   record_status(
-    mock = list(packages = mock_meta_packages, checks = mock_meta_checks),
+    mock = list(packages = mock),
     output = output,
     versions = versions
   )
   status <- jsonlite::read_json(output, simplifyVector = TRUE)
   expect_true(
     grepl(
-      "Not all checks succeeded on R-universe",
-      interpret_status("INLA", status)
+      "Not all `R CMD check` runs succeeded on R-universe",
+      interpret_status("INLA", status),
+      fixed = TRUE
     )
   )
   expect_true(
     grepl(
-      "Not all checks succeeded on R-universe",
-      interpret_status("colorout", status)
+      "Not all `R CMD check` runs succeeded on R-universe",
+      interpret_status("colorout", status),
+      fixed = TRUE
     )
   )
   expect_true(
@@ -176,15 +170,10 @@ test_that("interpret_status() with complicated dependency problems", {
   versions <- tempfile()
   on.exit(unlink(c(output, versions), recursive = TRUE))
   writeLines(lines, versions)
-  meta_checks <- mock_meta_checks[1L, ]
-  meta_checks$package <- "crew"
   suppressMessages(
     record_status(
       versions = versions,
-      mock = list(
-        checks = meta_checks,
-        packages = mock_meta_packages_graph
-      ),
+      mock = list(packages = mock_meta_packages),
       output = output,
       verbose = TRUE
     )
@@ -192,53 +181,25 @@ test_that("interpret_status() with complicated dependency problems", {
   expect_true(file.exists(output))
   status <- jsonlite::read_json(output, simplifyVector = TRUE)
   expect_equal(
-    status$nanonext,
+    status$nanonext$versions,
     list(
-      versions = list(
-        version_current = "1.0.0",
-        hash_current = "hash_1.0.0-modified",
-        version_highest = "1.0.0",
-        hash_highest = "hash_1.0.0"
-      ),
-      success = FALSE,
-      published = "published_5",
-      version = "1.1.0.9000",
-      remote_hash = "85dd672a44a92c890eb40ea9ebab7a4e95335c2f"
+      version_current = "1.0.0",
+      hash_current = "hash_1.0.0-modified",
+      version_highest = "1.0.0",
+      hash_highest = "hash_1.0.0"
     )
   )
+  expect_false(status$nanonext$success)
   expect_equal(
-    status$mirai,
-    list(
-      dependencies = list(
-        nanonext = list()
-      ),
-      success = FALSE,
-      published = "published_4",
-      version = "1.1.0.9000",
-      remote_hash = "7015695b7ef82f82ab3225ac2d226b2c8f298097"
-    )
+    status$mirai$dependencies,
+    list(nanonext = list())
   )
+  expect_false(status$mirai$success)
   expect_equal(
-    status$crew,
-    list(
-      checks = list(
-        url = file.path(
-          "https://github.com/r-universe/r-multiverse/actions",
-          "runs/11898760503"
-        ),
-        issues = list(
-          `linux R-4.5.0` = "WARNING",
-          `mac R-4.4.2` = "WARNING",
-          `win R-4.4.2` = "WARNING"
-        )
-      ),
-      dependencies = list(nanonext = "mirai"),
-      success = FALSE,
-      published = "published_1",
-      version = "0.9.3.9002",
-      remote_hash = "eafad0276c06dec2344da2f03596178c754c8b5e"
-    )
+    status$crew$dependencies,
+    list(nanonext = "mirai")
   )
+  expect_false(status$crew$success)
   expect_true(
     grepl(
       "nanonext: mirai",
@@ -263,20 +224,21 @@ test_that("interpret_status(): check these interactively", {
   skip_if_offline()
   status <- list(
     bad = list(
-      checks = list(
+      published = "date",
+      version = "1.2.3",
+      remote_hash = "hash",
+      r_cmd_check = list(
         url = "https://github.com/12103194809",
-        status = list(
+        issues = list(
           `linux x86_64 R-4.5.0` = "WARNING",
           `mac aarch64 R-4.4.2` = "WARNING",
           `mac x86_64 R-4.4.2` = "WARNING",
           `win x86_64 R-4.4.2` = "WARNING"
         )
       ),
-      descriptions = list(
-        license = "non-standard",
-        advisories <- c("link1", "link2", "link3"),
-        remotes = "markvanderloo/tinytest/pkg"
-      ),
+      license = "non-standard",
+      advisories = c("link1", "link2", "link3"),
+      remotes = "markvanderloo/tinytest/pkg",
       dependencies = list(
         nanonext = "mirai",
         mirai = list(),
@@ -288,7 +250,8 @@ test_that("interpret_status(): check these interactively", {
         hash_current = "hash_1.0.0-modified",
         version_highest = "1.0.0",
         hash_highest = "hash_1.0.0"
-      )
+      ),
+      cran = "9.9.9"
     )
   )
   status$bad2 <- status$bad

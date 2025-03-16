@@ -13,8 +13,7 @@ record_status(
 )
 }
 \arguments{
-\item{repo}{Character of length 1, URL of the package repository.
-R-multiverse uses \code{"https://community.r-multiverse.org"}.}
+\item{repo}{URL of the repository to query.}
 
 \item{versions}{Character of length 1, file path to a JSON manifest
 tracking the history of released versions of packages.}
@@ -38,43 +37,31 @@ package-specific JSON files.
 }
 \section{Package status}{
 
-Functions like \code{\link[=status_versions]{status_versions()}} and \code{\link[=status_descriptions]{status_descriptions()}}
+Functions like \code{\link[=issues_versions]{issues_versions()}} and \code{\link[=issues_r_cmd_check]{issues_r_cmd_check()}}
 perform health checks for all packages in R-multiverse.
 For a complete list of checks, see
-the \verb{status_*()} functions listed at
+the \verb{issues_*()} functions listed at
 \url{https://r-multiverse.org/multiverse.internals/reference/index.html}.
 \code{\link[=record_versions]{record_versions()}} updates the version number history
 of releases in R-multiverse, and \code{\link[=record_status]{record_status()}} gathers
 together all the status about R-multiverse packages.
 }
 
-\section{Status data}{
-
-For each package with observed problems, \code{\link[=record_status]{record_status()}} writes
-a JSON list entry in the output JSON file
-with one element for each type of failing check.
-Each check-specific element has an informative name
-(for example, \code{checks}, \code{descriptions}, or \code{versions})
-and a list of diagnostic information. In addition, there is a \code{date}
-field to indicate when an issue was first detected. The \code{date}
-automatically resets the next time all the status in the package
-are resolved.
-}
-
 \examples{
-  repo <- "https://wlandau.r-universe.dev"
-  output <- tempfile()
-  versions <- tempfile()
-  record_versions(
-    versions = versions,
-    repo = repo
-  )
-  record_status(
-    repo = repo,
-    versions = versions,
-    output = output
-  )
-  writeLines(readLines(output))
+\dontrun{
+output <- tempfile()
+versions <- tempfile()
+record_versions(
+  versions = versions,
+  repo = repo
+)
+record_status(
+  repo = repo,
+  versions = versions,
+  output = output
+)
+writeLines(readLines(output))
+}
 }
 \keyword{check}
 \keyword{data}

@@ -3,7 +3,7 @@
 #' @family pull request reviews
 #' @description Review a pull request to add packages to R-multiverse.
 #' @return `NULL` (invisibly).
-#' @inheritParams meta_checks
+#' @inheritParams meta_packages
 #' @param owner Character of length 1, name of the package repository owner.
 #' @param number Positive integer of length 1, index of the pull request
 #'   in the repo.

@@ -9,20 +9,24 @@ reference:
   contents:
   - review_pull_request
   - review_pull_requests
-- title: Package metadata
+- title: Metadata
   contents:
-  - meta_checks
   - meta_packages
   - meta_snapshot
-- title: Package status
+- title: Package issues
+  contents:
+  - issues_advisories
+  - issues_dependencies
+  - issues_licenses
+  - issues_r_cmd_check
+  - issues_remotes
+  - issues_versions
+  - issues_version_conflicts
+- title: Recording package information
   contents:
   - record_status
   - record_nonstandard_licenses
   - record_versions
-  - status_checks
-  - status_dependencies
-  - status_descriptions
-  - status_versions
 - title: Staging
   contents:
   - filter_meta

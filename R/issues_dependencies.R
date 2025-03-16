@@ -1,51 +1,60 @@
-#' @title Report package dependency status
+#' @title Report package dependency issues
 #' @export
-#' @family status
+#' @family issues
 #' @description Flag packages which have issues in their strong dependencies
 #'   (`Imports:`, `Depends:`, and `LinkingTo:` in the `DESCRIPTION`.)
 #'   These include indirect/upstream dependencies, as well, not just
 #'   the explicit mentions in the `DESCRIPTION` file.
-#' @inheritSection record_status Package status
-#' @return A nested list of problems triggered by dependencies.
-#'   The names of top-level elements are packages affected downstream.
-#'   The value of each top-level element is a list whose names are
-#    packages at the source of a problem upstream.
-#'   Each element of this inner list is a character
-#'   vector of relevant dependencies of the downstream package.
+#' @return A data frame with one row for each package impacted by
+#'   upstream dependencies.
+#'   Each element of the `dependencies` column is a
+#'   nested list describing the problems upstream.
 #'
-#'   For example, consider a linear dependency graph where `crew.cluster`
-#'   depends on `crew`, `crew` depends on `mirai`, and
-#'   `mirai` depends on `nanonext`. We represent the graph like this:
-#'      `nanonext -> mirai -> crew -> crew.cluster`.
-#'   If `nanonext` has an issue, then [status_dependencies()] returns
-#'   `list(crew.cluster = list(nanonext = "crew"), ...)`, where `...`
-#'   stands for additional named list entries. From this list, we deduce
-#'   that `nanonext` is causing an issue affecting `crew.cluster` through
-#'   the direct dependency on `crew`.
+#'   To illustrate the structure of this list, suppose
+#'   Package `tarchetypes` depends on package `targets`, and packages
+#'   `jagstargets` and `stantargets` depend on `tarchetypes`.
+#'   In addition, package `targets` has a problem in `R CMD check`
+#'   which might cause problems in `tarchetypes` and packages downstream.
 #'
-#'   The choice in output format from [status_dependencies()] allows package
-#'   maintainers to more easily figure out which direct dependencies
-#'   are contributing have issues and drop those direct dependencies
-#'   if necessary.
+#'   `status_dependencies()` represents this information in the
+#'   following list:
+#'
+#'   ```
+#'   list(
+#'     jagstargets = list(targets = "tarchetypes"),
+#'     tarchetypes = list(targets = character(0)),
+#'     stantargets = list(targets = "tarchetypes")
+#'   )
+#'   ```
+#'
+#'   In general, the returned list is of the form:
+#'
+#'   ```
+#'   list(
+#'     impacted_reverse_dependency = list(
+#'       upstream_culprit = c("direct_dependency_1", "direct_dependency_2")
+#'     )
+#'   )
+#'   ```
+#'
+#'   where `upstream_culprit` causes problems in `impacted_reverse_dependency`
+#'   through direct dependencies `direct_dependency_1` and
+#'   `direct_dependency_2`.
+#' @inheritParams issues_advisories
 #' @param packages Character vector of names of packages with other issues.
-#' @param meta A data frame with R-universe package check results
-#'   returned by [meta_checks()].
 #' @param verbose `TRUE` to print progress while checking
 #'   dependency status, `FALSE` otherwise.
 #' @examples
-#'   meta <- meta_packages(repo = "https://wlandau.r-universe.dev")
-#'   status_dependencies(packages = character(0L), meta = meta)
-#'   status_dependencies(packages = "crew.aws.batch", meta = meta)
-#'   status_dependencies(packages = "nanonext", meta = meta)
-#'   status_dependencies(packages = "crew", meta = meta)
-#'   status_dependencies(packages = c("crew", "mirai"), meta = meta)
-status_dependencies <- function(
+#' \dontrun{
+#' issues_dependencies(packages = "targets")
+#' }
+issues_dependencies <- function(
   packages,
   meta = meta_packages(),
   verbose = FALSE
 ) {
   if (verbose) message("Constructing the package dependency graph")
-  graph <- status_dependencies_graph(meta)
+  graph <- issues_dependencies_graph(meta)
   vertices <- names(igraph::V(graph))
   edges <- igraph::as_long_data_frame(graph)
   from <- tapply(
@@ -65,10 +74,12 @@ status_dependencies <- function(
       status[[revdep]][[package]] <- neighbors[keep]
     }
   }
-  status
+  out <- data.frame(package = names(status) %||% character(0L))
+  out$dependencies <- unname(status)
+  out[order(out$package),, drop = FALSE] # nolint
 }
 
-status_dependencies_graph <- function(meta) {
+issues_dependencies_graph <- function(meta) {
   repo_packages <- meta$package
   repo_dependencies <- meta$dependencies
   from <- list()
