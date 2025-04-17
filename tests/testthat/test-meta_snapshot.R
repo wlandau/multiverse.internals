@@ -73,7 +73,7 @@ test_that("meta_snapshot() is correct", {
       dependency_freeze = "2025-04-15",
       candidate_freeze = "2025-05-15",
       snapshot = "2025-06-15",
-      r = "4.4"
+      r = "4.5"
     )
   }
   for (month in c("05", "06")) {
@@ -83,7 +83,7 @@ test_that("meta_snapshot() is correct", {
         dependency_freeze = "2025-04-15",
         candidate_freeze = "2025-05-15",
         snapshot = "2025-06-15",
-        r = "4.4"
+        r = "4.5"
       )
     }
   }
@@ -93,7 +93,7 @@ test_that("meta_snapshot() is correct", {
       dependency_freeze = "2025-04-15",
       candidate_freeze = "2025-05-15",
       snapshot = "2025-06-15",
-      r = "4.4"
+      r = "4.5"
     )
   }
   for (day in c(middle, last)) {
@@ -102,7 +102,7 @@ test_that("meta_snapshot() is correct", {
       dependency_freeze = "2025-07-15",
       candidate_freeze = "2025-08-15",
       snapshot = "2025-09-15",
-      r = "4.4"
+      r = "4.5"
     )
   }
   for (month in c("08", "09")) {
@@ -112,7 +112,7 @@ test_that("meta_snapshot() is correct", {
         dependency_freeze = "2025-07-15",
         candidate_freeze = "2025-08-15",
         snapshot = "2025-09-15",
-        r = "4.4"
+        r = "4.5"
       )
     }
   }
@@ -122,7 +122,7 @@ test_that("meta_snapshot() is correct", {
       dependency_freeze = "2025-07-15",
       candidate_freeze = "2025-08-15",
       snapshot = "2025-09-15",
-      r = "4.4"
+      r = "4.5"
     )
   }
   for (day in c(middle, last)) {
@@ -131,7 +131,7 @@ test_that("meta_snapshot() is correct", {
       dependency_freeze = "2025-10-15",
       candidate_freeze = "2025-11-15",
       snapshot = "2025-12-15",
-      r = "4.4"
+      r = "4.5"
     )
   }
   for (month in c("11", "12")) {
@@ -141,7 +141,7 @@ test_that("meta_snapshot() is correct", {
         dependency_freeze = "2025-10-15",
         candidate_freeze = "2025-11-15",
         snapshot = "2025-12-15",
-        r = "4.4"
+        r = "4.5"
       )
     }
   }

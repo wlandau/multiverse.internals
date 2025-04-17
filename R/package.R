@@ -8,6 +8,7 @@
 #' @importFrom R.utils gzip
 #' @importFrom rversions r_versions
 #' @importFrom stats aggregate setNames
+#' @importFrom tools analyze_license
 #' @importFrom utils available.packages compareVersion contrib.url tail unzip
 #' @importFrom vctrs vec_rbind vec_slice
 #' @importFrom yaml read_yaml

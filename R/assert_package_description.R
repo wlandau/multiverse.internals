@@ -91,7 +91,7 @@ assert_parsed_description <- function(name, description) {
     )
   }
   authors_r <- try(
-    eval(parse(text = description$get("Authors@R"))),
+    suppressWarnings(eval(parse(text = description$get("Authors@R")))),
     silent = TRUE
   )
   if (inherits(authors_r, "try-error")) {
@@ -107,7 +107,10 @@ assert_parsed_description <- function(name, description) {
     )
   }
   license <- description$get("License")
-  if (!(license %in% trusted_licenses)) {
+  license_data <- tools::analyze_license(license)
+  license_okay <- isTRUE(license_data$is_canonical) &&
+    (isTRUE(license_data$is_FOSS) || isTRUE(license_data$is_verified))
+  if (!license_okay) {
     return(
       paste(
         "Detected license",
@@ -150,36 +153,3 @@ assert_license_local <- function(name, path, text) {
     )
   }
 }
-
-trusted_licenses <- c(
-  "Apache License (== 2.0)",
-  "Apache License (>= 2.0)",
-  "Artistic-2.0",
-  "Artistic License 2.0",
-  "BSD_2_clause + file LICENCE",
-  "BSD_3_clause + file LICENCE",
-  "BSD_2_clause + file LICENSE",
-  "BSD_3_clause + file LICENSE",
-  "GPL-2",
-  "GPL-3",
-  "GPL (== 2)",
-  "GPL (== 2)",
-  "GPL (== 2.0)",
-  "GPL (== 3)",
-  "GPL (== 3.0)",
-  "GPL (>= 2)",
-  "GPL (>= 2)",
-  "GPL (>= 2.0)",
-  "GPL (>= 3)",
-  "GPL (>= 3.0)",
-  "LGPL-2",
-  "LGPL-3",
-  "LGPL (== 2)",
-  "LGPL (== 2.1)",
-  "LGPL (== 3)",
-  "LGPL (>= 2)",
-  "LGPL (>= 2.1)",
-  "LGPL (>= 3)",
-  "MIT + file LICENCE",
-  "MIT + file LICENSE"
-)

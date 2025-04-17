@@ -33,13 +33,16 @@ test_that("rclone_includes()", {
   expect_equal(
     sort(include_packages),
     sort(
-      c(
-        "src/contrib/staged_2.0.5.tar.gz",
-        "src/contrib/removed-no-issue_2.0.6.tar.gz",
-        "bin/macosx/*/contrib/4.4/staged_2.0.5.tgz",
-        "bin/macosx/*/contrib/4.4/removed-no-issue_2.0.6.tgz",
-        "bin/windows/contrib/4.4/staged_2.0.5.zip",
-        "bin/windows/contrib/4.4/removed-no-issue_2.0.6.zip"
+      sprintf(
+        c(
+          "src/contrib/staged_2.0.5.tar.gz",
+          "src/contrib/removed-no-issue_2.0.6.tar.gz",
+          "bin/macosx/*/contrib/%s/staged_2.0.5.tgz",
+          "bin/macosx/*/contrib/%s/removed-no-issue_2.0.6.tgz",
+          "bin/windows/contrib/%s/staged_2.0.5.zip",
+          "bin/windows/contrib/%s/removed-no-issue_2.0.6.zip"
+        ),
+        meta_snapshot()$r
       )
     )
   )
@@ -47,13 +50,16 @@ test_that("rclone_includes()", {
   expect_equal(
     sort(include_meta),
     sort(
-      c(
-        "src/contrib/PACKAGES",
-        "src/contrib/PACKAGES.gz",
-        "bin/macosx/*/contrib/4.4/PACKAGES",
-        "bin/macosx/*/contrib/4.4/PACKAGES.gz",
-        "bin/windows/contrib/4.4/PACKAGES",
-        "bin/windows/contrib/4.4/PACKAGES.gz"
+      sprintf(
+        c(
+          "src/contrib/PACKAGES",
+          "src/contrib/PACKAGES.gz",
+          "bin/macosx/*/contrib/%s/PACKAGES",
+          "bin/macosx/*/contrib/%s/PACKAGES.gz",
+          "bin/windows/contrib/%s/PACKAGES",
+          "bin/windows/contrib/%s/PACKAGES.gz"
+        ),
+        meta_snapshot()$r
       )
     )
   )
