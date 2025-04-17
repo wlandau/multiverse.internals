@@ -1,3 +1,9 @@
+# multiverse.internals 1.0.9
+
+* Use `tools::analyze_license()` to determine if a package in a registration request has an open-source license. This is much more consistent and reliable than checking a manual list of license specification strings.
+* Fix `meta_snapshot()` tests (check against the correct versions of R for the year 2025).
+* Fix `rclone_includes()` tests: use the upcoming snapshot R version.
+
 # multiverse.internals 1.0.8
 
 * Subsume `meta_checks()` into `meta_packages()`.
