@@ -8,8 +8,8 @@ review_pull_request(
   owner = "r-multiverse",
   repo = "contributions",
   number,
-  advisories = character(0L),
-  organizations = character(0L)
+  advisories = NULL,
+  organizations = NULL
 )
 }
 \arguments{
@@ -21,11 +21,13 @@ review_pull_request(
 in the repo.}
 
 \item{advisories}{Character vector of names of packages with advisories
-in the R Consortium Advisory Database.}
+in the R Consortium Advisory Database.
+If \code{NULL}, the function reads the database.}
 
 \item{organizations}{Character vector of names of GitHub organizations.
 Pull requests from authors who are not members of at least one of
-these organizations will be flagged for manual review.}
+these organizations will be flagged for manual review.
+If \code{NULL}, the function reads the list of trusted organizations.}
 }
 \value{
 \code{NULL} (invisibly).
