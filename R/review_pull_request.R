@@ -9,19 +9,29 @@
 #'   in the repo.
 #' @param advisories Character vector of names of packages with advisories
 #'   in the R Consortium Advisory Database.
+#'   If `NULL`, the function reads the database.
 #' @param organizations Character vector of names of GitHub organizations.
 #'   Pull requests from authors who are not members of at least one of
 #'   these organizations will be flagged for manual review.
+#'   If `NULL`, the function reads the list of trusted organizations.
 review_pull_request <- function(
   owner = "r-multiverse",
   repo = "contributions",
   number,
-  advisories = character(0L),
-  organizations = character(0L)
+  advisories = NULL,
+  organizations = NULL
 ) {
   assert_character_scalar(owner, "owner must be a character string")
   assert_character_scalar(repo, "repo must be a character string")
   assert_positive_scalar(number, "number must be a positive integer")
+  if (is.null(advisories)) {
+    message("Skimming the R Consortium Advisory Database...")
+    advisories <- unique(read_advisories()$package)
+  }
+  if (is.null(organizations)) {
+    message("Listing trusted GitHub organizations...")
+    organizations <- list_organizations(owner = owner, repo = repo)
+  }
   message("Reviewing pull request ", number)
   merge <- review_pull_request_integrity(owner, repo, number, organizations) &&
     review_pull_request_content(owner, repo, number, advisories)

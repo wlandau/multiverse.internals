@@ -1,3 +1,7 @@
+# multiverse.internals 1.0.10
+
+* Allow `review_pull_request()` to get advisories and organizations if not supplied.
+
 # multiverse.internals 1.0.9
 
 * Use `tools::analyze_license()` to determine if a package in a registration request has an open-source license. This is much more consistent and reliable than checking a manual list of license specification strings.

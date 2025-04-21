@@ -31,7 +31,8 @@ test_that("update_status()", {
   path_status <- tempfile()
   gert::git_clone(
     url = "https://github.com/r-multiverse/status",
-    path = path_status
+    path = path_status,
+    verbose = FALSE
   )
   on.exit(unlink(path_status, recursive = TRUE), add = TRUE)
   stage_candidates(path_staging = path_staging)
