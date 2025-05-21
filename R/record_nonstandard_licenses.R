@@ -7,21 +7,22 @@
 #'   [record_nonstandard_licenses()] records packages with nonstandard
 #'   licenses.
 #' @return `NULL` (invisibly). Called for its side effects.
-#' @param repo Character string, URL of the repository.
-#' @param path Character string, output path to write JSON data with the names
+#' @param path_status Character string, local path to the `status.json` file
+#'   of the repository.
+#' @param path_nonstandard_licenses Character string,
+#'   output path to write JSON data with the names
 #'   and licenses of packages with non-standard licenses.
 record_nonstandard_licenses <- function(
-  repo = "https://community.r-multiverse.org",
-  path = "nonstandard_licenses.json"
+  path_status = "status.json",
+  path_nonstandard_licenses = "nonstandard_licenses.json"
 ) {
-  url <- utils::contrib.url(trim_url(repo), type = "source")
-  all <- utils::available.packages(contriburl = url)
-  foss <- utils::available.packages(contriburl = url, filters = "license/FOSS")
-  package <- as.character(setdiff(all[, "Package"], foss[, "Package"]))
-  license <- as.character(all[package, "License"])
+  json_status <- jsonlite::read_json(path_status, simplifyVector = TRUE)
+  nonstandard <- Filter(function(json) !is.null(json$license), json_status)
+  package <- names(nonstandard)
+  license <- as.character(lapply(nonstandard, function(json) json$license))
   jsonlite::write_json(
     x = data.frame(package = package, license = license),
-    path = path,
+    path = path_nonstandard_licenses,
     pretty = TRUE
   )
 }

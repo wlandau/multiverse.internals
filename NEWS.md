@@ -1,3 +1,7 @@
+# multiverse.internals 1.0.12
+
+* Fix `record_nonstandard_licenses()` (continuation of 1.0.11).
+
 # multiverse.internals 1.0.11
 
 * Use `tools::analyze_license()` for continuous license checks because `utils::available.packages(repos = "https://community.r-multiverse.org", filters = "license/FOSS")` no longer returns output.
