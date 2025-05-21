@@ -5,14 +5,16 @@
 \title{Record nonstandard licenses}
 \usage{
 record_nonstandard_licenses(
-  repo = "https://community.r-multiverse.org",
-  path = "nonstandard_licenses.json"
+  path_status = "status.json",
+  path_nonstandard_licenses = "nonstandard_licenses.json"
 )
 }
 \arguments{
-\item{repo}{Character string, URL of the repository.}
+\item{path_status}{Character string, local path to the \code{status.json} file
+of the repository.}
 
-\item{path}{Character string, output path to write JSON data with the names
+\item{path_nonstandard_licenses}{Character string,
+output path to write JSON data with the names
 and licenses of packages with non-standard licenses.}
 }
 \value{
