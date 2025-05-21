@@ -13,10 +13,10 @@ meta_packages <- function(repo = "https://community.r-multiverse.org") {
   meta_api <- get_meta_api(repo)
   meta_json <- get_meta_json(repo)
   meta_cran <- get_meta_cran()
-  foss <- get_foss(repo)
   data <- merge(x = meta_api, y = meta_json, all.x = TRUE, all.y = FALSE)
   data <- merge(x = data, y = meta_cran, all.x = TRUE, all.y = FALSE)
-  data$foss[data$package %in% foss] <- TRUE
+  data$license[is.na(data$license)] <- "NOT FOUND"
+  data$foss <- get_foss(data$license)
   data
 }
 
@@ -34,19 +34,26 @@ get_meta_json <- function(repo) {
     simplifyMatrix = TRUE
   )
   data <- clean_meta(data)
-  data$foss <- FALSE
   if (is.null(data$remote)) {
     data$remotes <- replicate(nrow(data), NULL, simplify = FALSE)
   }
-  data[, c("package", "remotes", "foss")]
+  data[, c("package", "remotes")]
 }
 
-get_foss <- function(repo) {
-  data <- utils::available.packages(
-    repos = trim_url(repo),
-    filters = "license/FOSS"
+get_foss <- function(license) {
+  license <- trimws(license)
+  foss <- rep(FALSE, length(license))
+  # Pre-compute most common license types because tools::analyze_license()
+  # is slow to iterate on large vectors of license specifications.
+  common <- c(
+    "MIT + file LICENSE",
+    "GPL-3",
+    "GPL-2"
   )
-  as.character(data[, "Package"])
+  is_common <- foss %in% common
+  foss[is_common] <- TRUE
+  foss[!is_common] <- license_okay(license[!is_common])
+  foss
 }
 
 get_meta_cran <- function() {

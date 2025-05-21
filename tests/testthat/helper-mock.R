@@ -928,7 +928,7 @@ mock_meta_packages <- structure(list(
     "MIT + file LICENSE", "MIT + file LICENSE", "MIT + file LICENSE",
     "MIT + file LICENSE", "MIT + file LICENSE", "MIT + file LICENSE",
     "AGPL-3", "MIT + file LICENSE", "GPL (>= 2)", "GPL (>= 3)",
-    "GPL (>= 2)", "MIT + file LICENSE", NA, "MIT + file LICENSE",
+    "GPL (>= 2)", "MIT + file LICENSE", "NOT FOUND", "MIT + file LICENSE",
     "MIT + file LICENSE", "MIT + file LICENSE", "MIT + file LICENSE",
     "MIT + file LICENSE", "GPL (>= 3)", "MIT + file LICENSE",
     "MIT + file LICENSE", "Apache License (>= 2)", "GPL (>= 3)",
@@ -1063,7 +1063,7 @@ mock_meta_packages <- structure(list(
     TRUE, TRUE, TRUE, TRUE,
     TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
     TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
-    NA, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
+    FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
     TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
     TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE
   ), cran = c(
@@ -1228,6 +1228,7 @@ mock_status <- list(
     success = FALSE,
     published = "2025-03-06 02:51:02.348 UTC", version = "19.09.03",
     remote_hash = "0fa332471d2e19548cc0f63e36873e31dbd685be",
+    license = "NOT FOUND",
     r_cmd_check = list(issues = list(
       linux = "MISSING", mac = "MISSING",
       win = "MISSING", source = "FAILURE"

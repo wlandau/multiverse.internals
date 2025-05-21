@@ -107,10 +107,7 @@ assert_parsed_description <- function(name, description) {
     )
   }
   license <- description$get("License")
-  license_data <- tools::analyze_license(license)
-  license_okay <- isTRUE(license_data$is_canonical) &&
-    (isTRUE(license_data$is_FOSS) || isTRUE(license_data$is_verified))
-  if (!license_okay) {
+  if (!all(license_okay(license))) {
     return(
       paste(
         "Detected license",
