@@ -9,6 +9,6 @@
 #' issues_licenses()
 #' }
 issues_licenses <- function(meta = meta_packages()) {
-  meta$foss[is.na(meta$foss)] <- TRUE
+  meta$foss[is.na(meta$foss)] <- FALSE # deliberately redundant
   meta[!meta$foss, c("package", "license"), drop = FALSE]
 }

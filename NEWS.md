@@ -1,3 +1,8 @@
+# multiverse.internals 1.0.11
+
+* Use `tools::analyze_license()` for continuous license checks because `utils::available.packages(repos = "https://community.r-multiverse.org", filters = "license/FOSS")` no longer returns output.
+* Strengthen continuous license checks: an `NA` license (from a failed source build) is no longer acceptable.
+
 # multiverse.internals 1.0.10
 
 * Allow `review_pull_request()` to get advisories and organizations if not supplied.
