@@ -1,3 +1,7 @@
+# multiverse.internals 1.0.13
+
+* Simplify `meta_packages()`: only call the R-universe API to get package metadata.
+
 # multiverse.internals 1.0.12
 
 * Fix `record_nonstandard_licenses()` (continuation of 1.0.11).
