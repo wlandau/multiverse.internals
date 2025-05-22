@@ -10,34 +10,81 @@
 #' meta_packages()
 #' }
 meta_packages <- function(repo = "https://community.r-multiverse.org") {
-  meta_api <- get_meta_api(repo)
-  meta_json <- get_meta_json(repo)
-  meta_cran <- get_meta_cran()
-  data <- merge(x = meta_api, y = meta_json, all.x = TRUE, all.y = FALSE)
-  data <- merge(x = data, y = meta_cran, all.x = TRUE, all.y = FALSE)
-  data$license[is.na(data$license)] <- "NOT FOUND"
-  data$foss <- get_foss(data$license)
-  data
+  merge(
+    x = get_meta_api(repo),
+    y = get_meta_cran(),
+    all.x = TRUE,
+    all.y = FALSE
+  )
 }
 
-get_meta_json <- function(repo) {
-  fields <- "Remotes"
-  listing <- file.path(
-    utils::contrib.url(repos = trim_url(repo), type = "source"),
-    paste0("PACKAGES.json?fields=", fields)
+get_meta_api <- function(repo) {
+  base <- file.path(trim_url(repo), "api", "packages?stream=true&fields=")
+  fields <- paste0(
+    "_buildurl,_binaries,_failure,_published,_dependencies,",
+    "Version,License,Remotes,RemoteSha,Title,URL"
   )
   data <- jsonlite::stream_in(
-    con = gzcon(url(listing)),
+    con = gzcon(url(paste0(base, fields))),
     verbose = FALSE,
     simplifyVector = TRUE,
     simplifyDataFrame = TRUE,
     simplifyMatrix = TRUE
   )
-  data <- clean_meta(data)
-  if (is.null(data$remote)) {
+  data <- meta_api_postprocess(data)
+  data$published <- format_time_stamp(data$published)
+  data
+}
+
+get_meta_cran <- function() {
+  cran  <- utils::available.packages(repos = meta_snapshot()$cran)
+  data.frame(
+    package = as.character(cran[, "Package"]),
+    cran = as.character(cran[, "Version"])
+  )
+}
+
+meta_api_postprocess <- function(data) {
+  data$License[is.na(data$License)] <- "NOT FOUND"
+  data$foss <- get_foss(data$License)
+  if (is.null(data$remotes)) {
     data$remotes <- replicate(nrow(data), NULL, simplify = FALSE)
   }
-  data[, c("package", "remotes")]
+  data$url_description <- data$URL
+  data$URL <- NULL
+  data$url_r_cmd_check <- data[["_buildurl"]]
+  failure <- data[["_failure"]]
+  is_failure <- data$`_type` == "failure"
+  if (!is.null(failure)) {
+    data$url_r_cmd_check[is_failure] <- failure$buildurl[is_failure]
+    data$Version[is_failure] <- failure$version[is_failure]
+    data$RemoteSha[is_failure] <- failure$commit$id[is_failure]
+  }
+  data$issues_r_cmd_check <- lapply(
+    data[["_binaries"]],
+    meta_api_issues_binaries,
+    snapshot = meta_snapshot()
+  )
+  for (index in which(is_failure)) {
+    data$issues_r_cmd_check[[index]]$source <- "FAILURE"
+  }
+  colnames(data) <- tolower(colnames(data))
+  colnames(data) <- gsub("^_", "", colnames(data))
+  fields <- c(
+    "dependencies",
+    "foss",
+    "issues_r_cmd_check",
+    "license",
+    "package",
+    "published",
+    "remotes",
+    "remotesha",
+    "title",
+    "url_description",
+    "url_r_cmd_check",
+    "version"
+  )
+  data[, fields]
 }
 
 get_foss <- function(license) {
@@ -54,60 +101,6 @@ get_foss <- function(license) {
   foss[is_common] <- TRUE
   foss[!is_common] <- license_okay(license[!is_common])
   foss
-}
-
-get_meta_cran <- function() {
-  cran  <- utils::available.packages(repos = meta_snapshot()$cran)
-  data.frame(
-    package = as.character(cran[, "Package"]),
-    cran = as.character(cran[, "Version"])
-  )
-}
-
-get_meta_api <- function(repo) {
-  base <- file.path(trim_url(repo), "api", "packages?stream=true&fields=")
-  fields <- paste0(
-    "_buildurl,_binaries,_failure,_published,_dependencies,",
-    "Version,License,RemoteSha,Title,URL"
-  )
-  data <- jsonlite::stream_in(
-    con = gzcon(url(paste0(base, fields))),
-    verbose = FALSE,
-    simplifyVector = TRUE,
-    simplifyDataFrame = TRUE,
-    simplifyMatrix = TRUE
-  )
-  data <- meta_api_postprocess(data)
-  data$published <- format_time_stamp(data$published)
-  data
-}
-
-meta_api_postprocess <- function(data) {
-  is_failure <- data$`_type` == "failure"
-  data$url_description <- data$URL
-  data$URL <- NULL
-  data$url_r_cmd_check <- data[["_buildurl"]]
-  failure <- data[["_failure"]]
-  if (!is.null(failure)) {
-    data$url_r_cmd_check[is_failure] <- failure$buildurl[is_failure]
-    data$Version[is_failure] <- failure$version[is_failure]
-    data$RemoteSha[is_failure] <- failure$commit$id[is_failure]
-  }
-  data$issues_r_cmd_check <- lapply(
-    data[["_binaries"]],
-    meta_api_issues_binaries,
-    snapshot = meta_snapshot()
-  )
-  for (index in which(is_failure)) {
-    data$issues_r_cmd_check[[index]]$source <- "FAILURE"
-  }
-  data <- clean_meta(data)
-  fields <- c(
-    "package", "url_r_cmd_check", "issues_r_cmd_check", "published",
-    "dependencies",
-    "license", "version", "remotesha", "title", "url_description"
-  )
-  data[, fields]
 }
 
 meta_api_issues_binaries <- function(binaries, snapshot) {
@@ -156,10 +149,4 @@ target_check <- function(
 format_time_stamp <- function(time) {
   time <- as.POSIXct(time, format = "%Y-%m-%dT%H:%M:%OSZ", tz = "UTC")
   format(time, format = "%Y-%m-%d %H:%M:%OS3 %Z")
-}
-
-clean_meta <- function(data) {
-  colnames(data) <- tolower(colnames(data))
-  colnames(data) <- gsub("^_", "", colnames(data))
-  data
 }
