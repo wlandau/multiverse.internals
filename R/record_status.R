@@ -17,30 +17,29 @@
 #' @inheritParams issues_dependencies
 #' @inheritParams issues_versions
 #' @inheritParams meta_packages
-#' @param output Character of length 1, file path to the JSON file to record
+#' @param output Character string, file path to the JSON file to record
 #'   new package status. Each call to `record_status()` overwrites the
 #'   contents of the file.
 #' @param mock For testing purposes only, a named list of data frames
 #'   for inputs to various intermediate functions.
+#' @param staging Character string, file path to the JSON manifest
+#'   of package versions in the Staging universe.
+#'   Used to identify staged packages.
+#'   Set to `NULL` (default) to ignore when processing the Community unvierse.
 #' @examples
 #' \dontrun{
 #' output <- tempfile()
 #' versions <- tempfile()
-#' record_versions(
-#'   versions = versions,
-#'   repo = repo
-#' )
-#' record_status(
-#'   repo = repo,
-#'   versions = versions,
-#'   output = output
-#' )
+#' repo <- "https://community.r-multiverse.org"
+#' record_versions(versions = versions, repo = repo)
+#' record_status(repo = repo, versions = versions, output = output)
 #' writeLines(readLines(output))
 #' }
 record_status <- function(
   repo = "https://community.r-multiverse.org",
   versions = "versions.json",
   output = "status.json",
+  staging = NULL,
   mock = NULL,
   verbose = FALSE
 ) {
@@ -66,6 +65,9 @@ record_status <- function(
     add_issues(issues_version_conflicts(meta, "cran")) |>
     add_issues(issues_versions(versions))
   issues <- names(Filter(\(x) !x$success, status))
+  if (!is.null(staging) && file.exists(staging)) {
+    issues <- setdiff(issues, staged_packages(staging))
+  }
   status <- add_issues(status, issues_dependencies(issues, meta, verbose))
   status <- status[order(names(status))]
   jsonlite::write_json(x = status, path = output, pretty = TRUE)
