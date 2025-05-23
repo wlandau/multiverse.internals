@@ -1,3 +1,7 @@
+# multiverse.internals 1.0.14
+
+* Do not penalize reverse dependencies of already staged packages with failing checks (#163).
+
 # multiverse.internals 1.0.13
 
 * Simplify `meta_packages()`: only call the R-universe API to get package metadata.

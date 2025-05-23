@@ -60,7 +60,7 @@ update_status_production <- function(output, input) {
   path_snapshot <- file.path(input, "snapshot.json")
   status <- jsonlite::read_json(path_status, simplifyVector = TRUE)
   snapshot <- jsonlite::read_json(path_snapshot, simplifyVector = TRUE)
-  staged <- staged_packages(input)
+  staged <- staged_packages(file.path(input, "packages.json"))
   rows <- status_rows(status[staged], "staging")
   file_template <- file.path(output, "staged.md")
   lines_page <- gsub(

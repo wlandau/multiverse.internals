@@ -31,7 +31,7 @@ filter_meta <- function(path_meta, path_staging) {
   lapply(
     listings,
     filter_packages_file,
-    staged = staged_packages(path_staging)
+    staged = staged_packages(file.path(path_staging, "packages.json"))
   )
   invisible()
 }
@@ -48,8 +48,7 @@ filter_packages_file <- function(path, staged) {
   )
 }
 
-staged_packages <- function(path_staging) {
-  file_staging <- file.path(path_staging, "packages.json")
-  json_staging <- jsonlite::read_json(file_staging, simplifyVector = TRUE)
+staged_packages <- function(path) {
+  json_staging <- jsonlite::read_json(path, simplifyVector = TRUE)
   json_staging$package[json_staging$branch != "*release"]
 }

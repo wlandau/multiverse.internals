@@ -8,6 +8,7 @@ record_status(
   repo = "https://community.r-multiverse.org",
   versions = "versions.json",
   output = "status.json",
+  staging = NULL,
   mock = NULL,
   verbose = FALSE
 )
@@ -18,9 +19,14 @@ record_status(
 \item{versions}{Character of length 1, file path to a JSON manifest
 tracking the history of released versions of packages.}
 
-\item{output}{Character of length 1, file path to the JSON file to record
+\item{output}{Character string, file path to the JSON file to record
 new package status. Each call to \code{record_status()} overwrites the
 contents of the file.}
+
+\item{staging}{Character string, file path to the JSON manifest
+of package versions in the Staging universe.
+Used to identify staged packages.
+Set to \code{NULL} (default) to ignore when processing the Community universe.}
 
 \item{mock}{For testing purposes only, a named list of data frames
 for inputs to various intermediate functions.}
@@ -51,15 +57,9 @@ together all the status about R-multiverse packages.
 \dontrun{
 output <- tempfile()
 versions <- tempfile()
-record_versions(
-  versions = versions,
-  repo = repo
-)
-record_status(
-  repo = repo,
-  versions = versions,
-  output = output
-)
+repo <- "https://community.r-multiverse.org"
+record_versions(versions = versions, repo = repo)
+record_status(repo = repo, versions = versions, output = output)
 writeLines(readLines(output))
 }
 }
