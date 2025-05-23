@@ -26,7 +26,7 @@ contents of the file.}
 \item{staging}{Character string, file path to the JSON manifest
 of package versions in the Staging universe.
 Used to identify staged packages.
-Set to \code{NULL} (default) to ignore when processing the Community unvierse.}
+Set to \code{NULL} (default) to ignore when processing the Community universe.}
 
 \item{mock}{For testing purposes only, a named list of data frames
 for inputs to various intermediate functions.}

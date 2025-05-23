@@ -25,7 +25,7 @@
 #' @param staging Character string, file path to the JSON manifest
 #'   of package versions in the Staging universe.
 #'   Used to identify staged packages.
-#'   Set to `NULL` (default) to ignore when processing the Community unvierse.
+#'   Set to `NULL` (default) to ignore when processing the Community universe.
 #' @examples
 #' \dontrun{
 #' output <- tempfile()
