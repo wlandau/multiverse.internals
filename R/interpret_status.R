@@ -85,19 +85,20 @@ interpret_r_cmd_check <- function(status) {
   if (is.null(r_cmd_check)) {
     return(character(0L))
   }
-  r_cmd_check$url <- sprintf(
-    "<a href=\"%s\">%s</a>",
-    r_cmd_check$url,
-    r_cmd_check$url
+  data <- data.frame(
+    Platform = r_cmd_check$config,
+    R = r_cmd_check$r,
+    Result = sprintf(
+      "<a href=\"%s\">%s</a>",
+      r_cmd_check$url,
+      r_cmd_check$check
+    )
   )
   paste0(
     "Not all `R CMD check` runs succeeded on R-universe. ",
-    "The following output shows the check status on each enforced platform ",
-    "and version of R. The GitHub Actions URL links to the check logs ",
-    "on all platforms that R-universe runs. ",
-    "Visit that URL to see specific details ",
-    "on the check failures.<br>",
-    as.character(yaml_html(r_cmd_check))
+    "The following table links to the output log ",
+    "of each `R CMD check` run.<br>",
+    table_html(data)
   )
 }
 
@@ -210,6 +211,18 @@ interpert_version_conflicts <- function(status) {
     )
   }
   trimws(out)
+}
+
+table_html <- function(x) {
+  header <- paste(sprintf("<th>%s</th>", colnames(x)), collapse = "")
+  for (name in names(x)) {
+    x[[name]] <- sprintf("<th>%s</th>", x[[name]])
+  }
+  lines <- sprintf("<tr>%s</tr>", c(header, do.call(paste0, x)))
+  sprintf(
+    "<table class=\"checks-table\">%s</table>",
+    paste(lines, collapse = "")
+  )
 }
 
 yaml_html <- function(x) {
