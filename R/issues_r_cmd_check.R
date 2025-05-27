@@ -16,15 +16,8 @@
 #' issues_r_cmd_check()
 #' }
 issues_r_cmd_check <- function(meta = meta_packages()) {
-  meta <- meta[lengths(meta$issues_r_cmd_check) > 0L,, drop = FALSE] # nolint
-  out <- data.frame(package = meta$package)
-  out$r_cmd_check <- Map(
-    function(issues, url) {
-      list(issues = issues, url = url)
-    },
-    issues = meta$issues_r_cmd_check,
-    url = meta$url_r_cmd_check
-  ) |>
-    unname()
+  is_problem <- lengths(meta$issues_r_cmd_check) > 0L
+  out <- meta[is_problem, c("package", "issues_r_cmd_check"), drop = FALSE]
+  colnames(out) <- c("package", "r_cmd_check")
   out
 }
