@@ -46,8 +46,9 @@ test_that("record_status() with dependency problems", {
   on.exit(unlink(c(output, versions), recursive = TRUE))
   writeLines(lines, versions)
   mock <- mock_meta_packages
+  borrow_check_errors <- "wildfires"
   mock$issues_r_cmd_check[mock$package == "crew"] <-
-    mock$issues_r_cmd_check[mock$package == "targets"]
+    mock$issues_r_cmd_check[mock$package == borrow_check_errors]
   suppressMessages(
     record_status(
       versions = versions,
@@ -79,8 +80,8 @@ test_that("record_status() with dependency problems", {
     list(nanonext = "mirai")
   )
   expect_equal(
-    status$crew$r_cmd_check$issues,
-    mock$issues_r_cmd_check[mock$package == "targets"][[1L]]
+    status$crew$r_cmd_check,
+    mock$issues_r_cmd_check[mock$package == borrow_check_errors][[1L]]
   )
   expect_equal(
     status$crew.aws.batch$dependencies,
