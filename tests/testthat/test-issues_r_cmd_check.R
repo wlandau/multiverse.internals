@@ -4,18 +4,18 @@ test_that("issues_r_cmd_check() mocked", {
   package <- c(
     "adbcbigquery",
     "adbcflightsql",
-    "adbcsnowflake", 
+    "adbcsnowflake",
     "audio.whisper",
     "bridgestan",
     "colorout",
     "demographr",
-    "geographr", 
+    "geographr",
     "glaredb",
     "healthyr",
     "INLA",
     "loneliness",
     "Rvision",
-    "SBC", 
+    "SBC",
     "stantargets",
     "tidypolars",
     "tidytensor",
@@ -25,12 +25,12 @@ test_that("issues_r_cmd_check() mocked", {
   r_cmd_check <- list(
     data.frame(
       check = c("WARNING", "WARNING"),
-      config = c("macos-release-x86_64", "macos-release-arm64"), 
+      config = c("macos-release-x86_64", "macos-release-arm64"),
       r = c("4.5.0", "4.5.0"),
       url = file.path(
         url,
         c(
-          "14849535334/job/42165268088", 
+          "14849535334/job/42165268088",
           "14849535334/job/42165268446"
         )
       )
@@ -42,7 +42,7 @@ test_that("issues_r_cmd_check() mocked", {
       url = file.path(
         url,
         c(
-          "14849539414/job/42165265697", 
+          "14849539414/job/42165265697",
           "14849539414/job/42165266384"
         )
       )
@@ -54,7 +54,7 @@ test_that("issues_r_cmd_check() mocked", {
       url = file.path(
         url,
         c(
-          "14849541628/job/42165269426", 
+          "14849541628/job/42165269426",
           "14849541628/job/42165270204"
         )
       )
@@ -69,10 +69,10 @@ test_that("issues_r_cmd_check() mocked", {
       url = file.path(
         url,
         c(
-          "14900366215/job/42170782320", 
-          "14900366215/job/42170782526", 
-          "14900366215/job/42170782712", 
-          "14900366215/job/42170782956", 
+          "14900366215/job/42170782320",
+          "14900366215/job/42170782526",
+          "14900366215/job/42170782712",
+          "14900366215/job/42170782956",
           "14900366215/job/42170783436"
         )
       )
@@ -85,7 +85,7 @@ test_that("issues_r_cmd_check() mocked", {
         url,
         c(
           "14711427981/job/42149749244",
-          "14711427981/job/42149749646", 
+          "14711427981/job/42149749646",
           "14711427981/job/42149750838"
         )
       )
@@ -105,8 +105,8 @@ test_that("issues_r_cmd_check() mocked", {
       url = file.path(
         url,
         c(
-          "14835604718/job/42161918184", 
-          "14835604718/job/42161918560", 
+          "14835604718/job/42161918184",
+          "14835604718/job/42161918560",
           "14835604718/job/42161919749"
         )
       )
@@ -120,8 +120,8 @@ test_that("issues_r_cmd_check() mocked", {
       url = file.path(
         url,
         c(
-          "14952288872/job/42165926505", 
-          "14952288872/job/42165926777", 
+          "14952288872/job/42165926505",
+          "14952288872/job/42165926777",
           "14952288872/job/42165927735"
         )
       )
@@ -133,7 +133,7 @@ test_that("issues_r_cmd_check() mocked", {
       url = file.path(
         url,
         c(
-          "15128408401/job/42679091499", 
+          "15128408401/job/42679091499",
           "15128408401/job/42679091642"
         )
       )
@@ -147,8 +147,8 @@ test_that("issues_r_cmd_check() mocked", {
       url = file.path(
         url,
         c(
-          "14942941830/job/42166611691", 
-          "14942941830/job/42166612634", 
+          "14942941830/job/42166611691",
+          "14942941830/job/42166612634",
           "14942941830/job/42166613147"
         )
       )
@@ -166,8 +166,8 @@ test_that("issues_r_cmd_check() mocked", {
       url = file.path(
         url,
         c(
-          "14782719153/job/42151614403", 
-          "14782719153/job/42151615228", 
+          "14782719153/job/42151614403",
+          "14782719153/job/42151615228",
           "14782719153/job/42151617108"
         )
       )
@@ -184,13 +184,13 @@ test_that("issues_r_cmd_check() mocked", {
         "source", "macos-release-arm64",
         "linux-release-x86_64", "windows-release"
       ),
-      r = c("4.5.0", "4.5.0", "4.5.0", "4.5.0"), 
+      r = c("4.5.0", "4.5.0", "4.5.0", "4.5.0"),
       url = file.path(
         url,
         c(
-          "14991919293/job/42139781927", 
-          "14991919293/job/42139785853", 
-          "14991919293/job/42139786447", 
+          "14991919293/job/42139781927",
+          "14991919293/job/42139785853",
+          "14991919293/job/42139786447",
           "14991919293/job/42139789083"
         )
       )
@@ -205,9 +205,9 @@ test_that("issues_r_cmd_check() mocked", {
       url = file.path(
         url,
         c(
-          "14991949490/job/42146211963", 
-          "14991949490/job/42146215626", 
-          "14991949490/job/42146216138", 
+          "14991949490/job/42146211963",
+          "14991949490/job/42146215626",
+          "14991949490/job/42146216138",
           "14991949490/job/42146217621"
         )
       )
@@ -215,7 +215,7 @@ test_that("issues_r_cmd_check() mocked", {
     data.frame(
       check = "ERROR",
       config = "windows-release",
-      r = "4.5.0", 
+      r = "4.5.0",
       url = file.path(url, "14698253111/job/42149249218")
     ),
     data.frame(
@@ -224,13 +224,13 @@ test_that("issues_r_cmd_check() mocked", {
         "source", "linux-release-x86_64",
         "macos-release-arm64", "windows-release"
       ),
-      r = c("4.5.0", "4.5.0", "4.5.0", "4.5.0"), 
+      r = c("4.5.0", "4.5.0", "4.5.0", "4.5.0"),
       url = file.path(
         url,
         c(
-          "15177117589/job/42679311345", 
-          "15177117589/job/42679418225", 
-          "15177117589/job/42679418740", 
+          "15177117589/job/42679311345",
+          "15177117589/job/42679418225",
+          "15177117589/job/42679418740",
           "15177117589/job/42679418961"
         )
       )
@@ -242,8 +242,8 @@ test_that("issues_r_cmd_check() mocked", {
       url = file.path(
         url,
         c(
-          "14788234736/job/42153194900", 
-          "14788234736/job/42153195174", 
+          "14788234736/job/42153194900",
+          "14788234736/job/42153195174",
           "14788234736/job/42153196053"
         )
       )
@@ -255,8 +255,8 @@ test_that("issues_r_cmd_check() mocked", {
       url = file.path(
         url,
         c(
-          "14817360103/job/42157252491", 
-          "14817360103/job/42157253094", 
+          "14817360103/job/42157252491",
+          "14817360103/job/42157253094",
           "14817360103/job/42157253512"
         )
       )
