@@ -12,7 +12,9 @@ test_that("record_status() mocked", {
     path_status = status
   )
   out <- jsonlite::read_json(nonstandard, simplifyVector = TRUE)
-  expect_equal(nrow(out), 1L)
-  expect_equal(out$package, "INLA")
-  expect_equal(out$license, "NOT FOUND")
+  expect_equal(
+    sort(out$package),
+    sort(c("colorout", "INLA", "Rvision"))
+  )
+  expect_equal(out$license, rep("NOT FOUND", 3L))
 })

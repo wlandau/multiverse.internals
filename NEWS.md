@@ -1,3 +1,8 @@
+# multiverse.internals 1.0.15
+
+* Use the `_jobs` field instead of `_binaries` to get `R CMD check` results from the R-universe API (https://github.com/r-multiverse/help/issues/162).
+* Use direct job links and improve style when reporting `R CMD check` results at r-multiverse.org/status.
+
 # multiverse.internals 1.0.14
 
 * Do not penalize reverse dependencies of already staged packages with failing checks (#163).
