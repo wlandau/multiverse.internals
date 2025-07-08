@@ -977,5 +977,7 @@ mock_meta_packages <- structure(list(package = c("adbcbigquery", "adbcdrivermana
     "2.1.4", "1.2.2", NA, "1.2.2", "1.4.2", "0.7", NA, NA, "2.2.0", 
     NA, NA, "0.6.0", "1.5.2", NA, "1.0", "0.10.1", "0.3.0", "1.1.6", 
     NA, NA, NA, NA, "0.2.2", "0.13.0", "1.11.1", NA, NA, NA, 
-    NA, "0.1.3", "1.3.0", NA, NA, NA)), row.names = c(NA, -56L
+    NA, "0.1.3", "1.3.0", NA, NA, NA),
+  monorepo = rep("r-multiverse", 56L)),
+  row.names = c(NA, -56L
 ), class = "data.frame")

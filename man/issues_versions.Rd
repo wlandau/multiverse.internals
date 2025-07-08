@@ -69,6 +69,7 @@ Other issues:
 \code{\link{issues_licenses}()},
 \code{\link{issues_r_cmd_check}()},
 \code{\link{issues_remotes}()},
+\code{\link{issues_synchronization}()},
 \code{\link{issues_version_conflicts}()}
 }
 \concept{issues}

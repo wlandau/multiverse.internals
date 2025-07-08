@@ -46,6 +46,7 @@ Other issues:
 \code{\link{issues_dependencies}()},
 \code{\link{issues_licenses}()},
 \code{\link{issues_remotes}()},
+\code{\link{issues_synchronization}()},
 \code{\link{issues_version_conflicts}()},
 \code{\link{issues_versions}()}
 }

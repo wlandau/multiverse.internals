@@ -7,9 +7,10 @@
 #' @importFrom pkgsearch cran_package
 #' @importFrom R.utils gzip
 #' @importFrom rversions r_versions
-#' @importFrom stats aggregate setNames
+#' @importFrom stats aggregate na.omit setNames
 #' @importFrom tools analyze_license
-#' @importFrom utils available.packages compareVersion contrib.url tail unzip
+#' @importFrom utils available.packages compareVersion contrib.url
+#'   head tail unzip
 #' @importFrom vctrs vec_rbind vec_slice
 #' @importFrom yaml read_yaml
 NULL
