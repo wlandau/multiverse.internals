@@ -98,7 +98,8 @@ interpret_r_cmd_check <- function(status) {
     "Not all `R CMD check` runs succeeded on R-universe. ",
     "The following table links to the output log ",
     "of each `R CMD check` run.<br>",
-    table_html(data)
+    table_html(data),
+    "<br>"
   )
 }
 
