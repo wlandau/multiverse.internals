@@ -50,14 +50,15 @@ issues_synchronization_incomplete <- function(monorepo) {
   for (status in statuses) {
     # Unfortunately the query could be so long that we need manual pagination.
     page <- 1L
-    n_runs <- 100L
-    while (n_runs == 100L) {
+    per_page <- 100L
+    n_runs <- per_page
+    while (n_runs == per_page) {
       runs <- gh(
         "GET /repos/r-universe/{repo}/actions/runs",
         repo = monorepo,
         status = status,
         page = page,
-        .per_page = 100L
+        .per_page = per_page
       )
       names <- unlist(
         lapply(
