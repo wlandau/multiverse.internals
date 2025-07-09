@@ -1,3 +1,7 @@
+# multiverse.internals 1.1.0
+
+* Add `issues_synchronization()` and factor it into `record_status()` and `interpret_status()` (https://github.com/r-multiverse/help/issues/156).
+
 # multiverse.internals 1.0.15
 
 * Use the `_jobs` field instead of `_binaries` to get `R CMD check` results from the R-universe API (https://github.com/r-multiverse/help/issues/162).
@@ -5,7 +9,7 @@
 
 # multiverse.internals 1.0.14
 
-* Do not penalize reverse dependencies of already staged packages with failing checks (#163).
+* Do not penalize reverse dependencies of already staged packages with failing checks (https://github.com/r-multiverse/help/issues/163).
 
 # multiverse.internals 1.0.13
 

@@ -1,6 +1,5 @@
 test_that("issues_synchronization()", {
   meta <- mock_meta_packages
-  meta$monorepo <- "wlandau"
   meta$published[c(2L, 5L)] <- format_time_stamp(Sys.time())
   issues <- suppressMessages(issues_synchronization(meta, verbose = TRUE))
   issues <- issues[issues$synchronization == "recent", ]

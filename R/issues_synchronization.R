@@ -29,24 +29,26 @@ issues_synchronization <- function(meta = meta_packages(), verbose = FALSE) {
   recent <- issues_synchronization_recent(meta) # Needs to run first.
   monorepo <- utils::head(meta$monorepo, n = 1L)
   incomplete <- issues_synchronization_incomplete(monorepo, verbose)
-  out <- data.frame(
-    package = meta$package,
-    synchronization = NA_character_
-  )
-  out$synchronization[out$package %in% recent] <- "recent"
-  out$synchronization[out$package %in% incomplete] <- "incomplete"
-  out[!is.na(out$synchronization), ]
+  out <- rbind(incomplete, recent)
+  out[!duplicated(out$package),, drop = FALSE] # nolint
 }
 
 issues_synchronization_recent <- function(meta) {
   now <- format_time_stamp(Sys.time())
-  meta$package[difftime(now, meta$published, units = "mins") < 15]
+  package <- meta$package[difftime(now, meta$published, units = "mins") < 5]
+  data.frame(
+    package = package,
+    synchronization = rep("recent", length(package))
+  )
 }
 
 # Monorepo is the name of the repo in https://github.com/r-universe.
 # Examples: "r-multiverse, "r-multiverse-staging", "ropensci"
-issues_synchronization_incomplete <- function(monorepo, verbose) {
-  incomplete <- character(0L)
+issues_synchronization_incomplete <- function(monorepo, verbose = TRUE) {
+  incomplete <- data.frame(
+    package = character(0L),
+    synchronization = character(0L)
+  )
   statuses <- c(
     "in_progress",
     "queued",
@@ -72,16 +74,16 @@ issues_synchronization_incomplete <- function(monorepo, verbose) {
         page = page,
         .per_page = per_page
       )
-      names <- unlist(lapply(runs$workflow_runs, name_run, status = status))
-      incomplete <- c(incomplete, stats::na.omit(names))
+      new <- lapply(runs$workflow_runs, parse_run, status = status)
+      incomplete <- rbind(incomplete, do.call(rbind, new))
       n_runs <- length(runs$workflow_runs)
       page <- page + 1L
     }
   }
-  unique(incomplete)
+  incomplete[!duplicated(incomplete$package),, drop = FALSE] # nolint
 }
 
-name_run <- function(run, status) {
+parse_run <- function(run, status) {
   delay <- difftime(
     format_time_stamp(Sys.time()),
     format_time_stamp(run$run_started_at),
@@ -92,8 +94,11 @@ name_run <- function(run, status) {
     is.null(run$conclusion) &&
     !is_lost
   if (mark_incomplete) {
-    utils::head(strsplit(run$name, split = " ")[[1L]], n = 1L)
+    data.frame(
+      package = utils::head(strsplit(run$name, split = " ")[[1L]], n = 1L),
+      synchronization = run$html_url
+    )
   } else {
-    NA_character_
+    NULL
   }
 }

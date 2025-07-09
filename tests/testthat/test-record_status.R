@@ -163,8 +163,7 @@ test_that("record_status() with failed check on already staged package", {
 test_that("record_status() synchronization test", {
   output <- tempfile()
   meta_packages <- mock_meta_packages
-  meta_packages$published[c(2L, 5L)] <- format_time_stamp(Sys.time())
-  meta_packages$monorepo <- "wlandau"
+  meta_packages$published[c(2L, 56L)] <- format_time_stamp(Sys.time())
   record_status(
     versions = mock_versions(),
     mock = list(packages = meta_packages),
@@ -179,5 +178,7 @@ test_that("record_status() synchronization test", {
     },
     status
   )
-  expect_equal(sort(names(issues)), sort(c("adbcdrivermanager", "arrow")))
+  expect_equal(sort(names(issues)), sort(c("adbcdrivermanager", "zstdlite")))
+  expect_false(issues$adbcdrivermanager$success)
+  expect_false(issues$zstdlite$success)
 })
