@@ -23,7 +23,8 @@ interpret_status <- function(package, status) {
       interpret_dependencies(status, package),
       interpret_remotes(status),
       interpert_version_conflicts(status),
-      interpret_versions(status)
+      interpret_versions(status),
+      interpret_synchronization(status)
     ),
     collapse = ""
   )
@@ -98,7 +99,8 @@ interpret_r_cmd_check <- function(status) {
     "Not all `R CMD check` runs succeeded on R-universe. ",
     "The following table links to the output log ",
     "of each `R CMD check` run.<br>",
-    table_html(data)
+    table_html(data),
+    "<br>"
   )
 }
 
@@ -211,6 +213,35 @@ interpert_version_conflicts <- function(status) {
     )
   }
   trimws(out)
+}
+
+interpret_synchronization <- function(status) {
+  if (is.null(status$synchronization)) {
+    return()
+  } else if (status$synchronization == "recent") {
+    paste(
+      "This package updated so recently that",
+      "checks on reverse dependencies may not have started yet.",
+      "Please wait for the next",
+      "<a href=\"https://github.com/r-multiverse/status/actions/workflows/update.yaml\">", # nolint
+      "R-multiverse status refresh</a>.<br><br>"
+    )
+  } else {
+    sprintf(
+      paste(
+        "An <a href=\"%s\"><code>R CMD check</code> job</a>",
+        "is either running or about to run.",
+        "Please wait for <a href=\"%s\">this check</a>",
+        "to finish, then wait for the next",
+        "<a href=\"https://github.com/r-multiverse/status/actions/workflows/update.yaml\">", # nolint
+        "R-multiverse status refresh</a>.",
+        "If the check is stuck in a pre-running state (such as \"queued\")",
+        "for more than a day, then R-multiverse will ignore it.<br><br>"
+      ),
+      status$synchronization,
+      status$synchronization
+    )
+  }
 }
 
 table_html <- function(x) {

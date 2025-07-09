@@ -31,9 +31,7 @@ get_meta_api <- function(repo) {
     simplifyDataFrame = TRUE,
     simplifyMatrix = TRUE
   )
-  data <- meta_api_postprocess(data)
-  data$published <- format_time_stamp(data$published)
-  data
+  meta_api_postprocess(data)
 }
 
 get_meta_cran <- function() {
@@ -82,6 +80,10 @@ meta_api_postprocess <- function(data) {
       )
     }
   )
+  data[["_published"]] <- format_time_stamp(data[["_published"]])
+  run <- utils::head(stats::na.omit(data[["_buildurl"]]), n = 1L)
+  splits <- strsplit(run, split = "/", fixed = TRUE)[[1L]]
+  data$monorepo <- splits[which(splits == "r-universe") + 1L]
   colnames(data) <- tolower(colnames(data))
   colnames(data) <- gsub("^_", "", colnames(data))
   fields <- c(
@@ -95,7 +97,8 @@ meta_api_postprocess <- function(data) {
     "remotesha",
     "title",
     "url",
-    "version"
+    "version",
+    "monorepo"
   )
   data[, fields]
 }

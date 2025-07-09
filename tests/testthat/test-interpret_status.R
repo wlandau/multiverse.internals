@@ -282,3 +282,25 @@ test_that("interpret_status(): check these interactively", {
     # browser() # nolint
   }
 })
+
+test_that("interpret_status() with synchronization issues", {
+  skip_if_offline()
+  mock <- mock_meta_packages
+  mock$published[56L] <- format_time_stamp(Sys.time())
+  output <- tempfile()
+  versions <- mock_versions()
+  on.exit(unlink(c(output, versions), recursive = TRUE))
+  record_status(
+    mock = list(packages = mock),
+    output = output,
+    versions = versions
+  )
+  status <- jsonlite::read_json(output, simplifyVector = TRUE)
+  out <- interpret_status("zstdlite", status)
+  expect_true(grepl("updated so recently that checks", out))
+  status$zstdlite$synchronization <-
+    "https://github.com/r-universe/r-multiverse/actions"
+  out <- interpret_status("zstdlite", status)
+  expect_true(grepl("R CMD check", out))
+  expect_true(grepl("either running or about to run", out))
+})

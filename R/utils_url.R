@@ -7,5 +7,5 @@ trim_url <- function(url) {
 }
 
 trim_trailing_slash <- function(url) {
-  sub(pattern = "/$", replacement = "", x = url, perl = TRUE)
+  sub(pattern = "/+$", replacement = "", x = url, perl = TRUE)
 }

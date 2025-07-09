@@ -20,6 +20,7 @@ reference:
   - issues_licenses
   - issues_r_cmd_check
   - issues_remotes
+  - issues_synchronization
   - issues_versions
   - issues_version_conflicts
 - title: Recording package information
