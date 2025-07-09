@@ -25,7 +25,7 @@
 #'   issues_synchronization(meta)
 #'   }
 issues_synchronization <- function(meta = meta_packages()) {
-  recent <- issues_synchronization_recent(meta) #Needs to run first.
+  recent <- issues_synchronization_recent(meta) # Needs to run first.
   monorepo <- utils::head(meta$monorepo, n = 1L)
   incomplete <- issues_synchronization_incomplete(monorepo)
   out <- data.frame(
@@ -33,7 +33,7 @@ issues_synchronization <- function(meta = meta_packages()) {
     synchronization = NA_character_
   )
   out$synchronization[out$package %in% recent] <- "recent"
-  out$synchronization[out$package %in% recent] <- "incomplete"
+  out$synchronization[out$package %in% incomplete] <- "incomplete"
   out[!is.na(out$synchronization), ]
 }
 
@@ -46,13 +46,22 @@ issues_synchronization_recent <- function(meta) {
 # Examples: "r-multiverse, "r-multiverse-staging", "ropensci"
 issues_synchronization_incomplete <- function(monorepo) {
   incomplete <- character(0L)
-  statuses <- c("in_progress", "queued", "requested", "waiting", "pending")
+  statuses <- c(
+    "in_progress",
+    "queued",
+    "requested",
+    "waiting",
+    "pending",
+    "expected"
+  )
   for (status in statuses) {
     # Unfortunately the query could be so long that we need manual pagination.
     page <- 1L
     per_page <- 100L
     n_runs <- per_page
     while (n_runs == per_page) {
+      template <- "Page %s universe \"%s\" job status \"%s\"..."
+      message(sprintf(template, page, monorepo, status))
       runs <- gh(
         "GET /repos/r-universe/{repo}/actions/runs",
         repo = monorepo,
@@ -60,22 +69,28 @@ issues_synchronization_incomplete <- function(monorepo) {
         page = page,
         .per_page = per_page
       )
-      names <- unlist(
-        lapply(
-          runs$workflow_runs,
-          function(run) {
-            if (basename(run$path) == "build.yml") {
-              utils::head(strsplit(run$name, split = " ")[[1L]], n = 1L)
-            } else {
-              NA_character_
-            }
-          }
-        )
-      )
+      names <- unlist(lapply(runs$workflow_runs, name_run, status = status))
       incomplete <- c(incomplete, stats::na.omit(names))
       n_runs <- length(runs$workflow_runs)
       page <- page + 1L
     }
   }
   unique(incomplete)
+}
+
+name_run <- function(run, status) {
+  delay <- difftime(
+    format_time_stamp(Sys.time()),
+    format_time_stamp(run$run_started_at),
+    units = "days"
+  )
+  is_lost <- (status != "in_progress") && delay > 1
+  mark_incomplete <- (basename(run$path) == "build.yml") &&
+    is.null(run$conclusion) &&
+    !is_lost
+  if (mark_incomplete) {
+    utils::head(strsplit(run$name, split = " ")[[1L]], n = 1L)
+  } else {
+    NA_character_
+  }
 }
