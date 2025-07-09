@@ -4,10 +4,12 @@
 \alias{issues_synchronization}
 \title{Report package check synchronization issues.}
 \usage{
-issues_synchronization(meta = meta_packages())
+issues_synchronization(meta = meta_packages(), verbose = FALSE)
 }
 \arguments{
 \item{meta}{Package metadata from \code{\link[=meta_packages]{meta_packages()}}.}
+
+\item{verbose}{\code{TRUE} to print progress messages, \code{FALSE} otherwise.}
 }
 \value{
 A \code{tibble} with one row per package and the following columns:

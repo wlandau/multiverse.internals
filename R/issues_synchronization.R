@@ -40,7 +40,7 @@ issues_synchronization <- function(meta = meta_packages(), verbose = FALSE) {
 
 issues_synchronization_recent <- function(meta) {
   now <- format_time_stamp(Sys.time())
-  meta$package[difftime(now, meta$published, units = "mins") < 5]
+  meta$package[difftime(now, meta$published, units = "mins") < 15]
 }
 
 # Monorepo is the name of the repo in https://github.com/r-universe.
