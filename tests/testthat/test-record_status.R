@@ -159,3 +159,22 @@ test_that("record_status() with failed check on already staged package", {
   expect_null(status$mirai$dependencies)
   expect_null(status$crew$dependencies)
 })
+
+test_that("record_status() synchronization test", {
+  output <- tempfile()
+  meta_packages <- mock_meta_packages
+  meta_packages$published[c(2L, 5L)] <- format_time_stamp(Sys.time())
+  record_status(
+    versions = mock_versions(),
+    mock = list(packages = meta_packages),
+    output = output,
+    verbose = FALSE
+  )
+  out <- readLines(output)
+  status <- jsonlite::read_json(output, simplifyVector = TRUE)
+  issues <- Filter(function(x) "synchronization" %in% names(x), status)
+  expect_equal(sort(names(issues)), sort(c("adbcdrivermanager", "arrow")))
+  for (issue in issues) {
+    expect_equal(issue$synchronization, "recent")
+  }
+})

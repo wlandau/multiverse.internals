@@ -62,7 +62,7 @@ record_status <- function(
     add_issues(issues_licenses(meta)) |>
     add_issues(issues_r_cmd_check(meta)) |>
     add_issues(issues_remotes(meta)) |>
-    add_issues(issues_synchronization(meta)) |>
+    add_issues(issues_synchronization(meta, verbose = verbose)) |>
     add_issues(issues_version_conflicts(meta, "cran")) |>
     add_issues(issues_versions(versions))
   issues <- names(Filter(\(x) !x$success, status))

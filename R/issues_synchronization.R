@@ -19,15 +19,16 @@
 #'     package was last published so recently that downstream checks
 #'     may not have started yet.
 #' @inheritParams issues_r_cmd_check
+#' @param verbose `TRUE` to print progress messages, `FALSE` otherwise.
 #' @examples
 #'   \dontrun{
 #'   meta <- meta_packages(repo = "https://wlandau.r-universe.dev")
 #'   issues_synchronization(meta)
 #'   }
-issues_synchronization <- function(meta = meta_packages()) {
+issues_synchronization <- function(meta = meta_packages(), verbose = FALSE) {
   recent <- issues_synchronization_recent(meta) # Needs to run first.
   monorepo <- utils::head(meta$monorepo, n = 1L)
-  incomplete <- issues_synchronization_incomplete(monorepo)
+  incomplete <- issues_synchronization_incomplete(monorepo, verbose)
   out <- data.frame(
     package = meta$package,
     synchronization = NA_character_
@@ -44,7 +45,7 @@ issues_synchronization_recent <- function(meta) {
 
 # Monorepo is the name of the repo in https://github.com/r-universe.
 # Examples: "r-multiverse, "r-multiverse-staging", "ropensci"
-issues_synchronization_incomplete <- function(monorepo) {
+issues_synchronization_incomplete <- function(monorepo, verbose) {
   incomplete <- character(0L)
   statuses <- c(
     "in_progress",
@@ -61,7 +62,9 @@ issues_synchronization_incomplete <- function(monorepo) {
     n_runs <- per_page
     while (n_runs == per_page) {
       template <- "Page %s universe \"%s\" job status \"%s\"..."
-      message(sprintf(template, page, monorepo, status))
+      if (verbose) {
+        message(sprintf(template, page, monorepo, status))
+      }
       runs <- gh(
         "GET /repos/r-universe/{repo}/actions/runs",
         repo = monorepo,
