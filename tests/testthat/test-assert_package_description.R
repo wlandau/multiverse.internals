@@ -152,7 +152,8 @@ test_that("assert_parsed_description() detects malformed Authors@R", {
       "  \"first.last@example.com\", role = c(\"aut\", \"cre\"),",
       "   comment = c(ORCID = \"YOUR-ORCID-ID\"))",
       "Description: What the package does (one paragraph).",
-      "License: GPL-3"),
+      "License: GPL-3"
+    ),
     collapse = "\n"
   )
   x <- desc::description$new(text = text)
@@ -179,7 +180,8 @@ test_that("assert_parsed_description() detects usethis default Authors@R", {
       "  \"first.last@example.com\", role = c(\"aut\", \"cre\"),",
       "   comment = c(ORCID = \"YOUR-ORCID-ID\")))",
       "Description: What the package does (one paragraph).",
-      "License: GPL-3"),
+      "License: GPL-3"
+    ),
     collapse = "\n"
   )
   x <- desc::description$new(text = text)

@@ -1,3 +1,8 @@
+# multiverse.internals 1.1.1
+
+* Count the number of packages in each section of the status page.
+* Use the Air formatter.
+
 # multiverse.internals 1.1.0
 
 * Add `issues_synchronization()` and factor it into `record_status()` and `interpret_status()` (https://github.com/r-multiverse/help/issues/156).

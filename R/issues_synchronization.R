@@ -30,7 +30,7 @@ issues_synchronization <- function(meta = meta_packages(), verbose = FALSE) {
   monorepo <- utils::head(meta$monorepo, n = 1L)
   incomplete <- issues_synchronization_incomplete(monorepo, verbose)
   out <- rbind(incomplete, recent)
-  out[!duplicated(out$package),, drop = FALSE] # nolint
+  out[!duplicated(out$package), , drop = FALSE] # nolint
 }
 
 issues_synchronization_recent <- function(meta) {
@@ -80,7 +80,7 @@ issues_synchronization_incomplete <- function(monorepo, verbose = TRUE) {
       page <- page + 1L
     }
   }
-  incomplete[!duplicated(incomplete$package),, drop = FALSE] # nolint
+  incomplete[!duplicated(incomplete$package), , drop = FALSE] # nolint
 }
 
 parse_run <- function(run, status) {

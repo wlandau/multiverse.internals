@@ -62,8 +62,11 @@ test_that("issues_r_cmd_check() mocked", {
     data.frame(
       check = c("WARNING", "WARNING", "WARNING", "WARNING", "WARNING"),
       config = c(
-        "linux-release-x86_64", "windows-release", "linux-release-arm64",
-        "macos-release-x86_64", "macos-release-arm64"
+        "linux-release-x86_64",
+        "windows-release",
+        "linux-release-arm64",
+        "macos-release-x86_64",
+        "macos-release-arm64"
       ),
       r = c("4.5.0", "4.5.0", "4.5.0", "4.5.0", "4.5.0"),
       url = file.path(
@@ -99,7 +102,9 @@ test_that("issues_r_cmd_check() mocked", {
     data.frame(
       check = c("WARNING", "WARNING", "WARNING"),
       config = c(
-        "windows-release", "macos-release-arm64", "linux-release-x86_64"
+        "windows-release",
+        "macos-release-arm64",
+        "linux-release-x86_64"
       ),
       r = c("4.5.0", "4.5.0", "4.5.0"),
       url = file.path(
@@ -114,7 +119,9 @@ test_that("issues_r_cmd_check() mocked", {
     data.frame(
       check = c("WARNING", "WARNING", "WARNING"),
       config = c(
-        "linux-release-x86_64", "macos-release-arm64", "windows-release"
+        "linux-release-x86_64",
+        "macos-release-arm64",
+        "windows-release"
       ),
       r = c("4.5.0", "4.5.0", "4.5.0"),
       url = file.path(
@@ -141,7 +148,9 @@ test_that("issues_r_cmd_check() mocked", {
     data.frame(
       check = c("WARNING", "WARNING", "WARNING"),
       config = c(
-        "windows-release", "macos-release-arm64", "linux-release-x86_64"
+        "windows-release",
+        "macos-release-arm64",
+        "linux-release-x86_64"
       ),
       r = c("4.5.0", "4.5.0", "4.5.0"),
       url = file.path(
@@ -181,8 +190,10 @@ test_that("issues_r_cmd_check() mocked", {
     data.frame(
       check = c("ERROR", "WARNING", "WARNING", "WARNING"),
       config = c(
-        "source", "macos-release-arm64",
-        "linux-release-x86_64", "windows-release"
+        "source",
+        "macos-release-arm64",
+        "linux-release-x86_64",
+        "windows-release"
       ),
       r = c("4.5.0", "4.5.0", "4.5.0", "4.5.0"),
       url = file.path(
@@ -198,8 +209,10 @@ test_that("issues_r_cmd_check() mocked", {
     data.frame(
       check = c("ERROR", "WARNING", "WARNING", "WARNING"),
       config = c(
-        "source", "macos-release-arm64",
-        "linux-release-x86_64", "windows-release"
+        "source",
+        "macos-release-arm64",
+        "linux-release-x86_64",
+        "windows-release"
       ),
       r = c("4.5.0", "4.5.0", "4.5.0", "4.5.0"),
       url = file.path(
@@ -221,8 +234,10 @@ test_that("issues_r_cmd_check() mocked", {
     data.frame(
       check = c("ERROR", "WARNING", "WARNING", "WARNING"),
       config = c(
-        "source", "linux-release-x86_64",
-        "macos-release-arm64", "windows-release"
+        "source",
+        "linux-release-x86_64",
+        "macos-release-arm64",
+        "windows-release"
       ),
       r = c("4.5.0", "4.5.0", "4.5.0", "4.5.0"),
       url = file.path(

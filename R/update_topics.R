@@ -39,7 +39,7 @@ update_topics <- function(
 update_topic <- function(topic, path, meta) {
   url <- file.path("https://r-multiverse.org/topics", paste0(topic, ".html"))
   which <- grepl(pattern = url, x = meta$url, fixed = TRUE)
-  meta <- meta[which,, drop = FALSE] # nolint
+  meta <- meta[which, , drop = FALSE] # nolint
   about <- readLines(file.path(path, "topics", topic))
   urls <- file.path("https://community.r-multiverse.org", meta$package)
   packages <- sprintf("|[%s](%s)|%s|", meta$package, urls, meta$title)

@@ -52,7 +52,7 @@ issues_versions <- function(versions) {
   aligned <- (history$version_current == history$version_highest) &
     (history$hash_current == history$hash_highest)
   aligned[is.na(aligned)] <- TRUE
-  misaligned <- history[!aligned,, drop = FALSE] # nolint
+  misaligned <- history[!aligned, , drop = FALSE] # nolint
   out <- data.frame(package = misaligned$package)
   out$versions <- Map(
     function(version_current, hash_current, version_highest, hash_highest) {

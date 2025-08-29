@@ -117,8 +117,9 @@ assert_url_exists <- function(url) {
 }
 
 is_package_name <- function(name) {
-  is_character_scalar(name) && grepl(
-    pattern = "^[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9]$",
-    x = trimws(name)
-  )
+  is_character_scalar(name) &&
+    grepl(
+      pattern = "^[a-zA-Z][a-zA-Z0-9.]*[a-zA-Z0-9]$",
+      x = trimws(name)
+    )
 }
