@@ -40,7 +40,7 @@ write_packages_json <- function(path_staging) {
   names(branches) <- json_staging$package
   branches[names(hashes)] <- unname(hashes)
   json_staging$branch <- unname(branches)
-  json_staging <- json_staging[order(json_staging$package),, drop = FALSE] # nolint
+  json_staging <- json_staging[order(json_staging$package), , drop = FALSE] # nolint
   jsonlite::write_json(json_staging, file_staging, pretty = TRUE)
 }
 

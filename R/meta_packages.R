@@ -35,7 +35,7 @@ get_meta_api <- function(repo) {
 }
 
 get_meta_cran <- function() {
-  cran  <- utils::available.packages(repos = meta_snapshot()$cran)
+  cran <- utils::available.packages(repos = meta_snapshot()$cran)
   data.frame(
     package = as.character(cran[, "Package"]),
     cran = as.character(cran[, "Version"])

@@ -29,10 +29,10 @@ test_that("interpret_status() with advisories", {
   skip_if_offline()
   mock <- mock_meta_packages
   example <- mock$package == "nanonext"
-  commonmark <- mock[example,, drop = FALSE] # nolint
+  commonmark <- mock[example, , drop = FALSE] # nolint
   commonmark$package <- "commonmark"
   commonmark$version <- "0.2"
-  readxl <- mock[example,, drop = FALSE] # nolint
+  readxl <- mock[example, , drop = FALSE] # nolint
   readxl$package <- "readxl"
   readxl$version <- "1.4.1"
   meta <- rbind(

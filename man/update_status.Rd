@@ -22,11 +22,13 @@ packages.
 }
 \examples{
 \dontrun{
-url_staging = "https://github.com/r-multiverse/staging"
-url_community = "https://github.com/r-multiverse/community"
+url_staging <- "https://github.com/r-multiverse/staging"
+url_community <- "https://github.com/r-multiverse/community"
+url_status <- "https://github.com/r-multiverse/status"
 path_status <- tempfile()
 path_staging <- tempfile()
 path_community <- tempfile()
+gert::git_clone(url = url_status, path = path_status)
 gert::git_clone(url = url_staging, path = path_staging)
 gert::git_clone(url = url_community, path = path_community)
 update_status(

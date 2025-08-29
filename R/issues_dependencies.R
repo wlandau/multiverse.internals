@@ -53,7 +53,9 @@ issues_dependencies <- function(
   meta = meta_packages(),
   verbose = FALSE
 ) {
-  if (verbose) message("Constructing the package dependency graph")
+  if (verbose) {
+    message("Constructing the package dependency graph")
+  }
   graph <- issues_dependencies_graph(meta)
   vertices <- names(igraph::V(graph))
   edges <- igraph::as_long_data_frame(graph)
@@ -65,7 +67,9 @@ issues_dependencies <- function(
   )
   status <- list()
   for (package in intersect(packages, vertices)) {
-    if (verbose) message("Flagging reverse dependencies of ", package)
+    if (verbose) {
+      message("Flagging reverse dependencies of ", package)
+    }
     revdeps <- names(igraph::subcomponent(graph, v = package, mode = "out"))
     revdeps <- setdiff(revdeps, package)
     for (revdep in revdeps) {
@@ -76,7 +80,7 @@ issues_dependencies <- function(
   }
   out <- data.frame(package = names(status) %||% character(0L))
   out$dependencies <- unname(status)
-  out[order(out$package),, drop = FALSE] # nolint
+  out[order(out$package), , drop = FALSE] # nolint
 }
 
 issues_dependencies_graph <- function(meta) {

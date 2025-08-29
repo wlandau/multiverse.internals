@@ -21,7 +21,8 @@ issues_version_conflicts <- function(meta = meta_packages(), repo = "cran") {
       utils::compareVersion(
         a = meta$version[index],
         b = meta[[repo]][index]
-      ) < 0L
+      ) <
+        0L
     },
     FUN.VALUE = logical(1L)
   )
