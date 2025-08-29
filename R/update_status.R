@@ -11,11 +11,13 @@
 #'   to the clone of the Community universe GitHub repository.
 #' @examples
 #' \dontrun{
-#' url_staging = "https://github.com/r-multiverse/staging"
-#' url_community = "https://github.com/r-multiverse/community"
+#' url_staging <- "https://github.com/r-multiverse/staging"
+#' url_community <- "https://github.com/r-multiverse/community"
+#' url_status <- "https://github.com/r-multiverse/status"
 #' path_status <- tempfile()
 #' path_staging <- tempfile()
 #' path_community <- tempfile()
+#' gert::git_clone(url = url_status, path = path_status)
 #' gert::git_clone(url = url_staging, path = path_staging)
 #' gert::git_clone(url = url_community, path = path_community)
 #' update_status(
@@ -73,6 +75,11 @@ update_status_production <- function(output, input) {
     replacement = rows,
     x = lines_page
   )
+  lines_page <- gsub(
+    pattern = "SIZE",
+    replacement = length(staged),
+    x = lines_page
+  )
   writeLines(lines_page, file.path(output, "production.md"))
 }
 
@@ -118,6 +125,11 @@ update_status_summary <- function(output, directory, status) {
     x = lines
   )
   lines <- gsub(pattern = "PACKAGES", replacement = rows, x = lines)
+  lines <- gsub(
+    pattern = "SIZE",
+    replacement = length(strsplit(rows, split = "\n")[[1L]]),
+    x = lines
+  )
   writeLines(lines, file.path(output, paste0(directory, ".md")))
 }
 
