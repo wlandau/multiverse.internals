@@ -1,3 +1,7 @@
+# multiverse.internals 1.1.2
+
+* Clarify that pull requests to add organizations should be separate from ones that contribute packages.
+
 # multiverse.internals 1.1.1
 
 * Count the number of packages in each section of the status page.
