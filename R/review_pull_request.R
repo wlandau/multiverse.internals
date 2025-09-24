@@ -101,7 +101,7 @@ review_pull_request_integrity <- function(owner, repo, number, organizations) {
         ". For security, R-multiverse requires manual review ",
         "by a moderator in such cases. \n\n",
         "Or, if you would like to add an organization to the list, ",
-        "please submit a pull request to ",
+        "please submit a new pull request (different from this one) to ",
         file.path(
           "https://github.com",
           owner,
