@@ -86,10 +86,10 @@ review_pull_request_integrity <- function(owner, repo, number, organizations) {
       repo = repo,
       number = number,
       message = paste0(
-        "Author ",
-        shQuote(pull$user$login),
-        " of pull request ",
+        "Pull request ",
         number,
+        " requires manual review because author ",
+        shQuote(pull$user$login),
         " is not a public member of one of the GitHub organizations ",
         "listed at ",
         file.path(
@@ -98,20 +98,12 @@ review_pull_request_integrity <- function(owner, repo, number, organizations) {
           repo,
           "blob/main/organizations"
         ),
-        ". For security, R-multiverse requires manual review ",
-        "by a moderator in such cases. \n\n",
-        "If you would like to add an organization to the list, ",
-        "please submit a new pull request (different from this one) to ",
-        file.path(
-          "https://github.com",
-          owner,
-          repo
-        ),
-        " to add it to the ",
-        "'organizations' file. ",
-        "Pull requests that add organizations should be separate from ",
-        "ones that contribute packages.\n\n",
-        "If you are already a member of one of the already listed ",
+        ".\n\nYou may submit a new pull request to",
+        " edit this list of organizations.",
+        " However, the pull request should not also contribute packages,",
+        " and it will require manual review by the ",
+        "[administrators](https://r-multiverse.org/team.html#administrators).",
+        "\n\nIf you are already a member of one of the already listed ",
         "organizations, you may need to edit settings in GitHub ",
         "to [make your membership publicly visible](",
         file.path(
