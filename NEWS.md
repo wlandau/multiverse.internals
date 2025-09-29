@@ -1,6 +1,6 @@
 # multiverse.internals 1.1.3
 
-* Clarify expectations for adding orgqanizations.
+* Clarify expectations for adding organizations.
 
 # multiverse.internals 1.1.2
 
