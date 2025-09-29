@@ -1,3 +1,7 @@
+# multiverse.internals 1.1.3
+
+* Clarify expectations for adding orgqanizations.
+
 # multiverse.internals 1.1.2
 
 * Clarify that pull requests to add organizations should be separate from ones that contribute packages.
