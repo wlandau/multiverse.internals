@@ -20,9 +20,17 @@ The advisory database is cached internally for performance.}
 \value{
 A character string if there is a problem with the package entry,
 otherwise \code{NULL} if there are no issues.
+For security reasons, \code{\link[=review_package]{review_package()}} might only return the first
+finding it encounters. If that happens, there will be an informative
+note at the end of the text string.
 }
 \description{
 Review a package for registration in R-multiverse.
+}
+\details{
+\code{\link[=review_package]{review_package()}} runs all the checks from
+\url{https://r-multiverse.org/review.html#automatic-acceptance}
+that can be done using the package name and source code repository URL.
 }
 \examples{
   review_package(

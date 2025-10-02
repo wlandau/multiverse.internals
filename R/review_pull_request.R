@@ -232,7 +232,7 @@ pull_request_defer <- function(owner, repo, number, message) {
       "or close this pull request and open a different one ",
       "which passes automated checks.\n\n",
       "Moderators, please use `multiverse.internals::review_package()` ",
-      "to run the full set of registration checks."
+      "to run pre-registration checks."
     )
   )
 }

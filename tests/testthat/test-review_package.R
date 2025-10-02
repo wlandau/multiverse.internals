@@ -71,10 +71,10 @@ test_that("malformed URL", {
   )
 })
 
-test_that("package name/repo disagreement", {
+test_that("package name/repo discrpeancy", {
   expect_true(
     grepl(
-      "appears to disagree with the repository name in the URL",
+      "is different from the repository name in the URL",
       review_package(
         name = "gh2",
         url = "https://github.com/r-lib/gh"
@@ -100,7 +100,7 @@ test_that("https", {
 test_that("GitHub/GitLab URL", {
   expect_true(
     grepl(
-      "is not a GitHub or GitLab URL",
+      "is not a repository in GitHub or GitLab",
       review_package(
         name = "gh",
         url = "https://github.gov/r-lib/gh",
