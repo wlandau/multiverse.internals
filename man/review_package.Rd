@@ -2,7 +2,7 @@
 % Please edit documentation in R/review_package.R
 \name{review_package}
 \alias{review_package}
-\title{Review a package}
+\title{Review a package.}
 \usage{
 review_package(name, url, advisories = NULL)
 }

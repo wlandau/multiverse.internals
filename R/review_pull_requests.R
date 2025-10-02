@@ -1,4 +1,4 @@
-#' @title Review pull requests.
+#' @title Review R-multiverse contribution pull requests.
 #' @export
 #' @family package reviews
 #' @description Review pull requests which add packages to `packages.json`.

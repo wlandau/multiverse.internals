@@ -2,7 +2,7 @@
 % Please edit documentation in R/review_license.R
 \name{review_license}
 \alias{review_license}
-\title{Review a package license}
+\title{Review a package license.}
 \usage{
 review_license(license)
 }

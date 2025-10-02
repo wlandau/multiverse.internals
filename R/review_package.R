@@ -1,4 +1,4 @@
-#' @title Review a package
+#' @title Review a package.
 #' @export
 #' @family package reviews
 #' @description Review a package for registration in R-multiverse.

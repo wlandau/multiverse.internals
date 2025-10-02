@@ -2,7 +2,7 @@
 % Please edit documentation in R/review_pull_request.R
 \name{review_pull_request}
 \alias{review_pull_request}
-\title{Review an R-multiverse contribution}
+\title{Review an R-multiverse contribution pull request.}
 \usage{
 review_pull_request(
   owner = "r-multiverse",

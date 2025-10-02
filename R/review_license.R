@@ -1,4 +1,4 @@
-#' @title Review a package license
+#' @title Review a package license.
 #' @export
 #' @family package reviews
 #' @description Review a package license string from the `DESCRIPTION` file
