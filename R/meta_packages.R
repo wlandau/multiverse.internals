@@ -44,22 +44,30 @@ get_meta_cran <- function() {
 
 get_foss <- function(license) {
   license <- trimws(license)
-  foss <- rep(FALSE, length(license))
+  foss <- rep(NA, length(license))
   # Pre-compute most common license types because tools::analyze_license()
   # is slow to iterate on large vectors of license specifications.
   common <- c(
+    "Apache License (>= 2)",
+    "Apache License (>= 2.0)",
     "MIT + file LICENSE",
+    "GNU General Public License",
     "GPL-3",
-    "GPL-2"
+    "GPL-2",
+    "GPL (>= 3)",
+    "GPL (>= 2)",
+    "LGPL-3",
+    "BSD_3_clause + file LICENSE",
+    "BSD_2_clause + file LICENSE"
   )
   is_common <- foss %in% common
   foss[is_common] <- TRUE
-  foss[!is_common] <- license_okay(license[!is_common])
+  is_remainder <- !is_common & !is.na(license)
+  foss[is_remainder] <- review_license(license[is_remainder])
   foss
 }
 
 meta_api_postprocess <- function(data) {
-  data$License[is.na(data$License)] <- "NOT FOUND"
   data$foss <- get_foss(data$License)
   if (is.null(data$remotes)) {
     data$remotes <- replicate(nrow(data), NULL, simplify = FALSE)

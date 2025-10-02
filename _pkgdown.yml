@@ -5,8 +5,9 @@ template:
     primary: "#152640"
 
 reference:
-- title: Package contributions
+- title: Package reviews
   contents:
+  - review_package
   - review_pull_request
   - review_pull_requests
 - title: Metadata

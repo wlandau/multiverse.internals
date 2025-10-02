@@ -1,3 +1,9 @@
+# multiverse.internals 1.1.4
+
+* Move `assert_package()` to `review_package()` and add examples. `review_package()` is how the bot checks each package review, and the ability to run it locally will really help ease the manual work of moderators.
+* Cache the output of `read_advisories()` in memory for performance.
+* Remove false positives (source build failures) from `nonstandard_licenses.json` (#168).
+
 # multiverse.internals 1.1.3
 
 * Clarify expectations for adding organizations.

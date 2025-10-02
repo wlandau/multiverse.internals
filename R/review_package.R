@@ -1,14 +1,25 @@
-#' @title Validate a Package Entry
+#' @title Review a package
 #' @export
-#' @keywords internal
-#' @description Validate a package entry.
+#' @family package reviews
+#' @description Review a package for registration in R-multiverse.
 #' @return A character string if there is a problem with the package entry,
 #'   otherwise `NULL` if there are no issues.
 #' @param name Character of length 1, package name.
 #' @param url Usually a character of length 1 with the package URL.
 #' @param advisories Character vector of names of packages with advisories
 #'   in the R Consortium Advisory Database.
-assert_package <- function(name, url, advisories = character(0L)) {
+#'   If `NULL`, then `review_package()` downloads the advisory database and
+#'   checks if the package has a vulnerability listed there.
+#'   The advisory database is cached internally for performance.
+#' @examples
+#'   review_package(
+#'     name = "multiverse.internals",
+#'     url = "https://github.com/r-multiverse/multiverse.internals"
+#'   )
+review_package <- function(name, url, advisories = NULL) {
+  if (is.null(advisories)) {
+    advisories <- unique(read_advisories()$package)
+  }
   if (any(grepl(pattern = "\\}|\\{", x = url))) {
     return(paste("Listing of package", shQuote(name), "looks like JSON"))
   }

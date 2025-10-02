@@ -4,7 +4,7 @@
 #' @description Check for a release.
 #' @return A character string if there is a problem with the package entry,
 #'   otherwise `NULL` if there are no issues.
-#' @inheritParams assert_package
+#' @inheritParams review_package
 assert_release_exists <- function(url) {
   host <- url_parse(url)[["host"]]
   if (host == "github.com") {

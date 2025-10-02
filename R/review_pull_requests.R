@@ -1,6 +1,6 @@
 #' @title Review pull requests.
 #' @export
-#' @family pull request reviews
+#' @family package reviews
 #' @description Review pull requests which add packages to `packages.json`.
 #' @return `NULL` (invisibly).
 #' @inheritParams review_pull_request

@@ -36,7 +36,9 @@ If \code{NULL}, the function reads the list of trusted organizations.}
 Review a pull request to add packages to R-multiverse.
 }
 \seealso{
-Other pull request reviews: 
+Other package reviews: 
+\code{\link{review_license}()},
+\code{\link{review_package}()},
 \code{\link{review_pull_requests}()}
 }
-\concept{pull request reviews}
+\concept{package reviews}

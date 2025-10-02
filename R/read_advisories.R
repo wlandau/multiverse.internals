@@ -1,10 +1,14 @@
 #' @title Read R Consortium advisories
 #' @keywords internal
 #' @description Read the R Consortium R Advisory database
+#'   and cache it in memory for performance.
 #' @param timeout Number of milliseconds until the database download times
 #'   out.
 #' @param retries Number of retries to download the database.
 read_advisories <- function(timeout = 600000, retries = 3L) {
+  if (!is.null(cache$advisories)) {
+    return(cache$advisories)
+  }
   path <- tempfile()
   dir.create(path)
   on.exit(unlink(path, recursive = TRUE, force = TRUE))
@@ -31,7 +35,13 @@ read_advisories <- function(timeout = 600000, retries = 3L) {
   unzip(zipfile, exdir = path, junkpaths = TRUE)
   advisories <- Sys.glob(file.path(path, "RSEC*.yaml"))
   out <- do.call(vctrs::vec_rbind, lapply(advisories, read_advisory))
-  stats::aggregate(x = advisories ~ package + version, data = out, FUN = list)
+  out <- stats::aggregate(
+    x = advisories ~ package + version,
+    data = out,
+    FUN = list
+  )
+  cache$advisories <- out
+  out
 }
 
 read_advisory <- function(path) {
