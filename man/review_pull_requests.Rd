@@ -2,7 +2,7 @@
 % Please edit documentation in R/review_pull_requests.R
 \name{review_pull_requests}
 \alias{review_pull_requests}
-\title{Review pull requests.}
+\title{Review R-multiverse contribution pull requests.}
 \usage{
 review_pull_requests(owner = "r-multiverse", repo = "contributions")
 }
@@ -18,7 +18,9 @@ review_pull_requests(owner = "r-multiverse", repo = "contributions")
 Review pull requests which add packages to \code{packages.json}.
 }
 \seealso{
-Other pull request reviews: 
+Other package reviews: 
+\code{\link{review_license}()},
+\code{\link{review_package}()},
 \code{\link{review_pull_request}()}
 }
-\concept{pull request reviews}
+\concept{package reviews}

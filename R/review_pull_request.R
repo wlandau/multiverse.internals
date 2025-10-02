@@ -1,6 +1,6 @@
-#' @title Review an R-multiverse contribution
+#' @title Review an R-multiverse contribution pull request.
 #' @export
-#' @family pull request reviews
+#' @family package reviews
 #' @description Review a pull request to add packages to R-multiverse.
 #' @return `NULL` (invisibly).
 #' @inheritParams meta_packages
@@ -193,7 +193,7 @@ review_pull_request_content <- function(owner, repo, number, advisories) {
     }
     url <- gsub(pattern = "^.*\\+", replacement = "", x = file$patch)
     url <- gsub(pattern = "\\s.*$", replacement = "", x = url)
-    result <- assert_package(name = name, url = url, advisories = advisories)
+    result <- review_package(name = name, url = url, advisories = advisories)
     if (!is.null(result)) {
       pull_request_defer(
         owner = owner,
@@ -230,7 +230,9 @@ pull_request_defer <- function(owner, repo, number, message) {
       "\n\nThis pull request has been marked for manual review. ",
       "Please either wait for an R-multiverse moderator to review, ",
       "or close this pull request and open a different one ",
-      "which passes automated checks."
+      "which passes automated checks.\n\n",
+      "Moderators, please use `multiverse.internals::review_package()` ",
+      "to run pre-registration checks."
     )
   )
 }

@@ -14,5 +14,6 @@ out.}
 }
 \description{
 Read the R Consortium R Advisory database
+and cache it in memory for performance.
 }
 \keyword{internal}
