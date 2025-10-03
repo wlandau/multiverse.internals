@@ -56,8 +56,9 @@ review_package_text <- function(name, url, advisories = NULL) {
   skipped <- paste(
     "WARNING: for security and/or practical reasons",
     "some pre-registration checks were skipped.",
-    "Please manually check the criteria listed at",
-    "<https://r-multiverse.org/review.html#automatic-acceptance>."
+    "The criteria in",
+    "<https://r-multiverse.org/review.html#automatic-acceptance>",
+    "need to be checked manually."
   )
   skip <- function(message) {
     paste(message, skipped, sep = "\n\n")
