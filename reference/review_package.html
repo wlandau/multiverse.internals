@@ -72,7 +72,10 @@ In either case, <code>review_package()</code> prints an R console message with
 the result.</p>
 <p>For security reasons, <code>review_package()</code> might only print the first
 finding it encounters. If that happens, there will be an informative
-note at the end of the console message.</p>
+note at the end of the console message, and compliance with
+R-multiverse policies will need to be checked manually.
+In particular, please use <code><a href="review_license.html">review_license()</a></code> to
+check the <code>"License:"</code> field in the package <code>DESCRIPTION</code> file.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -89,19 +92,17 @@ that can be done using the package name and source code repository URL.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span>  <span class="fu">review_package</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    name <span class="op">=</span> <span class="st">"multiverse.internals"</span>,</span></span>
-<span class="r-in"><span>    url <span class="op">=</span> <span class="st">"https://github.com/r-multiverse/multiverse.internals"</span></span></span>
+<span class="r-in"><span>    name <span class="op">=</span> <span class="st">"webchem"</span>,</span></span>
+<span class="r-in"><span>    url <span class="op">=</span> <span class="st">"https://github.com/ropensci/webchem"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> package <span style="color: #0000BB;">multiverse.internals</span> passed cursory checks for policy compliance.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> package <span style="color: #0000BB;">webchem</span> passed cursory checks for policy compliance.</span>
 <span class="r-in"><span>  <span class="fu">review_package</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    name <span class="op">=</span> <span class="st">"wrongName"</span>,</span></span>
-<span class="r-in"><span>    url <span class="op">=</span> <span class="st">"https://github.com/r-multiverse/multiverse.internals"</span></span></span>
+<span class="r-in"><span>    name <span class="op">=</span> <span class="st">"polars"</span>,</span></span>
+<span class="r-in"><span>    url <span class="op">=</span> <span class="st">"https://github.com/pola-rs/r-polars"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> package <span style="color: #0000BB;">wrongName</span> did not pass cursory checks for policy compliance. Findings:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> package <span style="color: #0000BB;">polars</span> did not pass cursory checks for policy compliance. Findings:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Package name 'wrongName' is different from the repository name in the URL 'https://github.com/r-multiverse/multiverse.internals'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> R-multiverse listing name 'wrongName' is different from the package name in the DESCRIPTION FILE: 'multiverse.internals'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Package name 'polars' is different from the repository name in the URL 'https://github.com/pola-rs/r-polars'</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
