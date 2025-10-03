@@ -1,4 +1,5 @@
 #' @importFrom base64enc base64decode
+#' @importFrom cli cli_alert_danger cli_alert_success
 #' @importFrom desc description
 #' @importFrom gh gh
 #' @importFrom igraph make_graph neighbors subcomponent V

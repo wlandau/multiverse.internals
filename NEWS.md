@@ -1,3 +1,7 @@
+# multiverse.internals 1.1.5
+
+* Make `review_license()` and `review_package()` friendlier for manual reviews. These functions now print nicely formatted R console messages the the results of each review.
+
 # multiverse.internals 1.1.4
 
 * Move `assert_package()` to `review_package()` and add examples. `review_package()` is how the bot checks each package review, and the ability to run it locally will really help ease the manual work of moderators.

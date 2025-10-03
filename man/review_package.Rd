@@ -7,22 +7,30 @@
 review_package(name, url, advisories = NULL)
 }
 \arguments{
-\item{name}{Character of length 1, package name.}
+\item{name}{Character string, name of the package to check.}
 
-\item{url}{Usually a character of length 1 with the package URL.}
+\item{url}{Either a character string with the package URL or
+a custom JSON string with a package entry.}
 
 \item{advisories}{Character vector of names of packages with advisories
 in the R Consortium Advisory Database.
-If \code{NULL}, then \code{review_package()} downloads the advisory database and
+If \code{NULL}, then \code{review_package_text()} downloads the advisory database and
 checks if the package has a vulnerability listed there.
 The advisory database is cached internally for performance.}
 }
 \value{
-A character string if there is a problem with the package entry,
-otherwise \code{NULL} if there are no issues.
-For security reasons, \code{\link[=review_package]{review_package()}} might only return the first
+Invisibly returns \code{TRUE}
+if there is a problem with the package entry,
+otherwise \code{FALSE} if there are no issues.
+In either case, \code{\link[=review_package]{review_package()}} prints an R console message with
+the result.
+
+For security reasons, \code{\link[=review_package]{review_package()}} might only print the first
 finding it encounters. If that happens, there will be an informative
-note at the end of the text string.
+note at the end of the console message, and compliance with
+R-multiverse policies will need to be checked manually.
+In particular, please use \code{\link[=review_license]{review_license()}} to
+check the \code{"License:"} field in the package \code{DESCRIPTION} file.
 }
 \description{
 Review a package for registration in R-multiverse.
@@ -34,14 +42,16 @@ that can be done using the package name and source code repository URL.
 }
 \examples{
   review_package(
-    name = "multiverse.internals",
-    url = "https://github.com/r-multiverse/multiverse.internals"
+    name = "webchem",
+    url = "https://github.com/ropensci/webchem"
+  )
+  review_package(
+    name = "polars",
+    url = "https://github.com/pola-rs/r-polars"
   )
 }
 \seealso{
-Other package reviews: 
-\code{\link{review_license}()},
-\code{\link{review_pull_request}()},
-\code{\link{review_pull_requests}()}
+Other Manual package reviews: 
+\code{\link{review_license}()}
 }
-\concept{package reviews}
+\concept{Manual package reviews}

@@ -1,6 +1,6 @@
 #' @title Review an R-multiverse contribution pull request.
 #' @export
-#' @family package reviews
+#' @family Automated package reviews
 #' @description Review a pull request to add packages to R-multiverse.
 #' @return `NULL` (invisibly).
 #' @inheritParams meta_packages
@@ -193,7 +193,11 @@ review_pull_request_content <- function(owner, repo, number, advisories) {
     }
     url <- gsub(pattern = "^.*\\+", replacement = "", x = file$patch)
     url <- gsub(pattern = "\\s.*$", replacement = "", x = url)
-    result <- review_package(name = name, url = url, advisories = advisories)
+    result <- review_package_text(
+      name = name,
+      url = url,
+      advisories = advisories
+    )
     if (!is.null(result)) {
       pull_request_defer(
         owner = owner,
@@ -202,7 +206,7 @@ review_pull_request_content <- function(owner, repo, number, advisories) {
         message = paste0(
           "Pull request ",
           number,
-          " automated checks returned findings: ",
+          " did not pass automated checks for policy compliance:\n\n",
           result
         )
       )
@@ -230,9 +234,7 @@ pull_request_defer <- function(owner, repo, number, message) {
       "\n\nThis pull request has been marked for manual review. ",
       "Please either wait for an R-multiverse moderator to review, ",
       "or close this pull request and open a different one ",
-      "which passes automated checks.\n\n",
-      "Moderators, please use `multiverse.internals::review_package()` ",
-      "to run pre-registration checks."
+      "which passes automated checks."
     )
   )
 }
@@ -290,8 +292,9 @@ pull_request_merge <- function(owner, repo, number) {
       number = number,
       body = paste(
         "This pull request was automatically merged",
-        "to incorporate new packages into R-multiverse.",
-        "An automated GitHub actions job will deploy the packages.",
+        "to incorporate new package(s) into R-multiverse.",
+        "Your package(s) are currently en route to",
+        "<https://community.r-multiverse.org>.",
         "Thank you for your contribution."
       )
     )
