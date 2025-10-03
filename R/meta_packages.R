@@ -63,7 +63,7 @@ get_foss <- function(license) {
   is_common <- foss %in% common
   foss[is_common] <- TRUE
   is_remainder <- !is_common & !is.na(license)
-  foss[is_remainder] <- review_license(license[is_remainder])
+  foss[is_remainder] <- license_okay(license[is_remainder])
   foss
 }
 

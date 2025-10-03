@@ -107,7 +107,7 @@ assert_parsed_description <- function(name, description) {
     )
   }
   license <- description$get("License")
-  if (!all(review_license(license))) {
+  if (!all(license_okay(license))) {
     return(
       paste(
         "Detected license",

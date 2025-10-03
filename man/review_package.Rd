@@ -39,9 +39,7 @@ that can be done using the package name and source code repository URL.
   )
 }
 \seealso{
-Other package reviews: 
-\code{\link{review_license}()},
-\code{\link{review_pull_request}()},
-\code{\link{review_pull_requests}()}
+Other Manual package reviews: 
+\code{\link{review_license}()}
 }
-\concept{package reviews}
+\concept{Manual package reviews}

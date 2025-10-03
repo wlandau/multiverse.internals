@@ -18,9 +18,7 @@ review_pull_requests(owner = "r-multiverse", repo = "contributions")
 Review pull requests which add packages to \code{packages.json}.
 }
 \seealso{
-Other package reviews: 
-\code{\link{review_license}()},
-\code{\link{review_package}()},
+Other Automated package reviews: 
 \code{\link{review_pull_request}()}
 }
-\concept{package reviews}
+\concept{Automated package reviews}

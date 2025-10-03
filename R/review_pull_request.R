@@ -1,6 +1,6 @@
 #' @title Review an R-multiverse contribution pull request.
 #' @export
-#' @family package reviews
+#' @family Automated package reviews
 #' @description Review a pull request to add packages to R-multiverse.
 #' @return `NULL` (invisibly).
 #' @inheritParams meta_packages

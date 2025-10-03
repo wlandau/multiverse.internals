@@ -1,6 +1,6 @@
 #' @title Review a package.
 #' @export
-#' @family package reviews
+#' @family Manual package reviews
 #' @description Review a package for registration in R-multiverse.
 #' @details [review_package()] runs all the checks from
 #'   <https://r-multiverse.org/review.html#automatic-acceptance>

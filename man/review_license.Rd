@@ -11,8 +11,11 @@ review_license(license)
 of the \code{DESCRIPTION} file of the package in question.}
 }
 \value{
+Invisibly returns
 \code{TRUE} if the package has a valid free open-source (FOSS)
 license according to \code{\link[tools:licensetools]{tools::analyze_license()}}. \code{FALSE} otherwise.
+\code{\link[=review_license]{review_license()}} also prints an R console message
+to the communicate the result.
 Licenses for which \code{\link[=review_license]{review_license()}} returns \code{FALSE} are
 prohibited in R-multiverse.
 }
@@ -27,9 +30,7 @@ to distribute the package source code.
   review_license("just file LICENSE")
 }
 \seealso{
-Other package reviews: 
-\code{\link{review_package}()},
-\code{\link{review_pull_request}()},
-\code{\link{review_pull_requests}()}
+Other Manual package reviews: 
+\code{\link{review_package}()}
 }
-\concept{package reviews}
+\concept{Manual package reviews}
