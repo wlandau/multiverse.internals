@@ -13,7 +13,10 @@
 #'
 #'   For security reasons, [review_package()] might only print the first
 #'   finding it encounters. If that happens, there will be an informative
-#'   note at the end of the console message.
+#'   note at the end of the console message, and compliance with
+#'   R-multiverse policies will need to be checked manually.
+#'   In particular, please use [review_license()] to
+#'   check the `"License:"` field in the package `DESCRIPTION` file.
 #' @param name Character string, name of the package to check.
 #' @param url Either a character string with the package URL or
 #'   a custom JSON string with a package entry.
@@ -24,12 +27,12 @@
 #'   The advisory database is cached internally for performance.
 #' @examples
 #'   review_package(
-#'     name = "multiverse.internals",
-#'     url = "https://github.com/r-multiverse/multiverse.internals"
+#'     name = "webchem",
+#'     url = "https://github.com/ropensci/webchem"
 #'   )
 #'   review_package(
-#'     name = "wrongName",
-#'     url = "https://github.com/r-multiverse/multiverse.internals"
+#'     name = "polars",
+#'     url = "https://github.com/pola-rs/r-polars"
 #'   )
 review_package <- function(name, url, advisories = NULL) {
   result <- review_package_text(name, url, advisories)
@@ -56,9 +59,10 @@ review_package_text <- function(name, url, advisories = NULL) {
   skipped <- paste(
     "WARNING: for security and/or practical reasons",
     "some pre-registration checks were skipped.",
-    "The criteria in",
-    "<https://r-multiverse.org/review.html#automatic-acceptance>",
-    "need to be checked manually."
+    "Please manually check the package for",
+    "compliance with R-multiverse policies.",
+    "In particular, please check the license with",
+    "multiverse.internals::review_license()."
   )
   skip <- function(message) {
     paste(message, skipped, sep = "\n\n")

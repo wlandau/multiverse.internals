@@ -27,7 +27,10 @@ the result.
 
 For security reasons, \code{\link[=review_package]{review_package()}} might only print the first
 finding it encounters. If that happens, there will be an informative
-note at the end of the console message.
+note at the end of the console message, and compliance with
+R-multiverse policies will need to be checked manually.
+In particular, please use \code{\link[=review_license]{review_license()}} to
+check the \code{"License:"} field in the package \code{DESCRIPTION} file.
 }
 \description{
 Review a package for registration in R-multiverse.
@@ -39,12 +42,12 @@ that can be done using the package name and source code repository URL.
 }
 \examples{
   review_package(
-    name = "multiverse.internals",
-    url = "https://github.com/r-multiverse/multiverse.internals"
+    name = "webchem",
+    url = "https://github.com/ropensci/webchem"
   )
   review_package(
-    name = "wrongName",
-    url = "https://github.com/r-multiverse/multiverse.internals"
+    name = "polars",
+    url = "https://github.com/pola-rs/r-polars"
   )
 }
 \seealso{
