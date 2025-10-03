@@ -5,16 +5,21 @@
 #' @details [review_package()] runs all the checks from
 #'   <https://r-multiverse.org/review.html#automatic-acceptance>
 #'   that can be done using the package name and source code repository URL.
-#' @return A character string if there is a problem with the package entry,
-#'   otherwise `NULL` if there are no issues.
-#'   For security reasons, [review_package()] might only return the first
+#' @return Invisibly returns `TRUE`
+#'   if there is a problem with the package entry,
+#'   otherwise `FALSE` if there are no issues.
+#'   In either case, [review_package()] prints an R console message with
+#'   the result.
+#'
+#'   For security reasons, [review_package()] might only print the first
 #'   finding it encounters. If that happens, there will be an informative
-#'   note at the end of the text string.
-#' @param name Character of length 1, package name.
-#' @param url Usually a character of length 1 with the package URL.
+#'   note at the end of the console message.
+#' @param name Character string, name of the package to check.
+#' @param url Either a character string with the package URL or
+#'   a custom JSON string with a package entry.
 #' @param advisories Character vector of names of packages with advisories
 #'   in the R Consortium Advisory Database.
-#'   If `NULL`, then `review_package()` downloads the advisory database and
+#'   If `NULL`, then `review_package_text()` downloads the advisory database and
 #'   checks if the package has a vulnerability listed there.
 #'   The advisory database is cached internally for performance.
 #' @examples
@@ -22,7 +27,32 @@
 #'     name = "multiverse.internals",
 #'     url = "https://github.com/r-multiverse/multiverse.internals"
 #'   )
+#'   review_package(
+#'     name = "wrongName",
+#'     url = "https://github.com/r-multiverse/multiverse.internals"
+#'   )
 review_package <- function(name, url, advisories = NULL) {
+  result <- review_package_text(name, url, advisories)
+  if (is.null(result)) {
+    cli::cli_alert_success(
+      "package {.pkg {name}} passed cursory checks for policy compliance."
+    )
+    return(invisible(TRUE))
+  } else {
+    cli::cli_alert_danger(
+      paste0(
+        "package {.pkg {name}} did not pass ",
+        "cursory checks for policy compliance. ",
+        "Findings:\n\n",
+        result
+      )
+    )
+    return(invisible(FALSE))
+  }
+}
+
+
+review_package_text <- function(name, url, advisories = NULL) {
   skipped <- paste(
     "WARNING: for security and/or practical reasons",
     "some pre-registration checks were skipped.",
@@ -42,7 +72,7 @@ review_package <- function(name, url, advisories = NULL) {
         shQuote(name),
         "looks like JSON, which needs to be manually reviewed.",
         "Manually supply the package name and URL to",
-        "`multiverse.internals::review_package()`",
+        "`multiverse.internals::review_package_text()`",
         "to run the rest of the checks."
       )
     )

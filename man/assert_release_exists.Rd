@@ -7,7 +7,8 @@
 assert_release_exists(url)
 }
 \arguments{
-\item{url}{Usually a character of length 1 with the package URL.}
+\item{url}{Either a character string with the package URL or
+a custom JSON string with a package entry.}
 }
 \value{
 A character string if there is a problem with the package entry,

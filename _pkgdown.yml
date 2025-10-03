@@ -5,10 +5,12 @@ template:
     primary: "#152640"
 
 reference:
-- title: Package reviews
+- title: Manual package reviews
   contents:
   - review_license
   - review_package
+- title: Automated package reviews
+  contents:
   - review_pull_request
   - review_pull_requests
 - title: Metadata

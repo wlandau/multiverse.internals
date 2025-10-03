@@ -1,8 +1,37 @@
+test_that("review_package() on a failing package", {
+  expect_message(
+    out <- review_package(name = letters, url = "xy"),
+    regexp = "did not pass"
+  )
+  expect_false(out)
+})
+
+test_that("review_package() on a successful package", {
+  expect_message(
+    out <- review_package(
+      name = "multiverse.internals",
+      url = "https://github.com/r-multiverse/multiverse.internals"
+    ),
+    regexp = "passed"
+  )
+  expect_true(out)
+})
+
 test_that("invalid package name with vector", {
   expect_true(
     grepl(
       "Invalid package name",
-      review_package(name = letters, url = "xy"),
+      review_package_text(name = letters, url = "xy"),
+      fixed = TRUE
+    )
+  )
+})
+
+test_that("invalid package name with vector", {
+  expect_true(
+    grepl(
+      "Invalid package name",
+      review_package_text(name = letters, url = "xy"),
       fixed = TRUE
     )
   )
@@ -12,7 +41,7 @@ test_that("invalid package name with dot", {
   expect_true(
     grepl(
       "Invalid package name",
-      review_package(
+      review_package_text(
         name = ".gh",
         url = "https://github.com/r-lib/gh"
       ),
@@ -25,7 +54,7 @@ test_that("custom JSON", {
   expect_true(
     grepl(
       "looks like JSON",
-      review_package(name = "xy", url = "{"),
+      review_package_text(name = "xy", url = "{"),
       fixed = TRUE
     )
   )
@@ -35,7 +64,7 @@ test_that("advisory", {
   expect_true(
     grepl(
       "advisory",
-      review_package(
+      review_package_text(
         name = "def",
         url = "https://github.com/abc/def",
         advisories = c("abc", "def")
@@ -49,7 +78,7 @@ test_that("invalid vector URL", {
   expect_true(
     grepl(
       "Invalid package URL",
-      review_package(
+      review_package_text(
         name = "xy",
         url = letters
       ),
@@ -62,7 +91,7 @@ test_that("malformed URL", {
   expect_true(
     grepl(
       "Found malformed URL",
-      review_package(
+      review_package_text(
         name = "gh",
         url = "github.com/r-lib/gh"
       ),
@@ -75,7 +104,7 @@ test_that("package name/repo discrpeancy", {
   expect_true(
     grepl(
       "is different from the repository name in the URL",
-      review_package(
+      review_package_text(
         name = "gh2",
         url = "https://github.com/r-lib/gh"
       ),
@@ -88,7 +117,7 @@ test_that("https", {
   expect_true(
     grepl(
       "is not https",
-      review_package(
+      review_package_text(
         name = "gh",
         url = "http://github.com/r-lib/gh"
       ),
@@ -101,7 +130,7 @@ test_that("GitHub/GitLab URL", {
   expect_true(
     grepl(
       "is not a repository in GitHub or GitLab",
-      review_package(
+      review_package_text(
         name = "gh",
         url = "https://github.gov/r-lib/gh",
         advisories = character(0L)
@@ -115,7 +144,7 @@ test_that("owner URL", {
   expect_true(
     grepl(
       "appears to be an owner",
-      review_package(
+      review_package_text(
         name = "gh",
         url = "https://github.com/gh",
         advisories = character(0L)
@@ -129,7 +158,7 @@ test_that("CRAN mirror", {
   expect_true(
     grepl(
       "appears to use a CRAN mirror",
-      review_package(
+      review_package_text(
         name = "gh",
         url = "https://github.com/cran/gh",
         advisories = character(0L)
@@ -156,7 +185,7 @@ test_that("HTTP error", {
   expect_true(
     grepl(
       "returned HTTP error",
-      review_package(
+      review_package_text(
         name = "afantasticallylongandimpossiblepackage",
         url = "https://github.com/r-lib/afantasticallylongandimpossiblepackage"
       ),
@@ -169,7 +198,7 @@ test_that("release URL", {
   expect_true(
     grepl(
       "No full release found at URL",
-      review_package(
+      review_package_text(
         name = "test.no.release",
         url = "https://github.com/wlandau/test.no.release"
       ),
@@ -180,7 +209,7 @@ test_that("release URL", {
 
 test_that("good GitHub registration", {
   expect_null(
-    review_package(
+    review_package_text(
       name = "gh",
       url = "https://github.com/r-lib/gh",
       advisories = character(0L)
@@ -191,7 +220,7 @@ test_that("good GitHub registration", {
 test_that("GitLab registration with free-form license", {
   tmp <- utils::capture.output(
     suppressMessages(
-      out <- review_package(
+      out <- review_package_text(
         name = "test",
         url = "https://gitlab.com/wlandau/test"
       )
