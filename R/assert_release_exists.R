@@ -6,7 +6,7 @@
 #'   otherwise `NULL` if there are no issues.
 #' @inheritParams review_package
 assert_release_exists <- function(url) {
-  host <- url_parse(url)[["host"]]
+  host <- url_parse(url)[["hostname"]]
   if (host == "github.com") {
     assert_release_github(url)
   } else if (host == "gitlab.com") {
