@@ -5,7 +5,7 @@
 #' @param url Character string, URL of a GitHub or GitLab repository.
 #' @param path Character string, path to the file in the repository.
 get_repo_file <- function(url, path) {
-  host <- url_parse(url)[["host"]]
+  host <- url_parse(url)[["hostname"]]
   if (host == "github.com") {
     get_repo_file_github(url, path)
   } else if (host == "gitlab.com") {

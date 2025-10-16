@@ -1,3 +1,7 @@
+# multiverse.internals 1.1.6
+
+* Ensure compatibility with `parse_url()` in `nanonext` 2.0.0.
+
 # multiverse.internals 1.1.5
 
 * Make `review_license()` and `review_package()` friendlier for manual reviews. These functions now print nicely formatted R console messages the the results of each review.
