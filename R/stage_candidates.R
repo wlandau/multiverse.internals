@@ -43,11 +43,3 @@ write_packages_json <- function(path_staging) {
   json_staging <- json_staging[order(json_staging$package), , drop = FALSE] # nolint
   jsonlite::write_json(json_staging, file_staging, pretty = TRUE)
 }
-
-write_snapshot_json <- function(path_staging) {
-  jsonlite::write_json(
-    meta_snapshot(),
-    file.path(path_staging, "snapshot.json"),
-    pretty = TRUE
-  )
-}
