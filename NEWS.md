@@ -1,6 +1,6 @@
 # multiverse.internals 1.1.7
 
-* Write `snapshot.json` during the candidate freeze.
+* Write `snapshot.json` during the dependency freeze.
 * Regenerate `README.md`.
 
 # multiverse.internals 1.1.6
