@@ -31,6 +31,7 @@
 #' )
 #' }
 freeze_dependencies <- function(path_staging, path_community) {
+  write_snapshot_json(path_staging)
   write_config_json(path_staging)
   file.copy(
     file.path(path_community, "packages.json"),
@@ -49,5 +50,13 @@ write_config_json <- function(path_staging) {
     file_config,
     pretty = TRUE,
     auto_unbox = TRUE
+  )
+}
+
+write_snapshot_json <- function(path_staging) {
+  jsonlite::write_json(
+    meta_snapshot(),
+    file.path(path_staging, "snapshot.json"),
+    pretty = TRUE
   )
 }

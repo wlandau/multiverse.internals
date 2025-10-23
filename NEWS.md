@@ -1,3 +1,8 @@
+# multiverse.internals 1.1.7
+
+* Write `snapshot.json` during the candidate freeze.
+* Regenerate `README.md`.
+
 # multiverse.internals 1.1.6
 
 * Ensure compatibility with `parse_url()` in `nanonext` 2.0.0.
