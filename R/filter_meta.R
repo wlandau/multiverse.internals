@@ -38,7 +38,8 @@ filter_meta <- function(path_meta, path_staging) {
 
 filter_packages_file <- function(path, staged) {
   data <- read.dcf(file = path)
-  data <- data[data[, "Package"] %in% staged, , drop = FALSE] # nolint
+  data <- data[, setdiff(colnames(data), c("File", "file", "FILE"))] # issue 173
+  data <- data[data[, "Package"] %in% staged, , drop = FALSE]
   write.dcf(x = data, file = path)
   R.utils::gzip(
     filename = path,

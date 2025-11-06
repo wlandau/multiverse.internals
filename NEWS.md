@@ -1,3 +1,7 @@
+# multiverse.internals 1.1.8
+
+* Filter out the `File` column from all `PACKAGES` and `PACKAGES.gz` files (<https://github.com/r-multiverse/help/issues/173>, @andres-ixpantia).
+
 # multiverse.internals 1.1.7
 
 * Write `snapshot.json` during the candidate freeze.
