@@ -1,5 +1,10 @@
 # Changelog
 
+## multiverse.internals 1.1.9
+
+- Bug fix: handle source build failures in
+  [`issues_synchronization()`](https://r-multiverse.org/multiverse.internals/reference/issues_synchronization.md).
+
 ## multiverse.internals 1.1.8
 
 - Filter out the `File` column from all `PACKAGES` and `PACKAGES.gz`
