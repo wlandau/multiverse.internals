@@ -14,14 +14,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/r-multiverse/multiverse.internals/blob/main/DESCRIPTION)
 
-Landau WM, Gao C (2025). *multiverse.internals: Internal Infrastructure
+Landau WM, Gao C (2026). *multiverse.internals: Internal Infrastructure
 for R-multiverse*. R package version 1.1.9,
 <https://r-multiverse.org/multiverse.internals/>.
 
     @Manual{,
       title = {multiverse.internals: Internal Infrastructure for R-multiverse},
       author = {William Michael Landau and Charlie Gao},
-      year = {2025},
+      year = {2026},
       note = {R package version 1.1.9},
       url = {https://r-multiverse.org/multiverse.internals/},
     }
